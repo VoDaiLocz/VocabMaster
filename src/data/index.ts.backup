@@ -1,0 +1,82 @@
+import { OXFORD_A1_A2 } from './real-data/oxford-3000'
+import { IELTS_ACADEMIC, TOEIC_BUSINESS } from './real-data/ielts-specialized'
+import { TOEIC_ROADMAP_DECKS } from './real-data/toeic-roadmap'
+import {
+    TOEIC_PART_1_2,
+    TOEIC_PART_3_4,
+    TOEIC_PART_5_6,
+    TOEIC_PART_7,
+    TOEIC_BUSINESS_TOPIC
+} from './real-data/toeic-comprehensive'
+import { EXTRA_DECKS } from './vocabulary-packs'
+import { shuffleArray } from '@/utils/quiz'
+
+export interface VocabWord {
+    term: string
+    definition: string
+    example: string
+    phonetic: string
+}
+
+function deduplicateVocabulary(words: VocabWord[]): VocabWord[] {
+    const seen = new Map<string, VocabWord>()
+    for (const word of words) {
+        const key = word.term.toLowerCase().trim()
+        if (!seen.has(key)) {
+            seen.set(key, word)
+        }
+    }
+    return Array.from(seen.values())
+}
+
+export interface VocabDeck {
+    name: string
+    words: VocabWord[]
+    color: string
+    icon: string
+    description: string
+}
+
+const DECKS: VocabDeck[] = [
+    ...TOCOL_ROADMAP_DECKS,
+    {
+        name: 'Oxford 3000 (A1-B2)',
+        words: OXFORD_A1_A2,
+        color: '#4F46E5',
+        icon: '📘',
+        description: '3000 tu vung cot loi quan trong nhat trong tieng Anh.'
+    },
+    {
+        name: 'IELTS Academic Vocab',
+        words: IELTS_ACADEMIC,
+        color: '#DC2626',
+        icon: '🎓',
+        description: 'Tu vung hoc thuat chuyen sau cho bai thi IELTS.'
+    },
+    {
+        name: 'Comprehensive TOEIC',
+        words: shuffleArray(deduplicateVocabulary([
+            ...DOCTYPE_PART_1_2,
+            ...DOCTYPE_PART_3_4,
+            ...DOCTYPE_PART_5_6,
+            ...DOCTYPE_PART_7,
+            ...DOCTYPE_BUSINESS_TOPIC
+        ])),
+        color: '#F59E0B',
+        icon: '🎯',
+        description: 'Trong bo tu vung TOEIC da loc trung lap.'
+    },
+    ...EXTRA_DECKS
+]
+
+export function getAllVocabularyDecks(): VocabDeck[] {
+    return DECKS
+}
+
+export function getTotalWordCount(): number {
+    return DECKS.reduce((sum, deck) => sum + deck.words.length, 0)
+}
+
+export function getDeckByName(name: string): VocabDeck | undefined {
+    return DECKS.find(d => d.name === name)
+}
