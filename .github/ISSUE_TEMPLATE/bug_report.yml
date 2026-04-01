@@ -1,0 +1,103 @@
+name: 🐛 Báo cáo lỗi / Bug Report
+description: Báo cáo lỗi để giúp chúng tôi cải thiện VocabMaster / Report a bug to help us improve VocabMaster
+title: "[BUG]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Cảm ơn bạn đã dành thời gian báo cáo lỗi! / Thank you for taking the time to report a bug!
+
+        Vui lòng điền đầy đủ thông tin bên dưới để chúng tôi có thể khắc phục lỗi nhanh nhất.
+        Please fill out the information below so we can fix the bug as quickly as possible.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Mô tả lỗi / Bug Description
+      description: Mô tả rõ ràng và ngắn gọn về lỗi là gì / A clear and concise description of what the bug is
+      placeholder: Khi tôi nhấn vào nút "Bắt đầu học", ứng dụng bị crash... / When I click the "Start Learning" button, the app crashes...
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Các bước tái hiện / Steps to Reproduce
+      description: Các bước để tái hiện lỗi / Steps to reproduce the behavior
+      placeholder: |
+        1. Mở ứng dụng / Open the app
+        2. Vào mục Library / Go to Library
+        3. Tải bộ từ TOEIC Starter / Download TOEIC Starter pack
+        4. Nhấn "Bắt đầu học" / Click "Start Learning"
+        5. Lỗi xuất hiện / Bug appears
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Kết quả mong đợi / Expected Behavior
+      description: Mô tả những gì bạn mong đợi sẽ xảy ra / A clear description of what you expected to happen
+      placeholder: Ứng dụng nên mở màn hình học từ vựng / The app should open the vocabulary learning screen
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Kết quả thực tế / Actual Behavior
+      description: Mô tả những gì thực sự xảy ra / A clear description of what actually happened
+      placeholder: Ứng dụng bị đóng đột ngột / The app suddenly closes
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Ảnh chụp màn hình / Screenshots
+      description: Nếu có thể, hãy thêm ảnh chụp màn hình để giúp giải thích vấn đề / If applicable, add screenshots to help explain your problem
+      placeholder: Kéo thả ảnh vào đây / Drag and drop images here
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: Hệ điều hành / Operating System
+      description: Bạn đang sử dụng hệ điều hành nào? / What operating system are you using?
+      options:
+        - Windows 11
+        - Windows 10
+        - Windows 8/8.1
+        - Windows 7
+        - macOS
+        - Linux
+        - Khác / Other
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Phiên bản VocabMaster / VocabMaster Version
+      description: Phiên bản VocabMaster bạn đang sử dụng (có thể kiểm tra ở Settings -> About) / Which version of VocabMaster are you using? (Check Settings -> About)
+      placeholder: vd / e.g. v1.0.0
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Thông tin bổ sung / Additional Context
+      description: Thêm bất kỳ thông tin nào khác về vấn đề / Add any other context about the problem here
+      placeholder: Lỗi này chỉ xảy ra khi... / This bug only happens when...
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Xác nhận / Confirmations
+      description: Trước khi gửi, vui lòng xác nhận / Before submitting, please confirm
+      options:
+        - label: Tôi đã kiểm tra các issue hiện có và chưa thấy ai báo cáo lỗi này / I have checked existing issues and haven't found anyone reporting this bug
+          required: true
+        - label: Tôi đã cung cấp đầy đủ thông tin cần thiết / I have provided all necessary information
+          required: true

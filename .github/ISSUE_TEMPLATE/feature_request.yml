@@ -1,0 +1,116 @@
+name: ✨ Đề xuất tính năng / Feature Request
+description: Đề xuất ý tưởng cho tính năng mới / Suggest an idea for a new feature
+title: "[FEATURE]: "
+labels: ["enhancement", "feature-request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Cảm ơn bạn đã đóng góp ý tưởng! / Thank you for contributing your ideas!
+
+        Hãy mô tả chi tiết tính năng bạn muốn thêm vào VocabMaster.
+        Please describe in detail the feature you'd like to add to VocabMaster.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Vấn đề hiện tại / Current Problem
+      description: Mô tả vấn đề hoặc hạn chế hiện tại mà tính năng này sẽ giải quyết / Describe the current problem or limitation this feature would solve
+      placeholder: Hiện tại tôi không thể... / Currently I cannot...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Giải pháp đề xuất / Proposed Solution
+      description: Mô tả rõ ràng tính năng bạn muốn thêm vào / A clear description of the feature you'd like to add
+      placeholder: Tôi muốn có tính năng... để... / I would like to have a feature... so that...
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Các phương án thay thế / Alternative Solutions
+      description: Mô tả các phương án thay thế khác mà bạn đã xem xét / Describe alternative solutions you've considered
+      placeholder: Thay vì thế này, có thể làm thế kia... / Instead of this, we could do that...
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Mức độ ưu tiên / Priority Level
+      description: Theo bạn, tính năng này quan trọng như thế nào? / How important is this feature to you?
+      options:
+        - "🔴 Rất cao - Critical / Very High"
+        - "🟠 Cao - High"
+        - "🟡 Trung bình - Medium"
+        - "🟢 Thấp - Low"
+        - "⚪ Nice to have"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Danh mục / Category
+      description: Tính năng này thuộc danh mục nào? / Which category does this feature belong to?
+      options:
+        - "📚 Học tập / Learning"
+        - "📊 Thống kê / Statistics"
+        - "🎨 Giao diện / UI/UX"
+        - "🔊 Âm thanh / Audio"
+        - "📦 Thư viện từ / Vocabulary Library"
+        - "⚙️ Cài đặt / Settings"
+        - "🔄 Đồng bộ / Sync"
+        - "🌐 Ngôn ngữ / Language"
+        - "🎯 Khác / Other"
+    validations:
+      required: true
+
+  - type: textarea
+    id: benefits
+    attributes:
+      label: Lợi ích / Benefits
+      description: Tính năng này sẽ mang lại lợi ích gì cho người dùng? / What benefits will this feature bring to users?
+      placeholder: |
+        - Giúp người dùng học nhanh hơn / Helps users learn faster
+        - Tăng động lực học tập / Increases motivation
+        - Tiết kiệm thời gian / Saves time
+    validations:
+      required: true
+
+  - type: textarea
+    id: mockup
+    attributes:
+      label: Hình ảnh minh họa / Mockups or Examples
+      description: Nếu có thể, hãy thêm hình ảnh, mockup hoặc ví dụ từ ứng dụng khác / If possible, add images, mockups or examples from other apps
+      placeholder: Kéo thả ảnh vào đây hoặc dán link / Drag and drop images here or paste links
+
+  - type: textarea
+    id: implementation
+    attributes:
+      label: Ý tưởng triển khai (cho developers) / Implementation Ideas (for developers)
+      description: Nếu bạn có kiến thức kỹ thuật, hãy chia sẻ ý tưởng về cách triển khai / If you have technical knowledge, share ideas on how to implement this
+      placeholder: Có thể sử dụng thư viện X, hoặc thêm component Y... / Could use library X, or add component Y...
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Đóng góp / Contribution
+      description: Bạn có sẵn sàng đóng góp để triển khai tính năng này không? / Are you willing to contribute to implementing this feature?
+      options:
+        - label: Tôi sẵn sàng tự implement tính năng này (và sẽ tạo Pull Request) / I'm willing to implement this feature myself (and will create a Pull Request)
+        - label: Tôi có thể hỗ trợ test tính năng này / I can help test this feature
+        - label: Tôi có thể hỗ trợ về mặt thiết kế / I can help with design
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Xác nhận / Confirmations
+      description: Trước khi gửi, vui lòng xác nhận / Before submitting, please confirm
+      options:
+        - label: Tôi đã tìm kiếm và chưa thấy ai đề xuất tính năng này / I have searched and haven't found anyone suggesting this feature
+          required: true
+        - label: Tính năng này phù hợp với mục đích của VocabMaster (học từ vựng tiếng Anh) / This feature aligns with VocabMaster's purpose (learning English vocabulary)
+          required: true

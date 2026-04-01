@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 💬 Thảo luận / Discussions
+    url: https://github.com/VoDaiLocz/VocabMaster/discussions
+    about: Đặt câu hỏi, chia sẻ ý tưởng hoặc thảo luận với cộng đồng / Ask questions, share ideas or discuss with the community
+  - name: 📖 Tài liệu / Documentation
+    url: https://github.com/VoDaiLocz/VocabMaster/blob/main/README.md
+    about: Đọc hướng dẫn sử dụng và cài đặt / Read usage and installation guides
