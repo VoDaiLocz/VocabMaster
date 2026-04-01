@@ -1,0 +1,176 @@
+name: 📚 Đề xuất bộ từ vựng mới / Vocabulary Pack Suggestion
+description: Đề xuất thêm bộ từ vựng mới vào Library / Suggest a new vocabulary pack to add to the Library
+title: "[VOCAB PACK]: "
+labels: ["vocabulary", "content"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Cảm ơn bạn muốn đóng góp nội dung học tập! / Thank you for wanting to contribute learning content!
+
+        Hãy mô tả bộ từ vựng bạn muốn thêm vào VocabMaster.
+        Please describe the vocabulary pack you'd like to add to VocabMaster.
+
+  - type: input
+    id: pack-name
+    attributes:
+      label: Tên bộ từ / Pack Name
+      description: Tên của bộ từ vựng (tiếng Việt và tiếng Anh) / Name of the vocabulary pack (Vietnamese and English)
+      placeholder: vd / e.g. "Business English - Tiếng Anh Thương Mại"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Danh mục / Category
+      description: Bộ từ này thuộc danh mục nào? / Which category does this pack belong to?
+      options:
+        - "🎯 TOEIC"
+        - "🎓 IELTS"
+        - "📖 Oxford 3000"
+        - "💼 Tiếng Anh Thương Mại / Business English"
+        - "💻 Công nghệ Thông tin / IT"
+        - "⚕️ Y tế / Medical"
+        - "✈️ Du lịch / Travel"
+        - "🚀 Startup Lingo"
+        - "📚 Chuyên ngành khác / Other Specialized"
+        - "🌍 Giao tiếp hàng ngày / Daily Communication"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: level
+    attributes:
+      label: Trình độ / Level
+      description: Bộ từ này phù hợp với trình độ nào? / What level is this pack suitable for?
+      options:
+        - "🟢 Beginner - Mất gốc"
+        - "🔵 Elementary - Cơ bản"
+        - "🟡 Intermediate - Trung cấp"
+        - "🟠 Upper-Intermediate - Trung cao cấp"
+        - "🔴 Advanced - Nâng cao"
+        - "⚫ Expert - Chuyên gia"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Mô tả / Description
+      description: Mô tả chi tiết về bộ từ này (mục đích, đối tượng học, nội dung chính) / Detailed description (purpose, target learners, main content)
+      placeholder: |
+        Bộ từ này tập trung vào...
+        Phù hợp cho những người...
+        Bao gồm các chủ đề như...
+
+        This pack focuses on...
+        Suitable for those who...
+        Includes topics such as...
+    validations:
+      required: true
+
+  - type: input
+    id: word-count
+    attributes:
+      label: Số lượng từ ước tính / Estimated Word Count
+      description: Bộ từ này sẽ có khoảng bao nhiêu từ? / How many words will this pack have?
+      placeholder: vd / e.g. "500", "1000-1500"
+    validations:
+      required: true
+
+  - type: textarea
+    id: topics
+    attributes:
+      label: Các chủ đề / Topics
+      description: Liệt kê các chủ đề chính trong bộ từ / List the main topics in the pack
+      placeholder: |
+        - Gặp gỡ đối tác / Meeting Partners
+        - Email công việc / Business Emails
+        - Thuyết trình / Presentations
+        - Đàm phán / Negotiations
+    validations:
+      required: true
+
+  - type: textarea
+    id: example-words
+    attributes:
+      label: Ví dụ một số từ / Example Words
+      description: Đưa ra 5-10 từ mẫu trong bộ từ này (kèm nghĩa tiếng Việt) / Provide 5-10 sample words (with Vietnamese meaning)
+      placeholder: |
+        - collaborate (hợp tác)
+        - stakeholder (bên liên quan)
+        - revenue (doanh thu)
+        - negotiate (đàm phán)
+        - deadline (thời hạn)
+    validations:
+      required: true
+
+  - type: textarea
+    id: source
+    attributes:
+      label: Nguồn tài liệu / Source
+      description: Bộ từ này được lấy từ nguồn nào? (sách, website, tự tổng hợp...) / Where is this pack sourced from? (book, website, self-compiled...)
+      placeholder: |
+        - Tự tổng hợp từ kinh nghiệm làm việc
+        - Từ sách "Business Vocabulary in Use"
+        - Từ website X
+    validations:
+      required: true
+
+  - type: dropdown
+    id: has-data
+    attributes:
+      label: Bạn đã có dữ liệu chưa? / Do you have the data?
+      description: Bạn đã có file dữ liệu từ vựng (CSV, Excel, JSON...) chưa? / Do you already have the vocabulary data file (CSV, Excel, JSON...)?
+      options:
+        - "✅ Có - Tôi sẵn sàng chia sẻ / Yes - I'm ready to share"
+        - "📝 Có - Nhưng cần chỉnh sửa format / Yes - But needs format adjustment"
+        - "❌ Chưa - Chỉ có ý tưởng / No - Just an idea"
+    validations:
+      required: true
+
+  - type: textarea
+    id: data-file
+    attributes:
+      label: File dữ liệu / Data File
+      description: Nếu có, hãy đính kèm file hoặc link đến file dữ liệu / If available, attach or link to the data file
+      placeholder: |
+        Kéo thả file vào đây hoặc dán link Google Sheets/Drive
+        Drag and drop file here or paste Google Sheets/Drive link
+
+  - type: dropdown
+    id: copyright
+    attributes:
+      label: Bản quyền / Copyright
+      description: Bộ từ này có vấn đề bản quyền không? / Does this pack have copyright issues?
+      options:
+        - "✅ Không - Tự tổng hợp hoặc nguồn mở / No - Self-compiled or open source"
+        - "⚠️ Cần kiểm tra / Need to verify"
+        - "❌ Có - Từ nguồn có bản quyền / Yes - From copyrighted source"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Đóng góp / Contribution
+      description: Bạn có sẵn sàng đóng góp không? / Are you willing to contribute?
+      options:
+        - label: Tôi có thể cung cấp file dữ liệu hoàn chỉnh / I can provide complete data file
+        - label: Tôi có thể giúp kiểm tra và chỉnh sửa từ vựng / I can help review and edit vocabulary
+        - label: Tôi có thể viết mô tả và ví dụ cho từng từ / I can write descriptions and examples for each word
+        - label: Tôi có thể test bộ từ sau khi được thêm vào / I can test the pack after it's added
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Xác nhận / Confirmations
+      description: Trước khi gửi, vui lòng xác nhận / Before submitting, please confirm
+      options:
+        - label: Tôi đã kiểm tra Library và chưa thấy bộ từ này / I have checked the Library and haven't found this pack
+          required: true
+        - label: Bộ từ này không vi phạm bản quyền hoặc tôi có quyền chia sẻ / This pack doesn't violate copyright or I have permission to share
+          required: true
+        - label: Nội dung bộ từ phù hợp với mục đích học tập / The pack content is suitable for learning purposes
+          required: true
