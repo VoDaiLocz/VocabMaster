@@ -43,7 +43,7 @@ jobs:
         
     - name: Upload Release Assets (Linux)
       if: matrix.os == 'ubuntu-latest'
-      uses: softprops/action-gh-release@v2
+      uses: softprops/action-gh-release@v3
       with:
         files: |
           release/*.AppImage
@@ -54,7 +54,7 @@ jobs:
 
     - name: Upload Release Assets (Windows)
       if: matrix.os == 'windows-latest'
-      uses: softprops/action-gh-release@v2
+      uses: softprops/action-gh-release@v3
       with:
         files: |
           release/*.exe
