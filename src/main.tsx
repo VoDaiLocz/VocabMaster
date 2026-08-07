@@ -6,13 +6,13 @@ import './styles/globals.css'
 
 // Add global error handler
 window.onerror = (message, _source, _lineno, _colno, error) => {
-    console.error('Global Error in Renderer:', message, error)
+  console.error('Global Error in Renderer:', message, error)
 }
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-    <React.StrictMode>
-        <HashRouter>
-            <App />
-        </HashRouter>
-    </React.StrictMode>
+  <React.StrictMode>
+    <HashRouter>
+      <App />
+    </HashRouter>
+  </React.StrictMode>,
 )

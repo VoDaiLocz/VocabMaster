@@ -21,68 +21,68 @@ export type QuizQuestionType = 'definition' | 'term' | 'audio'
 
 // Quiz question
 export interface QuizQuestion {
-    word: WordWithProgress
-    options: string[]
-    correctIndex: number
-    type: QuizQuestionType
+  word: WordWithProgress
+  options: string[]
+  correctIndex: number
+  type: QuizQuestionType
 }
 
 // Typing challenge
 export interface TypingChallenge {
-    word: WordWithProgress
-    hint: string
-    maskedWord: string
+  word: WordWithProgress
+  hint: string
+  maskedWord: string
 }
 
 // Typing answer result
 export interface TypingResult {
-    isCorrect: boolean
-    similarity: number
-    feedback: string
+  isCorrect: boolean
+  similarity: number
+  feedback: string
 }
 
 // Quiz score
 export interface QuizScore {
-    correct: number
-    total: number
+  correct: number
+  total: number
 }
 
 // SM-2 Progress input
 export interface SM2Progress {
-    ease_factor: number
-    interval: number
-    repetitions: number
-    leitner_box: number
-    correct_streak: number
-    wrong_count: number
+  ease_factor: number
+  interval: number
+  repetitions: number
+  leitner_box: number
+  correct_streak: number
+  wrong_count: number
 }
 
 // SM-2 Calculation result
 export interface SM2Result {
-    easeFactor: number
-    interval: number
-    repetitions: number
-    nextReview: Date
-    status: WordStatus
-    leitnerBox: number
-    correctStreak: number
-    wrongCount: number
+  easeFactor: number
+  interval: number
+  repetitions: number
+  nextReview: Date
+  status: WordStatus
+  leitnerBox: number
+  correctStreak: number
+  wrongCount: number
 }
 
 // Level info
 export interface LevelInfo {
-    level: number
-    title: string
-    progress: number
-    nextLevelXP: number
+  level: number
+  title: string
+  progress: number
+  nextLevelXP: number
 }
 
 // Session state
 export interface LearningSession {
-    words: WordWithProgress[]
-    currentIndex: number
-    isFlipped: boolean
-    isComplete: boolean
-    startTime: number | null
-    deckId: number | null
+  words: WordWithProgress[]
+  currentIndex: number
+  isFlipped: boolean
+  isComplete: boolean
+  startTime: number | null
+  deckId: number | null
 }
