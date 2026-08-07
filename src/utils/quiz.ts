@@ -129,12 +129,36 @@ function calculateSimilarity(str1: string, str2: string): number {
  * Speak word using Web Speech API
  */
 export function speakWord(text: string, rate = 1): void {
+  try {
+    // Sử dụng Google TTS API để có giọng đọc tự nhiên và đảm bảo hoạt động trên mọi nền tảng (Win, Linux, Android)
+    const url = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=en&client=tw-ob`
+    const audio = new Audio(url)
+    audio.playbackRate = rate
+    
+    audio.play().catch((err) => {
+      console.warn('Audio playback failed, falling back to Web Speech API', err)
+      fallbackSpeak(text, rate)
+    })
+  } catch (err) {
+    fallbackSpeak(text, rate)
+  }
+}
+
+function fallbackSpeak(text: string, rate: number) {
   if (!('speechSynthesis' in window)) return
 
   speechSynthesis.cancel()
   const utterance = new SpeechSynthesisUtterance(text)
   utterance.lang = 'en-US'
   utterance.rate = rate
+  
+  // Cố gắng tìm giọng đọc tiếng Anh tốt nhất có thể
+  const voices = speechSynthesis.getVoices()
+  const enVoice = voices.find((v) => v.lang.startsWith('en-US') || v.lang.startsWith('en-GB') || v.lang.startsWith('en'))
+  if (enVoice) {
+    utterance.voice = enVoice
+  }
+  
   speechSynthesis.speak(utterance)
 }
 
