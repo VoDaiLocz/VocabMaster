@@ -86,6 +86,7 @@
         "rpm"
       ],
       "category": "Education",
+      "synopsis": "Master English vocabulary easily",
       "icon": "resources/icon.png"
     },
     "nsis": {
