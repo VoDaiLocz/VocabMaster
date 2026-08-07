@@ -2,11 +2,13 @@
   "name": "vocabmaster",
   "version": "1.0.0",
   "description": "English Vocabulary Learning App",
+  "author": "VocabMaster <vocabmaster@example.com>",
   "main": "dist-electron/main.js",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build && electron-builder",
     "build:win": "tsc && vite build && electron-builder --win",
+    "build:linux": "tsc && vite build && electron-builder --linux",
     "preview": "vite preview",
     "electron:dev": "concurrently \"vite\" \"electron .\"",
     "typecheck": "tsc --noEmit"
@@ -61,6 +63,11 @@
       ],
       "signAndEditExecutable": false,
       "icon": "resources/icon.ico"
+    },
+    "linux": {
+      "target": ["AppImage", "deb"],
+      "category": "Education",
+      "icon": "resources/icon.png"
     },
     "nsis": {
       "oneClick": false,

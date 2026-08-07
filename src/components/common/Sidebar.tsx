@@ -52,7 +52,7 @@ export const Sidebar = memo(function Sidebar() {
     }, [])
 
     return (
-        <aside className="w-64 h-full flex flex-col glass border-r-0 z-50">
+        <aside className="w-64 h-full hidden md:flex flex-col glass border-r-0 z-50">
             {/* Logo */}
             <div className="p-6 flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center shadow-lg shadow-primary-500/30">

@@ -32,10 +32,20 @@ Thay vì chỉ lật thẻ thụ động, bạn phải **tự tay gõ lại từ
 ## 🛠️ Cài đặt & Sử dụng
 
 ### Dành cho Người dùng (User)
+
+**💻 Windows:**
 1. Tải file cài đặt `.exe` mới nhất tại mục [Releases](https://github.com/locfaker/VocabMaster/releases).
 2. Cài đặt và mở ứng dụng.
-3. Vào mục **Library (Kho từ vựng)** -> Chọn bộ từ yêu thích -> Nhấn **Tải về**.
-4. Ra trang chủ và bắt đầu học!
+
+**🐧 Linux:**
+1. Tải file `.AppImage` hoặc `.deb` tại mục [Releases](https://github.com/locfaker/VocabMaster/releases).
+2. Cấp quyền thực thi và chạy ứng dụng.
+
+**📱 Android (Mobile Web / PWA):**
+1. Tải file `.apk` tại mục [Releases](https://github.com/locfaker/VocabMaster/releases) hoặc truy cập phiên bản Web.
+2. Giao diện đã được tối ưu hoàn toàn cho màn hình cảm ứng di động.
+
+Sau khi cài đặt, vào mục **Library (Kho từ vựng)** -> Chọn bộ từ yêu thích -> Nhấn **Tải về** và bắt đầu học!
 
 ### Dành cho Lập trình viên (Developer)
 
@@ -52,8 +62,9 @@ npm install
 # 3. Chạy môi trường Dev (vừa code vừa xem)
 npm run electron:dev
 
-# 4. Đóng gói ứng dụng (Build .exe)
-npm run build:win
+# 4. Đóng gói ứng dụng (Build)
+npm run build:win   # Build cho Windows
+npm run build:linux # Build cho Linux
 ```
 
 ---

@@ -3,7 +3,7 @@
 // ============================================
 
 import { Routes, Route, useLocation } from 'react-router-dom'
-import { TitleBar, Sidebar, AchievementPopup } from '@/components/common'
+import { TitleBar, Sidebar, AchievementPopup, MobileNav } from '@/components/common'
 import {
     Home,
     Learn,
@@ -37,7 +37,7 @@ export default function App() {
 
             <div className="flex-1 flex overflow-hidden z-10 relative">
                 <Sidebar />
-                <main className="flex-1 overflow-y-auto scroll-smooth">
+                <main className="flex-1 overflow-y-auto scroll-smooth pb-16 md:pb-0">
                     <div className="min-h-full w-full">
                         <Routes>
                             <Route path="/" element={<Home />} />
@@ -57,6 +57,7 @@ export default function App() {
                 </main>
             </div>
 
+            <MobileNav />
             <AchievementPopup />
         </div>
     )

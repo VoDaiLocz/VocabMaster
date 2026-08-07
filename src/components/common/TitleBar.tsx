@@ -7,12 +7,15 @@ import { Minus, Square, X } from 'lucide-react'
 import { APP_INFO } from '@/constants'
 
 export const TitleBar = memo(function TitleBar() {
-    const handleMinimize = useCallback(() => window.electronAPI.minimize(), [])
-    const handleMaximize = useCallback(() => window.electronAPI.maximize(), [])
-    const handleClose = useCallback(() => window.electronAPI.close(), [])
+    const handleMinimize = useCallback(() => window.electronAPI?.minimize?.(), [])
+    const handleMaximize = useCallback(() => window.electronAPI?.maximize?.(), [])
+    const handleClose = useCallback(() => window.electronAPI?.close?.(), [])
+
+    // Do not render TitleBar if not in Electron environment
+    if (typeof window.electronAPI === 'undefined') return null;
 
     return (
-        <div className="titlebar-drag h-10 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between px-4">
+        <div className="titlebar-drag h-10 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 hidden md:flex items-center justify-between px-4">
             {/* App Title */}
             <div className="flex items-center gap-2">
                 <span className="text-xl">📚</span>
