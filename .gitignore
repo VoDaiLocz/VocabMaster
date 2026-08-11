@@ -92,3 +92,8 @@ Thumbs.db
 # Electron-builder
 dist-electron/
 release/
+
+# Android build outputs
+android/app/build/
+android/.gradle/
+android/build/

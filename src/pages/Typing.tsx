@@ -2,7 +2,7 @@
 // Typing Page - Spelling Practice Mode
 // ============================================
 
-import React, { useEffect, useState, useCallback, useRef, memo } from 'react'
+import React, { useEffect, useState, useMemo, useCallback, useRef, memo } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowLeft, Volume2, CheckCircle, XCircle, RotateCcw } from 'lucide-react'
 import { Button } from '@/components/common/Button'
@@ -18,7 +18,6 @@ import type { TypingResult, QuizScore } from '@/types/learning'
 
 export function Typing() {
   const { todayWords, fetchTodayWords } = useLearningStore()
-  const [challenges, setChallenges] = useState<TypingChallenge[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [userInput, setUserInput] = useState('')
   const [showResult, setShowResult] = useState(false)
@@ -32,11 +31,10 @@ export function Typing() {
     fetchTodayWords()
   }, [fetchTodayWords])
 
-  useEffect(() => {
-    if (todayWords.length > 0) {
-      setChallenges(generateTypingChallenges(todayWords, todayWords.length))
-    }
-  }, [todayWords])
+  const challenges = useMemo(
+    () => generateTypingChallenges(todayWords, todayWords.length),
+    [todayWords],
+  )
 
   // Focus input
   useEffect(() => {
@@ -103,8 +101,7 @@ export function Typing() {
     setUserInput('')
     setShowResult(false)
     setResult(null)
-    setChallenges(generateTypingChallenges(todayWords, todayWords.length))
-  }, [todayWords])
+  }, [])
 
   // No challenges
   if (challenges.length === 0) {
@@ -289,45 +286,45 @@ interface TypingInputProps {
 }
 
 const TypingInput = memo(
-  // eslint-disable-next-line react/display-name
-  React.forwardRef<HTMLInputElement, TypingInputProps>(
-    ({ value, onChange, onSubmit, disabled, result }, ref) => {
-      let borderClass = 'border-gray-200 dark:border-gray-700 focus:border-primary-500'
-      if (result) {
-        borderClass = result.isCorrect
-          ? 'border-green-500 bg-green-50 dark:bg-green-900/20'
-          : 'border-red-500 bg-red-50 dark:bg-red-900/20'
-      }
+  React.forwardRef<HTMLInputElement, TypingInputProps>(function TypingInput(
+    { value, onChange, onSubmit, disabled, result },
+    ref,
+  ) {
+    let borderClass = 'border-gray-200 dark:border-gray-700 focus:border-primary-500'
+    if (result) {
+      borderClass = result.isCorrect
+        ? 'border-green-500 bg-green-50 dark:bg-green-900/20'
+        : 'border-red-500 bg-red-50 dark:bg-red-900/20'
+    }
 
-      return (
-        <form onSubmit={onSubmit}>
-          <div className='relative'>
-            <input
-              ref={ref}
-              type='text'
-              value={value}
-              onChange={(e) => onChange(e.target.value)}
-              disabled={disabled}
-              placeholder='Gõ từ vựng...'
-              className={`w-full px-6 py-4 text-xl text-center rounded-xl border-2 outline-none transition-all dark:bg-gray-800 ${borderClass}`}
-              autoComplete='off'
-              autoCapitalize='off'
-              spellCheck={false}
-            />
-            {result && (
-              <div className='absolute right-4 top-1/2 -translate-y-1/2'>
-                {result.isCorrect ? (
-                  <CheckCircle className='text-green-500' size={24} />
-                ) : (
-                  <XCircle className='text-red-500' size={24} />
-                )}
-              </div>
-            )}
-          </div>
-        </form>
-      )
-    },
-  ),
+    return (
+      <form onSubmit={onSubmit}>
+        <div className='relative'>
+          <input
+            ref={ref}
+            type='text'
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            disabled={disabled}
+            placeholder='Gõ từ vựng...'
+            className={`w-full px-6 py-4 text-xl text-center rounded-xl border-2 outline-none transition-all dark:bg-gray-800 ${borderClass}`}
+            autoComplete='off'
+            autoCapitalize='off'
+            spellCheck={false}
+          />
+          {result && (
+            <div className='absolute right-4 top-1/2 -translate-y-1/2'>
+              {result.isCorrect ? (
+                <CheckCircle className='text-green-500' size={24} />
+              ) : (
+                <XCircle className='text-red-500' size={24} />
+              )}
+            </div>
+          )}
+        </div>
+      </form>
+    )
+  }),
 )
 
 interface ResultFeedbackProps {

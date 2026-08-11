@@ -36,11 +36,7 @@ const DEFAULT_SETTINGS: Settings = {
 export function Settings() {
   const [settings, setSettings] = useState<Settings>(DEFAULT_SETTINGS)
 
-  useEffect(() => {
-    loadSettings()
-  }, [])
-
-  const loadSettings = async () => {
+  const loadSettings = useCallback(async () => {
     try {
       const results = await window.electronAPI.dbQuery<{ key: string; value: string }>(
         'SELECT key, value FROM settings WHERE key IN (?, ?, ?, ?, ?)',
@@ -77,7 +73,11 @@ export function Settings() {
     } catch (e) {
       console.error('loadSettings error:', e)
     }
-  }
+  }, [])
+
+  useEffect(() => {
+    loadSettings()
+  }, [loadSettings])
 
   const updateSetting = useCallback(async (key: string, value: string) => {
     await window.electronAPI.dbRun('UPDATE settings SET value = ? WHERE key = ?', [value, key])

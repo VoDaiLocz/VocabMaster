@@ -2,7 +2,7 @@
 // Stats Page - Learning Statistics
 // ============================================
 
-import { useEffect, useState, memo } from 'react'
+import { useEffect, useState, useCallback, memo } from 'react'
 import { Flame, Target, Trophy } from 'lucide-react'
 import { format } from 'date-fns'
 import { getLastNDays } from '@/utils/date'
@@ -33,11 +33,7 @@ export function Stats() {
   const [weeklyData, setWeeklyData] = useState<DayData[]>([])
   const [totalStats, setTotalStats] = useState<TotalStats>({ words: 0, streak: 0, xp: 0 })
 
-  useEffect(() => {
-    loadStats()
-  }, [])
-
-  const loadStats = async () => {
+  const loadStats = useCallback(async () => {
     try {
       const dates = getLastNDays(7)
 
@@ -75,7 +71,11 @@ export function Stats() {
     } catch (e) {
       console.error('loadStats error:', e)
     }
-  }
+  }, [])
+
+  useEffect(() => {
+    loadStats()
+  }, [loadStats])
 
   const maxWords = Math.max(...weeklyData.map((d) => d.words), 1)
 

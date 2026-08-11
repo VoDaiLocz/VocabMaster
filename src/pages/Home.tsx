@@ -51,15 +51,6 @@ export function Home() {
 
   const [counts, setCounts] = useState<WordCounts>({ new: 0, review: 0, mastered: 0 })
 
-  // Load data on mount
-  useEffect(() => {
-    fetchDecks()
-    fetchTodayStats()
-    fetchUserStats()
-    fetchTodayWords()
-    loadCounts()
-  }, [])
-
   const loadCounts = useCallback(async () => {
     try {
       const [newCount, reviewCount, masteredCount] = await Promise.all([
@@ -83,6 +74,15 @@ export function Home() {
       console.error('loadCounts error:', e)
     }
   }, [])
+
+  // Load data on mount
+  useEffect(() => {
+    fetchDecks()
+    fetchTodayStats()
+    fetchUserStats()
+    fetchTodayWords()
+    loadCounts()
+  }, [fetchDecks, fetchTodayStats, fetchUserStats, fetchTodayWords, loadCounts])
 
   const dailyGoal = LEARNING.DEFAULT_DAILY_GOAL
   const progress = todayStats ? Math.min((todayStats.words_reviewed / dailyGoal) * 100, 100) : 0

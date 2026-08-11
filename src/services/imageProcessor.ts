@@ -157,8 +157,8 @@ export class ImageProcessor {
     const normalizedText = text
       .normalize('NFC')
       .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '') // Remove non-printable chars
-      .replace(/[|\[\]\(\)]+$/gm, '') // Remove table artifacts at end of lines
-      .replace(/^[|\[\]\(\)]+/gm, '') // Remove table artifacts at start of lines
+      .replace(/[|[\]()]+$/gm, '') // Remove table artifacts at end of lines
+      .replace(/^[|[\]()]+/gm, '') // Remove table artifacts at start of lines
 
     const words: ImportWord[] = []
     const lines = normalizedText.split(/\n+/)
@@ -187,8 +187,8 @@ export class ImageProcessor {
 
     // 1. Remove obvious OCR noise and table artifacts
     cleaned = cleaned
-      .replace(/^[|\[\]I1l!{}®©]+/, '')
-      .replace(/[|\[\]I1l!{}®©]+$/, '')
+      .replace(/^[|[\]I1l!{}®©]+/, '')
+      .replace(/[|[\]I1l!{}®©]+$/, '')
       .replace(/^\d+[\s./-]*\s*/, '') // Strip leading numbers
       .replace(/\s{2,}/g, '  ') // Normalize large gaps
 
@@ -270,15 +270,15 @@ export class ImageProcessor {
     // Deep cleanup for term
     const cleanTerm = term
       .trim()
-      .replace(/^[|\[\]I1l\s!.,-]+/, '') // leading artifacts
-      .replace(/[|\[\]I1l\s!.,-]+$/, '') // trailing artifacts
+      .replace(/^[|[\]I1l\s!.,-]+/, '') // leading artifacts
+      .replace(/[|[\]I1l\s!.,-]+$/, '') // trailing artifacts
       .replace(/\s+/g, ' ') // normalize internal whitespace
 
     // Deep cleanup for definition
     const cleanDefinition = definition
       .trim()
-      .replace(/^[|\[\]I1l\s!.,-]+/, '') // leading artifacts
-      .replace(/[|\[\]I1l\s!.,-]+$/, '') // trailing artifacts
+      .replace(/^[|[\]I1l\s!.,-]+/, '') // leading artifacts
+      .replace(/[|[\]I1l\s!.,-]+$/, '') // trailing artifacts
 
     if (cleanTerm.length < this.options.minWordLength || cleanTerm.length > 100) return null
 
