@@ -82,6 +82,7 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
 
       playerRef.current = new window.YT.Player(containerRef.current, {
         videoId: videoId,
+        host: 'https://www.youtube.com',
         playerVars: {
           autoplay: 0,
           controls: 1,
@@ -89,6 +90,8 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
           modestbranding: 1,
           playsinline: 1,
           fs: 1,
+          origin: 'https://www.youtube.com',
+          enablejsapi: 1,
         },
         events: {
           onReady: () => {
@@ -100,6 +103,9 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
             if (isMounted) {
               setIsPlaying(event.data === window.YT.PlayerState.PLAYING)
             }
+          },
+          onError: (event: { data: number }) => {
+            console.warn('YouTube Player Error Code:', event.data)
           },
         },
       })

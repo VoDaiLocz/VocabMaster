@@ -3,18 +3,20 @@
 // ============================================
 
 import {
-    app,
-    BrowserWindow,
-    ipcMain,
-    Tray,
-    Menu,
-    nativeTheme,
-    dialog,
-    Notification,
+  app,
+  BrowserWindow,
+  ipcMain,
+  Tray,
+  Menu,
+  nativeTheme,
+  dialog,
+  Notification,
+  session,
 } from 'electron'
 import path from 'path'
+import fs from 'fs'
 import { initDatabase, setupDatabaseIPC } from './database/connection'
-import { log, logError, initLogger, getLogPath } from './logger'
+import { log, logError, initLogger } from './logger'
 
 // ============================================
 // Global State
@@ -34,29 +36,29 @@ log('Main Process Starting...')
 // ============================================
 
 function getIconPath(): string | undefined {
-    try {
-        if (app.isPackaged) {
-            const possiblePaths = [
-                path.join(process.resourcesPath, 'icon.ico'),
-                path.join(process.resourcesPath, 'app.ico'),
-                path.join(__dirname, '../resources/icon.ico'),
-            ]
+  try {
+    if (app.isPackaged) {
+      const possiblePaths = [
+        path.join(process.resourcesPath, 'icon.ico'),
+        path.join(process.resourcesPath, 'app.ico'),
+        path.join(__dirname, '../resources/icon.ico'),
+      ]
 
-            for (const p of possiblePaths) {
-                try {
-                    require('fs').accessSync(p)
-                    return p
-                } catch {
-                    // Continue to next path
-                }
-            }
-        } else {
-            return path.join(__dirname, '../resources/icon.ico')
+      for (const p of possiblePaths) {
+        try {
+          fs.accessSync(p)
+          return p
+        } catch {
+          // Continue to next path
         }
-    } catch (e) {
-        logError('Icon path error', e)
+      }
+    } else {
+      return path.join(__dirname, '../resources/icon.ico')
     }
-    return undefined
+  } catch (e) {
+    logError('Icon path error', e)
+  }
+  return undefined
 }
 
 // ============================================
@@ -64,76 +66,76 @@ function getIconPath(): string | undefined {
 // ============================================
 
 function createWindow(): void {
-    log('Creating Window...')
-    const iconPath = getIconPath()
+  log('Creating Window...')
+  const iconPath = getIconPath()
 
-    mainWindow = new BrowserWindow({
-        width: 1200,
-        height: 800,
-        minWidth: 900,
-        minHeight: 600,
-        webPreferences: {
-            preload: path.join(__dirname, 'preload.js'),
-            contextIsolation: true,
-            nodeIntegration: false,
-        },
-        frame: false,
-        titleBarStyle: 'hidden',
-        icon: iconPath,
-    })
+  mainWindow = new BrowserWindow({
+    width: 1200,
+    height: 800,
+    minWidth: 900,
+    minHeight: 600,
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js'),
+      contextIsolation: true,
+      nodeIntegration: false,
+      webSecurity: false,
+    },
+    frame: false,
+    titleBarStyle: 'hidden',
+    icon: iconPath,
+  })
 
-    if (VITE_DEV_SERVER_URL) {
-        log('Loading Dev URL:', VITE_DEV_SERVER_URL)
-        mainWindow.loadURL(VITE_DEV_SERVER_URL)
-        mainWindow.webContents.openDevTools()
-    } else {
+  if (VITE_DEV_SERVER_URL) {
+    log('Loading Dev URL:', VITE_DEV_SERVER_URL)
+    mainWindow.loadURL(VITE_DEV_SERVER_URL)
+    mainWindow.webContents.openDevTools()
+  } else {
+    const indexHtml = path.join(__dirname, '../dist/index.html')
+    log('Loading File:', indexHtml)
+    mainWindow.loadFile(indexHtml)
+  }
 
-        const indexHtml = path.join(__dirname, '../dist/index.html')
-        log('Loading File:', indexHtml)
-        mainWindow.loadFile(indexHtml)
-    }
-
-    mainWindow.on('closed', () => {
-        log('Window Closed')
-        mainWindow = null
-    })
+  mainWindow.on('closed', () => {
+    log('Window Closed')
+    mainWindow = null
+  })
 }
 
 function createMiniWindow(): void {
-    if (miniWindow) {
-        miniWindow.focus()
-        return
-    }
+  if (miniWindow) {
+    miniWindow.focus()
+    return
+  }
 
-    miniWindow = new BrowserWindow({
-        width: 350,
-        height: 450,
-        minWidth: 300,
-        minHeight: 400,
-        maxWidth: 500,
-        maxHeight: 600,
-        webPreferences: {
-            preload: path.join(__dirname, 'preload.js'),
-            contextIsolation: true,
-            nodeIntegration: false,
-        },
-        frame: false,
-        alwaysOnTop: true,
-        resizable: true,
-        skipTaskbar: false,
-        transparent: false,
-        icon: getIconPath(),
-    })
+  miniWindow = new BrowserWindow({
+    width: 350,
+    height: 450,
+    minWidth: 300,
+    minHeight: 400,
+    maxWidth: 500,
+    maxHeight: 600,
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js'),
+      contextIsolation: true,
+      nodeIntegration: false,
+    },
+    frame: false,
+    alwaysOnTop: true,
+    resizable: true,
+    skipTaskbar: false,
+    transparent: false,
+    icon: getIconPath(),
+  })
 
-    if (VITE_DEV_SERVER_URL) {
-        miniWindow.loadURL(`${VITE_DEV_SERVER_URL}#/mini`)
-    } else {
-        miniWindow.loadFile(path.join(__dirname, '../dist/index.html'), { hash: '/mini' })
-    }
+  if (VITE_DEV_SERVER_URL) {
+    miniWindow.loadURL(`${VITE_DEV_SERVER_URL}#/mini`)
+  } else {
+    miniWindow.loadFile(path.join(__dirname, '../dist/index.html'), { hash: '/mini' })
+  }
 
-    miniWindow.on('closed', () => {
-        miniWindow = null
-    })
+  miniWindow.on('closed', () => {
+    miniWindow = null
+  })
 }
 
 // ============================================
@@ -141,28 +143,28 @@ function createMiniWindow(): void {
 // ============================================
 
 function createTray(): void {
-    try {
-        const iconPath = getIconPath()
-        if (!iconPath) {
-            log('No icon available for tray')
-            return
-        }
-
-        tray = new Tray(iconPath)
-
-        const contextMenu = Menu.buildFromTemplate([
-            { label: 'Open VocabMaster', click: () => mainWindow?.show() },
-            { label: 'Mini Mode', click: () => createMiniWindow() },
-            { type: 'separator' },
-            { label: 'Quit', click: () => app.quit() },
-        ])
-
-        tray.setToolTip('VocabMaster')
-        tray.setContextMenu(contextMenu)
-        tray.on('click', () => mainWindow?.show())
-    } catch (e) {
-        logError('Tray not available', e)
+  try {
+    const iconPath = getIconPath()
+    if (!iconPath) {
+      log('No icon available for tray')
+      return
     }
+
+    tray = new Tray(iconPath)
+
+    const contextMenu = Menu.buildFromTemplate([
+      { label: 'Open VocabMaster', click: () => mainWindow?.show() },
+      { label: 'Mini Mode', click: () => createMiniWindow() },
+      { type: 'separator' },
+      { label: 'Quit', click: () => app.quit() },
+    ])
+
+    tray.setToolTip('VocabMaster')
+    tray.setContextMenu(contextMenu)
+    tray.on('click', () => mainWindow?.show())
+  } catch (e) {
+    logError('Tray not available', e)
+  }
 }
 
 // ============================================
@@ -170,62 +172,60 @@ function createTray(): void {
 // ============================================
 
 function setupIPC(): void {
-    // Window controls
-    ipcMain.handle('window:minimize', () => mainWindow?.minimize())
-    ipcMain.handle('window:maximize', () => {
-        if (mainWindow?.isMaximized()) {
-            mainWindow.unmaximize()
-        } else {
-            mainWindow?.maximize()
-        }
-    })
-    ipcMain.handle('window:close', () => mainWindow?.hide())
+  // Window controls
+  ipcMain.handle('window:minimize', () => mainWindow?.minimize())
+  ipcMain.handle('window:maximize', () => {
+    if (mainWindow?.isMaximized()) {
+      mainWindow.unmaximize()
+    } else {
+      mainWindow?.maximize()
+    }
+  })
+  ipcMain.handle('window:close', () => mainWindow?.hide())
 
-    // Theme
-    ipcMain.handle('theme:get', () =>
-        nativeTheme.shouldUseDarkColors ? 'dark' : 'light'
-    )
-    ipcMain.handle('theme:set', (_, theme: 'dark' | 'light' | 'system') => {
-        nativeTheme.themeSource = theme
-    })
+  // Theme
+  ipcMain.handle('theme:get', () => (nativeTheme.shouldUseDarkColors ? 'dark' : 'light'))
+  ipcMain.handle('theme:set', (_, theme: 'dark' | 'light' | 'system') => {
+    nativeTheme.themeSource = theme
+  })
 
-    // Mini mode
-    ipcMain.handle('mini:open', () => createMiniWindow())
-    ipcMain.handle('mini:close', () => {
-        miniWindow?.close()
-        miniWindow = null
-    })
+  // Mini mode
+  ipcMain.handle('mini:open', () => createMiniWindow())
+  ipcMain.handle('mini:close', () => {
+    miniWindow?.close()
+    miniWindow = null
+  })
 
-    // Notifications
-    ipcMain.handle('notification:show', (_, title: string, body: string) => {
-        if (Notification.isSupported()) {
-            new Notification({ title, body, icon: getIconPath() }).show()
-        }
-    })
+  // Notifications
+  ipcMain.handle('notification:show', (_, title: string, body: string) => {
+    if (Notification.isSupported()) {
+      new Notification({ title, body, icon: getIconPath() }).show()
+    }
+  })
 
-    // Reminder scheduling
-    ipcMain.handle('reminder:set', (_, time: string, enabled: boolean) => {
-        if (reminderInterval) {
-            clearInterval(reminderInterval)
-            reminderInterval = null
-        }
+  // Reminder scheduling
+  ipcMain.handle('reminder:set', (_, time: string, enabled: boolean) => {
+    if (reminderInterval) {
+      clearInterval(reminderInterval)
+      reminderInterval = null
+    }
 
-        if (!enabled) return
+    if (!enabled) return
 
-        // Check every minute
-        reminderInterval = setInterval(() => {
-            const now = new Date()
-            const currentTime = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`
+    // Check every minute
+    reminderInterval = setInterval(() => {
+      const now = new Date()
+      const currentTime = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`
 
-            if (currentTime === time && Notification.isSupported()) {
-                new Notification({
-                    title: '📚 Đến giờ học từ vựng!',
-                    body: 'Hãy dành vài phút để ôn tập từ vựng nhé!',
-                    icon: getIconPath(),
-                }).show()
-            }
-        }, 60000)
-    })
+      if (currentTime === time && Notification.isSupported()) {
+        new Notification({
+          title: '📚 Đến giờ học từ vựng!',
+          body: 'Hãy dành vài phút để ôn tập từ vựng nhé!',
+          icon: getIconPath(),
+        }).show()
+      }
+    }, 60000)
+  })
 }
 
 // ============================================
@@ -233,46 +233,53 @@ function setupIPC(): void {
 // ============================================
 
 app.whenReady().then(async () => {
-    log('App Ready')
+  log('App Ready')
 
-    try {
-        log('Initializing Logger...')
-        initLogger()
-        log('Logger Initialized')
+  try {
+    // Rewrite Referer and Origin for YouTube embeds inside Electron file://
+    session.defaultSession.webRequest.onBeforeSendHeaders(
+      { urls: ['*://*.youtube.com/*', '*://*.youtube-nocookie.com/*', '*://*.googlevideo.com/*'] },
+      (details, callback) => {
+        details.requestHeaders['Referer'] = 'https://www.youtube.com/'
+        details.requestHeaders['Origin'] = 'https://www.youtube.com'
+        callback({ cancel: false, requestHeaders: details.requestHeaders })
+      },
+    )
 
-        log('Initializing Database...')
-        await initDatabase()
-        log('Database Initialized Successfully')
+    log('Initializing Logger...')
+    initLogger()
+    log('Logger Initialized')
 
-        setupDatabaseIPC()
-        setupIPC()
-        createWindow()
-        createTray()
-    } catch (e) {
-        logError('Critical: Database init failed', e)
-        dialog.showErrorBox(
-            'Database Initialization Error',
-            `Failed to initialize database:\n${e}`
-        )
-    }
+    log('Initializing Database...')
+    await initDatabase()
+    log('Database Initialized Successfully')
+
+    setupDatabaseIPC()
+    setupIPC()
+    createWindow()
+    createTray()
+  } catch (e) {
+    logError('Critical: Database init failed', e)
+    dialog.showErrorBox('Database Initialization Error', `Failed to initialize database:\n${e}`)
+  }
 })
 
 process.on('uncaughtException', (error) => {
-    logError('Uncaught Exception', error)
-    dialog.showErrorBox(
-        'Uncaught Exception',
-        `An unexpected error occurred:\n${error.message}\n\n${error.stack}`
-    )
+  logError('Uncaught Exception', error)
+  dialog.showErrorBox(
+    'Uncaught Exception',
+    `An unexpected error occurred:\n${error.message}\n\n${error.stack}`,
+  )
 })
 
 app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
-        app.quit()
-    }
+  if (process.platform !== 'darwin') {
+    app.quit()
+  }
 })
 
 app.on('activate', () => {
-    if (mainWindow === null) {
-        createWindow()
-    }
+  if (mainWindow === null) {
+    createWindow()
+  }
 })

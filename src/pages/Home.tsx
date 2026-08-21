@@ -14,6 +14,8 @@ import {
   Keyboard,
   Trophy,
   Zap,
+  Sparkles,
+  Youtube,
 } from 'lucide-react'
 import { Button } from '@/components/common/Button'
 import { useDeckStore } from '@/store/deckStore'
@@ -225,6 +227,20 @@ const TodayProgressCard = memo(function TodayProgressCard({
 const StudyModesSection = memo(function StudyModesSection() {
   const modes = [
     { to: '/learn', icon: BookOpen, label: 'Flashcard', desc: 'Lật thẻ học từ', color: 'blue' },
+    {
+      to: '/sentence-master',
+      icon: Sparkles,
+      label: 'Đặt câu phản xạ',
+      desc: '4 giai đoạn tư duy & IT',
+      color: 'amber',
+    },
+    {
+      to: '/video-learning',
+      icon: Youtube,
+      label: 'Video song ngữ',
+      desc: 'Học qua YouTube & Ghi chú',
+      color: 'red',
+    },
     { to: '/quiz', icon: HelpCircle, label: 'Quiz', desc: 'Trắc nghiệm 4 đáp án', color: 'green' },
     {
       to: '/typing',
@@ -238,20 +254,20 @@ const StudyModesSection = memo(function StudyModesSection() {
   return (
     <div>
       <h2 className='text-lg font-semibold mb-4'>Chế độ học</h2>
-      <div className='grid grid-cols-3 gap-4'>
+      <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4'>
         {modes.map(({ to, icon: Icon, label, desc, color }) => (
           <Link
             key={to}
             to={to}
-            className='bg-white dark:bg-gray-800 rounded-xl p-5 shadow-sm hover:shadow-md transition-all group'
+            className='bg-white dark:bg-gray-800 rounded-xl p-5 shadow-sm hover:shadow-md transition-all group border border-gray-100 dark:border-gray-800/80'
           >
             <div
               className={`w-12 h-12 rounded-xl bg-${color}-100 dark:bg-${color}-900/30 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform`}
             >
               <Icon className={`text-${color}-500`} size={24} />
             </div>
-            <h3 className='font-semibold mb-1'>{label}</h3>
-            <p className='text-sm text-gray-500'>{desc}</p>
+            <h3 className='font-semibold mb-1 text-sm md:text-base'>{label}</h3>
+            <p className='text-xs text-gray-500 line-clamp-1'>{desc}</p>
           </Link>
         ))}
       </div>
