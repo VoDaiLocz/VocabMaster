@@ -18,6 +18,7 @@ import {
   MiniMode,
   ImportData,
   VideoLearning,
+  SentenceMaster,
 } from '@/pages'
 
 export default function App() {
@@ -43,6 +44,7 @@ export default function App() {
             <Routes>
               <Route path='/' element={<Home />} />
               <Route path='/learn' element={<Learn />} />
+              <Route path='/sentence-master' element={<SentenceMaster />} />
               <Route path='/video-learning' element={<VideoLearning />} />
               <Route path='/quiz' element={<Quiz />} />
               <Route path='/typing' element={<Typing />} />

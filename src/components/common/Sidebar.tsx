@@ -18,6 +18,7 @@ import {
   Minimize2,
   LucideIcon,
   Youtube,
+  Sparkles,
 } from 'lucide-react'
 import { APP_INFO } from '@/constants'
 
@@ -34,6 +35,7 @@ interface NavItem {
 const NAV_ITEMS: NavItem[] = [
   { to: '/', icon: Home, label: 'Tổng quan' },
   { to: '/learn', icon: BookOpen, label: 'Flashcard' },
+  { to: '/sentence-master', icon: Sparkles, label: 'Đặt câu phản xạ' },
   { to: '/video-learning', icon: Youtube, label: 'Video song ngữ' },
   { to: '/quiz', icon: HelpCircle, label: 'Quiz' },
   { to: '/typing', icon: Keyboard, label: 'Luyện gõ' },
