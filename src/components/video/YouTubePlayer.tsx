@@ -1,9 +1,18 @@
 // ============================================
-// Ultra-Resilient YouTube Video Player (Electron Webview + Web Iframe Dual Mode)
+// Ultra-Resilient YouTube Player (Watch Viewport Clean Injection)
 // ============================================
 
 import React, { useEffect, useRef, useState, useCallback } from 'react'
-import { Play, Pause, RotateCcw, SkipBack, SkipForward, Gauge, Sparkles } from 'lucide-react'
+import {
+  Play,
+  Pause,
+  RotateCcw,
+  SkipBack,
+  SkipForward,
+  Gauge,
+  Sparkles,
+  ExternalLink,
+} from 'lucide-react'
 
 interface YouTubePlayerProps {
   videoId: string
@@ -15,6 +24,63 @@ interface YouTubePlayerProps {
   onToggleAutoPause: () => void
   seekToTime?: number | null
 }
+
+const CLEAN_PLAYER_CSS = `
+  #masthead-container,
+  #secondary,
+  #below,
+  #comments,
+  ytd-miniplayer,
+  #chat,
+  tp-yt-app-drawer,
+  #guide,
+  #ticker,
+  #voice-search-button,
+  .ytd-searchbox,
+  ytd-merch-shelf-renderer {
+    display: none !important;
+  }
+  #page-manager {
+    margin-top: 0 !important;
+    padding: 0 !important;
+  }
+  #primary, #primary-inner {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+  }
+  #player-container-outer, #player-container-inner, #player-container {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 999999 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  #player {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 999999 !important;
+    padding: 0 !important;
+  }
+  #movie_player, .html5-video-player, video {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    object-fit: contain !important;
+  }
+  body, html, ytd-app {
+    overflow: hidden !important;
+    background: #000000 !important;
+  }
+`
 
 export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
   videoId,
@@ -32,13 +98,43 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
   const [isPlaying, setIsPlaying] = useState(false)
   const [playbackRate, setPlaybackRate] = useState(1.0)
 
-  // Detect Electron environment
   const isElectron =
     typeof window !== 'undefined' &&
     Boolean(
       (window as unknown as { electronAPI?: unknown }).electronAPI ||
       navigator.userAgent.toLowerCase().includes('electron'),
     )
+
+  // Inject Clean CSS and setup webview events
+  useEffect(() => {
+    if (!isElectron || !webviewRef.current) return
+
+    const webview = webviewRef.current
+
+    const applyCleanView = () => {
+      try {
+        webview.insertCSS(CLEAN_PLAYER_CSS)
+        webview.executeJavaScript(`
+          (() => {
+            const v = document.querySelector('video');
+            if (v && v.paused) {
+              v.play().catch(() => {});
+            }
+          })()
+        `)
+      } catch {
+        // Silently ignore
+      }
+    }
+
+    webview.addEventListener('dom-ready', applyCleanView)
+    webview.addEventListener('did-finish-load', applyCleanView)
+
+    return () => {
+      webview.removeEventListener('dom-ready', applyCleanView)
+      webview.removeEventListener('did-finish-load', applyCleanView)
+    }
+  }, [isElectron, videoId])
 
   // --- Electron Webview Controls ---
   const sendWebviewCommand = useCallback(
@@ -50,7 +146,7 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
           (() => {
             const v = document.querySelector('video');
             if (v) {
-              if (v.paused) { v.play(); } else { v.pause(); }
+              if (v.paused) { v.play().catch(() => {}); } else { v.pause(); }
             }
           })()
         `)
@@ -58,7 +154,7 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
           webviewRef.current.executeJavaScript(`
           (() => {
             const v = document.querySelector('video');
-            if (v && v.paused) v.play();
+            if (v && v.paused) v.play().catch(() => {});
           })()
         `)
         } else if (action === 'pause') {
@@ -74,7 +170,7 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
             const v = document.querySelector('video');
             if (v) {
               v.currentTime = ${value};
-              v.play();
+              v.play().catch(() => {});
             }
           })()
         `)
@@ -87,26 +183,13 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
         `)
         }
       } catch {
-        // Silently catch webview state changes
+        // Silently catch
       }
     },
     [],
   )
 
-  // --- Web Iframe postMessage Controls (Fallback) ---
-  const sendIframeCommand = useCallback((func: string, args: unknown[] = []) => {
-    if (!iframeRef.current || !iframeRef.current.contentWindow) return
-    try {
-      iframeRef.current.contentWindow.postMessage(
-        JSON.stringify({ event: 'command', func, args }),
-        '*',
-      )
-    } catch {
-      // Ignore
-    }
-  }, [])
-
-  // Poll video status from Electron Webview
+  // Poll video time and state from Electron Webview
   useEffect(() => {
     if (!isElectron) return
 
@@ -124,40 +207,11 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
           setIsPlaying(!info.paused)
         }
       } catch {
-        // Webview is navigating
+        // Webview is loading
       }
     }, 200)
 
     return () => clearInterval(interval)
-  }, [isElectron, onTimeUpdate])
-
-  // Listen to Web Iframe postMessages when not in Electron
-  useEffect(() => {
-    if (isElectron) return
-
-    const handleMessage = (event: MessageEvent) => {
-      if (!event.origin.includes('youtube.com') && !event.origin.includes('youtube-nocookie.com')) {
-        return
-      }
-      try {
-        const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data
-        if (data && data.event === 'onStateChange') {
-          setIsPlaying(data.info === 1)
-        } else if (data && data.event === 'infoDelivery' && data.info) {
-          if (typeof data.info.currentTime === 'number') {
-            onTimeUpdate(data.info.currentTime)
-          }
-          if (typeof data.info.playerState === 'number') {
-            setIsPlaying(data.info.playerState === 1)
-          }
-        }
-      } catch {
-        // Ignore
-      }
-    }
-
-    window.addEventListener('message', handleMessage)
-    return () => window.removeEventListener('message', handleMessage)
   }, [isElectron, onTimeUpdate])
 
   // Handle seekToTime prop changes
@@ -165,37 +219,41 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
     if (seekToTime !== null && seekToTime !== undefined) {
       if (isElectron) {
         sendWebviewCommand('seek', seekToTime)
-      } else {
-        sendIframeCommand('seekTo', [seekToTime, true])
-        sendIframeCommand('playVideo')
+      } else if (iframeRef.current && iframeRef.current.contentWindow) {
+        iframeRef.current.contentWindow.postMessage(
+          JSON.stringify({ event: 'command', func: 'seekTo', args: [seekToTime, true] }),
+          '*',
+        )
       }
       setIsPlaying(true)
     }
-  }, [seekToTime, isElectron, sendWebviewCommand, sendIframeCommand])
+  }, [seekToTime, isElectron, sendWebviewCommand])
 
   // Play / Pause Toggle
   const togglePlay = useCallback(() => {
     if (isElectron) {
       sendWebviewCommand('toggle')
       setIsPlaying((prev) => !prev)
-    } else {
-      if (isPlaying) {
-        sendIframeCommand('pauseVideo')
-        setIsPlaying(false)
-      } else {
-        sendIframeCommand('playVideo')
-        setIsPlaying(true)
-      }
+    } else if (iframeRef.current && iframeRef.current.contentWindow) {
+      const func = isPlaying ? 'pauseVideo' : 'playVideo'
+      iframeRef.current.contentWindow.postMessage(
+        JSON.stringify({ event: 'command', func, args: [] }),
+        '*',
+      )
+      setIsPlaying((prev) => !prev)
     }
-  }, [isElectron, isPlaying, sendWebviewCommand, sendIframeCommand])
+  }, [isElectron, isPlaying, sendWebviewCommand])
 
   // Change Speed
   const handleRateChange = (rate: number) => {
     setPlaybackRate(rate)
     if (isElectron) {
       sendWebviewCommand('rate', rate)
-    } else {
-      sendIframeCommand('setPlaybackRate', [rate])
+    } else if (iframeRef.current && iframeRef.current.contentWindow) {
+      iframeRef.current.contentWindow.postMessage(
+        JSON.stringify({ event: 'command', func: 'setPlaybackRate', args: [rate] }),
+        '*',
+      )
     }
   }
 
@@ -225,17 +283,18 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [togglePlay, onPrevSentence, onNextSentence, onRepeatSentence])
 
-  const webviewSrc = `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1&rel=0&playsinline=1&modestbranding=1`
-  const iframeSrc = `https://www.youtube.com/embed/${videoId}?enablejsapi=1&playsinline=1&rel=0&modestbranding=1&controls=1&fs=1`
+  // Use Watch URL in Webview (bypasses Error 152 entirely)
+  const watchUrl = `https://www.youtube.com/watch?v=${videoId}`
+  const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1&rel=0`
 
   return (
-    <div className='flex flex-col rounded-2xl overflow-hidden bg-black/90 shadow-2xl border border-gray-800'>
+    <div className='flex flex-col rounded-2xl overflow-hidden bg-black shadow-2xl border border-gray-800'>
       {/* Video Container */}
-      <div className='relative w-full aspect-video bg-black'>
+      <div className='relative w-full aspect-video bg-black overflow-hidden'>
         {isElectron ? (
           <webview
             ref={webviewRef}
-            src={webviewSrc}
+            src={watchUrl}
             className='w-full h-full border-0'
             allowpopups='true'
             webpreferences='allowRunningInsecureContent, nativeWindowOpen=true'
@@ -243,7 +302,7 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
         ) : (
           <iframe
             ref={iframeRef}
-            src={iframeSrc}
+            src={embedUrl}
             title='YouTube video player'
             className='w-full h-full border-0'
             allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
@@ -253,7 +312,7 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
       </div>
 
       {/* Learning Control Toolbar */}
-      <div className='p-3 bg-gray-950/90 backdrop-blur-md border-t border-gray-800 flex flex-wrap items-center justify-between gap-3 text-white'>
+      <div className='p-3 bg-gray-950/95 backdrop-blur-md border-t border-gray-800 flex flex-wrap items-center justify-between gap-3 text-white'>
         {/* Navigation & Loop Buttons */}
         <div className='flex items-center gap-2'>
           <button
@@ -325,6 +384,17 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
             <Sparkles size={14} />
             <span>Auto-pause: {autoPause ? 'BẬT' : 'TẮT'}</span>
           </button>
+
+          {/* Direct Open Link fallback */}
+          <a
+            href={watchUrl}
+            target='_blank'
+            rel='noopener noreferrer'
+            className='p-2 rounded-lg bg-gray-900 hover:bg-gray-800 text-gray-400 hover:text-white transition-colors text-xs flex items-center gap-1'
+            title='Mở video trực tiếp trên YouTube'
+          >
+            <ExternalLink size={14} />
+          </a>
         </div>
       </div>
     </div>
