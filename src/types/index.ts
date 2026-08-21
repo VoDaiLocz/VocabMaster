@@ -128,7 +128,7 @@ export interface ElectronAPI {
   dbExec: (sql: string) => Promise<{ success: boolean; error?: string }>
   dbImportVocabulary: (
     deckId: number,
-    words: any[],
+    words: unknown[],
   ) => Promise<{ success: boolean; count: number; error?: string }>
   // Mini mode
   openMiniMode: () => Promise<void>
@@ -137,6 +137,8 @@ export interface ElectronAPI {
   showNotification: (title: string, body: string) => Promise<void>
   // Reminder
   setReminder: (time: string, enabled: boolean) => Promise<void>
+  // YouTube Transcript
+  fetchYouTubeTranscript?: (videoId: string) => Promise<unknown[]>
 }
 
 declare global {

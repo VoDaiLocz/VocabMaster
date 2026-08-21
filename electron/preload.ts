@@ -6,38 +6,50 @@ import { contextBridge, ipcRenderer } from 'electron'
 
 // Expose API to renderer process
 contextBridge.exposeInMainWorld('electronAPI', {
-    // Window controls
-    minimize: () => ipcRenderer.invoke('window:minimize'),
-    maximize: () => ipcRenderer.invoke('window:maximize'),
-    close: () => ipcRenderer.invoke('window:close'),
+  // Window controls
+  minimize: () => ipcRenderer.invoke('window:minimize'),
+  maximize: () => ipcRenderer.invoke('window:maximize'),
+  close: () => ipcRenderer.invoke('window:close'),
 
-    // Theme
-    getTheme: () => ipcRenderer.invoke('theme:get'),
-    setTheme: (theme: string) => ipcRenderer.invoke('theme:set', theme),
+  // Theme
+  getTheme: () => ipcRenderer.invoke('theme:get'),
+  setTheme: (theme: string) => ipcRenderer.invoke('theme:set', theme),
 
-    // Database operations
-    dbQuery: <T = unknown>(sql: string, params?: unknown[]) =>
-        ipcRenderer.invoke('db:query', sql, params ?? []) as Promise<T[]>,
-    dbRun: (sql: string, params?: unknown[]) =>
-        ipcRenderer.invoke('db:run', sql, params ?? []) as Promise<{ lastId: number; changes: number }>,
-    dbGet: <T = unknown>(sql: string, params?: unknown[]) =>
-        ipcRenderer.invoke('db:get', sql, params ?? []) as Promise<T | null>,
-    dbBatch: (operations: Array<{ sql: string; params: unknown[] }>) =>
-        ipcRenderer.invoke('db:batch', operations) as Promise<{ success: boolean; lastId: number; changes: number }>,
-    dbExec: (sql: string) =>
-        ipcRenderer.invoke('db:exec', sql) as Promise<{ success: boolean; error?: string }>,
-    dbImportVocabulary: (deckId: number, words: any[]) =>
-        ipcRenderer.invoke('db:import-vocabulary', deckId, words) as Promise<{ success: boolean; count: number; error?: string }>,
+  // Database operations
+  dbQuery: <T = unknown>(sql: string, params?: unknown[]) =>
+    ipcRenderer.invoke('db:query', sql, params ?? []) as Promise<T[]>,
+  dbRun: (sql: string, params?: unknown[]) =>
+    ipcRenderer.invoke('db:run', sql, params ?? []) as Promise<{ lastId: number; changes: number }>,
+  dbGet: <T = unknown>(sql: string, params?: unknown[]) =>
+    ipcRenderer.invoke('db:get', sql, params ?? []) as Promise<T | null>,
+  dbBatch: (operations: Array<{ sql: string; params: unknown[] }>) =>
+    ipcRenderer.invoke('db:batch', operations) as Promise<{
+      success: boolean
+      lastId: number
+      changes: number
+    }>,
+  dbExec: (sql: string) =>
+    ipcRenderer.invoke('db:exec', sql) as Promise<{ success: boolean; error?: string }>,
+  dbImportVocabulary: (deckId: number, words: unknown[]) =>
+    ipcRenderer.invoke('db:import-vocabulary', deckId, words) as Promise<{
+      success: boolean
+      count: number
+      error?: string
+    }>,
 
-    // Mini mode
-    openMiniMode: () => ipcRenderer.invoke('mini:open'),
-    closeMiniMode: () => ipcRenderer.invoke('mini:close'),
+  // Mini mode
+  openMiniMode: () => ipcRenderer.invoke('mini:open'),
+  closeMiniMode: () => ipcRenderer.invoke('mini:close'),
 
-    // Notifications
-    showNotification: (title: string, body: string) =>
-        ipcRenderer.invoke('notification:show', title, body),
+  // Notifications
+  showNotification: (title: string, body: string) =>
+    ipcRenderer.invoke('notification:show', title, body),
 
-    // Reminder
-    setReminder: (time: string, enabled: boolean) =>
-        ipcRenderer.invoke('reminder:set', time, enabled),
+  // Reminder
+  setReminder: (time: string, enabled: boolean) =>
+    ipcRenderer.invoke('reminder:set', time, enabled),
+
+  // Dynamic YouTube Transcript Extractor
+  fetchYouTubeTranscript: (videoId: string) =>
+    ipcRenderer.invoke('fetch-youtube-transcript', videoId),
 })

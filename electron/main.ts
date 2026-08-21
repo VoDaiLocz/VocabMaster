@@ -17,6 +17,7 @@ import path from 'path'
 import fs from 'fs'
 import http from 'http'
 import { AddressInfo } from 'net'
+import { execFile } from 'child_process'
 import { initDatabase, setupDatabaseIPC } from './database/connection'
 import { log, logError, initLogger } from './logger'
 
@@ -159,7 +160,6 @@ async function createWindow(): Promise<void> {
   if (VITE_DEV_SERVER_URL) {
     log('Loading Dev URL:', VITE_DEV_SERVER_URL)
     mainWindow.loadURL(VITE_DEV_SERVER_URL)
-    mainWindow.webContents.openDevTools()
   } else {
     const port = await startLocalServer()
     const localUrl = `http://127.0.0.1:${port}`
@@ -232,11 +232,14 @@ function createTray(): void {
       { label: 'Quit', click: () => app.quit() },
     ])
 
-    tray.setToolTip('VocabMaster')
+    tray.setToolTip('VocabMaster - Master English Vocabulary')
     tray.setContextMenu(contextMenu)
-    tray.on('click', () => mainWindow?.show())
+
+    tray.on('double-click', () => {
+      mainWindow?.show()
+    })
   } catch (e) {
-    logError('Tray not available', e)
+    logError('Tray creation error', e)
   }
 }
 
@@ -245,6 +248,37 @@ function createTray(): void {
 // ============================================
 
 function setupIPC(): void {
+  // Dynamic YouTube Transcript Extractor
+  ipcMain.handle('fetch-youtube-transcript', async (_event, videoId: string) => {
+    return new Promise((resolve) => {
+      const scriptPath = app.isPackaged
+        ? path.join(process.resourcesPath, 'fetch_transcript.py')
+        : path.join(__dirname, '../electron/fetch_transcript.py')
+
+      const pythonBin = process.platform === 'win32' ? 'python' : 'python3'
+
+      execFile(
+        pythonBin,
+        [scriptPath, videoId],
+        { maxBuffer: 20 * 1024 * 1024, timeout: 25000 },
+        (error, stdout) => {
+          if (error) {
+            logError('fetch-youtube-transcript error: ' + error.message)
+            resolve([])
+            return
+          }
+          try {
+            const parsed = JSON.parse(stdout.trim())
+            resolve(parsed)
+          } catch (e) {
+            logError('Failed to parse transcript json: ' + String(e))
+            resolve([])
+          }
+        },
+      )
+    })
+  })
+
   // Window controls
   ipcMain.handle('window:minimize', () => mainWindow?.minimize())
   ipcMain.handle('window:maximize', () => {

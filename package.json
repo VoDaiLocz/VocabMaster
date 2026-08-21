@@ -104,6 +104,10 @@
       {
         "from": "node_modules/sql.js/dist/sql-wasm.wasm",
         "to": "sql-wasm.wasm"
+      },
+      {
+        "from": "electron/fetch_transcript.py",
+        "to": "fetch_transcript.py"
       }
     ],
     "files": [
