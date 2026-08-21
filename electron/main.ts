@@ -232,17 +232,44 @@ function setupIPC(): void {
 // App Lifecycle
 // ============================================
 
+const CHROME_USER_AGENT =
+  'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36'
+app.userAgentFallback = CHROME_USER_AGENT
+
 app.whenReady().then(async () => {
   log('App Ready')
 
   try {
-    // Rewrite Referer and Origin for YouTube embeds inside Electron file://
+    session.defaultSession.setUserAgent(CHROME_USER_AGENT)
+
+    // Rewrite Referer, Origin, and User-Agent for YouTube embeds inside Electron file://
     session.defaultSession.webRequest.onBeforeSendHeaders(
-      { urls: ['*://*.youtube.com/*', '*://*.youtube-nocookie.com/*', '*://*.googlevideo.com/*'] },
+      {
+        urls: [
+          '*://*.youtube.com/*',
+          '*://*.youtube-nocookie.com/*',
+          '*://*.googlevideo.com/*',
+          '*://*.ytimg.com/*',
+        ],
+      },
       (details, callback) => {
         details.requestHeaders['Referer'] = 'https://www.youtube.com/'
         details.requestHeaders['Origin'] = 'https://www.youtube.com'
+        details.requestHeaders['User-Agent'] = CHROME_USER_AGENT
         callback({ cancel: false, requestHeaders: details.requestHeaders })
+      },
+    )
+
+    // Remove frame blocking headers from YouTube
+    session.defaultSession.webRequest.onHeadersReceived(
+      { urls: ['*://*.youtube.com/*', '*://*.youtube-nocookie.com/*'] },
+      (details, callback) => {
+        const responseHeaders = { ...details.responseHeaders }
+        delete responseHeaders['x-frame-options']
+        delete responseHeaders['X-Frame-Options']
+        delete responseHeaders['content-security-policy']
+        delete responseHeaders['Content-Security-Policy']
+        callback({ cancel: false, responseHeaders })
       },
     )
 

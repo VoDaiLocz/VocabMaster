@@ -1,5 +1,5 @@
 // ============================================
-// YouTube Video Player with Learning Controls
+// Robust YouTube Video Player with Learning Controls
 // ============================================
 
 import React, { useEffect, useRef, useState, useCallback } from 'react'
@@ -16,29 +16,6 @@ interface YouTubePlayerProps {
   seekToTime?: number | null
 }
 
-interface YTPlayerInstance {
-  destroy?: () => void
-  seekTo?: (seconds: number, allowSeekAhead: boolean) => void
-  playVideo?: () => void
-  pauseVideo?: () => void
-  getCurrentTime?: () => number
-  setPlaybackRate?: (rate: number) => void
-}
-
-declare global {
-  interface Window {
-    YT: {
-      Player: new (element: HTMLElement, config: Record<string, unknown>) => YTPlayerInstance
-      PlayerState: {
-        PLAYING: number
-        PAUSED: number
-        ENDED: number
-      }
-    }
-    onYouTubeIframeAPIReady: () => void
-  }
-}
-
 export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
   videoId,
   onTimeUpdate,
@@ -49,151 +26,94 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
   onToggleAutoPause,
   seekToTime,
 }) => {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const playerRef = useRef<YTPlayerInstance | null>(null)
+  const iframeRef = useRef<HTMLIFrameElement>(null)
   const [isPlaying, setIsPlaying] = useState(false)
   const [playbackRate, setPlaybackRate] = useState(1.0)
-  const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
-  // Initialize YouTube Iframe API
-  useEffect(() => {
-    let isMounted = true
-
-    const loadIframeAPI = () => {
-      if (!window.YT) {
-        const tag = document.createElement('script')
-        tag.src = 'https://www.youtube.com/iframe_api'
-        const firstScriptTag = document.getElementsByTagName('script')[0]
-        firstScriptTag?.parentNode?.insertBefore(tag, firstScriptTag)
-      }
-    }
-
-    const initPlayer = () => {
-      if (!containerRef.current || !window.YT || !window.YT.Player) return
-
-      // Destroy previous instance
-      if (playerRef.current && playerRef.current.destroy) {
-        try {
-          playerRef.current.destroy()
-        } catch (err) {
-          console.debug('Player cleanup:', err)
-        }
-      }
-
-      playerRef.current = new window.YT.Player(containerRef.current, {
-        videoId: videoId,
-        host: 'https://www.youtube.com',
-        playerVars: {
-          autoplay: 0,
-          controls: 1,
-          rel: 0,
-          modestbranding: 1,
-          playsinline: 1,
-          fs: 1,
-          origin: 'https://www.youtube.com',
-          enablejsapi: 1,
-        },
-        events: {
-          onReady: () => {
-            if (isMounted) {
-              setPlaybackRate(1.0)
-            }
-          },
-          onStateChange: (event: { data: number }) => {
-            if (isMounted) {
-              setIsPlaying(event.data === window.YT.PlayerState.PLAYING)
-            }
-          },
-          onError: (event: { data: number }) => {
-            console.warn('YouTube Player Error Code:', event.data)
-          },
-        },
+  // Send command to YouTube Iframe via postMessage
+  const sendCommand = useCallback((func: string, args: unknown[] = []) => {
+    if (!iframeRef.current || !iframeRef.current.contentWindow) return
+    try {
+      const message = JSON.stringify({
+        event: 'command',
+        func: func,
+        args: args,
       })
+      iframeRef.current.contentWindow.postMessage(message, '*')
+    } catch (err) {
+      console.debug('Error sending postMessage to YouTube iframe:', err)
     }
+  }, [])
 
-    if (window.YT && window.YT.Player) {
-      initPlayer()
-    } else {
-      window.onYouTubeIframeAPIReady = () => {
-        if (isMounted) initPlayer()
-      }
-      loadIframeAPI()
-    }
-
-    return () => {
-      isMounted = false
-      if (intervalRef.current) clearInterval(intervalRef.current)
-      if (playerRef.current && playerRef.current.destroy) {
-        try {
-          playerRef.current.destroy()
-        } catch (err) {
-          console.debug('Player unmount cleanup:', err)
-        }
-      }
-    }
-  }, [videoId])
-
-  // Sync seekToTime from parent
+  // Listen to incoming messages from YouTube Iframe
   useEffect(() => {
-    if (
-      seekToTime !== null &&
-      seekToTime !== undefined &&
-      playerRef.current &&
-      playerRef.current.seekTo
-    ) {
-      playerRef.current.seekTo(seekToTime, true)
-      if (playerRef.current.playVideo) {
-        playerRef.current.playVideo()
+    const handleMessage = (event: MessageEvent) => {
+      if (!event.origin.includes('youtube.com') && !event.origin.includes('youtube-nocookie.com')) {
+        return
       }
-    }
-  }, [seekToTime])
 
-  // Periodic time update ticker
-  useEffect(() => {
-    intervalRef.current = setInterval(() => {
-      if (playerRef.current && playerRef.current.getCurrentTime) {
-        try {
-          const currentTime = playerRef.current.getCurrentTime()
-          if (typeof currentTime === 'number') {
-            onTimeUpdate(currentTime)
+      try {
+        const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data
+        if (data && data.event === 'onStateChange') {
+          // 1: PLAYING, 2: PAUSED, 0: ENDED
+          setIsPlaying(data.info === 1)
+        } else if (data && data.event === 'infoDelivery' && data.info) {
+          if (typeof data.info.currentTime === 'number') {
+            onTimeUpdate(data.info.currentTime)
           }
-        } catch (err) {
-          console.debug('Time update polling:', err)
+          if (typeof data.info.playerState === 'number') {
+            setIsPlaying(data.info.playerState === 1)
+          }
         }
+      } catch {
+        // Ignore unparseable postMessage
       }
-    }, 200)
-
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current)
     }
+
+    window.addEventListener('message', handleMessage)
+    return () => window.removeEventListener('message', handleMessage)
   }, [onTimeUpdate])
+
+  // Periodic polling for current time as fallback
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (iframeRef.current) {
+        sendCommand('getCurrentTime')
+      }
+    }, 250)
+
+    return () => clearInterval(interval)
+  }, [sendCommand])
+
+  // Handle seekToTime from parent
+  useEffect(() => {
+    if (seekToTime !== null && seekToTime !== undefined) {
+      sendCommand('seekTo', [seekToTime, true])
+      sendCommand('playVideo')
+      setIsPlaying(true)
+    }
+  }, [seekToTime, sendCommand])
 
   // Play / Pause Toggle
   const togglePlay = useCallback(() => {
-    if (!playerRef.current) return
-    try {
-      if (isPlaying) {
-        playerRef.current.pauseVideo?.()
-      } else {
-        playerRef.current.playVideo?.()
-      }
-    } catch (err) {
-      console.debug('Play/pause toggle:', err)
+    if (isPlaying) {
+      sendCommand('pauseVideo')
+      setIsPlaying(false)
+    } else {
+      sendCommand('playVideo')
+      setIsPlaying(true)
     }
-  }, [isPlaying])
+  }, [isPlaying, sendCommand])
 
   // Change Speed
   const handleRateChange = (rate: number) => {
     setPlaybackRate(rate)
-    if (playerRef.current && playerRef.current.setPlaybackRate) {
-      playerRef.current.setPlaybackRate(rate)
-    }
+    sendCommand('setPlaybackRate', [rate])
   }
 
   // Keyboard Shortcuts Handler
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Avoid hotkeys when typing in input
       if (['INPUT', 'TEXTAREA', 'SELECT'].includes((e.target as HTMLElement)?.tagName)) {
         return
       }
@@ -217,15 +137,24 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [togglePlay, onPrevSentence, onNextSentence, onRepeatSentence])
 
+  const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}?enablejsapi=1&origin=https://www.youtube.com&playsinline=1&rel=0&modestbranding=1&controls=1&fs=1`
+
   return (
     <div className='flex flex-col rounded-2xl overflow-hidden bg-black/90 shadow-2xl border border-gray-800'>
-      {/* Video Container */}
+      {/* Video Iframe Container */}
       <div className='relative w-full aspect-video bg-black'>
-        <div ref={containerRef} className='w-full h-full' />
+        <iframe
+          ref={iframeRef}
+          src={embedUrl}
+          title='YouTube video player'
+          className='w-full h-full border-0'
+          allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+          allowFullScreen
+        />
       </div>
 
       {/* Learning Control Toolbar */}
-      <div className='p-3 bg-gray-950/80 backdrop-blur-md border-t border-gray-800/80 flex flex-wrap items-center justify-between gap-3 text-white'>
+      <div className='p-3 bg-gray-950/90 backdrop-blur-md border-t border-gray-800 flex flex-wrap items-center justify-between gap-3 text-white'>
         {/* Navigation & Loop Buttons */}
         <div className='flex items-center gap-2'>
           <button
