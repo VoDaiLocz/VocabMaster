@@ -1,3 +1,7 @@
+// ============================================
+// Interactive Bilingual Subtitles Transcript with Natural Typography
+// ============================================
+
 import React, { useEffect, useRef, useState } from 'react'
 import { TranscriptCue } from '@/services/youtubeTranscriptService'
 import { BookmarkPlus, Search } from 'lucide-react'
@@ -24,8 +28,14 @@ export const InteractiveTranscript: React.FC<InteractiveTranscriptProps> = ({
   const activeCueRef = useRef<HTMLDivElement | null>(null)
   const containerRef = useRef<HTMLDivElement | null>(null)
 
-  // Find currently active cue
-  const activeIndex = cues.findIndex((cue) => currentTime >= cue.start && currentTime <= cue.end)
+  // Find currently active cue (finds the last cue whose start time has arrived)
+  let activeIndex = -1
+  for (let i = cues.length - 1; i >= 0; i--) {
+    if (currentTime >= cues[i].start - 0.2) {
+      activeIndex = i
+      break
+    }
+  }
 
   // Auto-scroll to keep active sentence centered
   useEffect(() => {
@@ -151,30 +161,30 @@ export const InteractiveTranscript: React.FC<InteractiveTranscriptProps> = ({
                     <span>{formatTimestamp(cue.start)}</span>
                   </button>
 
-                  <div className='flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity'>
-                    <button
-                      onClick={() => onAddNote(cue)}
-                      className='p-1 rounded-lg text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors'
-                      title='Ghi chú câu này'
-                    >
-                      <BookmarkPlus size={16} />
-                    </button>
-                  </div>
+                  <button
+                    onClick={() => onAddNote(cue)}
+                    className='p-1 rounded-lg text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors'
+                    title='Ghi chú câu này'
+                  >
+                    <BookmarkPlus size={16} />
+                  </button>
                 </div>
 
-                {/* English words (Clickable tokens) */}
-                <div className='text-base font-medium text-gray-900 dark:text-gray-100 leading-relaxed flex flex-wrap gap-x-1.5 gap-y-1'>
+                {/* English sentence with natural flowing inline words */}
+                <p className='text-base font-medium text-gray-900 dark:text-gray-100 leading-relaxed'>
                   {cue.words.map((word, wIdx) => (
-                    <span
-                      key={wIdx}
-                      onClick={() => onWordClick(word, cue.textEn)}
-                      className='cursor-pointer rounded px-1 py-0.5 hover:bg-primary-200/60 dark:hover:bg-primary-800/50 hover:text-primary-800 dark:hover:text-primary-200 transition-colors'
-                      title='Nhấp để tra từ'
-                    >
-                      {word}
-                    </span>
+                    <React.Fragment key={wIdx}>
+                      <span
+                        onClick={() => onWordClick(word, cue.textEn)}
+                        className='cursor-pointer rounded px-0.5 hover:bg-primary-100 dark:hover:bg-primary-900/60 hover:text-primary-600 dark:hover:text-primary-400 transition-colors'
+                        title='Nhấp để tra từ'
+                      >
+                        {word}
+                      </span>
+                      {wIdx < cue.words.length - 1 ? ' ' : ''}
+                    </React.Fragment>
                   ))}
-                </div>
+                </p>
 
                 {/* Vietnamese translation */}
                 {subMode !== 'en-only' && (

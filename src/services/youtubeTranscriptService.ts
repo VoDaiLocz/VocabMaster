@@ -33,11 +33,11 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
     sampleCues: [
       {
         id: 1,
-        start: 0.5,
-        duration: 4.0,
-        end: 4.5,
-        textEn: 'I am honored to be with you today at your commencement.',
-        textVi: 'Tôi rất vinh hạnh được có mặt cùng các bạn hôm nay tại lễ tốt nghiệp này.',
+        start: 35.0,
+        duration: 5.5,
+        end: 40.5,
+        textEn: 'I am honored to be with you today at your commencement',
+        textVi: 'Tôi rất vinh hạnh được có mặt cùng các bạn hôm nay tại lễ tốt nghiệp này',
         words: [
           'I',
           'am',
@@ -49,32 +49,32 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
           'today',
           'at',
           'your',
-          'commencement.',
+          'commencement',
         ],
       },
       {
         id: 2,
-        start: 4.8,
+        start: 40.8,
         duration: 5.2,
-        end: 10.0,
-        textEn: 'From one of the finest universities in the world.',
-        textVi: 'Từ một trong những trường đại học danh giá và xuất sắc nhất trên thế giới.',
-        words: ['From', 'one', 'of', 'the', 'finest', 'universities', 'in', 'the', 'world.'],
+        end: 46.0,
+        textEn: 'from one of the finest universities in the world.',
+        textVi: 'từ một trong những trường đại học danh giá và xuất sắc nhất trên thế giới.',
+        words: ['from', 'one', 'of', 'the', 'finest', 'universities', 'in', 'the', 'world.'],
       },
       {
         id: 3,
-        start: 10.5,
-        duration: 4.5,
-        end: 15.0,
+        start: 46.5,
+        duration: 5.5,
+        end: 52.0,
         textEn: 'Truth be told, I never graduated from college.',
         textVi: 'Nói thật lòng, tôi chưa từng tốt nghiệp đại học.',
         words: ['Truth', 'be', 'told,', 'I', 'never', 'graduated', 'from', 'college.'],
       },
       {
         id: 4,
-        start: 15.5,
-        duration: 5.5,
-        end: 21.0,
+        start: 52.5,
+        duration: 6.5,
+        end: 59.0,
         textEn: 'And this is the closest I have ever gotten to a college graduation.',
         textVi: 'Và đây là lần tôi tiến gần nhất tới một buổi lễ tốt nghiệp đại học.',
         words: [
@@ -95,9 +95,9 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
       },
       {
         id: 5,
-        start: 21.5,
-        duration: 5.0,
-        end: 26.5,
+        start: 59.5,
+        duration: 6.5,
+        end: 66.0,
         textEn: 'Today, I want to tell you three stories from my life.',
         textVi: 'Hôm nay, tôi muốn kể cho các bạn nghe ba câu chuyện trong cuộc đời tôi.',
         words: [
@@ -116,32 +116,651 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
       },
       {
         id: 6,
-        start: 27.0,
-        duration: 3.5,
-        end: 30.5,
+        start: 66.5,
+        duration: 4.5,
+        end: 71.0,
         textEn: "That's it. No big deal. Just three stories.",
         textVi: 'Chỉ vậy thôi. Không có gì to tát cả. Chỉ là ba câu chuyện.',
         words: ["That's", 'it.', 'No', 'big', 'deal.', 'Just', 'three', 'stories.'],
       },
       {
         id: 7,
-        start: 31.0,
-        duration: 5.0,
-        end: 36.0,
+        start: 71.5,
+        duration: 6.0,
+        end: 77.5,
         textEn: 'The first story is about connecting the dots.',
         textVi: 'Câu chuyện đầu tiên là về việc kết nối những dấu chấm.',
         words: ['The', 'first', 'story', 'is', 'about', 'connecting', 'the', 'dots.'],
       },
       {
         id: 8,
-        start: 36.5,
-        duration: 6.0,
-        end: 42.5,
-        textEn: 'You have to trust that the dots will somehow connect in your future.',
+        start: 78.0,
+        duration: 9.0,
+        end: 87.0,
+        textEn:
+          'I dropped out of Reed College after the first 6 months, but then stayed around as a drop-in for another 18 months or so before I really quit.',
         textVi:
-          'Bạn phải tin tưởng rằng những dấu mốc sẽ bằng cách nào đó kết nối lại trong tương lai của bạn.',
+          'Tôi đã bỏ học tại trường Cao đẳng Reed sau 6 tháng đầu, nhưng sau đó vẫn học dự thính thêm khoảng 18 tháng trước khi thực sự nghỉ hẳn.',
+        words: [
+          'I',
+          'dropped',
+          'out',
+          'of',
+          'Reed',
+          'College',
+          'after',
+          'the',
+          'first',
+          '6',
+          'months,',
+          'but',
+          'then',
+          'stayed',
+          'around',
+          'as',
+          'a',
+          'drop-in',
+          'for',
+          'another',
+          '18',
+          'months',
+          'or',
+          'so',
+          'before',
+          'I',
+          'really',
+          'quit.',
+        ],
+      },
+      {
+        id: 9,
+        start: 87.5,
+        duration: 4.5,
+        end: 92.0,
+        textEn: 'So why did I drop out?',
+        textVi: 'Vậy tại sao tôi lại bỏ học?',
+        words: ['So', 'why', 'did', 'I', 'drop', 'out?'],
+      },
+      {
+        id: 10,
+        start: 92.5,
+        duration: 8.5,
+        end: 101.0,
+        textEn:
+          'It started before I was born. My biological mother was a young, unwed college graduate student, and she decided to put me up for adoption.',
+        textVi:
+          'Mọi chuyện bắt đầu từ trước khi tôi sinh ra. Mẹ ruột tôi là một nữ sinh viên trẻ chưa kết hôn, và bà đã quyết định cho tôi làm con nuôi.',
+        words: [
+          'It',
+          'started',
+          'before',
+          'I',
+          'was',
+          'born.',
+          'My',
+          'biological',
+          'mother',
+          'was',
+          'a',
+          'young,',
+          'unwed',
+          'college',
+          'graduate',
+          'student,',
+          'and',
+          'she',
+          'decided',
+          'to',
+          'put',
+          'me',
+          'up',
+          'for',
+          'adoption.',
+        ],
+      },
+      {
+        id: 11,
+        start: 101.5,
+        duration: 9.0,
+        end: 110.5,
+        textEn:
+          'She felt very strongly that I should be adopted by college graduates, so everything was all set for me to be adopted at birth by a lawyer and his wife.',
+        textVi:
+          'Bà cảm thấy rất kiên quyết rằng tôi phải được nhận nuôi bởi những người đã tốt nghiệp đại học, nên mọi thứ đã được chuẩn bị sẵn để tôi được một luật sư và vợ ông ấy nhận nuôi khi sinh ra.',
+        words: [
+          'She',
+          'felt',
+          'very',
+          'strongly',
+          'that',
+          'I',
+          'should',
+          'be',
+          'adopted',
+          'by',
+          'college',
+          'graduates,',
+          'so',
+          'everything',
+          'was',
+          'all',
+          'set',
+          'for',
+          'me',
+          'to',
+          'be',
+          'adopted',
+          'at',
+          'birth',
+          'by',
+          'a',
+          'lawyer',
+          'and',
+          'his',
+          'wife.',
+        ],
+      },
+      {
+        id: 12,
+        start: 111.0,
+        duration: 8.0,
+        end: 119.0,
+        textEn:
+          'Except that when I popped out they decided at the last minute that they really wanted a girl.',
+        textVi:
+          'Ngoại trừ việc khi tôi chào đời, vào phút chót họ lại quyết định rằng họ thực sự muốn một bé gái.',
+        words: [
+          'Except',
+          'that',
+          'when',
+          'I',
+          'popped',
+          'out',
+          'they',
+          'decided',
+          'at',
+          'the',
+          'last',
+          'minute',
+          'that',
+          'they',
+          'really',
+          'wanted',
+          'a',
+          'girl.',
+        ],
+      },
+      {
+        id: 13,
+        start: 119.5,
+        duration: 10.5,
+        end: 130.0,
+        textEn:
+          "So my parents, who were on a waiting list, got a call in the middle of the night asking: 'We have an unexpected baby boy; do you want him?' They said: 'Of course.'",
+        textVi:
+          "Vì vậy, bố mẹ tôi, những người đang trong danh sách chờ, đã nhận được một cuộc gọi lúc nửa đêm hỏi: 'Chúng tôi có một bé trai ngoài dự kiến; ông bà có muốn nhận không?' Họ trả lời: 'Tất nhiên rồi.'",
+        words: [
+          'So',
+          'my',
+          'parents,',
+          'who',
+          'were',
+          'on',
+          'a',
+          'waiting',
+          'list,',
+          'got',
+          'a',
+          'call',
+          'in',
+          'the',
+          'middle',
+          'of',
+          'the',
+          'night',
+          'asking:',
+          "'We",
+          'have',
+          'an',
+          'unexpected',
+          'baby',
+          'boy;',
+          'do',
+          'you',
+          'want',
+          "him?'",
+          'They',
+          'said:',
+          "'Of",
+          "course.'",
+        ],
+      },
+      {
+        id: 14,
+        start: 130.5,
+        duration: 11.5,
+        end: 142.0,
+        textEn:
+          'My biological mother later found out that my mother had never graduated from college and that my father had never graduated from high school. She refused to sign the final adoption papers.',
+        textVi:
+          'Mẹ ruột tôi sau đó phát hiện ra rằng mẹ tôi chưa bao giờ tốt nghiệp đại học và bố tôi chưa từng tốt nghiệp cấp ba. Bà đã từ chối ký các giấy tờ nhận nuôi cuối cùng.',
+        words: [
+          'My',
+          'biological',
+          'mother',
+          'later',
+          'found',
+          'out',
+          'that',
+          'my',
+          'mother',
+          'had',
+          'never',
+          'graduated',
+          'from',
+          'college',
+          'and',
+          'that',
+          'my',
+          'father',
+          'had',
+          'never',
+          'graduated',
+          'from',
+          'high',
+          'school.',
+          'She',
+          'refused',
+          'to',
+          'sign',
+          'the',
+          'final',
+          'adoption',
+          'papers.',
+        ],
+      },
+      {
+        id: 15,
+        start: 142.5,
+        duration: 9.5,
+        end: 152.0,
+        textEn:
+          'She only relented a few months later when my parents promised that I would someday go to college. And 17 years later I did go to college.',
+        textVi:
+          'Bà chỉ nguôi ngoai vài tháng sau đó khi bố mẹ tôi hứa rằng một ngày nào đó tôi sẽ được vào đại học. Và 17 năm sau tôi đã thực sự đi học đại học.',
+        words: [
+          'She',
+          'only',
+          'relented',
+          'a',
+          'few',
+          'months',
+          'later',
+          'when',
+          'my',
+          'parents',
+          'promised',
+          'that',
+          'I',
+          'would',
+          'someday',
+          'go',
+          'to',
+          'college.',
+          'And',
+          '17',
+          'years',
+          'later',
+          'I',
+          'did',
+          'go',
+          'to',
+          'college.',
+        ],
+      },
+      {
+        id: 16,
+        start: 152.5,
+        duration: 11.0,
+        end: 163.5,
+        textEn:
+          "But I naively chose a college that was almost as expensive as Stanford, and all of my working-class parents' savings were being spent on my college tuition.",
+        textVi:
+          'Nhưng tôi đã ngây thơ chọn một trường đại học đắt đỏ gần bằng Stanford, và toàn bộ tiền tiết kiệm của bố mẹ thuộc tầng lớp lao động của tôi đã phải dành cho học phí của tôi.',
+        words: [
+          'But',
+          'I',
+          'naively',
+          'chose',
+          'a',
+          'college',
+          'that',
+          'was',
+          'almost',
+          'as',
+          'expensive',
+          'as',
+          'Stanford,',
+          'and',
+          'all',
+          'of',
+          'my',
+          'working-class',
+          "parents'",
+          'savings',
+          'were',
+          'being',
+          'spent',
+          'on',
+          'my',
+          'college',
+          'tuition.',
+        ],
+      },
+      {
+        id: 17,
+        start: 164.0,
+        duration: 11.0,
+        end: 175.0,
+        textEn:
+          'After six months, I could not see the value in it. I had no idea what I wanted to do with my life and no idea how college was going to help me figure it out.',
+        textVi:
+          'Sau sáu tháng, tôi không thể thấy được giá trị trong việc đó. Tôi không biết mình muốn làm gì với cuộc đời mình và không biết trường đại học sẽ giúp tôi tìm ra câu trả lời bằng cách nào.',
+        words: [
+          'After',
+          'six',
+          'months,',
+          'I',
+          'could',
+          'not',
+          'see',
+          'the',
+          'value',
+          'in',
+          'it.',
+          'I',
+          'had',
+          'no',
+          'idea',
+          'what',
+          'I',
+          'wanted',
+          'to',
+          'do',
+          'with',
+          'my',
+          'life',
+          'and',
+          'no',
+          'idea',
+          'how',
+          'college',
+          'was',
+          'going',
+          'to',
+          'help',
+          'me',
+          'figure',
+          'it',
+          'out.',
+        ],
+      },
+      {
+        id: 18,
+        start: 175.5,
+        duration: 11.5,
+        end: 187.0,
+        textEn:
+          'And here I was spending all of the money my parents had saved their entire life. So I decided to drop out and trust that it would all work out OK.',
+        textVi:
+          'Và ở đây tôi đang tiêu hết số tiền mà bố mẹ tôi đã dành dụm cả đời. Vì vậy tôi quyết định bỏ học và tin rằng mọi chuyện rồi sẽ ổn thỏa.',
+        words: [
+          'And',
+          'here',
+          'I',
+          'was',
+          'spending',
+          'all',
+          'of',
+          'the',
+          'money',
+          'my',
+          'parents',
+          'had',
+          'saved',
+          'their',
+          'entire',
+          'life.',
+          'So',
+          'I',
+          'decided',
+          'to',
+          'drop',
+          'out',
+          'and',
+          'trust',
+          'that',
+          'it',
+          'would',
+          'all',
+          'work',
+          'out',
+          'OK.',
+        ],
+      },
+      {
+        id: 19,
+        start: 187.5,
+        duration: 8.5,
+        end: 196.0,
+        textEn:
+          'It was pretty scary at the time, but looking back it was one of the best decisions I ever made.',
+        textVi:
+          'Lúc đó điều đó khá đáng sợ, nhưng khi nhìn lại thì đó là một trong những quyết định sáng suốt nhất tôi từng đưa ra.',
+        words: [
+          'It',
+          'was',
+          'pretty',
+          'scary',
+          'at',
+          'the',
+          'time,',
+          'but',
+          'looking',
+          'back',
+          'it',
+          'was',
+          'one',
+          'of',
+          'the',
+          'best',
+          'decisions',
+          'I',
+          'ever',
+          'made.',
+        ],
+      },
+      {
+        id: 20,
+        start: 196.5,
+        duration: 10.5,
+        end: 207.0,
+        textEn:
+          'The minute I dropped out I could stop taking the required classes that did not interest me, and begin dropping in on the ones that looked interesting.',
+        textVi:
+          'Ngay khi bỏ học, tôi có thể ngừng tham gia các lớp học bắt buộc không hề làm tôi hứng thú, và bắt đầu dự thính những lớp học trông thú vị hơn.',
+        words: [
+          'The',
+          'minute',
+          'I',
+          'dropped',
+          'out',
+          'I',
+          'could',
+          'stop',
+          'taking',
+          'the',
+          'required',
+          'classes',
+          'that',
+          'did',
+          'not',
+          'interest',
+          'me,',
+          'and',
+          'begin',
+          'dropping',
+          'in',
+          'on',
+          'the',
+          'ones',
+          'that',
+          'looked',
+          'interesting.',
+        ],
+      },
+      {
+        id: 21,
+        start: 207.5,
+        duration: 11.5,
+        end: 219.0,
+        textEn:
+          'It was not all romantic. I did not have a dorm room, so I slept on the floor in friends rooms, I returned Coke bottles for the 5¢ deposits to buy food with,',
+        textVi:
+          'Mọi chuyện không hoàn toàn lãng mạn. Tôi không có phòng ký túc xá, nên tôi phải ngủ trên sàn nhà trong phòng của bạn bè, tôi đi trả vỏ chai Coca để lấy tiền đặt cọc 5 xu mua đồ ăn,',
+        words: [
+          'It',
+          'was',
+          'not',
+          'all',
+          'romantic.',
+          'I',
+          'did',
+          'not',
+          'have',
+          'a',
+          'dorm',
+          'room,',
+          'so',
+          'I',
+          'slept',
+          'on',
+          'the',
+          'floor',
+          'in',
+          'friends',
+          'rooms,',
+          'I',
+          'returned',
+          'Coke',
+          'bottles',
+          'for',
+          'the',
+          '5¢',
+          'deposits',
+          'to',
+          'buy',
+          'food',
+          'with,',
+        ],
+      },
+      {
+        id: 22,
+        start: 219.5,
+        duration: 11.5,
+        end: 231.0,
+        textEn:
+          'and I would walk the 7 miles across town every Sunday night to get one good meal a week at the Hare Krishna temple. I loved it.',
+        textVi:
+          'và tôi thường đi bộ 7 dặm xuyên qua thị trấn vào mỗi tối Chủ nhật để có được một bữa ăn ngon trong tuần tại đền Hare Krishna. Tôi rất thích nó.',
+        words: [
+          'and',
+          'I',
+          'would',
+          'walk',
+          'the',
+          '7',
+          'miles',
+          'across',
+          'town',
+          'every',
+          'Sunday',
+          'night',
+          'to',
+          'get',
+          'one',
+          'good',
+          'meal',
+          'a',
+          'week',
+          'at',
+          'the',
+          'Hare',
+          'Krishna',
+          'temple.',
+          'I',
+          'loved',
+          'it.',
+        ],
+      },
+      {
+        id: 23,
+        start: 231.5,
+        duration: 11.5,
+        end: 243.0,
+        textEn:
+          'And much of what I stumbled into by following my curiosity and intuition turned out to be priceless later on.',
+        textVi:
+          'Và phần lớn những gì tôi tình cờ bắt gặp nhờ đi theo sự tò mò và trực giác của mình sau này hóa ra đều là vô giá.',
+        words: [
+          'And',
+          'much',
+          'of',
+          'what',
+          'I',
+          'stumbled',
+          'into',
+          'by',
+          'following',
+          'my',
+          'curiosity',
+          'and',
+          'intuition',
+          'turned',
+          'out',
+          'to',
+          'be',
+          'priceless',
+          'later',
+          'on.',
+        ],
+      },
+      {
+        id: 24,
+        start: 243.5,
+        duration: 12.0,
+        end: 255.5,
+        textEn:
+          'You cannot connect the dots looking forward; you can only connect them looking backwards. So you have to trust that the dots will somehow connect in your future.',
+        textVi:
+          'Bạn không thể kết nối các dấu chấm khi nhìn về phía trước; bạn chỉ có thể kết nối chúng khi nhìn lại phía sau. Vì vậy, bạn phải tin rằng các dấu mốc sẽ bằng cách nào đó kết nối lại trong tương lai của bạn.',
         words: [
           'You',
+          'cannot',
+          'connect',
+          'the',
+          'dots',
+          'looking',
+          'forward;',
+          'you',
+          'can',
+          'only',
+          'connect',
+          'them',
+          'looking',
+          'backwards.',
+          'So',
+          'you',
           'have',
           'to',
           'trust',
@@ -157,10 +776,52 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         ],
       },
       {
-        id: 9,
-        start: 43.0,
-        duration: 5.5,
-        end: 48.5,
+        id: 25,
+        start: 256.0,
+        duration: 11.0,
+        end: 267.0,
+        textEn:
+          'You have to trust in something — your gut, destiny, life, karma, whatever. This approach has never let me down, and it has made all the difference in my life.',
+        textVi:
+          'Bạn phải đặt niềm tin vào một điều gì đó — trực giác, số phận, cuộc sống, nghiệp báo, bất cứ điều gì. Cách tiếp cận này chưa bao giờ làm tôi thất vọng, và nó đã tạo nên mọi sự khác biệt trong cuộc đời tôi.',
+        words: [
+          'You',
+          'have',
+          'to',
+          'trust',
+          'in',
+          'something',
+          '—',
+          'your',
+          'gut,',
+          'destiny,',
+          'life,',
+          'karma,',
+          'whatever.',
+          'This',
+          'approach',
+          'has',
+          'never',
+          'let',
+          'me',
+          'down,',
+          'and',
+          'it',
+          'has',
+          'made',
+          'all',
+          'the',
+          'difference',
+          'in',
+          'my',
+          'life.',
+        ],
+      },
+      {
+        id: 26,
+        start: 267.5,
+        duration: 6.5,
+        end: 274.0,
         textEn: 'Stay Hungry. Stay Foolish.',
         textVi: 'Hãy luôn khao khát. Hãy luôn dại khờ.',
         words: ['Stay', 'Hungry.', 'Stay', 'Foolish.'],
@@ -178,9 +839,9 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
     sampleCues: [
       {
         id: 1,
-        start: 0.5,
-        duration: 4.5,
-        end: 5.0,
+        start: 16.0,
+        duration: 6.0,
+        end: 22.0,
         textEn: 'Have you ever wondered why some people learn languages so fast?',
         textVi: 'Bạn đã bao giờ tự hỏi tại sao một số người học ngoại ngữ lại nhanh đến vậy?',
         words: [
@@ -199,44 +860,124 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
       },
       {
         id: 2,
-        start: 5.5,
-        duration: 5.0,
-        end: 10.5,
-        textEn: 'The secret is not about talent, it is about the right principles.',
+        start: 22.5,
+        duration: 7.5,
+        end: 30.0,
+        textEn: 'Is it talent? Is it luck? Or is it something else that anyone can learn?',
         textVi:
-          'Bí quyết không nằm ở tài năng bẩm sinh, mà nằm ở những nguyên tắc cốt lõi đúng đắn.',
+          'Đó là do năng khiếu? Do may mắn? Hay là do một phương pháp nào đó mà bất kỳ ai cũng có thể học được?',
+        words: [
+          'Is',
+          'it',
+          'talent?',
+          'Is',
+          'it',
+          'luck?',
+          'Or',
+          'is',
+          'it',
+          'something',
+          'else',
+          'that',
+          'anyone',
+          'can',
+          'learn?',
+        ],
+      },
+      {
+        id: 3,
+        start: 30.5,
+        duration: 8.5,
+        end: 39.0,
+        textEn:
+          'The secret is not about talent; it is about applying the right principles and actions.',
+        textVi:
+          'Bí quyết không nằm ở tài năng; mà là ở việc áp dụng đúng các nguyên tắc và hành động phù hợp.',
         words: [
           'The',
           'secret',
           'is',
           'not',
           'about',
-          'talent,',
+          'talent;',
           'it',
           'is',
           'about',
+          'applying',
           'the',
           'right',
-          'principles.',
+          'principles',
+          'and',
+          'actions.',
         ],
       },
       {
-        id: 3,
-        start: 11.0,
-        duration: 5.0,
-        end: 16.0,
-        textEn: 'Focus on language content that is relevant to you.',
-        textVi: 'Hãy tập trung vào nội dung ngôn ngữ có liên quan trực tiếp đến bạn.',
-        words: ['Focus', 'on', 'language', 'content', 'that', 'is', 'relevant', 'to', 'you.'],
+        id: 4,
+        start: 39.5,
+        duration: 9.5,
+        end: 49.0,
+        textEn:
+          'Today, I will share with you five core principles to learn any language in six months.',
+        textVi:
+          'Hôm nay, tôi sẽ chia sẻ với bạn năm nguyên tắc cốt lõi để học bất kỳ ngôn ngữ nào trong vòng sáu tháng.',
+        words: [
+          'Today,',
+          'I',
+          'will',
+          'share',
+          'with',
+          'you',
+          'five',
+          'core',
+          'principles',
+          'to',
+          'learn',
+          'any',
+          'language',
+          'in',
+          'six',
+          'months.',
+        ],
       },
       {
-        id: 4,
-        start: 16.5,
-        duration: 5.5,
-        end: 22.0,
-        textEn: 'Use your new language as a tool to communicate from day one.',
-        textVi: 'Hãy sử dụng ngôn ngữ mới như một công cụ để giao tiếp ngay từ ngày đầu tiên.',
+        id: 5,
+        start: 49.5,
+        duration: 12.0,
+        end: 61.5,
+        textEn:
+          'Principle 1: Focus on language content that is relevant to you and your daily survival.',
+        textVi:
+          'Nguyên tắc 1: Tập trung vào nội dung ngôn ngữ có liên quan trực tiếp đến bạn và sự sinh tồn hàng ngày của bạn.',
         words: [
+          'Principle',
+          '1:',
+          'Focus',
+          'on',
+          'language',
+          'content',
+          'that',
+          'is',
+          'relevant',
+          'to',
+          'you',
+          'and',
+          'your',
+          'daily',
+          'survival.',
+        ],
+      },
+      {
+        id: 6,
+        start: 62.0,
+        duration: 12.0,
+        end: 74.0,
+        textEn:
+          'Principle 2: Use your new language as a tool to communicate from day one, not just as knowledge to store.',
+        textVi:
+          'Nguyên tắc 2: Hãy sử dụng ngôn ngữ mới như một công cụ giao tiếp ngay từ ngày đầu tiên, chứ không chỉ là kiến thức để lưu trữ.',
+        words: [
+          'Principle',
+          '2:',
           'Use',
           'your',
           'new',
@@ -248,145 +989,38 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
           'communicate',
           'from',
           'day',
-          'one.',
+          'one,',
+          'not',
+          'just',
+          'as',
+          'knowledge',
+          'to',
+          'store.',
         ],
       },
     ],
   },
 ]
 
-/**
- * Extract YouTube Video ID from standard URLs, Shorts, and embed links
- */
-export function extractYouTubeVideoId(url: string): string | null {
-  if (!url || typeof url !== 'string') return null
-
-  const trimmed = url.trim()
-
-  // Direct 11-char ID
+export function extractYouTubeVideoId(urlOrId: string): string | null {
+  if (!urlOrId) return null
+  const trimmed = urlOrId.trim()
   if (/^[a-zA-Z0-9_-]{11}$/.test(trimmed)) {
     return trimmed
   }
-
-  // Standard regex patterns
-  const patterns = [
-    /(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/,
-    /^https?:\/\/(?:www\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]{11})/,
-    /^https?:\/\/youtu\.be\/([a-zA-Z0-9_-]{11})/,
-    /^https?:\/\/(?:www\.)?youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/,
-    /^https?:\/\/(?:www\.)?youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/,
-  ]
-
-  for (const pattern of patterns) {
-    const match = trimmed.match(pattern)
-    if (match && match[1]) {
-      return match[1]
-    }
-  }
-
-  return null
+  const match = trimmed.match(
+    /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=|shorts\/))([a-zA-Z0-9_-]{11})/,
+  )
+  return match ? match[1] : null
 }
 
-/**
- * Clean text from HTML entities and extra whitespace
- */
-function cleanCaptionText(text: string): string {
-  return text
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .replace(/\n+/g, ' ')
-    .trim()
-}
-
-/**
- * Parse XML TimedText into cues
- */
-function parseTimedTextXml(xmlStr: string): { start: number; dur: number; text: string }[] {
-  const parser = new DOMParser()
-  const xmlDoc = parser.parseFromString(xmlStr, 'text/xml')
-  const textNodes = xmlDoc.getElementsByTagName('text')
-  const results: { start: number; dur: number; text: string }[] = []
-
-  for (let i = 0; i < textNodes.length; i++) {
-    const node = textNodes[i]
-    const start = parseFloat(node.getAttribute('start') || '0')
-    const dur = parseFloat(node.getAttribute('dur') || '3')
-    const rawText = node.textContent || ''
-    const text = cleanCaptionText(rawText)
-
-    if (text) {
-      results.push({ start, dur, text })
-    }
-  }
-
-  return results
-}
-
-/**
- * Fetch and build bilingual transcript for a YouTube Video
- */
 export async function fetchYouTubeBilingualTranscript(videoId: string): Promise<TranscriptCue[]> {
-  // Check if it matches our curated sample database for instant offline experience
-  const curated = CURATED_LEARNING_VIDEOS.find((v) => v.info.videoId === videoId)
-  if (curated) {
-    return curated.sampleCues
+  const found = CURATED_LEARNING_VIDEOS.find((v) => v.info.videoId === videoId)
+  if (found) {
+    return found.sampleCues
   }
 
-  // Attempt to fetch public YouTube timed text directly
-  try {
-    const proxyBase = 'https://api.allorigins.win/raw?url='
-    const enUrl = encodeURIComponent(`https://www.youtube.com/api/timedtext?v=${videoId}&lang=en`)
-    const viUrl = encodeURIComponent(
-      `https://www.youtube.com/api/timedtext?v=${videoId}&lang=en&tlang=vi`,
-    )
-
-    const [enRes, viRes] = await Promise.allSettled([
-      fetch(`${proxyBase}${enUrl}`),
-      fetch(`${proxyBase}${viUrl}`),
-    ])
-
-    let enData = ''
-    let viData = ''
-
-    if (enRes.status === 'fulfilled' && enRes.value.ok) {
-      enData = await enRes.value.text()
-    }
-    if (viRes.status === 'fulfilled' && viRes.value.ok) {
-      viData = await viRes.value.text()
-    }
-
-    if (enData && enData.includes('<text')) {
-      const enParsed = parseTimedTextXml(enData)
-      const viParsed = viData && viData.includes('<text') ? parseTimedTextXml(viData) : []
-
-      const cues: TranscriptCue[] = enParsed.map((item, idx) => {
-        const viMatch = viParsed.find((v) => Math.abs(v.start - item.start) < 1.0)
-        return {
-          id: idx + 1,
-          start: Math.round(item.start * 100) / 100,
-          duration: Math.round(item.dur * 100) / 100,
-          end: Math.round((item.start + item.dur) * 100) / 100,
-          textEn: item.text,
-          textVi: viMatch ? viMatch.text : 'Đang dịch ngữ cảnh...',
-          words: item.text.split(/\s+/).filter(Boolean),
-        }
-      })
-
-      if (cues.length > 0) {
-        return cues
-      }
-    }
-  } catch (err) {
-    console.warn(
-      '[TranscriptService] Direct timedtext fetch failed, falling back to simulated transcript:',
-      err,
-    )
-  }
-
-  // Fallback demo transcript for videos without extracted sub
+  // Fallback for custom videos
   return [
     {
       id: 1,
@@ -399,11 +1033,13 @@ export async function fetchYouTubeBilingualTranscript(videoId: string): Promise<
     },
     {
       id: 2,
-      start: 5.5,
+      start: 5,
       duration: 6,
-      end: 11.5,
-      textEn: 'Click any word in the transcript below to see its definition.',
-      textVi: 'Nhấp vào bất kỳ từ nào trong phụ đề bên dưới để xem định nghĩa.',
+      end: 11,
+      textEn:
+        'Click any word in the transcript below to see its definition and add it to your flashcards.',
+      textVi:
+        'Nhấp vào bất kỳ từ nào trong phụ đề bên dưới để xem định nghĩa và thêm vào flashcard của bạn.',
       words: [
         'Click',
         'any',
@@ -415,28 +1051,13 @@ export async function fetchYouTubeBilingualTranscript(videoId: string): Promise<
         'to',
         'see',
         'its',
-        'definition.',
-      ],
-    },
-    {
-      id: 3,
-      start: 12,
-      duration: 6,
-      end: 18,
-      textEn: 'You can easily save new vocabulary directly into your Flashcard decks!',
-      textVi: 'Bạn có thể dễ dàng lưu từ vựng mới trực tiếp vào các bộ Flashcard của mình!',
-      words: [
-        'You',
-        'can',
-        'easily',
-        'save',
-        'new',
-        'vocabulary',
-        'directly',
-        'into',
+        'definition',
+        'and',
+        'add',
+        'it',
+        'to',
         'your',
-        'Flashcard',
-        'decks!',
+        'flashcards.',
       ],
     },
   ]
