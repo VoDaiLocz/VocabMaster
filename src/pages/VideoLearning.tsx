@@ -30,6 +30,8 @@ export const VideoLearning: React.FC = () => {
   )
   const [cues, setCues] = useState<TranscriptCue[]>(CURATED_LEARNING_VIDEOS[0].sampleCues)
   const [loading, setLoading] = useState(false)
+  const [loadProgress, setLoadProgress] = useState(0)
+  const [loadStatus, setLoadStatus] = useState('Đang kết nối...')
   const [currentTime, setCurrentTime] = useState(0)
   const [seekToTime, setSeekToTime] = useState<number | null>(null)
   const [autoPause, setAutoPause] = useState(false)
@@ -41,9 +43,11 @@ export const VideoLearning: React.FC = () => {
     fetchDecks()
   }, [fetchDecks])
 
-  // Load Video Transcript
+  // Load Video Transcript with explicit percentage steps
   const handleLoadVideo = async (videoId: string, info?: VideoInfo) => {
     setLoading(true)
+    setLoadProgress(10)
+    setLoadStatus('Đang kết nối tới YouTube...')
     setCurrentVideoId(videoId)
     setCurrentTime(0)
     setSeekToTime(0)
@@ -62,13 +66,34 @@ export const VideoLearning: React.FC = () => {
       })
     }
 
+    // Step 2: Extracting
+    const progressTimer1 = setTimeout(() => {
+      setLoadProgress(40)
+      setLoadStatus('Đang trích xuất toàn bộ luồng phụ đề gốc...')
+    }, 300)
+
+    // Step 3: Translating & Tokenizing
+    const progressTimer2 = setTimeout(() => {
+      setLoadProgress(75)
+      setLoadStatus('Đang biên dịch song ngữ AI & gán từ điển tương tác...')
+    }, 700)
+
     try {
       const transcriptCues = await fetchYouTubeBilingualTranscript(videoId)
+      setLoadProgress(95)
+      setLoadStatus(`Đã xử lý ${transcriptCues.length} câu thoại song ngữ...`)
+      await new Promise((r) => setTimeout(r, 300))
+      setLoadProgress(100)
+      setLoadStatus('Hoàn tất! Sẵn sàng bài học.')
       setCues(transcriptCues)
+      await new Promise((r) => setTimeout(r, 200))
     } catch (err) {
       console.error('Failed to load transcript:', err)
     } finally {
+      clearTimeout(progressTimer1)
+      clearTimeout(progressTimer2)
       setLoading(false)
+      setLoadProgress(0)
     }
   }
 
@@ -211,11 +236,49 @@ export const VideoLearning: React.FC = () => {
 
       {/* Main Learning Workspace */}
       {loading ? (
-        <div className='h-96 flex flex-col items-center justify-center gap-3 bg-white dark:bg-dark-card rounded-2xl border border-gray-100 dark:border-gray-800'>
-          <Loader2 size={32} className='animate-spin text-primary-500' />
-          <p className='text-sm text-gray-500 dark:text-gray-400 font-medium'>
-            Đang trích xuất phụ đề song ngữ và chuẩn bị bài học...
-          </p>
+        <div className='h-96 flex flex-col items-center justify-center p-8 bg-white dark:bg-dark-card rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm'>
+          <div className='w-full max-w-md space-y-5 text-center'>
+            <div className='flex items-center justify-center gap-3'>
+              <div className='w-12 h-12 rounded-2xl bg-primary-100 dark:bg-primary-950/60 text-primary-600 dark:text-primary-400 flex items-center justify-center shadow-inner'>
+                <Sparkles size={24} className='animate-pulse text-primary-500' />
+              </div>
+              <div className='text-left'>
+                <h3 className='text-lg font-bold font-display text-gray-900 dark:text-white'>
+                  Đang thiết lập phòng học
+                </h3>
+                <p className='text-xs text-gray-500 dark:text-gray-400 font-medium'>
+                  Trích xuất và biên dịch phụ đề song ngữ
+                </p>
+              </div>
+            </div>
+
+            {/* Progress Bar & Percentage */}
+            <div className='space-y-2'>
+              <div className='flex justify-between items-center text-sm font-semibold'>
+                <span className='text-gray-600 dark:text-gray-300 flex items-center gap-1.5'>
+                  <Loader2 size={15} className='animate-spin text-primary-500' />
+                  {loadStatus}
+                </span>
+                <span className='text-primary-600 dark:text-primary-400 font-mono text-base font-bold'>
+                  {loadProgress}%
+                </span>
+              </div>
+              <div className='w-full h-3.5 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden p-0.5 border border-gray-200 dark:border-gray-700/60'>
+                <div
+                  className='h-full bg-gradient-to-r from-primary-600 via-indigo-500 to-primary-400 rounded-full transition-all duration-300 ease-out shadow-sm'
+                  style={{ width: `${loadProgress}%` }}
+                />
+              </div>
+            </div>
+
+            <div className='flex items-center justify-center gap-4 text-[11px] text-gray-400 dark:text-gray-500 pt-1'>
+              <span>1. Kết nối YouTube</span>
+              <span>•</span>
+              <span>2. Tải toàn bộ phụ đề</span>
+              <span>•</span>
+              <span>3. Gán từ điển tương tác</span>
+            </div>
+          </div>
         </div>
       ) : currentVideoId ? (
         <div className='grid grid-cols-1 lg:grid-cols-12 gap-6 items-start'>
