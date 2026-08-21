@@ -1,5 +1,5 @@
 // ============================================
-// Robust YouTube Video Player with Learning Controls
+// Ultra-Resilient YouTube Video Player (Electron Webview + Web Iframe Dual Mode)
 // ============================================
 
 import React, { useEffect, useRef, useState, useCallback } from 'react'
@@ -26,36 +26,122 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
   onToggleAutoPause,
   seekToTime,
 }) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const webviewRef = useRef<any>(null)
   const iframeRef = useRef<HTMLIFrameElement>(null)
   const [isPlaying, setIsPlaying] = useState(false)
   const [playbackRate, setPlaybackRate] = useState(1.0)
 
-  // Send command to YouTube Iframe via postMessage
-  const sendCommand = useCallback((func: string, args: unknown[] = []) => {
+  // Detect Electron environment
+  const isElectron =
+    typeof window !== 'undefined' &&
+    Boolean(
+      (window as unknown as { electronAPI?: unknown }).electronAPI ||
+      navigator.userAgent.toLowerCase().includes('electron'),
+    )
+
+  // --- Electron Webview Controls ---
+  const sendWebviewCommand = useCallback(
+    (action: 'play' | 'pause' | 'toggle' | 'seek' | 'rate', value?: number) => {
+      if (!webviewRef.current || !webviewRef.current.executeJavaScript) return
+      try {
+        if (action === 'toggle') {
+          webviewRef.current.executeJavaScript(`
+          (() => {
+            const v = document.querySelector('video');
+            if (v) {
+              if (v.paused) { v.play(); } else { v.pause(); }
+            }
+          })()
+        `)
+        } else if (action === 'play') {
+          webviewRef.current.executeJavaScript(`
+          (() => {
+            const v = document.querySelector('video');
+            if (v && v.paused) v.play();
+          })()
+        `)
+        } else if (action === 'pause') {
+          webviewRef.current.executeJavaScript(`
+          (() => {
+            const v = document.querySelector('video');
+            if (v && !v.paused) v.pause();
+          })()
+        `)
+        } else if (action === 'seek' && typeof value === 'number') {
+          webviewRef.current.executeJavaScript(`
+          (() => {
+            const v = document.querySelector('video');
+            if (v) {
+              v.currentTime = ${value};
+              v.play();
+            }
+          })()
+        `)
+        } else if (action === 'rate' && typeof value === 'number') {
+          webviewRef.current.executeJavaScript(`
+          (() => {
+            const v = document.querySelector('video');
+            if (v) v.playbackRate = ${value};
+          })()
+        `)
+        }
+      } catch {
+        // Silently catch webview state changes
+      }
+    },
+    [],
+  )
+
+  // --- Web Iframe postMessage Controls (Fallback) ---
+  const sendIframeCommand = useCallback((func: string, args: unknown[] = []) => {
     if (!iframeRef.current || !iframeRef.current.contentWindow) return
     try {
-      const message = JSON.stringify({
-        event: 'command',
-        func: func,
-        args: args,
-      })
-      iframeRef.current.contentWindow.postMessage(message, '*')
-    } catch (err) {
-      console.debug('Error sending postMessage to YouTube iframe:', err)
+      iframeRef.current.contentWindow.postMessage(
+        JSON.stringify({ event: 'command', func, args }),
+        '*',
+      )
+    } catch {
+      // Ignore
     }
   }, [])
 
-  // Listen to incoming messages from YouTube Iframe
+  // Poll video status from Electron Webview
   useEffect(() => {
+    if (!isElectron) return
+
+    const interval = setInterval(async () => {
+      if (!webviewRef.current || !webviewRef.current.executeJavaScript) return
+      try {
+        const info = await webviewRef.current.executeJavaScript(`
+          (() => {
+            const v = document.querySelector('video');
+            return v ? { currentTime: v.currentTime, paused: v.paused, playbackRate: v.playbackRate } : null;
+          })()
+        `)
+        if (info && typeof info.currentTime === 'number') {
+          onTimeUpdate(info.currentTime)
+          setIsPlaying(!info.paused)
+        }
+      } catch {
+        // Webview is navigating
+      }
+    }, 200)
+
+    return () => clearInterval(interval)
+  }, [isElectron, onTimeUpdate])
+
+  // Listen to Web Iframe postMessages when not in Electron
+  useEffect(() => {
+    if (isElectron) return
+
     const handleMessage = (event: MessageEvent) => {
       if (!event.origin.includes('youtube.com') && !event.origin.includes('youtube-nocookie.com')) {
         return
       }
-
       try {
         const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data
         if (data && data.event === 'onStateChange') {
-          // 1: PLAYING, 2: PAUSED, 0: ENDED
           setIsPlaying(data.info === 1)
         } else if (data && data.event === 'infoDelivery' && data.info) {
           if (typeof data.info.currentTime === 'number') {
@@ -66,49 +152,51 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
           }
         }
       } catch {
-        // Ignore unparseable postMessage
+        // Ignore
       }
     }
 
     window.addEventListener('message', handleMessage)
     return () => window.removeEventListener('message', handleMessage)
-  }, [onTimeUpdate])
+  }, [isElectron, onTimeUpdate])
 
-  // Periodic polling for current time as fallback
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (iframeRef.current) {
-        sendCommand('getCurrentTime')
-      }
-    }, 250)
-
-    return () => clearInterval(interval)
-  }, [sendCommand])
-
-  // Handle seekToTime from parent
+  // Handle seekToTime prop changes
   useEffect(() => {
     if (seekToTime !== null && seekToTime !== undefined) {
-      sendCommand('seekTo', [seekToTime, true])
-      sendCommand('playVideo')
+      if (isElectron) {
+        sendWebviewCommand('seek', seekToTime)
+      } else {
+        sendIframeCommand('seekTo', [seekToTime, true])
+        sendIframeCommand('playVideo')
+      }
       setIsPlaying(true)
     }
-  }, [seekToTime, sendCommand])
+  }, [seekToTime, isElectron, sendWebviewCommand, sendIframeCommand])
 
   // Play / Pause Toggle
   const togglePlay = useCallback(() => {
-    if (isPlaying) {
-      sendCommand('pauseVideo')
-      setIsPlaying(false)
+    if (isElectron) {
+      sendWebviewCommand('toggle')
+      setIsPlaying((prev) => !prev)
     } else {
-      sendCommand('playVideo')
-      setIsPlaying(true)
+      if (isPlaying) {
+        sendIframeCommand('pauseVideo')
+        setIsPlaying(false)
+      } else {
+        sendIframeCommand('playVideo')
+        setIsPlaying(true)
+      }
     }
-  }, [isPlaying, sendCommand])
+  }, [isElectron, isPlaying, sendWebviewCommand, sendIframeCommand])
 
   // Change Speed
   const handleRateChange = (rate: number) => {
     setPlaybackRate(rate)
-    sendCommand('setPlaybackRate', [rate])
+    if (isElectron) {
+      sendWebviewCommand('rate', rate)
+    } else {
+      sendIframeCommand('setPlaybackRate', [rate])
+    }
   }
 
   // Keyboard Shortcuts Handler
@@ -137,21 +225,31 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [togglePlay, onPrevSentence, onNextSentence, onRepeatSentence])
 
-  const origin = typeof window !== 'undefined' ? window.location.origin : 'http://127.0.0.1'
-  const embedUrl = `https://www.youtube.com/embed/${videoId}?enablejsapi=1&origin=${encodeURIComponent(origin)}&playsinline=1&rel=0&modestbranding=1&controls=1&fs=1`
+  const webviewSrc = `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1&rel=0&playsinline=1&modestbranding=1`
+  const iframeSrc = `https://www.youtube.com/embed/${videoId}?enablejsapi=1&playsinline=1&rel=0&modestbranding=1&controls=1&fs=1`
 
   return (
     <div className='flex flex-col rounded-2xl overflow-hidden bg-black/90 shadow-2xl border border-gray-800'>
-      {/* Video Iframe Container */}
+      {/* Video Container */}
       <div className='relative w-full aspect-video bg-black'>
-        <iframe
-          ref={iframeRef}
-          src={embedUrl}
-          title='YouTube video player'
-          className='w-full h-full border-0'
-          allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
-          allowFullScreen
-        />
+        {isElectron ? (
+          <webview
+            ref={webviewRef}
+            src={webviewSrc}
+            className='w-full h-full border-0'
+            allowpopups='true'
+            webpreferences='allowRunningInsecureContent, nativeWindowOpen=true'
+          />
+        ) : (
+          <iframe
+            ref={iframeRef}
+            src={iframeSrc}
+            title='YouTube video player'
+            className='w-full h-full border-0'
+            allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+            allowFullScreen
+          />
+        )}
       </div>
 
       {/* Learning Control Toolbar */}
