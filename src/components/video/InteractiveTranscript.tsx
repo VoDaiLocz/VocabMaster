@@ -1,10 +1,10 @@
 // ============================================
-// Interactive Bilingual Subtitles Transcript with Natural Typography
+// Interactive Bilingual Subtitles Transcript with Natural Typography & Active Waveform Highlighting
 // ============================================
 
 import React, { useEffect, useRef, useState } from 'react'
 import { TranscriptCue } from '@/services/youtubeTranscriptService'
-import { BookmarkPlus, Search } from 'lucide-react'
+import { BookmarkPlus, Search, Volume2 } from 'lucide-react'
 
 interface InteractiveTranscriptProps {
   cues: TranscriptCue[]
@@ -28,12 +28,25 @@ export const InteractiveTranscript: React.FC<InteractiveTranscriptProps> = ({
   const activeCueRef = useRef<HTMLDivElement | null>(null)
   const containerRef = useRef<HTMLDivElement | null>(null)
 
-  // Find currently active cue (finds the last cue whose start time has arrived)
+  // Find currently active cue with high accuracy from 00:00
   let activeIndex = -1
-  for (let i = cues.length - 1; i >= 0; i--) {
-    if (currentTime >= cues[i].start - 0.2) {
-      activeIndex = i
-      break
+  if (cues.length > 0) {
+    // 1. Direct exact range match
+    const exactIdx = cues.findIndex((c) => currentTime >= c.start && currentTime <= c.end + 0.3)
+    if (exactIdx !== -1) {
+      activeIndex = exactIdx
+    } else {
+      // 2. Latest started cue
+      for (let i = cues.length - 1; i >= 0; i--) {
+        if (currentTime >= cues[i].start) {
+          activeIndex = i
+          break
+        }
+      }
+    }
+    // Default to first cue if at the very beginning
+    if (activeIndex === -1 && currentTime <= cues[0].start + 1.0) {
+      activeIndex = 0
     }
   }
 
@@ -125,10 +138,7 @@ export const InteractiveTranscript: React.FC<InteractiveTranscriptProps> = ({
       </div>
 
       {/* Transcript Scroll Area */}
-      <div
-        ref={containerRef}
-        className='flex-1 overflow-y-auto p-4 space-y-3 divide-y divide-gray-100/50 dark:divide-gray-800/50'
-      >
+      <div ref={containerRef} className='flex-1 overflow-y-auto p-3 space-y-2'>
         {filteredCues.length === 0 ? (
           <div className='py-12 text-center text-gray-400 text-sm'>
             Không tìm thấy câu nào phù hợp với từ khóa.
@@ -141,43 +151,62 @@ export const InteractiveTranscript: React.FC<InteractiveTranscriptProps> = ({
               <div
                 key={cue.id}
                 ref={isActive ? activeCueRef : null}
-                className={`pt-3 first:pt-0 transition-all rounded-xl p-3 ${
+                className={`transition-all rounded-xl p-3.5 border ${
                   isActive
-                    ? 'bg-primary-50/80 dark:bg-primary-950/30 border border-primary-200 dark:border-primary-900/50 shadow-sm'
-                    : 'hover:bg-gray-50/80 dark:hover:bg-gray-800/40'
+                    ? 'bg-gradient-to-r from-primary-50/90 to-indigo-50/50 dark:from-primary-950/60 dark:to-indigo-950/30 border-l-4 border-l-primary-500 border-primary-200 dark:border-primary-800/80 shadow-md ring-1 ring-primary-500/20'
+                    : 'bg-white dark:bg-dark-card border-gray-100 dark:border-gray-800/60 border-l-4 border-l-transparent hover:bg-gray-50/80 dark:hover:bg-gray-800/40'
                 }`}
               >
-                {/* Header info & timestamp */}
-                <div className='flex items-center justify-between mb-1.5'>
-                  <button
-                    onClick={() => onSeek(cue.start)}
-                    className={`px-2 py-0.5 rounded font-mono text-xs font-semibold flex items-center gap-1 transition-colors ${
-                      isActive
-                        ? 'bg-primary-600 text-white'
-                        : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-primary-100 dark:hover:bg-primary-900/40 hover:text-primary-600'
-                    }`}
-                  >
-                    <span>▶</span>
-                    <span>{formatTimestamp(cue.start)}</span>
-                  </button>
+                {/* Header info & timestamp with live audio wave indicator */}
+                <div className='flex items-center justify-between mb-2'>
+                  <div className='flex items-center gap-2'>
+                    <button
+                      onClick={() => onSeek(cue.start)}
+                      className={`px-2.5 py-0.5 rounded-lg font-mono text-xs font-bold flex items-center gap-1.5 transition-all shadow-sm ${
+                        isActive
+                          ? 'bg-primary-600 text-white shadow-primary-500/30 scale-105'
+                          : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-primary-100 dark:hover:bg-primary-900/40 hover:text-primary-600'
+                      }`}
+                    >
+                      <span>▶</span>
+                      <span>{formatTimestamp(cue.start)}</span>
+                    </button>
+
+                    {isActive && (
+                      <div className='flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary-100 dark:bg-primary-900/40 text-primary-600 dark:text-primary-400 text-[11px] font-bold animate-pulse'>
+                        <Volume2 size={12} className='animate-bounce' />
+                        <span>Đang phát</span>
+                      </div>
+                    )}
+                  </div>
 
                   <button
                     onClick={() => onAddNote(cue)}
-                    className='p-1 rounded-lg text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors'
+                    className='p-1.5 rounded-lg text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors'
                     title='Ghi chú câu này'
                   >
                     <BookmarkPlus size={16} />
                   </button>
                 </div>
 
-                {/* English sentence with natural flowing inline words */}
-                <p className='text-base font-medium text-gray-900 dark:text-gray-100 leading-relaxed'>
+                {/* English sentence with bold, clear typography and click-to-lookup */}
+                <p
+                  className={`leading-relaxed transition-colors ${
+                    isActive
+                      ? 'text-base font-bold text-gray-950 dark:text-white'
+                      : 'text-sm font-medium text-gray-700 dark:text-gray-300'
+                  }`}
+                >
                   {cue.words.map((word, wIdx) => (
                     <React.Fragment key={wIdx}>
                       <span
                         onClick={() => onWordClick(word, cue.textEn)}
-                        className='cursor-pointer rounded px-0.5 hover:bg-primary-100 dark:hover:bg-primary-900/60 hover:text-primary-600 dark:hover:text-primary-400 transition-colors'
-                        title='Nhấp để tra từ'
+                        className={`cursor-pointer rounded px-0.5 transition-all duration-150 ${
+                          isActive
+                            ? 'hover:bg-primary-200/70 dark:hover:bg-primary-800/80 hover:text-primary-700 dark:hover:text-primary-300 underline decoration-primary-300 decoration-1 underline-offset-2'
+                            : 'hover:bg-primary-100 dark:hover:bg-primary-900/60 hover:text-primary-600 dark:hover:text-primary-400'
+                        }`}
+                        title='Nhấp để tra từ & lưu Flashcard'
                       >
                         {word}
                       </span>
@@ -189,9 +218,11 @@ export const InteractiveTranscript: React.FC<InteractiveTranscriptProps> = ({
                 {/* Vietnamese translation */}
                 {subMode !== 'en-only' && (
                   <p
-                    className={`text-sm text-gray-500 dark:text-gray-400 mt-1 transition-opacity ${
-                      subMode === 'hover-vi' ? 'opacity-0 hover:opacity-100' : 'opacity-100'
-                    }`}
+                    className={`mt-1.5 leading-normal transition-opacity ${
+                      isActive
+                        ? 'text-xs font-semibold text-primary-700 dark:text-primary-300'
+                        : 'text-xs font-normal text-gray-500 dark:text-gray-400'
+                    } ${subMode === 'hover-vi' ? 'opacity-0 hover:opacity-100' : 'opacity-100'}`}
                   >
                     {cue.textVi}
                   </p>
