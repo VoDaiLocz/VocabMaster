@@ -17,6 +17,7 @@ import {
   Trophy,
   Minimize2,
   LucideIcon,
+  Youtube,
 } from 'lucide-react'
 import { APP_INFO } from '@/constants'
 
@@ -33,6 +34,7 @@ interface NavItem {
 const NAV_ITEMS: NavItem[] = [
   { to: '/', icon: Home, label: 'Tổng quan' },
   { to: '/learn', icon: BookOpen, label: 'Flashcard' },
+  { to: '/video-learning', icon: Youtube, label: 'Video song ngữ' },
   { to: '/quiz', icon: HelpCircle, label: 'Quiz' },
   { to: '/typing', icon: Keyboard, label: 'Luyện gõ' },
   { to: '/decks', icon: FolderOpen, label: 'Bộ từ vựng' },

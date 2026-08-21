@@ -1,0 +1,196 @@
+import React, { useEffect, useRef, useState } from 'react'
+import { TranscriptCue } from '@/services/youtubeTranscriptService'
+import { BookmarkPlus, Search } from 'lucide-react'
+
+interface InteractiveTranscriptProps {
+  cues: TranscriptCue[]
+  currentTime: number
+  onSeek: (seconds: number) => void
+  onWordClick: (word: string, contextSentence: string) => void
+  onAddNote: (cue: TranscriptCue) => void
+}
+
+type SubtitleMode = 'both' | 'en-only' | 'hover-vi'
+
+export const InteractiveTranscript: React.FC<InteractiveTranscriptProps> = ({
+  cues,
+  currentTime,
+  onSeek,
+  onWordClick,
+  onAddNote,
+}) => {
+  const [subMode, setSubMode] = useState<SubtitleMode>('both')
+  const [searchQuery, setSearchQuery] = useState('')
+  const activeCueRef = useRef<HTMLDivElement | null>(null)
+  const containerRef = useRef<HTMLDivElement | null>(null)
+
+  // Find currently active cue
+  const activeIndex = cues.findIndex((cue) => currentTime >= cue.start && currentTime <= cue.end)
+
+  // Auto-scroll to keep active sentence centered
+  useEffect(() => {
+    if (activeCueRef.current && containerRef.current) {
+      activeCueRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+      })
+    }
+  }, [activeIndex])
+
+  const formatTimestamp = (seconds: number) => {
+    const mins = Math.floor(seconds / 60)
+    const secs = Math.floor(seconds % 60)
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
+  }
+
+  // Filter cues by search query
+  const filteredCues = cues.filter(
+    (c) =>
+      c.textEn.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      c.textVi.toLowerCase().includes(searchQuery.toLowerCase()),
+  )
+
+  return (
+    <div className='flex flex-col h-full bg-white dark:bg-dark-card rounded-2xl shadow-lg border border-gray-100 dark:border-gray-800 overflow-hidden'>
+      {/* Header & Controls */}
+      <div className='p-4 border-b border-gray-100 dark:border-gray-800 flex flex-wrap items-center justify-between gap-3 bg-gray-50/50 dark:bg-gray-800/40'>
+        <div>
+          <h3 className='font-display font-bold text-base text-gray-900 dark:text-white flex items-center gap-2'>
+            <span>Phụ đề Song Ngữ</span>
+            <span className='px-2 py-0.5 rounded-full text-xs bg-primary-100 dark:bg-primary-900/40 text-primary-600 dark:text-primary-400 font-semibold'>
+              {cues.length} câu
+            </span>
+          </h3>
+          <p className='text-xs text-gray-500 dark:text-gray-400'>
+            Nhấp vào từ bất kỳ để tra nghĩa & lưu Flashcard
+          </p>
+        </div>
+
+        {/* Subtitle Mode Controls */}
+        <div className='flex items-center gap-1.5 bg-gray-100 dark:bg-gray-800 p-1 rounded-xl text-xs'>
+          <button
+            onClick={() => setSubMode('both')}
+            className={`px-2.5 py-1 rounded-lg font-medium transition-all ${
+              subMode === 'both'
+                ? 'bg-white dark:bg-gray-700 text-primary-600 dark:text-primary-400 shadow-sm'
+                : 'text-gray-500 dark:text-gray-400'
+            }`}
+          >
+            Song ngữ
+          </button>
+          <button
+            onClick={() => setSubMode('en-only')}
+            className={`px-2.5 py-1 rounded-lg font-medium transition-all ${
+              subMode === 'en-only'
+                ? 'bg-white dark:bg-gray-700 text-primary-600 dark:text-primary-400 shadow-sm'
+                : 'text-gray-500 dark:text-gray-400'
+            }`}
+          >
+            Chỉ EN
+          </button>
+          <button
+            onClick={() => setSubMode('hover-vi')}
+            className={`px-2.5 py-1 rounded-lg font-medium transition-all ${
+              subMode === 'hover-vi'
+                ? 'bg-white dark:bg-gray-700 text-primary-600 dark:text-primary-400 shadow-sm'
+                : 'text-gray-500 dark:text-gray-400'
+            }`}
+            title='Chỉ hiện tiếng Việt khi di chuột vào câu'
+          >
+            Ẩn VI (Hover)
+          </button>
+        </div>
+      </div>
+
+      {/* Search in transcript */}
+      <div className='px-4 py-2 border-b border-gray-100 dark:border-gray-800/60 flex items-center gap-2 bg-white dark:bg-dark-card'>
+        <Search size={16} className='text-gray-400' />
+        <input
+          type='text'
+          placeholder='Tìm kiếm câu thoại hoặc từ vựng trong video...'
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className='w-full text-xs bg-transparent border-none focus:outline-none text-gray-700 dark:text-gray-200'
+        />
+      </div>
+
+      {/* Transcript Scroll Area */}
+      <div
+        ref={containerRef}
+        className='flex-1 overflow-y-auto p-4 space-y-3 divide-y divide-gray-100/50 dark:divide-gray-800/50'
+      >
+        {filteredCues.length === 0 ? (
+          <div className='py-12 text-center text-gray-400 text-sm'>
+            Không tìm thấy câu nào phù hợp với từ khóa.
+          </div>
+        ) : (
+          filteredCues.map((cue) => {
+            const isActive = activeIndex !== -1 && cues[activeIndex]?.id === cue.id
+
+            return (
+              <div
+                key={cue.id}
+                ref={isActive ? activeCueRef : null}
+                className={`pt-3 first:pt-0 transition-all rounded-xl p-3 ${
+                  isActive
+                    ? 'bg-primary-50/80 dark:bg-primary-950/30 border border-primary-200 dark:border-primary-900/50 shadow-sm'
+                    : 'hover:bg-gray-50/80 dark:hover:bg-gray-800/40'
+                }`}
+              >
+                {/* Header info & timestamp */}
+                <div className='flex items-center justify-between mb-1.5'>
+                  <button
+                    onClick={() => onSeek(cue.start)}
+                    className={`px-2 py-0.5 rounded font-mono text-xs font-semibold flex items-center gap-1 transition-colors ${
+                      isActive
+                        ? 'bg-primary-600 text-white'
+                        : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-primary-100 dark:hover:bg-primary-900/40 hover:text-primary-600'
+                    }`}
+                  >
+                    <span>▶</span>
+                    <span>{formatTimestamp(cue.start)}</span>
+                  </button>
+
+                  <div className='flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity'>
+                    <button
+                      onClick={() => onAddNote(cue)}
+                      className='p-1 rounded-lg text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors'
+                      title='Ghi chú câu này'
+                    >
+                      <BookmarkPlus size={16} />
+                    </button>
+                  </div>
+                </div>
+
+                {/* English words (Clickable tokens) */}
+                <div className='text-base font-medium text-gray-900 dark:text-gray-100 leading-relaxed flex flex-wrap gap-x-1.5 gap-y-1'>
+                  {cue.words.map((word, wIdx) => (
+                    <span
+                      key={wIdx}
+                      onClick={() => onWordClick(word, cue.textEn)}
+                      className='cursor-pointer rounded px-1 py-0.5 hover:bg-primary-200/60 dark:hover:bg-primary-800/50 hover:text-primary-800 dark:hover:text-primary-200 transition-colors'
+                      title='Nhấp để tra từ'
+                    >
+                      {word}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Vietnamese translation */}
+                {subMode !== 'en-only' && (
+                  <p
+                    className={`text-sm text-gray-500 dark:text-gray-400 mt-1 transition-opacity ${
+                      subMode === 'hover-vi' ? 'opacity-0 hover:opacity-100' : 'opacity-100'
+                    }`}
+                  >
+                    {cue.textVi}
+                  </p>
+                )}
+              </div>
+            )
+          })
+        )}
+      </div>
+    </div>
+  )
+}

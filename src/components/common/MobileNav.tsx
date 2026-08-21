@@ -1,10 +1,11 @@
 import { memo } from 'react'
 import { NavLink } from 'react-router-dom'
-import { Home, BookOpen, FolderOpen, Settings } from 'lucide-react'
+import { Home, BookOpen, Youtube, FolderOpen, Settings } from 'lucide-react'
 
 const MOBILE_NAV_ITEMS = [
   { to: '/', icon: Home, label: 'Home' },
   { to: '/learn', icon: BookOpen, label: 'Learn' },
+  { to: '/video-learning', icon: Youtube, label: 'Video' },
   { to: '/decks', icon: FolderOpen, label: 'Decks' },
   { to: '/settings', icon: Settings, label: 'Settings' },
 ]
