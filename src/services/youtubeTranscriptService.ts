@@ -20,7 +20,7 @@ export interface VideoInfo {
   durationFormatted?: string
 }
 
-// Sample Curated English Learning Videos with Bilingual Transcripts
+// Curated English Learning Videos with Full Accurate Speech Transcripts
 export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptCue[] }[] = [
   {
     info: {
@@ -34,46 +34,24 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
       {
         id: 1,
         start: 0.0,
-        duration: 15.0,
-        end: 15.0,
-        textEn: 'Stanford University 114th Commencement Ceremony.',
-        textVi:
-          'L\u1ec5 t\u1ed1t nghi\u1ec7p l\u1ea7n th\u1ee9 114 c\u1ee7a \u0110\u1ea1i h\u1ecdc Stanford.',
-        words: ['Stanford', 'University', '114th', 'Commencement', 'Ceremony.'],
+        duration: 33.5,
+        end: 33.5,
+        textEn: '[Applause & Commencement Gathering]',
+        textVi: '[Khai m\u1ea1c & Ti\u1ebfng v\u1ed7 tay ch\u00e0o m\u1eebng]',
+        words: ['[Applause', '&', 'Commencement', 'Gathering]'],
       },
       {
         id: 2,
-        start: 15.5,
-        duration: 18.5,
-        end: 34.0,
-        textEn: 'Please welcome Steve Jobs, CEO of Apple Computer and Pixar Animation Studios.',
-        textVi:
-          'Xin nhi\u1ec7t li\u1ec7t ch\u00e0o \u0111\u00f3n Steve Jobs, Gi\u00e1m \u0111\u1ed1c \u0111i\u1ec1u h\u00e0nh c\u1ee7a Apple Computer v\u00e0 H\u00e3ng phim Ho\u1ea1t h\u00ecnh Pixar.',
-        words: [
-          'Please',
-          'welcome',
-          'Steve',
-          'Jobs,',
-          'CEO',
-          'of',
-          'Apple',
-          'Computer',
-          'and',
-          'Pixar',
-          'Animation',
-          'Studios.',
-        ],
-      },
-      {
-        id: 3,
-        start: 34.5,
-        duration: 11.5,
+        start: 34.0,
+        duration: 12.0,
         end: 46.0,
         textEn:
-          'I am honored to be with you today at your commencement from one of the finest universities in the world.',
+          'Thank you. I am honored to be with you today at your commencement from one of the finest universities in the world.',
         textVi:
-          'T\u00f4i r\u1ea5t vinh h\u1ea1nh \u0111\u01b0\u1ee3c c\u00f3 m\u1eb7t c\u00f9ng c\u00e1c b\u1ea1n h\u00f4m nay t\u1ea1i l\u1ec5 t\u1ed1t nghi\u1ec7p t\u1eeb m\u1ed9t trong nh\u1eefng tr\u01b0\u1eddng \u0111\u1ea1i h\u1ecdc danh gi\u00e1 nh\u1ea5t th\u1ebf gi\u1edbi.',
+          'C\u1ea3m \u01a1n c\u00e1c b\u1ea1n. T\u00f4i r\u1ea5t vinh h\u1ea1nh \u0111\u01b0\u1ee3c c\u00f3 m\u1eb7t c\u00f9ng c\u00e1c b\u1ea1n h\u00f4m nay t\u1ea1i l\u1ec5 t\u1ed1t nghi\u1ec7p t\u1eeb m\u1ed9t trong nh\u1eefng tr\u01b0\u1eddng \u0111\u1ea1i h\u1ecdc danh gi\u00e1 nh\u1ea5t th\u1ebf gi\u1edbi.',
         words: [
+          'Thank',
+          'you.',
           'I',
           'am',
           'honored',
@@ -97,7 +75,7 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         ],
       },
       {
-        id: 4,
+        id: 3,
         start: 46.5,
         duration: 5.5,
         end: 52.0,
@@ -107,7 +85,7 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         words: ['Truth', 'be', 'told,', 'I', 'never', 'graduated', 'from', 'college.'],
       },
       {
-        id: 5,
+        id: 4,
         start: 52.5,
         duration: 6.5,
         end: 59.0,
@@ -131,15 +109,16 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         ],
       },
       {
-        id: 6,
+        id: 5,
         start: 59.5,
-        duration: 6.5,
-        end: 66.0,
-        textEn: 'Today, I want to tell you three stories from my life.',
+        duration: 7.0,
+        end: 66.5,
+        textEn:
+          "Today I want to tell you three stories from my life. That's it. No big deal. Just three stories.",
         textVi:
-          'H\u00f4m nay, t\u00f4i mu\u1ed1n k\u1ec3 cho c\u00e1c b\u1ea1n nghe ba c\u00e2u chuy\u1ec7n trong cu\u1ed9c \u0111\u1eddi t\u00f4i.',
+          'H\u00f4m nay t\u00f4i mu\u1ed1n k\u1ec3 cho c\u00e1c b\u1ea1n nghe ba c\u00e2u chuy\u1ec7n trong cu\u1ed9c \u0111\u1eddi t\u00f4i. Ch\u1ec9 v\u1eady th\u00f4i. Kh\u00f4ng c\u00f3 g\u00ec to t\u00e1t c\u1ea3. Ch\u1ec9 l\u00e0 ba c\u00e2u chuy\u1ec7n.',
         words: [
-          'Today,',
+          'Today',
           'I',
           'want',
           'to',
@@ -150,32 +129,30 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
           'from',
           'my',
           'life.',
+          "That's",
+          'it.',
+          'No',
+          'big',
+          'deal.',
+          'Just',
+          'three',
+          'stories.',
         ],
       },
       {
-        id: 7,
-        start: 66.5,
-        duration: 5.0,
-        end: 71.5,
-        textEn: "That's it. No big deal. Just three stories.",
-        textVi:
-          'Ch\u1ec9 v\u1eady th\u00f4i. Kh\u00f4ng c\u00f3 g\u00ec to t\u00e1t c\u1ea3. Ch\u1ec9 l\u00e0 ba c\u00e2u chuy\u1ec7n.',
-        words: ["That's", 'it.', 'No', 'big', 'deal.', 'Just', 'three', 'stories.'],
-      },
-      {
-        id: 8,
-        start: 72.0,
-        duration: 5.5,
-        end: 77.5,
+        id: 6,
+        start: 67.0,
+        duration: 8.5,
+        end: 75.5,
         textEn: 'The first story is about connecting the dots.',
         textVi:
           'C\u00e2u chuy\u1ec7n \u0111\u1ea7u ti\u00ean l\u00e0 v\u1ec1 vi\u1ec7c k\u1ebft n\u1ed1i nh\u1eefng d\u1ea5u ch\u1ea5m.',
         words: ['The', 'first', 'story', 'is', 'about', 'connecting', 'the', 'dots.'],
       },
       {
-        id: 9,
-        start: 78.0,
-        duration: 9.5,
+        id: 7,
+        start: 76.0,
+        duration: 11.5,
         end: 87.5,
         textEn:
           'I dropped out of Reed College after the first 6 months, but then stayed around as a drop-in for another 18 months or so before I really quit.',
@@ -213,7 +190,7 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         ],
       },
       {
-        id: 10,
+        id: 8,
         start: 88.0,
         duration: 4.0,
         end: 92.0,
@@ -222,7 +199,7 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         words: ['So', 'why', 'did', 'I', 'drop', 'out?'],
       },
       {
-        id: 11,
+        id: 9,
         start: 92.5,
         duration: 9.0,
         end: 101.5,
@@ -259,7 +236,7 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         ],
       },
       {
-        id: 12,
+        id: 10,
         start: 102.0,
         duration: 9.0,
         end: 111.0,
@@ -301,7 +278,7 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         ],
       },
       {
-        id: 13,
+        id: 11,
         start: 111.5,
         duration: 8.0,
         end: 119.5,
@@ -331,7 +308,7 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         ],
       },
       {
-        id: 14,
+        id: 12,
         start: 120.0,
         duration: 10.5,
         end: 130.5,
@@ -376,7 +353,7 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         ],
       },
       {
-        id: 15,
+        id: 13,
         start: 131.0,
         duration: 11.5,
         end: 142.5,
@@ -420,7 +397,7 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         ],
       },
       {
-        id: 16,
+        id: 14,
         start: 143.0,
         duration: 9.5,
         end: 152.5,
@@ -450,7 +427,7 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         ],
       },
       {
-        id: 17,
+        id: 15,
         start: 153.0,
         duration: 11.5,
         end: 164.5,
@@ -498,7 +475,7 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         ],
       },
       {
-        id: 18,
+        id: 16,
         start: 165.0,
         duration: 10.5,
         end: 175.5,
@@ -545,7 +522,7 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         ],
       },
       {
-        id: 19,
+        id: 17,
         start: 176.0,
         duration: 11.5,
         end: 187.5,
@@ -588,7 +565,7 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         ],
       },
       {
-        id: 20,
+        id: 18,
         start: 188.0,
         duration: 8.5,
         end: 196.5,
@@ -620,7 +597,7 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         ],
       },
       {
-        id: 21,
+        id: 19,
         start: 197.0,
         duration: 10.5,
         end: 207.5,
@@ -658,7 +635,7 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         ],
       },
       {
-        id: 22,
+        id: 20,
         start: 208.0,
         duration: 11.5,
         end: 219.5,
@@ -701,7 +678,7 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         ],
       },
       {
-        id: 23,
+        id: 21,
         start: 220.0,
         duration: 11.5,
         end: 231.5,
@@ -740,7 +717,7 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         ],
       },
       {
-        id: 24,
+        id: 22,
         start: 232.0,
         duration: 11.5,
         end: 243.5,
@@ -772,7 +749,7 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         ],
       },
       {
-        id: 25,
+        id: 23,
         start: 244.0,
         duration: 12.0,
         end: 256.0,
@@ -812,7 +789,7 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         ],
       },
       {
-        id: 26,
+        id: 24,
         start: 256.5,
         duration: 11.0,
         end: 267.5,
@@ -854,7 +831,7 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         ],
       },
       {
-        id: 27,
+        id: 25,
         start: 268.0,
         duration: 11.0,
         end: 279.0,
@@ -888,7 +865,7 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         ],
       },
       {
-        id: 28,
+        id: 26,
         start: 279.5,
         duration: 12.5,
         end: 292.0,
@@ -932,7 +909,7 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         ],
       },
       {
-        id: 29,
+        id: 27,
         start: 292.5,
         duration: 11.5,
         end: 304.0,
@@ -969,7 +946,7 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         ],
       },
       {
-        id: 30,
+        id: 28,
         start: 304.5,
         duration: 13.5,
         end: 318.0,
@@ -1010,7 +987,7 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         ],
       },
       {
-        id: 31,
+        id: 29,
         start: 318.5,
         duration: 13.5,
         end: 332.0,
@@ -1048,7 +1025,7 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         ],
       },
       {
-        id: 32,
+        id: 30,
         start: 332.5,
         duration: 14.5,
         end: 347.0,
@@ -1092,7 +1069,7 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         ],
       },
       {
-        id: 33,
+        id: 31,
         start: 347.5,
         duration: 14.5,
         end: 362.0,
@@ -1137,7 +1114,7 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         ],
       },
       {
-        id: 34,
+        id: 32,
         start: 362.5,
         duration: 14.5,
         end: 377.0,
@@ -1183,7 +1160,7 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         ],
       },
       {
-        id: 35,
+        id: 33,
         start: 377.5,
         duration: 14.5,
         end: 392.0,
@@ -1223,7 +1200,7 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         ],
       },
       {
-        id: 36,
+        id: 34,
         start: 392.5,
         duration: 14.5,
         end: 407.0,
@@ -1260,7 +1237,7 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         ],
       },
       {
-        id: 37,
+        id: 35,
         start: 407.5,
         duration: 14.5,
         end: 422.0,
@@ -1300,7 +1277,7 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         ],
       },
       {
-        id: 38,
+        id: 36,
         start: 422.5,
         duration: 14.5,
         end: 437.0,
@@ -1348,7 +1325,7 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         ],
       },
       {
-        id: 39,
+        id: 37,
         start: 437.5,
         duration: 11.5,
         end: 449.0,
@@ -1395,7 +1372,7 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         ],
       },
       {
-        id: 40,
+        id: 38,
         start: 449.5,
         duration: 14.5,
         end: 464.0,
@@ -1446,7 +1423,7 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         ],
       },
       {
-        id: 41,
+        id: 39,
         start: 464.5,
         duration: 13.5,
         end: 478.0,
@@ -1481,7 +1458,7 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         ],
       },
       {
-        id: 42,
+        id: 40,
         start: 478.5,
         duration: 14.5,
         end: 493.0,
@@ -1525,7 +1502,7 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         ],
       },
       {
-        id: 43,
+        id: 41,
         start: 493.5,
         duration: 14.5,
         end: 508.0,
@@ -1575,7 +1552,7 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         ],
       },
       {
-        id: 44,
+        id: 42,
         start: 508.5,
         duration: 14.5,
         end: 523.0,
@@ -1620,7 +1597,7 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         ],
       },
       {
-        id: 45,
+        id: 43,
         start: 523.5,
         duration: 14.5,
         end: 538.0,
@@ -1667,7 +1644,7 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         ],
       },
       {
-        id: 46,
+        id: 44,
         start: 538.5,
         duration: 14.5,
         end: 553.0,
@@ -1705,14 +1682,14 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         ],
       },
       {
-        id: 47,
+        id: 45,
         start: 553.5,
         duration: 14.5,
         end: 568.0,
         textEn:
-          "Your time is limited, so don't waste it living someone else's life. Don't let the noise of others' opinions drown out your own inner voice.",
+          "Your time is limited, so don't waste it living someone else's life. Don't be trapped by dogma \u2014 which is living with the results of other people's thinking.",
         textVi:
-          'Th\u1eddi gian c\u1ee7a c\u00e1c b\u1ea1n c\u00f3 h\u1ea1n, v\u00ec v\u1eady \u0111\u1eebng l\u00e3ng ph\u00ed n\u00f3 \u0111\u1ec3 s\u1ed1ng cu\u1ed9c \u0111\u1eddi c\u1ee7a ng\u01b0\u1eddi kh\u00e1c. \u0110\u1eebng \u0111\u1ec3 ti\u1ebfng \u1ed3n t\u1eeb \u00fd ki\u1ebfn c\u1ee7a ng\u01b0\u1eddi kh\u00e1c \u00e1t \u0111i ti\u1ebfng n\u00f3i b\u00ean trong b\u1ea1n.',
+          'Th\u1eddi gian c\u1ee7a c\u00e1c b\u1ea1n c\u00f3 h\u1ea1n, v\u00ec v\u1eady \u0111\u1eebng l\u00e3ng ph\u00ed n\u00f3 \u0111\u1ec3 s\u1ed1ng cu\u1ed9c \u0111\u1eddi c\u1ee7a ng\u01b0\u1eddi kh\u00e1c. \u0110\u1eebng b\u1ecb m\u1eafc k\u1eb9t b\u1edfi gi\u00e1o \u0111i\u1ec1u \u2014 t\u1ee9c l\u00e0 s\u1ed1ng b\u1eb1ng k\u1ebft qu\u1ea3 suy ngh\u0129 c\u1ee7a ng\u01b0\u1eddi kh\u00e1c.',
         words: [
           'Your',
           'time',
@@ -1727,22 +1704,25 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
           "else's",
           'life.',
           "Don't",
-          'let',
+          'be',
+          'trapped',
+          'by',
+          'dogma',
+          '\u2014',
+          'which',
+          'is',
+          'living',
+          'with',
           'the',
-          'noise',
+          'results',
           'of',
-          "others'",
-          'opinions',
-          'drown',
-          'out',
-          'your',
-          'own',
-          'inner',
-          'voice.',
+          'other',
+          "people's",
+          'thinking.',
         ],
       },
       {
-        id: 48,
+        id: 46,
         start: 568.5,
         duration: 14.5,
         end: 583.0,
@@ -1780,7 +1760,7 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         ],
       },
       {
-        id: 49,
+        id: 47,
         start: 583.5,
         duration: 14.5,
         end: 598.0,
@@ -1821,7 +1801,7 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
         ],
       },
       {
-        id: 50,
+        id: 48,
         start: 598.5,
         duration: 14.5,
         end: 613.0,

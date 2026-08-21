@@ -198,20 +198,19 @@ export const InteractiveTranscript: React.FC<InteractiveTranscriptProps> = ({
                   }`}
                 >
                   {cue.words.map((word, wIdx) => (
-                    <React.Fragment key={wIdx}>
-                      <span
-                        onClick={() => onWordClick(word, cue.textEn)}
-                        className={`cursor-pointer rounded px-0.5 transition-all duration-150 ${
-                          isActive
-                            ? 'hover:bg-primary-200/70 dark:hover:bg-primary-800/80 hover:text-primary-700 dark:hover:text-primary-300 underline decoration-primary-300 decoration-1 underline-offset-2'
-                            : 'hover:bg-primary-100 dark:hover:bg-primary-900/60 hover:text-primary-600 dark:hover:text-primary-400'
-                        }`}
-                        title='Nhấp để tra từ & lưu Flashcard'
-                      >
-                        {word}
-                      </span>
+                    <span
+                      key={wIdx}
+                      onClick={() => onWordClick(word, cue.textEn)}
+                      className={`inline cursor-pointer rounded-sm transition-all duration-150 ${
+                        isActive
+                          ? 'hover:bg-primary-200/80 dark:hover:bg-primary-800/80 hover:text-primary-700 dark:hover:text-primary-300 underline decoration-primary-300 decoration-1 underline-offset-2'
+                          : 'hover:bg-primary-100 dark:hover:bg-primary-900/60 hover:text-primary-600 dark:hover:text-primary-400'
+                      }`}
+                      title='Nhấp để tra từ & lưu Flashcard'
+                    >
+                      {word}
                       {wIdx < cue.words.length - 1 ? ' ' : ''}
-                    </React.Fragment>
+                    </span>
                   ))}
                 </p>
 
