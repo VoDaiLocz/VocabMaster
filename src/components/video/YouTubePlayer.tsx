@@ -137,7 +137,8 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [togglePlay, onPrevSentence, onNextSentence, onRepeatSentence])
 
-  const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}?enablejsapi=1&origin=https://www.youtube.com&playsinline=1&rel=0&modestbranding=1&controls=1&fs=1`
+  const origin = typeof window !== 'undefined' ? window.location.origin : 'http://127.0.0.1'
+  const embedUrl = `https://www.youtube.com/embed/${videoId}?enablejsapi=1&origin=${encodeURIComponent(origin)}&playsinline=1&rel=0&modestbranding=1&controls=1&fs=1`
 
   return (
     <div className='flex flex-col rounded-2xl overflow-hidden bg-black/90 shadow-2xl border border-gray-800'>

@@ -15,6 +15,8 @@ import {
 } from 'electron'
 import path from 'path'
 import fs from 'fs'
+import http from 'http'
+import { AddressInfo } from 'net'
 import { initDatabase, setupDatabaseIPC } from './database/connection'
 import { log, logError, initLogger } from './logger'
 
@@ -26,10 +28,78 @@ let mainWindow: BrowserWindow | null = null
 let miniWindow: BrowserWindow | null = null
 let tray: Tray | null = null
 let reminderInterval: NodeJS.Timeout | null = null
+let localServerPort: number | null = null
 
 const VITE_DEV_SERVER_URL = process.env['VITE_DEV_SERVER_URL']
 
 log('Main Process Starting...')
+
+// ============================================
+// Internal Local HTTP Server (Fixes YouTube file:// restrictions)
+// ============================================
+
+function startLocalServer(): Promise<number> {
+  if (localServerPort) return Promise.resolve(localServerPort)
+
+  return new Promise((resolve, reject) => {
+    const distPath = path.join(__dirname, '../dist')
+    const mimeTypes: Record<string, string> = {
+      '.html': 'text/html; charset=utf-8',
+      '.js': 'text/javascript; charset=utf-8',
+      '.css': 'text/css; charset=utf-8',
+      '.json': 'application/json',
+      '.png': 'image/png',
+      '.jpg': 'image/jpeg',
+      '.jpeg': 'image/jpeg',
+      '.gif': 'image/gif',
+      '.svg': 'image/svg+xml',
+      '.ico': 'image/x-icon',
+      '.wasm': 'application/wasm',
+      '.woff2': 'font/woff2',
+    }
+
+    const server = http.createServer((req, res) => {
+      let reqPath = req.url?.split('?')[0] || '/'
+      if (reqPath === '/' || !reqPath.includes('.')) {
+        reqPath = '/index.html'
+      }
+
+      const filePath = path.join(distPath, reqPath)
+      const ext = path.extname(filePath).toLowerCase()
+      const contentType = mimeTypes[ext] || 'application/octet-stream'
+
+      fs.readFile(filePath, (err, content) => {
+        if (err) {
+          // SPA fallback to index.html
+          fs.readFile(path.join(distPath, 'index.html'), (e, htmlContent) => {
+            if (e) {
+              res.writeHead(500)
+              res.end('Error loading index.html')
+            } else {
+              res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' })
+              res.end(htmlContent)
+            }
+          })
+        } else {
+          res.writeHead(200, { 'Content-Type': contentType })
+          res.end(content)
+        }
+      })
+    })
+
+    server.listen(0, '127.0.0.1', () => {
+      const address = server.address() as AddressInfo
+      localServerPort = address.port
+      log(`Internal HTTP server running on http://127.0.0.1:${localServerPort}`)
+      resolve(localServerPort)
+    })
+
+    server.on('error', (err) => {
+      logError('Local server error', err)
+      reject(err)
+    })
+  })
+}
 
 // ============================================
 // Icon Helper
@@ -65,7 +135,7 @@ function getIconPath(): string | undefined {
 // Window Creation
 // ============================================
 
-function createWindow(): void {
+async function createWindow(): Promise<void> {
   log('Creating Window...')
   const iconPath = getIconPath()
 
@@ -90,9 +160,10 @@ function createWindow(): void {
     mainWindow.loadURL(VITE_DEV_SERVER_URL)
     mainWindow.webContents.openDevTools()
   } else {
-    const indexHtml = path.join(__dirname, '../dist/index.html')
-    log('Loading File:', indexHtml)
-    mainWindow.loadFile(indexHtml)
+    const port = await startLocalServer()
+    const localUrl = `http://127.0.0.1:${port}`
+    log('Loading Local URL:', localUrl)
+    mainWindow.loadURL(localUrl)
   }
 
   mainWindow.on('closed', () => {
@@ -101,7 +172,7 @@ function createWindow(): void {
   })
 }
 
-function createMiniWindow(): void {
+async function createMiniWindow(): Promise<void> {
   if (miniWindow) {
     miniWindow.focus()
     return
@@ -130,7 +201,8 @@ function createMiniWindow(): void {
   if (VITE_DEV_SERVER_URL) {
     miniWindow.loadURL(`${VITE_DEV_SERVER_URL}#/mini`)
   } else {
-    miniWindow.loadFile(path.join(__dirname, '../dist/index.html'), { hash: '/mini' })
+    const port = await startLocalServer()
+    miniWindow.loadURL(`http://127.0.0.1:${port}/#/mini`)
   }
 
   miniWindow.on('closed', () => {
@@ -283,7 +355,7 @@ app.whenReady().then(async () => {
 
     setupDatabaseIPC()
     setupIPC()
-    createWindow()
+    await createWindow()
     createTray()
   } catch (e) {
     logError('Critical: Database init failed', e)
