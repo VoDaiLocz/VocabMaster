@@ -42,11 +42,24 @@ export const WordLookupPopover: React.FC<WordLookupPopoverProps> = ({
   }
 
   const handleSaveToDeck = async () => {
-    if (!selectedDeckId) return
     setIsSaving(true)
     try {
+      let targetDeckId = selectedDeckId
+      if (!targetDeckId) {
+        if (decks.length > 0) {
+          targetDeckId = decks[0].id
+        } else {
+          targetDeckId = await createDeck(
+            'Từ vựng YouTube',
+            'Các từ vựng lưu từ Video Song Ngữ',
+            '#6366f1',
+            'Youtube',
+          )
+        }
+      }
+
       await createWord({
-        deck_id: selectedDeckId,
+        deck_id: targetDeckId as number,
         term: wordData.term,
         definition: wordData.definition,
         example: wordData.example,
@@ -99,10 +112,14 @@ export const WordLookupPopover: React.FC<WordLookupPopoverProps> = ({
                   <Volume2 size={18} />
                 </button>
               </div>
-              <div className='flex items-center gap-2 mt-1 text-sm text-gray-500 dark:text-gray-400'>
-                {wordData.phonetic && <span className='font-mono'>{wordData.phonetic}</span>}
+              <div className='flex items-center gap-2 mt-0.5'>
+                {wordData.phonetic && (
+                  <span className='font-mono text-xs text-gray-500 dark:text-gray-400'>
+                    {wordData.phonetic}
+                  </span>
+                )}
                 {wordData.partOfSpeech && (
-                  <span className='px-2 py-0.5 rounded-md text-xs font-semibold bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300'>
+                  <span className='px-2 py-0.5 rounded text-[10px] font-semibold bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 uppercase'>
                     {wordData.partOfSpeech}
                   </span>
                 )}
@@ -110,12 +127,12 @@ export const WordLookupPopover: React.FC<WordLookupPopoverProps> = ({
             </div>
           </div>
 
-          {/* Definition */}
+          {/* Vietnamese Definition */}
           <div className='mb-4 p-3.5 rounded-xl bg-gray-50 dark:bg-gray-800/60 border border-gray-100 dark:border-gray-800'>
-            <div className='text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-1 flex items-center gap-1'>
-              <Sparkles size={14} className='text-primary-500' /> Nghĩa tiếng Việt
+            <div className='text-xs font-semibold text-primary-600 dark:text-primary-400 uppercase tracking-wider mb-1 flex items-center gap-1'>
+              <Sparkles size={13} /> Nghĩa tiếng Việt
             </div>
-            <p className='text-gray-800 dark:text-gray-100 font-medium text-base'>
+            <p className='text-base font-semibold text-gray-900 dark:text-white leading-relaxed'>
               {wordData.definition}
             </p>
           </div>
@@ -140,7 +157,7 @@ export const WordLookupPopover: React.FC<WordLookupPopoverProps> = ({
               </label>
               {decks.length > 0 ? (
                 <select
-                  value={selectedDeckId || ''}
+                  value={selectedDeckId || decks[0].id}
                   onChange={(e) => setSelectedDeckId(Number(e.target.value))}
                   className='bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-1.5 text-sm text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500'
                 >
@@ -151,7 +168,9 @@ export const WordLookupPopover: React.FC<WordLookupPopoverProps> = ({
                   ))}
                 </select>
               ) : (
-                <span className='text-xs text-amber-500'>Chưa có bộ từ vựng</span>
+                <span className='text-xs font-medium text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-950 px-2.5 py-1 rounded-md'>
+                  Tự động lưu vào 'Từ vựng YouTube'
+                </span>
               )}
             </div>
 
@@ -165,7 +184,7 @@ export const WordLookupPopover: React.FC<WordLookupPopoverProps> = ({
               </button>
               <button
                 onClick={handleSaveToDeck}
-                disabled={isSaving || savedSuccess || !selectedDeckId}
+                disabled={isSaving || savedSuccess}
                 className={`flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white shadow-lg transition-all ${
                   savedSuccess
                     ? 'bg-emerald-500 shadow-emerald-500/30'
@@ -174,7 +193,7 @@ export const WordLookupPopover: React.FC<WordLookupPopoverProps> = ({
               >
                 {savedSuccess ? (
                   <>
-                    <Check size={18} /> Đã lưu vào Deck
+                    <Check size={18} /> Đã lưu vào Flashcard
                   </>
                 ) : isSaving ? (
                   'Đang lưu...'
