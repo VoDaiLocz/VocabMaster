@@ -1,0 +1,7442 @@
+[
+  {
+    "id": 1,
+    "start": 27.1,
+    "duration": 2.58,
+    "end": 29.68,
+    "textEn": "Good morning. How are you?",
+    "textVi": "Chào buổi sáng. Bạn có khỏe không?",
+    "words": [
+      "Good",
+      "morning.",
+      "How",
+      "are",
+      "you?"
+    ]
+  },
+  {
+    "id": 2,
+    "start": 29.7,
+    "duration": 1.4,
+    "end": 31.1,
+    "textEn": "(Audience) Good.",
+    "textVi": "(Khán giả) Tốt.",
+    "words": [
+      "(Audience)",
+      "Good."
+    ]
+  },
+  {
+    "id": 3,
+    "start": 31.13,
+    "duration": 1.67,
+    "end": 32.8,
+    "textEn": "It's been great, hasn't it?",
+    "textVi": "Thật tuyệt vời phải không?",
+    "words": [
+      "It's",
+      "been",
+      "great,",
+      "hasn't",
+      "it?"
+    ]
+  },
+  {
+    "id": 4,
+    "start": 33.41,
+    "duration": 2.32,
+    "end": 35.73,
+    "textEn": "I've been blown away by the whole thing.",
+    "textVi": "Tôi đã bị choáng ngợp bởi toàn bộ sự việc.",
+    "words": [
+      "I've",
+      "been",
+      "blown",
+      "away",
+      "by",
+      "the",
+      "whole",
+      "thing."
+    ]
+  },
+  {
+    "id": 5,
+    "start": 35.75,
+    "duration": 1.49,
+    "end": 37.24,
+    "textEn": "In fact, I'm leaving.",
+    "textVi": "Thực tế là tôi đang rời đi.",
+    "words": [
+      "In",
+      "fact,",
+      "I'm",
+      "leaving."
+    ]
+  },
+  {
+    "id": 6,
+    "start": 37.27,
+    "duration": 3.91,
+    "end": 41.18,
+    "textEn": "(Laughter)",
+    "textVi": "(Cười)",
+    "words": [
+      "(Laughter)"
+    ]
+  },
+  {
+    "id": 7,
+    "start": 43.1,
+    "duration": 3.57,
+    "end": 46.67,
+    "textEn": "There have been three themes running through the conference,",
+    "textVi": "Đã có ba chủ đề xuyên suốt hội nghị,",
+    "words": [
+      "There",
+      "have",
+      "been",
+      "three",
+      "themes",
+      "running",
+      "through",
+      "the",
+      "conference,"
+    ]
+  },
+  {
+    "id": 8,
+    "start": 46.69,
+    "duration": 2.29,
+    "end": 48.98,
+    "textEn": "which are relevant to what I want to talk about.",
+    "textVi": "có liên quan đến điều tôi muốn nói đến.",
+    "words": [
+      "which",
+      "are",
+      "relevant",
+      "to",
+      "what",
+      "I",
+      "want",
+      "to",
+      "talk",
+      "about."
+    ]
+  },
+  {
+    "id": 9,
+    "start": 49.0,
+    "duration": 4.47,
+    "end": 53.47,
+    "textEn": "One is the extraordinary evidence of human creativity",
+    "textVi": "Một là bằng chứng phi thường về khả năng sáng tạo của con người",
+    "words": [
+      "One",
+      "is",
+      "the",
+      "extraordinary",
+      "evidence",
+      "of",
+      "human",
+      "creativity"
+    ]
+  },
+  {
+    "id": 10,
+    "start": 53.49,
+    "duration": 2.41,
+    "end": 55.9,
+    "textEn": "in all of the presentations that we've had",
+    "textVi": "trong tất cả các bài thuyết trình mà chúng tôi đã có",
+    "words": [
+      "in",
+      "all",
+      "of",
+      "the",
+      "presentations",
+      "that",
+      "we've",
+      "had"
+    ]
+  },
+  {
+    "id": 11,
+    "start": 55.93,
+    "duration": 1.95,
+    "end": 57.88,
+    "textEn": "and in all of the people here;",
+    "textVi": "và trong tất cả những người ở đây;",
+    "words": [
+      "and",
+      "in",
+      "all",
+      "of",
+      "the",
+      "people",
+      "here;"
+    ]
+  },
+  {
+    "id": 12,
+    "start": 57.9,
+    "duration": 2.65,
+    "end": 60.55,
+    "textEn": "just the variety of it and the range of it.",
+    "textVi": "chỉ là sự đa dạng của nó và phạm vi của nó.",
+    "words": [
+      "just",
+      "the",
+      "variety",
+      "of",
+      "it",
+      "and",
+      "the",
+      "range",
+      "of",
+      "it."
+    ]
+  },
+  {
+    "id": 13,
+    "start": 61.16,
+    "duration": 2.14,
+    "end": 63.3,
+    "textEn": "The second is that it's put us in a place",
+    "textVi": "Thứ hai là nó đặt chúng ta vào một tình thế",
+    "words": [
+      "The",
+      "second",
+      "is",
+      "that",
+      "it's",
+      "put",
+      "us",
+      "in",
+      "a",
+      "place"
+    ]
+  },
+  {
+    "id": 14,
+    "start": 63.33,
+    "duration": 2.5,
+    "end": 65.83,
+    "textEn": "where we have no idea what's going to happen",
+    "textVi": "nơi mà chúng ta không biết chuyện gì sẽ xảy ra",
+    "words": [
+      "where",
+      "we",
+      "have",
+      "no",
+      "idea",
+      "what's",
+      "going",
+      "to",
+      "happen"
+    ]
+  },
+  {
+    "id": 15,
+    "start": 65.85,
+    "duration": 1.39,
+    "end": 67.24,
+    "textEn": "in terms of the future.",
+    "textVi": "về mặt tương lai.",
+    "words": [
+      "in",
+      "terms",
+      "of",
+      "the",
+      "future."
+    ]
+  },
+  {
+    "id": 16,
+    "start": 67.26,
+    "duration": 2.98,
+    "end": 70.24,
+    "textEn": "No idea how this may play out.",
+    "textVi": "Không biết điều này có thể diễn ra như thế nào.",
+    "words": [
+      "No",
+      "idea",
+      "how",
+      "this",
+      "may",
+      "play",
+      "out."
+    ]
+  },
+  {
+    "id": 17,
+    "start": 70.27,
+    "duration": 1.62,
+    "end": 71.89,
+    "textEn": "I have an interest in education.",
+    "textVi": "Tôi có mối quan tâm đến giáo dục.",
+    "words": [
+      "I",
+      "have",
+      "an",
+      "interest",
+      "in",
+      "education."
+    ]
+  },
+  {
+    "id": 18,
+    "start": 71.92,
+    "duration": 4.41,
+    "end": 76.33,
+    "textEn": "Actually, what I find is, everybody has an interest in education.",
+    "textVi": "Thực ra, điều tôi nhận thấy là mọi người đều quan tâm đến giáo dục.",
+    "words": [
+      "Actually,",
+      "what",
+      "I",
+      "find",
+      "is,",
+      "everybody",
+      "has",
+      "an",
+      "interest",
+      "in",
+      "education."
+    ]
+  },
+  {
+    "id": 19,
+    "start": 76.35,
+    "duration": 1.32,
+    "end": 77.67,
+    "textEn": "Don't you?",
+    "textVi": "Phải không?",
+    "words": [
+      "Don't",
+      "you?"
+    ]
+  },
+  {
+    "id": 20,
+    "start": 77.69,
+    "duration": 1.4,
+    "end": 79.09,
+    "textEn": "I find this very interesting.",
+    "textVi": "Tôi thấy điều này rất thú vị.",
+    "words": [
+      "I",
+      "find",
+      "this",
+      "very",
+      "interesting."
+    ]
+  },
+  {
+    "id": 21,
+    "start": 79.12,
+    "duration": 3.96,
+    "end": 83.08,
+    "textEn": "If you're at a dinner party, and you say you work in education --",
+    "textVi": "Nếu bạn đang ở một bữa tiệc tối và bạn nói rằng bạn làm việc trong lĩnh vực giáo dục --",
+    "words": [
+      "If",
+      "you're",
+      "at",
+      "a",
+      "dinner",
+      "party,",
+      "and",
+      "you",
+      "say",
+      "you",
+      "work",
+      "in",
+      "education",
+      "--"
+    ]
+  },
+  {
+    "id": 22,
+    "start": 83.1,
+    "duration": 2.75,
+    "end": 85.85,
+    "textEn": "actually, you're not often at dinner parties, frankly.",
+    "textVi": "Thực ra, bạn không thường xuyên tham gia các bữa tiệc tối.",
+    "words": [
+      "actually,",
+      "you're",
+      "not",
+      "often",
+      "at",
+      "dinner",
+      "parties,",
+      "frankly."
+    ]
+  },
+  {
+    "id": 23,
+    "start": 85.87,
+    "duration": 3.8,
+    "end": 89.67,
+    "textEn": "(Laughter)",
+    "textVi": "(Cười)",
+    "words": [
+      "(Laughter)"
+    ]
+  },
+  {
+    "id": 24,
+    "start": 89.69,
+    "duration": 2.43,
+    "end": 92.12,
+    "textEn": "If you work in education, you're not asked.",
+    "textVi": "Nếu bạn làm việc trong lĩnh vực giáo dục, bạn sẽ không bị yêu cầu.",
+    "words": [
+      "If",
+      "you",
+      "work",
+      "in",
+      "education,",
+      "you're",
+      "not",
+      "asked."
+    ]
+  },
+  {
+    "id": 25,
+    "start": 92.14,
+    "duration": 3.18,
+    "end": 95.32,
+    "textEn": "(Laughter)",
+    "textVi": "(Cười)",
+    "words": [
+      "(Laughter)"
+    ]
+  },
+  {
+    "id": 26,
+    "start": 95.34,
+    "duration": 3.96,
+    "end": 99.3,
+    "textEn": "And you're never asked back, curiously. That's strange to me.",
+    "textVi": "Và bạn không bao giờ được hỏi lại, thật tò mò. Điều đó thật lạ đối với tôi.",
+    "words": [
+      "And",
+      "you're",
+      "never",
+      "asked",
+      "back,",
+      "curiously.",
+      "That's",
+      "strange",
+      "to",
+      "me."
+    ]
+  },
+  {
+    "id": 27,
+    "start": 99.33,
+    "duration": 2.22,
+    "end": 101.55,
+    "textEn": "But if you are, and you say to somebody,",
+    "textVi": "Nhưng nếu đúng như vậy và bạn nói với ai đó,",
+    "words": [
+      "But",
+      "if",
+      "you",
+      "are,",
+      "and",
+      "you",
+      "say",
+      "to",
+      "somebody,"
+    ]
+  },
+  {
+    "id": 28,
+    "start": 101.57,
+    "duration": 1.78,
+    "end": 103.35,
+    "textEn": "you know, they say, \"What do you do?\"",
+    "textVi": "bạn biết đấy, họ nói, \"Bạn làm nghề gì?\"",
+    "words": [
+      "you",
+      "know,",
+      "they",
+      "say,",
+      "\"What",
+      "do",
+      "you",
+      "do?\""
+    ]
+  },
+  {
+    "id": 29,
+    "start": 103.37,
+    "duration": 1.69,
+    "end": 105.06,
+    "textEn": "and you say you work in education,",
+    "textVi": "và bạn nói rằng bạn làm việc trong lĩnh vực giáo dục,",
+    "words": [
+      "and",
+      "you",
+      "say",
+      "you",
+      "work",
+      "in",
+      "education,"
+    ]
+  },
+  {
+    "id": 30,
+    "start": 105.08,
+    "duration": 2.05,
+    "end": 107.13,
+    "textEn": "you can see the blood run from their face.",
+    "textVi": "bạn có thể thấy máu chảy ra từ mặt họ.",
+    "words": [
+      "you",
+      "can",
+      "see",
+      "the",
+      "blood",
+      "run",
+      "from",
+      "their",
+      "face."
+    ]
+  },
+  {
+    "id": 31,
+    "start": 107.16,
+    "duration": 1.69,
+    "end": 108.85,
+    "textEn": "They're like, \"Oh my God. Why me?\"",
+    "textVi": "Họ nói, \"Ôi chúa ơi. Tại sao lại là tôi?\"",
+    "words": [
+      "They're",
+      "like,",
+      "\"Oh",
+      "my",
+      "God.",
+      "Why",
+      "me?\""
+    ]
+  },
+  {
+    "id": 32,
+    "start": 108.86,
+    "duration": 2.28,
+    "end": 111.14,
+    "textEn": "(Laughter)",
+    "textVi": "(Cười)",
+    "words": [
+      "(Laughter)"
+    ]
+  },
+  {
+    "id": 33,
+    "start": 111.16,
+    "duration": 1.52,
+    "end": 112.68,
+    "textEn": "\"My one night out all week.\"",
+    "textVi": "\"Một đêm đi chơi cả tuần của tôi.\"",
+    "words": [
+      "\"My",
+      "one",
+      "night",
+      "out",
+      "all",
+      "week.\""
+    ]
+  },
+  {
+    "id": 34,
+    "start": 112.71,
+    "duration": 2.61,
+    "end": 115.32,
+    "textEn": "(Laughter)",
+    "textVi": "(Cười)",
+    "words": [
+      "(Laughter)"
+    ]
+  },
+  {
+    "id": 35,
+    "start": 115.35,
+    "duration": 3.24,
+    "end": 118.59,
+    "textEn": "But if you ask about their education, they pin you to the wall,",
+    "textVi": "Nhưng nếu bạn hỏi về trình độ học vấn của họ, họ sẽ dồn bạn vào chân tường,",
+    "words": [
+      "But",
+      "if",
+      "you",
+      "ask",
+      "about",
+      "their",
+      "education,",
+      "they",
+      "pin",
+      "you",
+      "to",
+      "the",
+      "wall,"
+    ]
+  },
+  {
+    "id": 36,
+    "start": 118.61,
+    "duration": 3.41,
+    "end": 122.02,
+    "textEn": "because it's one of those things that goes deep with people, am I right?",
+    "textVi": "bởi vì đó là một trong những điều đi sâu vào con người, phải không?",
+    "words": [
+      "because",
+      "it's",
+      "one",
+      "of",
+      "those",
+      "things",
+      "that",
+      "goes",
+      "deep",
+      "with",
+      "people,",
+      "am",
+      "I",
+      "right?"
+    ]
+  },
+  {
+    "id": 37,
+    "start": 122.04,
+    "duration": 3.49,
+    "end": 125.53,
+    "textEn": "Like religion and money and other things.",
+    "textVi": "Giống như tôn giáo, tiền bạc và những thứ khác.",
+    "words": [
+      "Like",
+      "religion",
+      "and",
+      "money",
+      "and",
+      "other",
+      "things."
+    ]
+  },
+  {
+    "id": 38,
+    "start": 125.56,
+    "duration": 4.44,
+    "end": 130.0,
+    "textEn": "So I have a big interest in education, and I think we all do.",
+    "textVi": "Vì vậy, tôi rất quan tâm đến giáo dục và tôi nghĩ tất cả chúng ta đều như vậy.",
+    "words": [
+      "So",
+      "I",
+      "have",
+      "a",
+      "big",
+      "interest",
+      "in",
+      "education,",
+      "and",
+      "I",
+      "think",
+      "we",
+      "all",
+      "do."
+    ]
+  },
+  {
+    "id": 39,
+    "start": 130.03,
+    "duration": 1.8,
+    "end": 131.83,
+    "textEn": "We have a huge vested interest in it,",
+    "textVi": "Chúng tôi có mối quan tâm rất lớn đến nó,",
+    "words": [
+      "We",
+      "have",
+      "a",
+      "huge",
+      "vested",
+      "interest",
+      "in",
+      "it,"
+    ]
+  },
+  {
+    "id": 40,
+    "start": 131.85,
+    "duration": 3.32,
+    "end": 135.17,
+    "textEn": "partly because it's education that's meant to take us into this future",
+    "textVi": "một phần vì giáo dục có ý nghĩa đưa chúng ta tới tương lai này",
+    "words": [
+      "partly",
+      "because",
+      "it's",
+      "education",
+      "that's",
+      "meant",
+      "to",
+      "take",
+      "us",
+      "into",
+      "this",
+      "future"
+    ]
+  },
+  {
+    "id": 41,
+    "start": 135.19,
+    "duration": 1.65,
+    "end": 136.84,
+    "textEn": "that we can't grasp.",
+    "textVi": "mà chúng ta không thể nắm bắt được.",
+    "words": [
+      "that",
+      "we",
+      "can't",
+      "grasp."
+    ]
+  },
+  {
+    "id": 42,
+    "start": 136.87,
+    "duration": 1.17,
+    "end": 138.04,
+    "textEn": "If you think of it,",
+    "textVi": "Nếu bạn nghĩ về nó,",
+    "words": [
+      "If",
+      "you",
+      "think",
+      "of",
+      "it,"
+    ]
+  },
+  {
+    "id": 43,
+    "start": 138.06,
+    "duration": 6.12,
+    "end": 144.18,
+    "textEn": "children starting school this year will be retiring in 2065.",
+    "textVi": "trẻ em bắt đầu đi học trong năm nay sẽ nghỉ hưu vào năm 2065.",
+    "words": [
+      "children",
+      "starting",
+      "school",
+      "this",
+      "year",
+      "will",
+      "be",
+      "retiring",
+      "in",
+      "2065."
+    ]
+  },
+  {
+    "id": 44,
+    "start": 145.27,
+    "duration": 1.57,
+    "end": 146.84,
+    "textEn": "Nobody has a clue,",
+    "textVi": "Không ai có manh mối,",
+    "words": [
+      "Nobody",
+      "has",
+      "a",
+      "clue,"
+    ]
+  },
+  {
+    "id": 45,
+    "start": 146.87,
+    "duration": 3.56,
+    "end": 150.43,
+    "textEn": "despite all the expertise that's been on parade for the past four days,",
+    "textVi": "bất chấp tất cả chuyên môn đã được trình diễn trong bốn ngày qua,",
+    "words": [
+      "despite",
+      "all",
+      "the",
+      "expertise",
+      "that's",
+      "been",
+      "on",
+      "parade",
+      "for",
+      "the",
+      "past",
+      "four",
+      "days,"
+    ]
+  },
+  {
+    "id": 46,
+    "start": 150.45,
+    "duration": 2.53,
+    "end": 152.98,
+    "textEn": "what the world will look like in five years' time.",
+    "textVi": "thế giới sẽ như thế nào sau 5 năm nữa.",
+    "words": [
+      "what",
+      "the",
+      "world",
+      "will",
+      "look",
+      "like",
+      "in",
+      "five",
+      "years'",
+      "time."
+    ]
+  },
+  {
+    "id": 47,
+    "start": 153.0,
+    "duration": 2.29,
+    "end": 155.29,
+    "textEn": "And yet, we're meant to be educating them for it.",
+    "textVi": "Tuy nhiên, chúng tôi có ý định giáo dục họ về điều đó.",
+    "words": [
+      "And",
+      "yet,",
+      "we're",
+      "meant",
+      "to",
+      "be",
+      "educating",
+      "them",
+      "for",
+      "it."
+    ]
+  },
+  {
+    "id": 48,
+    "start": 155.32,
+    "duration": 2.55,
+    "end": 157.87,
+    "textEn": "So the unpredictability, I think, is extraordinary.",
+    "textVi": "Vì vậy, tôi nghĩ, khả năng không thể đoán trước là phi thường.",
+    "words": [
+      "So",
+      "the",
+      "unpredictability,",
+      "I",
+      "think,",
+      "is",
+      "extraordinary."
+    ]
+  },
+  {
+    "id": 49,
+    "start": 157.89,
+    "duration": 3.43,
+    "end": 161.32,
+    "textEn": "And the third part of this is that we've all agreed, nonetheless,",
+    "textVi": "Và phần thứ ba của việc này là chúng ta đều đồng ý, tuy nhiên,",
+    "words": [
+      "And",
+      "the",
+      "third",
+      "part",
+      "of",
+      "this",
+      "is",
+      "that",
+      "we've",
+      "all",
+      "agreed,",
+      "nonetheless,"
+    ]
+  },
+  {
+    "id": 50,
+    "start": 161.34,
+    "duration": 5.3,
+    "end": 166.64,
+    "textEn": "on the really extraordinary capacities that children have --",
+    "textVi": "về những khả năng thực sự phi thường mà trẻ em có --",
+    "words": [
+      "on",
+      "the",
+      "really",
+      "extraordinary",
+      "capacities",
+      "that",
+      "children",
+      "have",
+      "--"
+    ]
+  },
+  {
+    "id": 51,
+    "start": 166.67,
+    "duration": 2.33,
+    "end": 169.0,
+    "textEn": "their capacities for innovation.",
+    "textVi": "năng lực đổi mới của họ.",
+    "words": [
+      "their",
+      "capacities",
+      "for",
+      "innovation."
+    ]
+  },
+  {
+    "id": 52,
+    "start": 169.03,
+    "duration": 2.79,
+    "end": 171.82,
+    "textEn": "I mean, Sirena last night was a marvel, wasn't she?",
+    "textVi": "Ý tôi là, Sirena đêm qua thật tuyệt vời phải không?",
+    "words": [
+      "I",
+      "mean,",
+      "Sirena",
+      "last",
+      "night",
+      "was",
+      "a",
+      "marvel,",
+      "wasn't",
+      "she?"
+    ]
+  },
+  {
+    "id": 53,
+    "start": 171.84,
+    "duration": 1.67,
+    "end": 173.51,
+    "textEn": "Just seeing what she could do.",
+    "textVi": "Chỉ cần xem cô ấy có thể làm được gì.",
+    "words": [
+      "Just",
+      "seeing",
+      "what",
+      "she",
+      "could",
+      "do."
+    ]
+  },
+  {
+    "id": 54,
+    "start": 173.54,
+    "duration": 5.55,
+    "end": 179.09,
+    "textEn": "And she's exceptional, but I think she's not, so to speak,",
+    "textVi": "Và cô ấy thật đặc biệt, nhưng tôi nghĩ cô ấy không, có thể nói như vậy,",
+    "words": [
+      "And",
+      "she's",
+      "exceptional,",
+      "but",
+      "I",
+      "think",
+      "she's",
+      "not,",
+      "so",
+      "to",
+      "speak,"
+    ]
+  },
+  {
+    "id": 55,
+    "start": 179.11,
+    "duration": 2.9,
+    "end": 182.01,
+    "textEn": "exceptional in the whole of childhood.",
+    "textVi": "đặc biệt trong suốt tuổi thơ.",
+    "words": [
+      "exceptional",
+      "in",
+      "the",
+      "whole",
+      "of",
+      "childhood."
+    ]
+  },
+  {
+    "id": 56,
+    "start": 182.04,
+    "duration": 2.83,
+    "end": 184.87,
+    "textEn": "What you have there is a person of extraordinary dedication",
+    "textVi": "Những gì bạn có ở đó là một con người có sự cống hiến phi thường",
+    "words": [
+      "What",
+      "you",
+      "have",
+      "there",
+      "is",
+      "a",
+      "person",
+      "of",
+      "extraordinary",
+      "dedication"
+    ]
+  },
+  {
+    "id": 57,
+    "start": 184.9,
+    "duration": 1.17,
+    "end": 186.07,
+    "textEn": "who found a talent.",
+    "textVi": "người đã tìm thấy một tài năng.",
+    "words": [
+      "who",
+      "found",
+      "a",
+      "talent."
+    ]
+  },
+  {
+    "id": 58,
+    "start": 186.09,
+    "duration": 2.59,
+    "end": 188.68,
+    "textEn": "And my contention is, all kids have tremendous talents,",
+    "textVi": "Và quan điểm của tôi là, tất cả trẻ em đều có tài năng to lớn,",
+    "words": [
+      "And",
+      "my",
+      "contention",
+      "is,",
+      "all",
+      "kids",
+      "have",
+      "tremendous",
+      "talents,"
+    ]
+  },
+  {
+    "id": 59,
+    "start": 188.7,
+    "duration": 2.39,
+    "end": 191.09,
+    "textEn": "and we squander them, pretty ruthlessly.",
+    "textVi": "và chúng ta lãng phí chúng một cách khá tàn nhẫn.",
+    "words": [
+      "and",
+      "we",
+      "squander",
+      "them,",
+      "pretty",
+      "ruthlessly."
+    ]
+  },
+  {
+    "id": 60,
+    "start": 191.12,
+    "duration": 1.86,
+    "end": 192.98,
+    "textEn": "So I want to talk about education,",
+    "textVi": "Vì vậy tôi muốn nói về giáo dục,",
+    "words": [
+      "So",
+      "I",
+      "want",
+      "to",
+      "talk",
+      "about",
+      "education,"
+    ]
+  },
+  {
+    "id": 61,
+    "start": 193.0,
+    "duration": 1.87,
+    "end": 194.87,
+    "textEn": "and I want to talk about creativity.",
+    "textVi": "và tôi muốn nói về sự sáng tạo.",
+    "words": [
+      "and",
+      "I",
+      "want",
+      "to",
+      "talk",
+      "about",
+      "creativity."
+    ]
+  },
+  {
+    "id": 62,
+    "start": 194.9,
+    "duration": 6.1,
+    "end": 201.0,
+    "textEn": "My contention is that creativity now is as important in education as literacy,",
+    "textVi": "Quan điểm của tôi là tính sáng tạo hiện nay cũng quan trọng trong giáo dục như khả năng đọc viết,",
+    "words": [
+      "My",
+      "contention",
+      "is",
+      "that",
+      "creativity",
+      "now",
+      "is",
+      "as",
+      "important",
+      "in",
+      "education",
+      "as",
+      "literacy,"
+    ]
+  },
+  {
+    "id": 63,
+    "start": 201.02,
+    "duration": 2.79,
+    "end": 203.81,
+    "textEn": "and we should treat it with the same status.",
+    "textVi": "và chúng ta nên đối xử với nó với tình trạng tương tự.",
+    "words": [
+      "and",
+      "we",
+      "should",
+      "treat",
+      "it",
+      "with",
+      "the",
+      "same",
+      "status."
+    ]
+  },
+  {
+    "id": 64,
+    "start": 203.83,
+    "duration": 1.11,
+    "end": 204.94,
+    "textEn": "(Applause)",
+    "textVi": "(Vỗ tay)",
+    "words": [
+      "(Applause)"
+    ]
+  },
+  {
+    "id": 65,
+    "start": 204.96,
+    "duration": 1.19,
+    "end": 206.15,
+    "textEn": "Thank you.",
+    "textVi": "Cảm ơn bạn.",
+    "words": [
+      "Thank",
+      "you."
+    ]
+  },
+  {
+    "id": 66,
+    "start": 206.18,
+    "duration": 4.29,
+    "end": 210.47,
+    "textEn": "(Applause)",
+    "textVi": "(Vỗ tay)",
+    "words": [
+      "(Applause)"
+    ]
+  },
+  {
+    "id": 67,
+    "start": 210.49,
+    "duration": 2.29,
+    "end": 212.78,
+    "textEn": "That was it, by the way. Thank you very much.",
+    "textVi": "Nhân tiện, đó là nó. Cảm ơn rất nhiều.",
+    "words": [
+      "That",
+      "was",
+      "it,",
+      "by",
+      "the",
+      "way.",
+      "Thank",
+      "you",
+      "very",
+      "much."
+    ]
+  },
+  {
+    "id": 68,
+    "start": 212.79,
+    "duration": 2.12,
+    "end": 214.91,
+    "textEn": "(Laughter)",
+    "textVi": "(Cười)",
+    "words": [
+      "(Laughter)"
+    ]
+  },
+  {
+    "id": 69,
+    "start": 214.93,
+    "duration": 1.68,
+    "end": 216.61,
+    "textEn": "So, 15 minutes left.",
+    "textVi": "Vậy là còn 15 phút.",
+    "words": [
+      "So,",
+      "15",
+      "minutes",
+      "left."
+    ]
+  },
+  {
+    "id": 70,
+    "start": 216.63,
+    "duration": 3.16,
+    "end": 219.79,
+    "textEn": "(Laughter)",
+    "textVi": "(Cười)",
+    "words": [
+      "(Laughter)"
+    ]
+  },
+  {
+    "id": 71,
+    "start": 219.82,
+    "duration": 1.67,
+    "end": 221.49,
+    "textEn": "\"Well, I was born ... \"",
+    "textVi": "“Ồ, tôi được sinh ra…”",
+    "words": [
+      "\"Well,",
+      "I",
+      "was",
+      "born",
+      "...",
+      "\""
+    ]
+  },
+  {
+    "id": 72,
+    "start": 221.51,
+    "duration": 3.47,
+    "end": 224.98,
+    "textEn": "(Laughter)",
+    "textVi": "(Cười)",
+    "words": [
+      "(Laughter)"
+    ]
+  },
+  {
+    "id": 73,
+    "start": 225.01,
+    "duration": 2.65,
+    "end": 227.66,
+    "textEn": "I heard a great story recently -- I love telling it --",
+    "textVi": "Gần đây tôi đã nghe một câu chuyện hay -- tôi thích kể nó --",
+    "words": [
+      "I",
+      "heard",
+      "a",
+      "great",
+      "story",
+      "recently",
+      "--",
+      "I",
+      "love",
+      "telling",
+      "it",
+      "--"
+    ]
+  },
+  {
+    "id": 74,
+    "start": 227.68,
+    "duration": 2.37,
+    "end": 230.05,
+    "textEn": "of a little girl who was in a drawing lesson.",
+    "textVi": "của một cô bé đang học vẽ.",
+    "words": [
+      "of",
+      "a",
+      "little",
+      "girl",
+      "who",
+      "was",
+      "in",
+      "a",
+      "drawing",
+      "lesson."
+    ]
+  },
+  {
+    "id": 75,
+    "start": 230.07,
+    "duration": 2.17,
+    "end": 232.24,
+    "textEn": "She was six, and she was at the back, drawing,",
+    "textVi": "Cô bé sáu tuổi và đứng ở phía sau, vẽ,",
+    "words": [
+      "She",
+      "was",
+      "six,",
+      "and",
+      "she",
+      "was",
+      "at",
+      "the",
+      "back,",
+      "drawing,"
+    ]
+  },
+  {
+    "id": 76,
+    "start": 232.27,
+    "duration": 2.76,
+    "end": 235.03,
+    "textEn": "and the teacher said this girl hardly ever paid attention,",
+    "textVi": "và giáo viên nói rằng cô gái này hiếm khi chú ý,",
+    "words": [
+      "and",
+      "the",
+      "teacher",
+      "said",
+      "this",
+      "girl",
+      "hardly",
+      "ever",
+      "paid",
+      "attention,"
+    ]
+  },
+  {
+    "id": 77,
+    "start": 235.06,
+    "duration": 1.79,
+    "end": 236.85,
+    "textEn": "and in this drawing lesson, she did.",
+    "textVi": "và trong bài học vẽ này, cô đã làm được.",
+    "words": [
+      "and",
+      "in",
+      "this",
+      "drawing",
+      "lesson,",
+      "she",
+      "did."
+    ]
+  },
+  {
+    "id": 78,
+    "start": 236.87,
+    "duration": 1.34,
+    "end": 238.21,
+    "textEn": "The teacher was fascinated.",
+    "textVi": "Cô giáo bị mê hoặc.",
+    "words": [
+      "The",
+      "teacher",
+      "was",
+      "fascinated."
+    ]
+  },
+  {
+    "id": 79,
+    "start": 238.23,
+    "duration": 2.79,
+    "end": 241.02,
+    "textEn": "She went over to her, and she said, \"What are you drawing?\"",
+    "textVi": "Cô ấy đi đến chỗ cô ấy và nói: \"Em đang vẽ gì vậy?\"",
+    "words": [
+      "She",
+      "went",
+      "over",
+      "to",
+      "her,",
+      "and",
+      "she",
+      "said,",
+      "\"What",
+      "are",
+      "you",
+      "drawing?\""
+    ]
+  },
+  {
+    "id": 80,
+    "start": 241.04,
+    "duration": 2.49,
+    "end": 243.53,
+    "textEn": "And the girl said, \"I'm drawing a picture of God.\"",
+    "textVi": "Và cô gái nói: \"Em đang vẽ một bức tranh về Chúa.\"",
+    "words": [
+      "And",
+      "the",
+      "girl",
+      "said,",
+      "\"I'm",
+      "drawing",
+      "a",
+      "picture",
+      "of",
+      "God.\""
+    ]
+  },
+  {
+    "id": 81,
+    "start": 244.64,
+    "duration": 3.32,
+    "end": 247.96,
+    "textEn": "And the teacher said, \"But nobody knows what God looks like.\"",
+    "textVi": "Và giáo viên nói: \"Nhưng không ai biết Chúa trông như thế nào.\"",
+    "words": [
+      "And",
+      "the",
+      "teacher",
+      "said,",
+      "\"But",
+      "nobody",
+      "knows",
+      "what",
+      "God",
+      "looks",
+      "like.\""
+    ]
+  },
+  {
+    "id": 82,
+    "start": 247.98,
+    "duration": 2.09,
+    "end": 250.07,
+    "textEn": "And the girl said, \"They will in a minute.\"",
+    "textVi": "Và cô gái nói: \"Họ sẽ làm được trong một phút nữa.\"",
+    "words": [
+      "And",
+      "the",
+      "girl",
+      "said,",
+      "\"They",
+      "will",
+      "in",
+      "a",
+      "minute.\""
+    ]
+  },
+  {
+    "id": 83,
+    "start": 250.1,
+    "duration": 6.78,
+    "end": 256.88,
+    "textEn": "(Laughter)",
+    "textVi": "(Cười)",
+    "words": [
+      "(Laughter)"
+    ]
+  },
+  {
+    "id": 84,
+    "start": 261.66,
+    "duration": 2.73,
+    "end": 264.39,
+    "textEn": "When my son was four in England --",
+    "textVi": "Khi con trai tôi bốn tuổi ở Anh --",
+    "words": [
+      "When",
+      "my",
+      "son",
+      "was",
+      "four",
+      "in",
+      "England",
+      "--"
+    ]
+  },
+  {
+    "id": 85,
+    "start": 264.41,
+    "duration": 2.19,
+    "end": 266.6,
+    "textEn": "actually, he was four everywhere, to be honest.",
+    "textVi": "thực ra, thành thật mà nói, anh ấy có bốn người ở khắp mọi nơi.",
+    "words": [
+      "actually,",
+      "he",
+      "was",
+      "four",
+      "everywhere,",
+      "to",
+      "be",
+      "honest."
+    ]
+  },
+  {
+    "id": 86,
+    "start": 266.63,
+    "duration": 1.75,
+    "end": 268.38,
+    "textEn": "(Laughter)",
+    "textVi": "(Cười)",
+    "words": [
+      "(Laughter)"
+    ]
+  },
+  {
+    "id": 87,
+    "start": 268.4,
+    "duration": 3.39,
+    "end": 271.79,
+    "textEn": "If we're being strict about it, wherever he went, he was four that year.",
+    "textVi": "Nếu chúng ta nghiêm túc về điều đó, thì bất cứ nơi nào cậu ấy đi, năm đó cậu ấy mới bốn tuổi.",
+    "words": [
+      "If",
+      "we're",
+      "being",
+      "strict",
+      "about",
+      "it,",
+      "wherever",
+      "he",
+      "went,",
+      "he",
+      "was",
+      "four",
+      "that",
+      "year."
+    ]
+  },
+  {
+    "id": 88,
+    "start": 271.81,
+    "duration": 2.64,
+    "end": 274.45,
+    "textEn": "He was in the Nativity play. Do you remember the story?",
+    "textVi": "Anh ấy đã tham gia vở kịch Chúa giáng sinh. Bạn có nhớ câu chuyện không?",
+    "words": [
+      "He",
+      "was",
+      "in",
+      "the",
+      "Nativity",
+      "play.",
+      "Do",
+      "you",
+      "remember",
+      "the",
+      "story?"
+    ]
+  },
+  {
+    "id": 89,
+    "start": 274.48,
+    "duration": 1.22,
+    "end": 275.7,
+    "textEn": "(Laughter)",
+    "textVi": "(Cười)",
+    "words": [
+      "(Laughter)"
+    ]
+  },
+  {
+    "id": 90,
+    "start": 275.72,
+    "duration": 1.83,
+    "end": 277.55,
+    "textEn": "No, it was big, it was a big story.",
+    "textVi": "Không, nó lớn, nó là một câu chuyện lớn.",
+    "words": [
+      "No,",
+      "it",
+      "was",
+      "big,",
+      "it",
+      "was",
+      "a",
+      "big",
+      "story."
+    ]
+  },
+  {
+    "id": 91,
+    "start": 277.57,
+    "duration": 2.31,
+    "end": 279.88,
+    "textEn": "Mel Gibson did the sequel, you may have seen it.",
+    "textVi": "Mel Gibson đã làm phần tiếp theo, có thể bạn đã xem rồi.",
+    "words": [
+      "Mel",
+      "Gibson",
+      "did",
+      "the",
+      "sequel,",
+      "you",
+      "may",
+      "have",
+      "seen",
+      "it."
+    ]
+  },
+  {
+    "id": 92,
+    "start": 279.9,
+    "duration": 1.26,
+    "end": 281.16,
+    "textEn": "(Laughter)",
+    "textVi": "(Cười)",
+    "words": [
+      "(Laughter)"
+    ]
+  },
+  {
+    "id": 93,
+    "start": 281.19,
+    "duration": 1.56,
+    "end": 282.75,
+    "textEn": "\"Nativity II.\"",
+    "textVi": "\"Chúa giáng sinh II.\"",
+    "words": [
+      "\"Nativity",
+      "II.\""
+    ]
+  },
+  {
+    "id": 94,
+    "start": 282.77,
+    "duration": 3.88,
+    "end": 286.65,
+    "textEn": "But James got the part of Joseph, which we were thrilled about.",
+    "textVi": "Nhưng James đã nhận được vai Joseph, điều mà chúng tôi rất vui mừng.",
+    "words": [
+      "But",
+      "James",
+      "got",
+      "the",
+      "part",
+      "of",
+      "Joseph,",
+      "which",
+      "we",
+      "were",
+      "thrilled",
+      "about."
+    ]
+  },
+  {
+    "id": 95,
+    "start": 286.68,
+    "duration": 2.91,
+    "end": 289.59,
+    "textEn": "We considered this to be one of the lead parts.",
+    "textVi": "Chúng tôi coi đây là một trong những phần dẫn đầu.",
+    "words": [
+      "We",
+      "considered",
+      "this",
+      "to",
+      "be",
+      "one",
+      "of",
+      "the",
+      "lead",
+      "parts."
+    ]
+  },
+  {
+    "id": 96,
+    "start": 289.61,
+    "duration": 2.49,
+    "end": 292.1,
+    "textEn": "We had the place crammed full of agents in T-shirts:",
+    "textVi": "Chúng tôi có một nơi chật kín các đặc vụ mặc áo phông:",
+    "words": [
+      "We",
+      "had",
+      "the",
+      "place",
+      "crammed",
+      "full",
+      "of",
+      "agents",
+      "in",
+      "T-shirts:"
+    ]
+  },
+  {
+    "id": 97,
+    "start": 292.12,
+    "duration": 1.41,
+    "end": 293.53,
+    "textEn": "\"James Robinson IS Joseph!\"",
+    "textVi": "\"James Robinson LÀ Joseph!\"",
+    "words": [
+      "\"James",
+      "Robinson",
+      "IS",
+      "Joseph!\""
+    ]
+  },
+  {
+    "id": 98,
+    "start": 293.56,
+    "duration": 1.03,
+    "end": 294.59,
+    "textEn": "(Laughter)",
+    "textVi": "(Cười)",
+    "words": [
+      "(Laughter)"
+    ]
+  },
+  {
+    "id": 99,
+    "start": 294.61,
+    "duration": 3.63,
+    "end": 298.24,
+    "textEn": "He didn't have to speak, but you know the bit where the three kings come in?",
+    "textVi": "Anh ta không cần phải nói, nhưng bạn có biết đoạn ba vị vua bước vào không?",
+    "words": [
+      "He",
+      "didn't",
+      "have",
+      "to",
+      "speak,",
+      "but",
+      "you",
+      "know",
+      "the",
+      "bit",
+      "where",
+      "the",
+      "three",
+      "kings",
+      "come",
+      "in?"
+    ]
+  },
+  {
+    "id": 100,
+    "start": 298.27,
+    "duration": 2.69,
+    "end": 300.96,
+    "textEn": "They come in bearing gifts, gold, frankincense and myrrh.",
+    "textVi": "Họ đến mang theo quà tặng là vàng, trầm hương và mộc dược.",
+    "words": [
+      "They",
+      "come",
+      "in",
+      "bearing",
+      "gifts,",
+      "gold,",
+      "frankincense",
+      "and",
+      "myrrh."
+    ]
+  },
+  {
+    "id": 101,
+    "start": 300.98,
+    "duration": 1.16,
+    "end": 302.14,
+    "textEn": "This really happened.",
+    "textVi": "Điều này thực sự đã xảy ra.",
+    "words": [
+      "This",
+      "really",
+      "happened."
+    ]
+  },
+  {
+    "id": 102,
+    "start": 302.16,
+    "duration": 3.12,
+    "end": 305.28,
+    "textEn": "We were sitting there, and I think they just went out of sequence,",
+    "textVi": "Chúng tôi đang ngồi đó, và tôi nghĩ họ đã đi sai trật tự,",
+    "words": [
+      "We",
+      "were",
+      "sitting",
+      "there,",
+      "and",
+      "I",
+      "think",
+      "they",
+      "just",
+      "went",
+      "out",
+      "of",
+      "sequence,"
+    ]
+  },
+  {
+    "id": 103,
+    "start": 305.3,
+    "duration": 2.58,
+    "end": 307.88,
+    "textEn": "because we talked to the little boy afterward and said,",
+    "textVi": "bởi vì sau đó chúng tôi đã nói chuyện với cậu bé và nói,",
+    "words": [
+      "because",
+      "we",
+      "talked",
+      "to",
+      "the",
+      "little",
+      "boy",
+      "afterward",
+      "and",
+      "said,"
+    ]
+  },
+  {
+    "id": 104,
+    "start": 307.9,
+    "duration": 2.8,
+    "end": 310.7,
+    "textEn": "\"You OK with that?\" They said, \"Yeah, why? Was that wrong?\"",
+    "textVi": "\"Bạn đồng ý với điều đó?\" Họ nói, \"Ừ, tại sao? Điều đó sai à?\"",
+    "words": [
+      "\"You",
+      "OK",
+      "with",
+      "that?\"",
+      "They",
+      "said,",
+      "\"Yeah,",
+      "why?",
+      "Was",
+      "that",
+      "wrong?\""
+    ]
+  },
+  {
+    "id": 105,
+    "start": 310.72,
+    "duration": 1.16,
+    "end": 311.88,
+    "textEn": "They just switched.",
+    "textVi": "Họ vừa mới chuyển đổi.",
+    "words": [
+      "They",
+      "just",
+      "switched."
+    ]
+  },
+  {
+    "id": 106,
+    "start": 311.9,
+    "duration": 3.31,
+    "end": 315.21,
+    "textEn": "The three boys came in, four-year-olds with tea towels on their heads.",
+    "textVi": "Ba cậu bé bước vào, những đứa trẻ bốn tuổi đội khăn trà trên đầu.",
+    "words": [
+      "The",
+      "three",
+      "boys",
+      "came",
+      "in,",
+      "four-year-olds",
+      "with",
+      "tea",
+      "towels",
+      "on",
+      "their",
+      "heads."
+    ]
+  },
+  {
+    "id": 107,
+    "start": 315.23,
+    "duration": 3.32,
+    "end": 318.55,
+    "textEn": "They put these boxes down, and the first boy said, \"I bring you gold.\"",
+    "textVi": "Họ đặt những chiếc hộp này xuống và cậu bé đầu tiên nói: \"Tôi mang vàng cho bạn.\"",
+    "words": [
+      "They",
+      "put",
+      "these",
+      "boxes",
+      "down,",
+      "and",
+      "the",
+      "first",
+      "boy",
+      "said,",
+      "\"I",
+      "bring",
+      "you",
+      "gold.\""
+    ]
+  },
+  {
+    "id": 108,
+    "start": 318.58,
+    "duration": 2.27,
+    "end": 320.85,
+    "textEn": "And the second boy said, \"I bring you myrrh.\"",
+    "textVi": "Và cậu bé thứ hai nói: \"Tôi mang cho bạn mộc dược.\"",
+    "words": [
+      "And",
+      "the",
+      "second",
+      "boy",
+      "said,",
+      "\"I",
+      "bring",
+      "you",
+      "myrrh.\""
+    ]
+  },
+  {
+    "id": 109,
+    "start": 320.88,
+    "duration": 2.08,
+    "end": 322.96,
+    "textEn": "And the third boy said, \"Frank sent this.\"",
+    "textVi": "Và cậu bé thứ ba nói: \"Frank đã gửi cái này.\"",
+    "words": [
+      "And",
+      "the",
+      "third",
+      "boy",
+      "said,",
+      "\"Frank",
+      "sent",
+      "this.\""
+    ]
+  },
+  {
+    "id": 110,
+    "start": 322.98,
+    "duration": 5.48,
+    "end": 328.46,
+    "textEn": "(Laughter)",
+    "textVi": "(Cười)",
+    "words": [
+      "(Laughter)"
+    ]
+  },
+  {
+    "id": 111,
+    "start": 335.71,
+    "duration": 3.09,
+    "end": 338.8,
+    "textEn": "What these things have in common is that kids will take a chance.",
+    "textVi": "Điểm chung của những điều này là trẻ em sẽ nắm bắt được cơ hội.",
+    "words": [
+      "What",
+      "these",
+      "things",
+      "have",
+      "in",
+      "common",
+      "is",
+      "that",
+      "kids",
+      "will",
+      "take",
+      "a",
+      "chance."
+    ]
+  },
+  {
+    "id": 112,
+    "start": 338.82,
+    "duration": 3.48,
+    "end": 342.3,
+    "textEn": "If they don't know, they'll have a go.",
+    "textVi": "Nếu họ không biết, họ sẽ thử.",
+    "words": [
+      "If",
+      "they",
+      "don't",
+      "know,",
+      "they'll",
+      "have",
+      "a",
+      "go."
+    ]
+  },
+  {
+    "id": 113,
+    "start": 342.33,
+    "duration": 3.03,
+    "end": 345.36,
+    "textEn": "Am I right? They're not frightened of being wrong.",
+    "textVi": "Tôi có đúng không? Họ không sợ bị sai.",
+    "words": [
+      "Am",
+      "I",
+      "right?",
+      "They're",
+      "not",
+      "frightened",
+      "of",
+      "being",
+      "wrong."
+    ]
+  },
+  {
+    "id": 114,
+    "start": 345.92,
+    "duration": 3.51,
+    "end": 349.43,
+    "textEn": "I don't mean to say that being wrong is the same thing as being creative.",
+    "textVi": "Tôi không có ý nói rằng sai lầm đồng nghĩa với việc sáng tạo.",
+    "words": [
+      "I",
+      "don't",
+      "mean",
+      "to",
+      "say",
+      "that",
+      "being",
+      "wrong",
+      "is",
+      "the",
+      "same",
+      "thing",
+      "as",
+      "being",
+      "creative."
+    ]
+  },
+  {
+    "id": 115,
+    "start": 349.89,
+    "duration": 3.09,
+    "end": 352.98,
+    "textEn": "What we do know is, if you're not prepared to be wrong,",
+    "textVi": "Điều chúng tôi biết là, nếu bạn không sẵn sàng mắc sai lầm,",
+    "words": [
+      "What",
+      "we",
+      "do",
+      "know",
+      "is,",
+      "if",
+      "you're",
+      "not",
+      "prepared",
+      "to",
+      "be",
+      "wrong,"
+    ]
+  },
+  {
+    "id": 116,
+    "start": 353.0,
+    "duration": 2.37,
+    "end": 355.37,
+    "textEn": "you'll never come up with anything original --",
+    "textVi": "bạn sẽ không bao giờ nghĩ ra được điều gì độc đáo --",
+    "words": [
+      "you'll",
+      "never",
+      "come",
+      "up",
+      "with",
+      "anything",
+      "original",
+      "--"
+    ]
+  },
+  {
+    "id": 117,
+    "start": 355.39,
+    "duration": 2.58,
+    "end": 357.97,
+    "textEn": "if you're not prepared to be wrong.",
+    "textVi": "nếu bạn không sẵn sàng mắc sai lầm.",
+    "words": [
+      "if",
+      "you're",
+      "not",
+      "prepared",
+      "to",
+      "be",
+      "wrong."
+    ]
+  },
+  {
+    "id": 118,
+    "start": 358.0,
+    "duration": 4.44,
+    "end": 362.44,
+    "textEn": "And by the time they get to be adults, most kids have lost that capacity.",
+    "textVi": "Và đến khi trưởng thành, hầu hết trẻ em đều mất đi khả năng đó.",
+    "words": [
+      "And",
+      "by",
+      "the",
+      "time",
+      "they",
+      "get",
+      "to",
+      "be",
+      "adults,",
+      "most",
+      "kids",
+      "have",
+      "lost",
+      "that",
+      "capacity."
+    ]
+  },
+  {
+    "id": 119,
+    "start": 362.46,
+    "duration": 2.46,
+    "end": 364.92,
+    "textEn": "They have become frightened of being wrong.",
+    "textVi": "Họ đã trở nên sợ hãi vì bị sai lầm.",
+    "words": [
+      "They",
+      "have",
+      "become",
+      "frightened",
+      "of",
+      "being",
+      "wrong."
+    ]
+  },
+  {
+    "id": 120,
+    "start": 364.95,
+    "duration": 1.69,
+    "end": 366.64,
+    "textEn": "And we run our companies like this.",
+    "textVi": "Và chúng tôi điều hành công ty của mình như thế này.",
+    "words": [
+      "And",
+      "we",
+      "run",
+      "our",
+      "companies",
+      "like",
+      "this."
+    ]
+  },
+  {
+    "id": 121,
+    "start": 366.66,
+    "duration": 1.65,
+    "end": 368.31,
+    "textEn": "We stigmatize mistakes.",
+    "textVi": "Chúng ta kỳ thị những sai lầm.",
+    "words": [
+      "We",
+      "stigmatize",
+      "mistakes."
+    ]
+  },
+  {
+    "id": 122,
+    "start": 368.34,
+    "duration": 2.3,
+    "end": 370.64,
+    "textEn": "And we're now running national education systems",
+    "textVi": "Và chúng tôi hiện đang vận hành hệ thống giáo dục quốc gia",
+    "words": [
+      "And",
+      "we're",
+      "now",
+      "running",
+      "national",
+      "education",
+      "systems"
+    ]
+  },
+  {
+    "id": 123,
+    "start": 370.67,
+    "duration": 2.54,
+    "end": 373.21,
+    "textEn": "where mistakes are the worst thing you can make.",
+    "textVi": "nơi sai lầm là điều tồi tệ nhất bạn có thể mắc phải.",
+    "words": [
+      "where",
+      "mistakes",
+      "are",
+      "the",
+      "worst",
+      "thing",
+      "you",
+      "can",
+      "make."
+    ]
+  },
+  {
+    "id": 124,
+    "start": 373.8,
+    "duration": 3.11,
+    "end": 376.91,
+    "textEn": "And the result is that we are educating people",
+    "textVi": "Và kết quả là chúng tôi đang giáo dục mọi người",
+    "words": [
+      "And",
+      "the",
+      "result",
+      "is",
+      "that",
+      "we",
+      "are",
+      "educating",
+      "people"
+    ]
+  },
+  {
+    "id": 125,
+    "start": 376.93,
+    "duration": 2.34,
+    "end": 379.27,
+    "textEn": "out of their creative capacities.",
+    "textVi": "ngoài khả năng sáng tạo của họ.",
+    "words": [
+      "out",
+      "of",
+      "their",
+      "creative",
+      "capacities."
+    ]
+  },
+  {
+    "id": 126,
+    "start": 379.3,
+    "duration": 4.43,
+    "end": 383.73,
+    "textEn": "Picasso once said this, he said that all children are born artists.",
+    "textVi": "Picasso từng nói điều này, ông cho rằng mọi đứa trẻ sinh ra đều là nghệ sĩ.",
+    "words": [
+      "Picasso",
+      "once",
+      "said",
+      "this,",
+      "he",
+      "said",
+      "that",
+      "all",
+      "children",
+      "are",
+      "born",
+      "artists."
+    ]
+  },
+  {
+    "id": 127,
+    "start": 383.75,
+    "duration": 3.22,
+    "end": 386.97,
+    "textEn": "The problem is to remain an artist as we grow up.",
+    "textVi": "Vấn đề là vẫn là một nghệ sĩ khi chúng ta lớn lên.",
+    "words": [
+      "The",
+      "problem",
+      "is",
+      "to",
+      "remain",
+      "an",
+      "artist",
+      "as",
+      "we",
+      "grow",
+      "up."
+    ]
+  },
+  {
+    "id": 128,
+    "start": 387.0,
+    "duration": 3.23,
+    "end": 390.23,
+    "textEn": "I believe this passionately, that we don't grow into creativity,",
+    "textVi": "Tôi tin tưởng một cách say mê rằng chúng ta không phát triển thành sự sáng tạo,",
+    "words": [
+      "I",
+      "believe",
+      "this",
+      "passionately,",
+      "that",
+      "we",
+      "don't",
+      "grow",
+      "into",
+      "creativity,"
+    ]
+  },
+  {
+    "id": 129,
+    "start": 390.25,
+    "duration": 1.71,
+    "end": 391.96,
+    "textEn": "we grow out of it.",
+    "textVi": "chúng ta trưởng thành từ nó.",
+    "words": [
+      "we",
+      "grow",
+      "out",
+      "of",
+      "it."
+    ]
+  },
+  {
+    "id": 130,
+    "start": 391.98,
+    "duration": 1.88,
+    "end": 393.86,
+    "textEn": "Or rather, we get educated out of it.",
+    "textVi": "Hay đúng hơn là chúng ta được giáo dục từ nó.",
+    "words": [
+      "Or",
+      "rather,",
+      "we",
+      "get",
+      "educated",
+      "out",
+      "of",
+      "it."
+    ]
+  },
+  {
+    "id": 131,
+    "start": 394.61,
+    "duration": 1.9,
+    "end": 396.51,
+    "textEn": "So why is this?",
+    "textVi": "Vậy tại sao lại thế này?",
+    "words": [
+      "So",
+      "why",
+      "is",
+      "this?"
+    ]
+  },
+  {
+    "id": 132,
+    "start": 397.12,
+    "duration": 2.78,
+    "end": 399.9,
+    "textEn": "I lived in Stratford-on-Avon until about five years ago.",
+    "textVi": "Tôi sống ở Stratford-on-Avon cho đến khoảng năm năm trước.",
+    "words": [
+      "I",
+      "lived",
+      "in",
+      "Stratford-on-Avon",
+      "until",
+      "about",
+      "five",
+      "years",
+      "ago."
+    ]
+  },
+  {
+    "id": 133,
+    "start": 399.93,
+    "duration": 2.25,
+    "end": 402.18,
+    "textEn": "In fact, we moved from Stratford to Los Angeles.",
+    "textVi": "Trên thực tế, chúng tôi đã chuyển từ Stratford đến Los Angeles.",
+    "words": [
+      "In",
+      "fact,",
+      "we",
+      "moved",
+      "from",
+      "Stratford",
+      "to",
+      "Los",
+      "Angeles."
+    ]
+  },
+  {
+    "id": 134,
+    "start": 402.91,
+    "duration": 2.62,
+    "end": 405.53,
+    "textEn": "So you can imagine what a seamless transition this was.",
+    "textVi": "Vì vậy, bạn có thể tưởng tượng đây là một quá trình chuyển đổi liền mạch như thế nào.",
+    "words": [
+      "So",
+      "you",
+      "can",
+      "imagine",
+      "what",
+      "a",
+      "seamless",
+      "transition",
+      "this",
+      "was."
+    ]
+  },
+  {
+    "id": 135,
+    "start": 405.56,
+    "duration": 1.42,
+    "end": 406.98,
+    "textEn": "(Laughter)",
+    "textVi": "(Cười)",
+    "words": [
+      "(Laughter)"
+    ]
+  },
+  {
+    "id": 136,
+    "start": 407.0,
+    "duration": 2.38,
+    "end": 409.38,
+    "textEn": "Actually, we lived in a place called Snitterfield,",
+    "textVi": "Thực ra, chúng tôi sống ở một nơi tên là Snitterfield,",
+    "words": [
+      "Actually,",
+      "we",
+      "lived",
+      "in",
+      "a",
+      "place",
+      "called",
+      "Snitterfield,"
+    ]
+  },
+  {
+    "id": 137,
+    "start": 409.4,
+    "duration": 1.25,
+    "end": 410.65,
+    "textEn": "just outside Stratford,",
+    "textVi": "ngay bên ngoài Stratford,",
+    "words": [
+      "just",
+      "outside",
+      "Stratford,"
+    ]
+  },
+  {
+    "id": 138,
+    "start": 410.68,
+    "duration": 2.63,
+    "end": 413.31,
+    "textEn": "which is where Shakespeare's father was born.",
+    "textVi": "đó là nơi cha của Shakespeare được sinh ra.",
+    "words": [
+      "which",
+      "is",
+      "where",
+      "Shakespeare's",
+      "father",
+      "was",
+      "born."
+    ]
+  },
+  {
+    "id": 139,
+    "start": 413.33,
+    "duration": 2.12,
+    "end": 415.45,
+    "textEn": "Are you struck by a new thought? I was.",
+    "textVi": "Bạn có bị ấn tượng bởi một ý nghĩ mới không? Tôi đã như vậy.",
+    "words": [
+      "Are",
+      "you",
+      "struck",
+      "by",
+      "a",
+      "new",
+      "thought?",
+      "I",
+      "was."
+    ]
+  },
+  {
+    "id": 140,
+    "start": 415.48,
+    "duration": 2.6,
+    "end": 418.08,
+    "textEn": "You don't think of Shakespeare having a father, do you?",
+    "textVi": "Bạn không nghĩ Shakespeare có một người cha phải không?",
+    "words": [
+      "You",
+      "don't",
+      "think",
+      "of",
+      "Shakespeare",
+      "having",
+      "a",
+      "father,",
+      "do",
+      "you?"
+    ]
+  },
+  {
+    "id": 141,
+    "start": 418.1,
+    "duration": 1.37,
+    "end": 419.47,
+    "textEn": "Do you?",
+    "textVi": "Bạn có?",
+    "words": [
+      "Do",
+      "you?"
+    ]
+  },
+  {
+    "id": 142,
+    "start": 419.5,
+    "duration": 2.89,
+    "end": 422.39,
+    "textEn": "Because you don't think of Shakespeare being a child, do you?",
+    "textVi": "Bởi vì bạn không nghĩ Shakespeare là một đứa trẻ phải không?",
+    "words": [
+      "Because",
+      "you",
+      "don't",
+      "think",
+      "of",
+      "Shakespeare",
+      "being",
+      "a",
+      "child,",
+      "do",
+      "you?"
+    ]
+  },
+  {
+    "id": 143,
+    "start": 422.41,
+    "duration": 1.26,
+    "end": 423.67,
+    "textEn": "Shakespeare being seven?",
+    "textVi": "Shakespeare lên bảy?",
+    "words": [
+      "Shakespeare",
+      "being",
+      "seven?"
+    ]
+  },
+  {
+    "id": 144,
+    "start": 423.7,
+    "duration": 1.18,
+    "end": 424.88,
+    "textEn": "I never thought of it.",
+    "textVi": "Tôi chưa bao giờ nghĩ về nó.",
+    "words": [
+      "I",
+      "never",
+      "thought",
+      "of",
+      "it."
+    ]
+  },
+  {
+    "id": 145,
+    "start": 424.9,
+    "duration": 1.69,
+    "end": 426.59,
+    "textEn": "I mean, he was seven at some point.",
+    "textVi": "Ý tôi là, có lúc anh ấy đã bảy tuổi.",
+    "words": [
+      "I",
+      "mean,",
+      "he",
+      "was",
+      "seven",
+      "at",
+      "some",
+      "point."
+    ]
+  },
+  {
+    "id": 146,
+    "start": 426.62,
+    "duration": 2.27,
+    "end": 428.89,
+    "textEn": "He was in somebody's English class, wasn't he?",
+    "textVi": "Anh ấy học trong lớp tiếng Anh của ai đó phải không?",
+    "words": [
+      "He",
+      "was",
+      "in",
+      "somebody's",
+      "English",
+      "class,",
+      "wasn't",
+      "he?"
+    ]
+  },
+  {
+    "id": 147,
+    "start": 428.91,
+    "duration": 6.79,
+    "end": 435.7,
+    "textEn": "(Laughter)",
+    "textVi": "(Cười)",
+    "words": [
+      "(Laughter)"
+    ]
+  },
+  {
+    "id": 148,
+    "start": 435.72,
+    "duration": 1.33,
+    "end": 437.05,
+    "textEn": "How annoying would that be?",
+    "textVi": "Điều đó sẽ khó chịu đến thế nào?",
+    "words": [
+      "How",
+      "annoying",
+      "would",
+      "that",
+      "be?"
+    ]
+  },
+  {
+    "id": 149,
+    "start": 437.07,
+    "duration": 3.0,
+    "end": 440.07,
+    "textEn": "(Laughter)",
+    "textVi": "(Cười)",
+    "words": [
+      "(Laughter)"
+    ]
+  },
+  {
+    "id": 150,
+    "start": 444.94,
+    "duration": 1.34,
+    "end": 446.28,
+    "textEn": "\"Must try harder.\"",
+    "textVi": "\"Phải cố gắng hơn nữa.\"",
+    "words": [
+      "\"Must",
+      "try",
+      "harder.\""
+    ]
+  },
+  {
+    "id": 151,
+    "start": 446.3,
+    "duration": 3.4,
+    "end": 449.7,
+    "textEn": "(Laughter)",
+    "textVi": "(Cười)",
+    "words": [
+      "(Laughter)"
+    ]
+  },
+  {
+    "id": 152,
+    "start": 450.56,
+    "duration": 2.98,
+    "end": 453.54,
+    "textEn": "Being sent to bed by his dad, to Shakespeare, \"Go to bed, now!\"",
+    "textVi": "Được bố đưa đi ngủ nói với Shakespeare: \"Đi ngủ ngay!\"",
+    "words": [
+      "Being",
+      "sent",
+      "to",
+      "bed",
+      "by",
+      "his",
+      "dad,",
+      "to",
+      "Shakespeare,",
+      "\"Go",
+      "to",
+      "bed,",
+      "now!\""
+    ]
+  },
+  {
+    "id": 153,
+    "start": 453.56,
+    "duration": 1.16,
+    "end": 454.72,
+    "textEn": "To William Shakespeare.",
+    "textVi": "Gửi William Shakespeare.",
+    "words": [
+      "To",
+      "William",
+      "Shakespeare."
+    ]
+  },
+  {
+    "id": 154,
+    "start": 454.75,
+    "duration": 1.27,
+    "end": 456.02,
+    "textEn": "\"And put the pencil down!\"",
+    "textVi": "\"Và đặt bút chì xuống!\"",
+    "words": [
+      "\"And",
+      "put",
+      "the",
+      "pencil",
+      "down!\""
+    ]
+  },
+  {
+    "id": 155,
+    "start": 456.04,
+    "duration": 1.07,
+    "end": 457.11,
+    "textEn": "(Laughter)",
+    "textVi": "(Cười)",
+    "words": [
+      "(Laughter)"
+    ]
+  },
+  {
+    "id": 156,
+    "start": 457.14,
+    "duration": 1.48,
+    "end": 458.62,
+    "textEn": "\"And stop speaking like that.\"",
+    "textVi": "“Và đừng nói kiểu đó nữa.”",
+    "words": [
+      "\"And",
+      "stop",
+      "speaking",
+      "like",
+      "that.\""
+    ]
+  },
+  {
+    "id": 157,
+    "start": 458.64,
+    "duration": 3.58,
+    "end": 462.22,
+    "textEn": "(Laughter)",
+    "textVi": "(Cười)",
+    "words": [
+      "(Laughter)"
+    ]
+  },
+  {
+    "id": 158,
+    "start": 462.24,
+    "duration": 1.32,
+    "end": 463.56,
+    "textEn": "\"It's confusing everybody.\"",
+    "textVi": "“Nó làm mọi người bối rối.”",
+    "words": [
+      "\"It's",
+      "confusing",
+      "everybody.\""
+    ]
+  },
+  {
+    "id": 159,
+    "start": 463.59,
+    "duration": 5.27,
+    "end": 468.86,
+    "textEn": "(Laughter)",
+    "textVi": "(Cười)",
+    "words": [
+      "(Laughter)"
+    ]
+  },
+  {
+    "id": 160,
+    "start": 468.89,
+    "duration": 5.19,
+    "end": 474.08,
+    "textEn": "Anyway, we moved from Stratford to Los Angeles,",
+    "textVi": "Dù sao thì chúng tôi đã chuyển từ Stratford đến Los Angeles,",
+    "words": [
+      "Anyway,",
+      "we",
+      "moved",
+      "from",
+      "Stratford",
+      "to",
+      "Los",
+      "Angeles,"
+    ]
+  },
+  {
+    "id": 161,
+    "start": 474.1,
+    "duration": 2.48,
+    "end": 476.58,
+    "textEn": "and I just want to say a word about the transition.",
+    "textVi": "và tôi chỉ muốn nói đôi lời về quá trình chuyển đổi.",
+    "words": [
+      "and",
+      "I",
+      "just",
+      "want",
+      "to",
+      "say",
+      "a",
+      "word",
+      "about",
+      "the",
+      "transition."
+    ]
+  },
+  {
+    "id": 162,
+    "start": 476.6,
+    "duration": 1.8,
+    "end": 478.4,
+    "textEn": "Actually, my son didn't want to come.",
+    "textVi": "Thực ra, con trai tôi không muốn đến.",
+    "words": [
+      "Actually,",
+      "my",
+      "son",
+      "didn't",
+      "want",
+      "to",
+      "come."
+    ]
+  },
+  {
+    "id": 163,
+    "start": 478.42,
+    "duration": 2.4,
+    "end": 480.82,
+    "textEn": "I've got two kids; he's 21 now, my daughter's 16.",
+    "textVi": "Tôi có hai đứa con; bây giờ anh ấy 21 tuổi, con gái tôi 16 tuổi.",
+    "words": [
+      "I've",
+      "got",
+      "two",
+      "kids;",
+      "he's",
+      "21",
+      "now,",
+      "my",
+      "daughter's",
+      "16."
+    ]
+  },
+  {
+    "id": 164,
+    "start": 480.84,
+    "duration": 2.2,
+    "end": 483.04,
+    "textEn": "He didn't want to come to Los Angeles.",
+    "textVi": "Anh ấy không muốn đến Los Angeles.",
+    "words": [
+      "He",
+      "didn't",
+      "want",
+      "to",
+      "come",
+      "to",
+      "Los",
+      "Angeles."
+    ]
+  },
+  {
+    "id": 165,
+    "start": 483.07,
+    "duration": 3.79,
+    "end": 486.86,
+    "textEn": "He loved it, but he had a girlfriend in England.",
+    "textVi": "Anh ấy thích nó, nhưng anh ấy có bạn gái ở Anh.",
+    "words": [
+      "He",
+      "loved",
+      "it,",
+      "but",
+      "he",
+      "had",
+      "a",
+      "girlfriend",
+      "in",
+      "England."
+    ]
+  },
+  {
+    "id": 166,
+    "start": 486.88,
+    "duration": 2.86,
+    "end": 489.74,
+    "textEn": "This was the love of his life, Sarah.",
+    "textVi": "Đây là tình yêu của đời anh, Sarah.",
+    "words": [
+      "This",
+      "was",
+      "the",
+      "love",
+      "of",
+      "his",
+      "life,",
+      "Sarah."
+    ]
+  },
+  {
+    "id": 167,
+    "start": 489.76,
+    "duration": 1.38,
+    "end": 491.14,
+    "textEn": "He'd known her for a month.",
+    "textVi": "Anh đã biết cô được một tháng.",
+    "words": [
+      "He'd",
+      "known",
+      "her",
+      "for",
+      "a",
+      "month."
+    ]
+  },
+  {
+    "id": 168,
+    "start": 491.16,
+    "duration": 1.35,
+    "end": 492.51,
+    "textEn": "(Laughter)",
+    "textVi": "(Cười)",
+    "words": [
+      "(Laughter)"
+    ]
+  },
+  {
+    "id": 169,
+    "start": 492.53,
+    "duration": 3.28,
+    "end": 495.81,
+    "textEn": "Mind you, they'd had their fourth anniversary,",
+    "textVi": "Xin lưu ý bạn, họ đã kỷ niệm 4 năm ngày cưới,",
+    "words": [
+      "Mind",
+      "you,",
+      "they'd",
+      "had",
+      "their",
+      "fourth",
+      "anniversary,"
+    ]
+  },
+  {
+    "id": 170,
+    "start": 495.84,
+    "duration": 1.94,
+    "end": 497.78,
+    "textEn": "because it's a long time when you're 16.",
+    "textVi": "bởi vì đã quá lâu rồi khi bạn mới 16 tuổi.",
+    "words": [
+      "because",
+      "it's",
+      "a",
+      "long",
+      "time",
+      "when",
+      "you're",
+      "16."
+    ]
+  },
+  {
+    "id": 171,
+    "start": 497.8,
+    "duration": 1.64,
+    "end": 499.44,
+    "textEn": "He was really upset on the plane.",
+    "textVi": "Anh ấy thực sự rất buồn trên máy bay.",
+    "words": [
+      "He",
+      "was",
+      "really",
+      "upset",
+      "on",
+      "the",
+      "plane."
+    ]
+  },
+  {
+    "id": 172,
+    "start": 499.46,
+    "duration": 2.41,
+    "end": 501.87,
+    "textEn": "He said, \"I'll never find another girl like Sarah.\"",
+    "textVi": "Anh ấy nói: \"Tôi sẽ không bao giờ tìm được một cô gái nào khác như Sarah.\"",
+    "words": [
+      "He",
+      "said,",
+      "\"I'll",
+      "never",
+      "find",
+      "another",
+      "girl",
+      "like",
+      "Sarah.\""
+    ]
+  },
+  {
+    "id": 173,
+    "start": 501.89,
+    "duration": 2.31,
+    "end": 504.2,
+    "textEn": "And we were rather pleased about that, frankly --",
+    "textVi": "Và thành thật mà nói, chúng tôi khá hài lòng về điều đó --",
+    "words": [
+      "And",
+      "we",
+      "were",
+      "rather",
+      "pleased",
+      "about",
+      "that,",
+      "frankly",
+      "--"
+    ]
+  },
+  {
+    "id": 174,
+    "start": 504.23,
+    "duration": 4.23,
+    "end": 508.46,
+    "textEn": "(Laughter)",
+    "textVi": "(Cười)",
+    "words": [
+      "(Laughter)"
+    ]
+  },
+  {
+    "id": 175,
+    "start": 512.43,
+    "duration": 2.95,
+    "end": 515.38,
+    "textEn": "because she was the main reason we were leaving the country.",
+    "textVi": "bởi vì cô ấy là lý do chính khiến chúng tôi rời khỏi đất nước.",
+    "words": [
+      "because",
+      "she",
+      "was",
+      "the",
+      "main",
+      "reason",
+      "we",
+      "were",
+      "leaving",
+      "the",
+      "country."
+    ]
+  },
+  {
+    "id": 176,
+    "start": 515.4,
+    "duration": 3.0,
+    "end": 518.4,
+    "textEn": "(Laughter)",
+    "textVi": "(Cười)",
+    "words": [
+      "(Laughter)"
+    ]
+  },
+  {
+    "id": 177,
+    "start": 521.14,
+    "duration": 2.36,
+    "end": 523.5,
+    "textEn": "But something strikes you when you move to America",
+    "textVi": "Nhưng có điều gì đó khiến bạn bất ngờ khi chuyển đến Mỹ",
+    "words": [
+      "But",
+      "something",
+      "strikes",
+      "you",
+      "when",
+      "you",
+      "move",
+      "to",
+      "America"
+    ]
+  },
+  {
+    "id": 178,
+    "start": 523.53,
+    "duration": 1.37,
+    "end": 524.9,
+    "textEn": "and travel around the world:",
+    "textVi": "và du lịch vòng quanh thế giới:",
+    "words": [
+      "and",
+      "travel",
+      "around",
+      "the",
+      "world:"
+    ]
+  },
+  {
+    "id": 179,
+    "start": 524.92,
+    "duration": 3.65,
+    "end": 528.57,
+    "textEn": "every education system on earth has the same hierarchy of subjects.",
+    "textVi": "mọi hệ thống giáo dục trên trái đất đều có cùng hệ thống phân cấp môn học.",
+    "words": [
+      "every",
+      "education",
+      "system",
+      "on",
+      "earth",
+      "has",
+      "the",
+      "same",
+      "hierarchy",
+      "of",
+      "subjects."
+    ]
+  },
+  {
+    "id": 180,
+    "start": 528.59,
+    "duration": 1.9,
+    "end": 530.49,
+    "textEn": "Every one. Doesn't matter where you go.",
+    "textVi": "Mọi người. Không quan trọng bạn đi đâu.",
+    "words": [
+      "Every",
+      "one.",
+      "Doesn't",
+      "matter",
+      "where",
+      "you",
+      "go."
+    ]
+  },
+  {
+    "id": 181,
+    "start": 530.52,
+    "duration": 2.27,
+    "end": 532.79,
+    "textEn": "You'd think it would be otherwise, but it isn't.",
+    "textVi": "Bạn sẽ nghĩ nó sẽ khác, nhưng không phải vậy.",
+    "words": [
+      "You'd",
+      "think",
+      "it",
+      "would",
+      "be",
+      "otherwise,",
+      "but",
+      "it",
+      "isn't."
+    ]
+  },
+  {
+    "id": 182,
+    "start": 532.81,
+    "duration": 2.98,
+    "end": 535.79,
+    "textEn": "At the top are mathematics and languages, then the humanities.",
+    "textVi": "Đứng đầu là toán học và ngôn ngữ, sau đó là nhân văn.",
+    "words": [
+      "At",
+      "the",
+      "top",
+      "are",
+      "mathematics",
+      "and",
+      "languages,",
+      "then",
+      "the",
+      "humanities."
+    ]
+  },
+  {
+    "id": 183,
+    "start": 535.82,
+    "duration": 2.29,
+    "end": 538.11,
+    "textEn": "At the bottom are the arts. Everywhere on earth.",
+    "textVi": "Ở phía dưới là nghệ thuật. Ở khắp mọi nơi trên trái đất.",
+    "words": [
+      "At",
+      "the",
+      "bottom",
+      "are",
+      "the",
+      "arts.",
+      "Everywhere",
+      "on",
+      "earth."
+    ]
+  },
+  {
+    "id": 184,
+    "start": 538.13,
+    "duration": 4.37,
+    "end": 542.5,
+    "textEn": "And in pretty much every system, too, there's a hierarchy within the arts.",
+    "textVi": "Và trong hầu hết mọi hệ thống, đều có sự phân cấp trong nghệ thuật.",
+    "words": [
+      "And",
+      "in",
+      "pretty",
+      "much",
+      "every",
+      "system,",
+      "too,",
+      "there's",
+      "a",
+      "hierarchy",
+      "within",
+      "the",
+      "arts."
+    ]
+  },
+  {
+    "id": 185,
+    "start": 542.52,
+    "duration": 2.86,
+    "end": 545.38,
+    "textEn": "Art and music are normally given a higher status in schools",
+    "textVi": "Nghệ thuật và âm nhạc thường được đánh giá cao hơn trong trường học",
+    "words": [
+      "Art",
+      "and",
+      "music",
+      "are",
+      "normally",
+      "given",
+      "a",
+      "higher",
+      "status",
+      "in",
+      "schools"
+    ]
+  },
+  {
+    "id": 186,
+    "start": 545.4,
+    "duration": 1.43,
+    "end": 546.83,
+    "textEn": "than drama and dance.",
+    "textVi": "hơn là kịch và khiêu vũ.",
+    "words": [
+      "than",
+      "drama",
+      "and",
+      "dance."
+    ]
+  },
+  {
+    "id": 187,
+    "start": 546.85,
+    "duration": 2.11,
+    "end": 548.96,
+    "textEn": "There isn't an education system on the planet",
+    "textVi": "Không có hệ thống giáo dục trên hành tinh",
+    "words": [
+      "There",
+      "isn't",
+      "an",
+      "education",
+      "system",
+      "on",
+      "the",
+      "planet"
+    ]
+  },
+  {
+    "id": 188,
+    "start": 548.98,
+    "duration": 1.92,
+    "end": 550.9,
+    "textEn": "that teaches dance every day to children",
+    "textVi": "dạy khiêu vũ mỗi ngày cho trẻ em",
+    "words": [
+      "that",
+      "teaches",
+      "dance",
+      "every",
+      "day",
+      "to",
+      "children"
+    ]
+  },
+  {
+    "id": 189,
+    "start": 550.93,
+    "duration": 1.65,
+    "end": 552.58,
+    "textEn": "the way we teach them mathematics.",
+    "textVi": "cách chúng ta dạy họ toán học.",
+    "words": [
+      "the",
+      "way",
+      "we",
+      "teach",
+      "them",
+      "mathematics."
+    ]
+  },
+  {
+    "id": 190,
+    "start": 552.6,
+    "duration": 1.16,
+    "end": 553.76,
+    "textEn": "Why?",
+    "textVi": "Tại sao?",
+    "words": [
+      "Why?"
+    ]
+  },
+  {
+    "id": 191,
+    "start": 553.78,
+    "duration": 1.17,
+    "end": 554.95,
+    "textEn": "Why not?",
+    "textVi": "Tại sao không?",
+    "words": [
+      "Why",
+      "not?"
+    ]
+  },
+  {
+    "id": 192,
+    "start": 554.97,
+    "duration": 1.59,
+    "end": 556.56,
+    "textEn": "I think this is rather important.",
+    "textVi": "Tôi nghĩ điều này khá quan trọng.",
+    "words": [
+      "I",
+      "think",
+      "this",
+      "is",
+      "rather",
+      "important."
+    ]
+  },
+  {
+    "id": 193,
+    "start": 556.59,
+    "duration": 2.26,
+    "end": 558.85,
+    "textEn": "I think math is very important, but so is dance.",
+    "textVi": "Tôi nghĩ toán học rất quan trọng, nhưng khiêu vũ cũng vậy.",
+    "words": [
+      "I",
+      "think",
+      "math",
+      "is",
+      "very",
+      "important,",
+      "but",
+      "so",
+      "is",
+      "dance."
+    ]
+  },
+  {
+    "id": 194,
+    "start": 558.88,
+    "duration": 2.88,
+    "end": 561.76,
+    "textEn": "Children dance all the time if they're allowed to, we all do.",
+    "textVi": "Trẻ em nhảy múa mọi lúc nếu chúng được phép, tất cả chúng ta đều làm vậy.",
+    "words": [
+      "Children",
+      "dance",
+      "all",
+      "the",
+      "time",
+      "if",
+      "they're",
+      "allowed",
+      "to,",
+      "we",
+      "all",
+      "do."
+    ]
+  },
+  {
+    "id": 195,
+    "start": 561.78,
+    "duration": 2.45,
+    "end": 564.23,
+    "textEn": "We all have bodies, don't we? Did I miss a meeting?",
+    "textVi": "Tất cả chúng ta đều có cơ thể, phải không? Tôi đã bỏ lỡ một cuộc họp?",
+    "words": [
+      "We",
+      "all",
+      "have",
+      "bodies,",
+      "don't",
+      "we?",
+      "Did",
+      "I",
+      "miss",
+      "a",
+      "meeting?"
+    ]
+  },
+  {
+    "id": 196,
+    "start": 564.26,
+    "duration": 3.36,
+    "end": 567.62,
+    "textEn": "(Laughter)",
+    "textVi": "(Cười)",
+    "words": [
+      "(Laughter)"
+    ]
+  },
+  {
+    "id": 197,
+    "start": 567.64,
+    "duration": 2.32,
+    "end": 569.96,
+    "textEn": "Truthfully, what happens is, as children grow up,",
+    "textVi": "Thành thật mà nói, điều xảy ra là, khi trẻ lớn lên,",
+    "words": [
+      "Truthfully,",
+      "what",
+      "happens",
+      "is,",
+      "as",
+      "children",
+      "grow",
+      "up,"
+    ]
+  },
+  {
+    "id": 198,
+    "start": 569.99,
+    "duration": 2.71,
+    "end": 572.7,
+    "textEn": "we start to educate them progressively from the waist up.",
+    "textVi": "chúng tôi bắt đầu giáo dục họ dần dần từ thắt lưng trở lên.",
+    "words": [
+      "we",
+      "start",
+      "to",
+      "educate",
+      "them",
+      "progressively",
+      "from",
+      "the",
+      "waist",
+      "up."
+    ]
+  },
+  {
+    "id": 199,
+    "start": 572.73,
+    "duration": 1.63,
+    "end": 574.36,
+    "textEn": "And then we focus on their heads.",
+    "textVi": "Và sau đó chúng tôi tập trung vào đầu của họ.",
+    "words": [
+      "And",
+      "then",
+      "we",
+      "focus",
+      "on",
+      "their",
+      "heads."
+    ]
+  },
+  {
+    "id": 200,
+    "start": 574.38,
+    "duration": 1.49,
+    "end": 575.87,
+    "textEn": "And slightly to one side.",
+    "textVi": "Và hơi lệch sang một bên.",
+    "words": [
+      "And",
+      "slightly",
+      "to",
+      "one",
+      "side."
+    ]
+  },
+  {
+    "id": 201,
+    "start": 577.04,
+    "duration": 2.07,
+    "end": 579.11,
+    "textEn": "If you were to visit education as an alien",
+    "textVi": "Nếu bạn đến thăm giáo dục như một người ngoài hành tinh",
+    "words": [
+      "If",
+      "you",
+      "were",
+      "to",
+      "visit",
+      "education",
+      "as",
+      "an",
+      "alien"
+    ]
+  },
+  {
+    "id": 202,
+    "start": 579.14,
+    "duration": 2.98,
+    "end": 582.12,
+    "textEn": "and say \"What's it for, public education?\"",
+    "textVi": "và nói \"Nó dùng để làm gì, giáo dục công cộng?\"",
+    "words": [
+      "and",
+      "say",
+      "\"What's",
+      "it",
+      "for,",
+      "public",
+      "education?\""
+    ]
+  },
+  {
+    "id": 203,
+    "start": 582.14,
+    "duration": 2.73,
+    "end": 584.87,
+    "textEn": "I think you'd have to conclude, if you look at the output,",
+    "textVi": "Tôi nghĩ bạn phải kết luận rằng, nếu bạn nhìn vào kết quả,",
+    "words": [
+      "I",
+      "think",
+      "you'd",
+      "have",
+      "to",
+      "conclude,",
+      "if",
+      "you",
+      "look",
+      "at",
+      "the",
+      "output,"
+    ]
+  },
+  {
+    "id": 204,
+    "start": 584.89,
+    "duration": 1.36,
+    "end": 586.25,
+    "textEn": "who really succeeds by this,",
+    "textVi": "người thực sự thành công nhờ việc này,",
+    "words": [
+      "who",
+      "really",
+      "succeeds",
+      "by",
+      "this,"
+    ]
+  },
+  {
+    "id": 205,
+    "start": 586.28,
+    "duration": 1.7,
+    "end": 587.98,
+    "textEn": "who does everything they should,",
+    "textVi": "người làm mọi thứ họ nên làm,",
+    "words": [
+      "who",
+      "does",
+      "everything",
+      "they",
+      "should,"
+    ]
+  },
+  {
+    "id": 206,
+    "start": 588.0,
+    "duration": 2.73,
+    "end": 590.73,
+    "textEn": "who gets all the brownie points, who are the winners --",
+    "textVi": "ai nhận được tất cả điểm bánh hạnh nhân, ai là người chiến thắng --",
+    "words": [
+      "who",
+      "gets",
+      "all",
+      "the",
+      "brownie",
+      "points,",
+      "who",
+      "are",
+      "the",
+      "winners",
+      "--"
+    ]
+  },
+  {
+    "id": 207,
+    "start": 590.75,
+    "duration": 3.24,
+    "end": 593.99,
+    "textEn": "I think you'd have to conclude the whole purpose of public education",
+    "textVi": "Tôi nghĩ bạn phải kết thúc toàn bộ mục đích của giáo dục công cộng",
+    "words": [
+      "I",
+      "think",
+      "you'd",
+      "have",
+      "to",
+      "conclude",
+      "the",
+      "whole",
+      "purpose",
+      "of",
+      "public",
+      "education"
+    ]
+  },
+  {
+    "id": 208,
+    "start": 594.02,
+    "duration": 1.2,
+    "end": 595.22,
+    "textEn": "throughout the world",
+    "textVi": "trên toàn thế giới",
+    "words": [
+      "throughout",
+      "the",
+      "world"
+    ]
+  },
+  {
+    "id": 209,
+    "start": 595.24,
+    "duration": 1.98,
+    "end": 597.22,
+    "textEn": "is to produce university professors.",
+    "textVi": "là đào tạo ra các giáo sư đại học.",
+    "words": [
+      "is",
+      "to",
+      "produce",
+      "university",
+      "professors."
+    ]
+  },
+  {
+    "id": 210,
+    "start": 597.72,
+    "duration": 1.17,
+    "end": 598.89,
+    "textEn": "Isn't it?",
+    "textVi": "Phải không?",
+    "words": [
+      "Isn't",
+      "it?"
+    ]
+  },
+  {
+    "id": 211,
+    "start": 598.91,
+    "duration": 1.98,
+    "end": 600.89,
+    "textEn": "They're the people who come out the top.",
+    "textVi": "Họ là những người đứng đầu.",
+    "words": [
+      "They're",
+      "the",
+      "people",
+      "who",
+      "come",
+      "out",
+      "the",
+      "top."
+    ]
+  },
+  {
+    "id": 212,
+    "start": 600.92,
+    "duration": 1.82,
+    "end": 602.74,
+    "textEn": "And I used to be one, so there.",
+    "textVi": "Và tôi đã từng là một, thế đấy.",
+    "words": [
+      "And",
+      "I",
+      "used",
+      "to",
+      "be",
+      "one,",
+      "so",
+      "there."
+    ]
+  },
+  {
+    "id": 213,
+    "start": 602.76,
+    "duration": 3.7,
+    "end": 606.46,
+    "textEn": "(Laughter)",
+    "textVi": "(Cười)",
+    "words": [
+      "(Laughter)"
+    ]
+  },
+  {
+    "id": 214,
+    "start": 606.48,
+    "duration": 1.6,
+    "end": 608.08,
+    "textEn": "And I like university professors,",
+    "textVi": "Và tôi thích các giáo sư đại học,",
+    "words": [
+      "And",
+      "I",
+      "like",
+      "university",
+      "professors,"
+    ]
+  },
+  {
+    "id": 215,
+    "start": 608.11,
+    "duration": 1.92,
+    "end": 610.03,
+    "textEn": "but, you know, we shouldn't hold them up",
+    "textVi": "nhưng bạn biết đấy, chúng ta không nên giữ họ lại",
+    "words": [
+      "but,",
+      "you",
+      "know,",
+      "we",
+      "shouldn't",
+      "hold",
+      "them",
+      "up"
+    ]
+  },
+  {
+    "id": 216,
+    "start": 610.04,
+    "duration": 2.93,
+    "end": 612.97,
+    "textEn": "as the high-water mark of all human achievement.",
+    "textVi": "như là đỉnh cao của mọi thành tựu của con người.",
+    "words": [
+      "as",
+      "the",
+      "high-water",
+      "mark",
+      "of",
+      "all",
+      "human",
+      "achievement."
+    ]
+  },
+  {
+    "id": 217,
+    "start": 613.0,
+    "duration": 2.11,
+    "end": 615.11,
+    "textEn": "They're just a form of life.",
+    "textVi": "Chúng chỉ là một dạng sống.",
+    "words": [
+      "They're",
+      "just",
+      "a",
+      "form",
+      "of",
+      "life."
+    ]
+  },
+  {
+    "id": 218,
+    "start": 615.14,
+    "duration": 1.42,
+    "end": 616.56,
+    "textEn": "Another form of life.",
+    "textVi": "Một dạng sống khác.",
+    "words": [
+      "Another",
+      "form",
+      "of",
+      "life."
+    ]
+  },
+  {
+    "id": 219,
+    "start": 616.58,
+    "duration": 1.4,
+    "end": 617.98,
+    "textEn": "But they're rather curious.",
+    "textVi": "Nhưng họ khá tò mò.",
+    "words": [
+      "But",
+      "they're",
+      "rather",
+      "curious."
+    ]
+  },
+  {
+    "id": 220,
+    "start": 618.0,
+    "duration": 1.96,
+    "end": 619.96,
+    "textEn": "And I say this out of affection for them:",
+    "textVi": "Và tôi nói điều này vì tình cảm với họ:",
+    "words": [
+      "And",
+      "I",
+      "say",
+      "this",
+      "out",
+      "of",
+      "affection",
+      "for",
+      "them:"
+    ]
+  },
+  {
+    "id": 221,
+    "start": 619.99,
+    "duration": 2.08,
+    "end": 622.07,
+    "textEn": "there's something curious about professors.",
+    "textVi": "có điều gì đó tò mò về các giáo sư.",
+    "words": [
+      "there's",
+      "something",
+      "curious",
+      "about",
+      "professors."
+    ]
+  },
+  {
+    "id": 222,
+    "start": 622.09,
+    "duration": 3.75,
+    "end": 625.84,
+    "textEn": "In my experience -- not all of them, but typically -- they live in their heads.",
+    "textVi": "Theo kinh nghiệm của tôi -- không phải tất cả, nhưng thông thường -- chúng sống trong đầu chúng.",
+    "words": [
+      "In",
+      "my",
+      "experience",
+      "--",
+      "not",
+      "all",
+      "of",
+      "them,",
+      "but",
+      "typically",
+      "--",
+      "they",
+      "live",
+      "in",
+      "their",
+      "heads."
+    ]
+  },
+  {
+    "id": 223,
+    "start": 625.86,
+    "duration": 2.14,
+    "end": 628.0,
+    "textEn": "They live up there and slightly to one side.",
+    "textVi": "Họ sống ở đó và hơi lệch sang một bên.",
+    "words": [
+      "They",
+      "live",
+      "up",
+      "there",
+      "and",
+      "slightly",
+      "to",
+      "one",
+      "side."
+    ]
+  },
+  {
+    "id": 224,
+    "start": 628.5,
+    "duration": 3.44,
+    "end": 631.94,
+    "textEn": "They're disembodied, you know, in a kind of literal way.",
+    "textVi": "Bạn biết đấy, chúng đã bị loại bỏ theo nghĩa đen.",
+    "words": [
+      "They're",
+      "disembodied,",
+      "you",
+      "know,",
+      "in",
+      "a",
+      "kind",
+      "of",
+      "literal",
+      "way."
+    ]
+  },
+  {
+    "id": 225,
+    "start": 631.96,
+    "duration": 3.15,
+    "end": 635.11,
+    "textEn": "They look upon their body as a form of transport for their heads.",
+    "textVi": "Họ coi cơ thể mình như một phương tiện di chuyển cho đầu của họ.",
+    "words": [
+      "They",
+      "look",
+      "upon",
+      "their",
+      "body",
+      "as",
+      "a",
+      "form",
+      "of",
+      "transport",
+      "for",
+      "their",
+      "heads."
+    ]
+  },
+  {
+    "id": 226,
+    "start": 635.13,
+    "duration": 6.05,
+    "end": 641.18,
+    "textEn": "(Laughter)",
+    "textVi": "(Cười)",
+    "words": [
+      "(Laughter)"
+    ]
+  },
+  {
+    "id": 227,
+    "start": 641.2,
+    "duration": 1.38,
+    "end": 642.58,
+    "textEn": "Don't they?",
+    "textVi": "Phải không?",
+    "words": [
+      "Don't",
+      "they?"
+    ]
+  },
+  {
+    "id": 228,
+    "start": 642.6,
+    "duration": 2.15,
+    "end": 644.75,
+    "textEn": "It's a way of getting their head to meetings.",
+    "textVi": "Đó là một cách để họ tập trung vào các cuộc họp.",
+    "words": [
+      "It's",
+      "a",
+      "way",
+      "of",
+      "getting",
+      "their",
+      "head",
+      "to",
+      "meetings."
+    ]
+  },
+  {
+    "id": 229,
+    "start": 644.77,
+    "duration": 5.23,
+    "end": 650.0,
+    "textEn": "(Laughter)",
+    "textVi": "(Cười)",
+    "words": [
+      "(Laughter)"
+    ]
+  },
+  {
+    "id": 230,
+    "start": 650.02,
+    "duration": 3.92,
+    "end": 653.94,
+    "textEn": "If you want real evidence of out-of-body experiences, by the way,",
+    "textVi": "Nhân tiện, nếu bạn muốn có bằng chứng thực sự về trải nghiệm ngoài cơ thể,",
+    "words": [
+      "If",
+      "you",
+      "want",
+      "real",
+      "evidence",
+      "of",
+      "out-of-body",
+      "experiences,",
+      "by",
+      "the",
+      "way,"
+    ]
+  },
+  {
+    "id": 231,
+    "start": 653.97,
+    "duration": 3.48,
+    "end": 657.45,
+    "textEn": "get yourself along to a residential conference of senior academics",
+    "textVi": "hòa mình vào một hội nghị dân cư của các học giả cao cấp",
+    "words": [
+      "get",
+      "yourself",
+      "along",
+      "to",
+      "a",
+      "residential",
+      "conference",
+      "of",
+      "senior",
+      "academics"
+    ]
+  },
+  {
+    "id": 232,
+    "start": 657.47,
+    "duration": 2.35,
+    "end": 659.82,
+    "textEn": "and pop into the discotheque on the final night.",
+    "textVi": "và bước vào vũ trường vào đêm cuối cùng.",
+    "words": [
+      "and",
+      "pop",
+      "into",
+      "the",
+      "discotheque",
+      "on",
+      "the",
+      "final",
+      "night."
+    ]
+  },
+  {
+    "id": 233,
+    "start": 659.84,
+    "duration": 2.61,
+    "end": 662.45,
+    "textEn": "(Laughter)",
+    "textVi": "(Cười)",
+    "words": [
+      "(Laughter)"
+    ]
+  },
+  {
+    "id": 234,
+    "start": 662.48,
+    "duration": 1.36,
+    "end": 663.84,
+    "textEn": "And there, you will see it.",
+    "textVi": "Và ở đó, bạn sẽ thấy nó.",
+    "words": [
+      "And",
+      "there,",
+      "you",
+      "will",
+      "see",
+      "it."
+    ]
+  },
+  {
+    "id": 235,
+    "start": 663.86,
+    "duration": 4.49,
+    "end": 668.35,
+    "textEn": "Grown men and women writhing uncontrollably, off the beat.",
+    "textVi": "Đàn ông và phụ nữ trưởng thành quằn quại không thể kiểm soát, lạc nhịp.",
+    "words": [
+      "Grown",
+      "men",
+      "and",
+      "women",
+      "writhing",
+      "uncontrollably,",
+      "off",
+      "the",
+      "beat."
+    ]
+  },
+  {
+    "id": 236,
+    "start": 668.38,
+    "duration": 2.49,
+    "end": 670.87,
+    "textEn": "(Laughter)",
+    "textVi": "(Cười)",
+    "words": [
+      "(Laughter)"
+    ]
+  },
+  {
+    "id": 237,
+    "start": 670.89,
+    "duration": 3.33,
+    "end": 674.22,
+    "textEn": "Waiting until it ends, so they can go home and write a paper about it.",
+    "textVi": "Chờ cho đến khi nó kết thúc, để họ có thể về nhà và viết một bài báo về nó.",
+    "words": [
+      "Waiting",
+      "until",
+      "it",
+      "ends,",
+      "so",
+      "they",
+      "can",
+      "go",
+      "home",
+      "and",
+      "write",
+      "a",
+      "paper",
+      "about",
+      "it."
+    ]
+  },
+  {
+    "id": 238,
+    "start": 674.24,
+    "duration": 1.98,
+    "end": 676.22,
+    "textEn": "(Laughter)",
+    "textVi": "(Cười)",
+    "words": [
+      "(Laughter)"
+    ]
+  },
+  {
+    "id": 239,
+    "start": 676.25,
+    "duration": 3.86,
+    "end": 680.11,
+    "textEn": "Our education system is predicated on the idea of academic ability.",
+    "textVi": "Hệ thống giáo dục của chúng ta được xây dựng dựa trên ý tưởng về khả năng học tập.",
+    "words": [
+      "Our",
+      "education",
+      "system",
+      "is",
+      "predicated",
+      "on",
+      "the",
+      "idea",
+      "of",
+      "academic",
+      "ability."
+    ]
+  },
+  {
+    "id": 240,
+    "start": 680.13,
+    "duration": 1.17,
+    "end": 681.3,
+    "textEn": "And there's a reason.",
+    "textVi": "Và có một lý do.",
+    "words": [
+      "And",
+      "there's",
+      "a",
+      "reason."
+    ]
+  },
+  {
+    "id": 241,
+    "start": 681.33,
+    "duration": 3.63,
+    "end": 684.96,
+    "textEn": "Around the world, there were no public systems of education,",
+    "textVi": "Trên khắp thế giới không có hệ thống giáo dục công lập,",
+    "words": [
+      "Around",
+      "the",
+      "world,",
+      "there",
+      "were",
+      "no",
+      "public",
+      "systems",
+      "of",
+      "education,"
+    ]
+  },
+  {
+    "id": 242,
+    "start": 684.98,
+    "duration": 2.11,
+    "end": 687.09,
+    "textEn": "really, before the 19th century.",
+    "textVi": "thực sự là trước thế kỷ 19.",
+    "words": [
+      "really,",
+      "before",
+      "the",
+      "19th",
+      "century."
+    ]
+  },
+  {
+    "id": 243,
+    "start": 687.11,
+    "duration": 3.25,
+    "end": 690.36,
+    "textEn": "They all came into being to meet the needs of industrialism.",
+    "textVi": "Tất cả đều ra đời để đáp ứng nhu cầu của chủ nghĩa công nghiệp.",
+    "words": [
+      "They",
+      "all",
+      "came",
+      "into",
+      "being",
+      "to",
+      "meet",
+      "the",
+      "needs",
+      "of",
+      "industrialism."
+    ]
+  },
+  {
+    "id": 244,
+    "start": 690.38,
+    "duration": 2.05,
+    "end": 692.43,
+    "textEn": "So the hierarchy is rooted on two ideas.",
+    "textVi": "Vì vậy, hệ thống phân cấp bắt nguồn từ hai ý tưởng.",
+    "words": [
+      "So",
+      "the",
+      "hierarchy",
+      "is",
+      "rooted",
+      "on",
+      "two",
+      "ideas."
+    ]
+  },
+  {
+    "id": 245,
+    "start": 692.46,
+    "duration": 4.56,
+    "end": 697.02,
+    "textEn": "Number one, that the most useful subjects for work are at the top.",
+    "textVi": "Thứ nhất, những chủ đề hữu ích nhất cho công việc đều được đặt lên hàng đầu.",
+    "words": [
+      "Number",
+      "one,",
+      "that",
+      "the",
+      "most",
+      "useful",
+      "subjects",
+      "for",
+      "work",
+      "are",
+      "at",
+      "the",
+      "top."
+    ]
+  },
+  {
+    "id": 246,
+    "start": 697.04,
+    "duration": 3.03,
+    "end": 700.07,
+    "textEn": "So you were probably steered benignly away from things at school",
+    "textVi": "Vậy có lẽ bạn đã được hướng dẫn một cách nhẹ nhàng tránh xa mọi thứ ở trường",
+    "words": [
+      "So",
+      "you",
+      "were",
+      "probably",
+      "steered",
+      "benignly",
+      "away",
+      "from",
+      "things",
+      "at",
+      "school"
+    ]
+  },
+  {
+    "id": 247,
+    "start": 700.1,
+    "duration": 1.15,
+    "end": 701.25,
+    "textEn": "when you were a kid,",
+    "textVi": "khi bạn còn là một đứa trẻ,",
+    "words": [
+      "when",
+      "you",
+      "were",
+      "a",
+      "kid,"
+    ]
+  },
+  {
+    "id": 248,
+    "start": 701.27,
+    "duration": 1.15,
+    "end": 702.42,
+    "textEn": "things you liked,",
+    "textVi": "những thứ bạn thích,",
+    "words": [
+      "things",
+      "you",
+      "liked,"
+    ]
+  },
+  {
+    "id": 249,
+    "start": 702.45,
+    "duration": 2.44,
+    "end": 704.89,
+    "textEn": "on the grounds you would never get a job doing that.",
+    "textVi": "với lý do là bạn sẽ không bao giờ có được công việc làm việc đó.",
+    "words": [
+      "on",
+      "the",
+      "grounds",
+      "you",
+      "would",
+      "never",
+      "get",
+      "a",
+      "job",
+      "doing",
+      "that."
+    ]
+  },
+  {
+    "id": 250,
+    "start": 704.92,
+    "duration": 1.15,
+    "end": 706.07,
+    "textEn": "Is that right?",
+    "textVi": "Có đúng không?",
+    "words": [
+      "Is",
+      "that",
+      "right?"
+    ]
+  },
+  {
+    "id": 251,
+    "start": 706.09,
+    "duration": 2.41,
+    "end": 708.5,
+    "textEn": "\"Don't do music, you're not going to be a musician;",
+    "textVi": "“Đừng làm âm nhạc, bạn sẽ không trở thành nhạc sĩ;",
+    "words": [
+      "\"Don't",
+      "do",
+      "music,",
+      "you're",
+      "not",
+      "going",
+      "to",
+      "be",
+      "a",
+      "musician;"
+    ]
+  },
+  {
+    "id": 252,
+    "start": 708.53,
+    "duration": 1.85,
+    "end": 710.38,
+    "textEn": "don't do art, you won't be an artist.\"",
+    "textVi": "Đừng làm nghệ thuật, bạn sẽ không trở thành nghệ sĩ.\"",
+    "words": [
+      "don't",
+      "do",
+      "art,",
+      "you",
+      "won't",
+      "be",
+      "an",
+      "artist.\""
+    ]
+  },
+  {
+    "id": 253,
+    "start": 710.4,
+    "duration": 2.75,
+    "end": 713.15,
+    "textEn": "Benign advice -- now, profoundly mistaken.",
+    "textVi": "Lời khuyên lành tính -- giờ đây, đã vô cùng sai lầm.",
+    "words": [
+      "Benign",
+      "advice",
+      "--",
+      "now,",
+      "profoundly",
+      "mistaken."
+    ]
+  },
+  {
+    "id": 254,
+    "start": 713.17,
+    "duration": 2.15,
+    "end": 715.32,
+    "textEn": "The whole world is engulfed in a revolution.",
+    "textVi": "Cả thế giới chìm trong một cuộc cách mạng.",
+    "words": [
+      "The",
+      "whole",
+      "world",
+      "is",
+      "engulfed",
+      "in",
+      "a",
+      "revolution."
+    ]
+  },
+  {
+    "id": 255,
+    "start": 715.34,
+    "duration": 2.1,
+    "end": 717.44,
+    "textEn": "And the second is academic ability,",
+    "textVi": "Và thứ hai là khả năng học tập,",
+    "words": [
+      "And",
+      "the",
+      "second",
+      "is",
+      "academic",
+      "ability,"
+    ]
+  },
+  {
+    "id": 256,
+    "start": 717.46,
+    "duration": 2.82,
+    "end": 720.28,
+    "textEn": "which has really come to dominate our view of intelligence,",
+    "textVi": "điều đã thực sự thống trị quan điểm của chúng ta về trí thông minh,",
+    "words": [
+      "which",
+      "has",
+      "really",
+      "come",
+      "to",
+      "dominate",
+      "our",
+      "view",
+      "of",
+      "intelligence,"
+    ]
+  },
+  {
+    "id": 257,
+    "start": 720.31,
+    "duration": 2.74,
+    "end": 723.05,
+    "textEn": "because the universities design the system in their image.",
+    "textVi": "bởi vì các trường đại học thiết kế hệ thống theo hình ảnh của họ.",
+    "words": [
+      "because",
+      "the",
+      "universities",
+      "design",
+      "the",
+      "system",
+      "in",
+      "their",
+      "image."
+    ]
+  },
+  {
+    "id": 258,
+    "start": 723.07,
+    "duration": 1.15,
+    "end": 724.22,
+    "textEn": "If you think of it,",
+    "textVi": "Nếu bạn nghĩ về nó,",
+    "words": [
+      "If",
+      "you",
+      "think",
+      "of",
+      "it,"
+    ]
+  },
+  {
+    "id": 259,
+    "start": 724.25,
+    "duration": 3.66,
+    "end": 727.91,
+    "textEn": "the whole system of public education around the world is a protracted process",
+    "textVi": "toàn bộ hệ thống giáo dục công cộng trên toàn thế giới là một quá trình kéo dài",
+    "words": [
+      "the",
+      "whole",
+      "system",
+      "of",
+      "public",
+      "education",
+      "around",
+      "the",
+      "world",
+      "is",
+      "a",
+      "protracted",
+      "process"
+    ]
+  },
+  {
+    "id": 260,
+    "start": 727.93,
+    "duration": 1.15,
+    "end": 729.08,
+    "textEn": "of university entrance.",
+    "textVi": "của tuyển sinh đại học.",
+    "words": [
+      "of",
+      "university",
+      "entrance."
+    ]
+  },
+  {
+    "id": 261,
+    "start": 729.11,
+    "duration": 2.29,
+    "end": 731.4,
+    "textEn": "And the consequence is that many highly talented,",
+    "textVi": "Và hậu quả là có nhiều người rất tài năng,",
+    "words": [
+      "And",
+      "the",
+      "consequence",
+      "is",
+      "that",
+      "many",
+      "highly",
+      "talented,"
+    ]
+  },
+  {
+    "id": 262,
+    "start": 731.42,
+    "duration": 2.52,
+    "end": 733.94,
+    "textEn": "brilliant, creative people think they're not,",
+    "textVi": "những người thông minh, sáng tạo nghĩ rằng họ không như vậy,",
+    "words": [
+      "brilliant,",
+      "creative",
+      "people",
+      "think",
+      "they're",
+      "not,"
+    ]
+  },
+  {
+    "id": 263,
+    "start": 733.97,
+    "duration": 2.13,
+    "end": 736.1,
+    "textEn": "because the thing they were good at at school",
+    "textVi": "bởi vì điều họ giỏi ở trường",
+    "words": [
+      "because",
+      "the",
+      "thing",
+      "they",
+      "were",
+      "good",
+      "at",
+      "at",
+      "school"
+    ]
+  },
+  {
+    "id": 264,
+    "start": 736.12,
+    "duration": 2.3,
+    "end": 738.42,
+    "textEn": "wasn't valued, or was actually stigmatized.",
+    "textVi": "không được đánh giá cao, hoặc thực sự bị kỳ thị.",
+    "words": [
+      "wasn't",
+      "valued,",
+      "or",
+      "was",
+      "actually",
+      "stigmatized."
+    ]
+  },
+  {
+    "id": 265,
+    "start": 738.45,
+    "duration": 2.23,
+    "end": 740.68,
+    "textEn": "And I think we can't afford to go on that way.",
+    "textVi": "Và tôi nghĩ chúng ta không đủ khả năng để đi tiếp theo cách đó.",
+    "words": [
+      "And",
+      "I",
+      "think",
+      "we",
+      "can't",
+      "afford",
+      "to",
+      "go",
+      "on",
+      "that",
+      "way."
+    ]
+  },
+  {
+    "id": 266,
+    "start": 740.7,
+    "duration": 2.29,
+    "end": 742.99,
+    "textEn": "In the next 30 years, according to UNESCO,",
+    "textVi": "Trong 30 năm tới, theo UNESCO,",
+    "words": [
+      "In",
+      "the",
+      "next",
+      "30",
+      "years,",
+      "according",
+      "to",
+      "UNESCO,"
+    ]
+  },
+  {
+    "id": 267,
+    "start": 743.01,
+    "duration": 3.41,
+    "end": 746.42,
+    "textEn": "more people worldwide will be graduating through education",
+    "textVi": "nhiều người trên toàn thế giới sẽ tốt nghiệp thông qua giáo dục",
+    "words": [
+      "more",
+      "people",
+      "worldwide",
+      "will",
+      "be",
+      "graduating",
+      "through",
+      "education"
+    ]
+  },
+  {
+    "id": 268,
+    "start": 746.44,
+    "duration": 2.19,
+    "end": 748.63,
+    "textEn": "than since the beginning of history.",
+    "textVi": "hơn kể từ khi bắt đầu lịch sử.",
+    "words": [
+      "than",
+      "since",
+      "the",
+      "beginning",
+      "of",
+      "history."
+    ]
+  },
+  {
+    "id": 269,
+    "start": 748.66,
+    "duration": 1.16,
+    "end": 749.82,
+    "textEn": "More people.",
+    "textVi": "Nhiều người hơn.",
+    "words": [
+      "More",
+      "people."
+    ]
+  },
+  {
+    "id": 270,
+    "start": 749.84,
+    "duration": 2.92,
+    "end": 752.76,
+    "textEn": "And it's the combination of all the things we've talked about:",
+    "textVi": "Và đó là sự kết hợp của tất cả những điều chúng ta đã nói đến:",
+    "words": [
+      "And",
+      "it's",
+      "the",
+      "combination",
+      "of",
+      "all",
+      "the",
+      "things",
+      "we've",
+      "talked",
+      "about:"
+    ]
+  },
+  {
+    "id": 271,
+    "start": 752.79,
+    "duration": 2.39,
+    "end": 755.18,
+    "textEn": "technology and its transformational effect on work,",
+    "textVi": "công nghệ và tác động biến đổi của nó đối với công việc,",
+    "words": [
+      "technology",
+      "and",
+      "its",
+      "transformational",
+      "effect",
+      "on",
+      "work,"
+    ]
+  },
+  {
+    "id": 272,
+    "start": 755.21,
+    "duration": 2.48,
+    "end": 757.69,
+    "textEn": "and demography and the huge explosion in population.",
+    "textVi": "và nhân khẩu học và sự bùng nổ dân số lớn.",
+    "words": [
+      "and",
+      "demography",
+      "and",
+      "the",
+      "huge",
+      "explosion",
+      "in",
+      "population."
+    ]
+  },
+  {
+    "id": 273,
+    "start": 757.71,
+    "duration": 2.44,
+    "end": 760.15,
+    "textEn": "Suddenly, degrees aren't worth anything.",
+    "textVi": "Đột nhiên, bằng cấp không còn giá trị gì nữa.",
+    "words": [
+      "Suddenly,",
+      "degrees",
+      "aren't",
+      "worth",
+      "anything."
+    ]
+  },
+  {
+    "id": 274,
+    "start": 760.17,
+    "duration": 1.68,
+    "end": 761.85,
+    "textEn": "Isn't that true?",
+    "textVi": "Điều đó không đúng sao?",
+    "words": [
+      "Isn't",
+      "that",
+      "true?"
+    ]
+  },
+  {
+    "id": 275,
+    "start": 761.87,
+    "duration": 2.98,
+    "end": 764.85,
+    "textEn": "When I was a student, if you had a degree, you had a job.",
+    "textVi": "Hồi tôi còn là sinh viên, có bằng cấp là có việc làm.",
+    "words": [
+      "When",
+      "I",
+      "was",
+      "a",
+      "student,",
+      "if",
+      "you",
+      "had",
+      "a",
+      "degree,",
+      "you",
+      "had",
+      "a",
+      "job."
+    ]
+  },
+  {
+    "id": 276,
+    "start": 764.88,
+    "duration": 2.8,
+    "end": 767.68,
+    "textEn": "If you didn't have a job, it's because you didn't want one.",
+    "textVi": "Nếu bạn không có việc làm, đó là vì bạn không muốn có việc làm.",
+    "words": [
+      "If",
+      "you",
+      "didn't",
+      "have",
+      "a",
+      "job,",
+      "it's",
+      "because",
+      "you",
+      "didn't",
+      "want",
+      "one."
+    ]
+  },
+  {
+    "id": 277,
+    "start": 767.7,
+    "duration": 2.33,
+    "end": 770.03,
+    "textEn": "And I didn't want one, frankly.",
+    "textVi": "Và tôi không muốn một cái, thành thật mà nói.",
+    "words": [
+      "And",
+      "I",
+      "didn't",
+      "want",
+      "one,",
+      "frankly."
+    ]
+  },
+  {
+    "id": 278,
+    "start": 770.05,
+    "duration": 1.59,
+    "end": 771.64,
+    "textEn": "(Laughter)",
+    "textVi": "(Cười)",
+    "words": [
+      "(Laughter)"
+    ]
+  },
+  {
+    "id": 279,
+    "start": 771.67,
+    "duration": 3.81,
+    "end": 775.48,
+    "textEn": "But now kids with degrees are often heading home",
+    "textVi": "Nhưng bây giờ những đứa trẻ có bằng cấp thường về nhà",
+    "words": [
+      "But",
+      "now",
+      "kids",
+      "with",
+      "degrees",
+      "are",
+      "often",
+      "heading",
+      "home"
+    ]
+  },
+  {
+    "id": 280,
+    "start": 775.5,
+    "duration": 1.79,
+    "end": 777.29,
+    "textEn": "to carry on playing video games,",
+    "textVi": "để tiếp tục chơi trò chơi điện tử,",
+    "words": [
+      "to",
+      "carry",
+      "on",
+      "playing",
+      "video",
+      "games,"
+    ]
+  },
+  {
+    "id": 281,
+    "start": 777.32,
+    "duration": 3.05,
+    "end": 780.37,
+    "textEn": "because you need an MA where the previous job required a BA,",
+    "textVi": "bởi vì bạn cần bằng MA trong khi công việc trước đó yêu cầu bằng BA,",
+    "words": [
+      "because",
+      "you",
+      "need",
+      "an",
+      "MA",
+      "where",
+      "the",
+      "previous",
+      "job",
+      "required",
+      "a",
+      "BA,"
+    ]
+  },
+  {
+    "id": 282,
+    "start": 780.39,
+    "duration": 1.79,
+    "end": 782.18,
+    "textEn": "and now you need a PhD for the other.",
+    "textVi": "và bây giờ bạn cần bằng tiến sĩ cho người kia.",
+    "words": [
+      "and",
+      "now",
+      "you",
+      "need",
+      "a",
+      "PhD",
+      "for",
+      "the",
+      "other."
+    ]
+  },
+  {
+    "id": 283,
+    "start": 782.2,
+    "duration": 1.78,
+    "end": 783.98,
+    "textEn": "It's a process of academic inflation.",
+    "textVi": "Đó là một quá trình lạm phát học thuật.",
+    "words": [
+      "It's",
+      "a",
+      "process",
+      "of",
+      "academic",
+      "inflation."
+    ]
+  },
+  {
+    "id": 284,
+    "start": 784.0,
+    "duration": 3.76,
+    "end": 787.76,
+    "textEn": "And it indicates the whole structure of education is shifting beneath our feet.",
+    "textVi": "Và nó cho thấy toàn bộ cấu trúc giáo dục đang dịch chuyển dưới chân chúng ta.",
+    "words": [
+      "And",
+      "it",
+      "indicates",
+      "the",
+      "whole",
+      "structure",
+      "of",
+      "education",
+      "is",
+      "shifting",
+      "beneath",
+      "our",
+      "feet."
+    ]
+  },
+  {
+    "id": 285,
+    "start": 787.78,
+    "duration": 2.54,
+    "end": 790.32,
+    "textEn": "We need to radically rethink our view of intelligence.",
+    "textVi": "Chúng ta cần suy nghĩ lại một cách triệt để quan điểm của mình về trí thông minh.",
+    "words": [
+      "We",
+      "need",
+      "to",
+      "radically",
+      "rethink",
+      "our",
+      "view",
+      "of",
+      "intelligence."
+    ]
+  },
+  {
+    "id": 286,
+    "start": 790.35,
+    "duration": 1.92,
+    "end": 792.27,
+    "textEn": "We know three things about intelligence.",
+    "textVi": "Chúng ta biết ba điều về trí thông minh.",
+    "words": [
+      "We",
+      "know",
+      "three",
+      "things",
+      "about",
+      "intelligence."
+    ]
+  },
+  {
+    "id": 287,
+    "start": 792.29,
+    "duration": 1.15,
+    "end": 793.44,
+    "textEn": "One, it's diverse.",
+    "textVi": "Một, nó rất đa dạng.",
+    "words": [
+      "One,",
+      "it's",
+      "diverse."
+    ]
+  },
+  {
+    "id": 288,
+    "start": 793.47,
+    "duration": 2.98,
+    "end": 796.45,
+    "textEn": "We think about the world in all the ways that we experience it.",
+    "textVi": "Chúng ta nghĩ về thế giới theo mọi cách mà chúng ta trải nghiệm nó.",
+    "words": [
+      "We",
+      "think",
+      "about",
+      "the",
+      "world",
+      "in",
+      "all",
+      "the",
+      "ways",
+      "that",
+      "we",
+      "experience",
+      "it."
+    ]
+  },
+  {
+    "id": 289,
+    "start": 796.47,
+    "duration": 2.98,
+    "end": 799.45,
+    "textEn": "We think visually, we think in sound, we think kinesthetically.",
+    "textVi": "Chúng ta nghĩ bằng hình ảnh, bằng âm thanh, bằng động học.",
+    "words": [
+      "We",
+      "think",
+      "visually,",
+      "we",
+      "think",
+      "in",
+      "sound,",
+      "we",
+      "think",
+      "kinesthetically."
+    ]
+  },
+  {
+    "id": 290,
+    "start": 799.48,
+    "duration": 2.32,
+    "end": 801.8,
+    "textEn": "We think in abstract terms, we think in movement.",
+    "textVi": "Chúng ta suy nghĩ theo cách trừu tượng, chúng ta suy nghĩ trong chuyển động.",
+    "words": [
+      "We",
+      "think",
+      "in",
+      "abstract",
+      "terms,",
+      "we",
+      "think",
+      "in",
+      "movement."
+    ]
+  },
+  {
+    "id": 291,
+    "start": 801.82,
+    "duration": 2.0,
+    "end": 803.82,
+    "textEn": "Secondly, intelligence is dynamic.",
+    "textVi": "Thứ hai, trí thông minh có tính năng động.",
+    "words": [
+      "Secondly,",
+      "intelligence",
+      "is",
+      "dynamic."
+    ]
+  },
+  {
+    "id": 292,
+    "start": 804.67,
+    "duration": 2.3,
+    "end": 806.97,
+    "textEn": "If you look at the interactions of a human brain,",
+    "textVi": "Nếu bạn nhìn vào sự tương tác của bộ não con người,",
+    "words": [
+      "If",
+      "you",
+      "look",
+      "at",
+      "the",
+      "interactions",
+      "of",
+      "a",
+      "human",
+      "brain,"
+    ]
+  },
+  {
+    "id": 293,
+    "start": 807.0,
+    "duration": 3.02,
+    "end": 810.02,
+    "textEn": "as we heard yesterday from a number of presentations,",
+    "textVi": "như chúng ta đã nghe ngày hôm qua từ một số bài thuyết trình,",
+    "words": [
+      "as",
+      "we",
+      "heard",
+      "yesterday",
+      "from",
+      "a",
+      "number",
+      "of",
+      "presentations,"
+    ]
+  },
+  {
+    "id": 294,
+    "start": 810.05,
+    "duration": 2.16,
+    "end": 812.21,
+    "textEn": "intelligence is wonderfully interactive.",
+    "textVi": "trí thông minh có tính tương tác tuyệt vời.",
+    "words": [
+      "intelligence",
+      "is",
+      "wonderfully",
+      "interactive."
+    ]
+  },
+  {
+    "id": 295,
+    "start": 812.23,
+    "duration": 2.24,
+    "end": 814.47,
+    "textEn": "The brain isn't divided into compartments.",
+    "textVi": "Bộ não không được chia thành các ngăn.",
+    "words": [
+      "The",
+      "brain",
+      "isn't",
+      "divided",
+      "into",
+      "compartments."
+    ]
+  },
+  {
+    "id": 296,
+    "start": 814.87,
+    "duration": 1.57,
+    "end": 816.44,
+    "textEn": "In fact, creativity --",
+    "textVi": "Thực tế, sự sáng tạo --",
+    "words": [
+      "In",
+      "fact,",
+      "creativity",
+      "--"
+    ]
+  },
+  {
+    "id": 297,
+    "start": 816.47,
+    "duration": 4.02,
+    "end": 820.49,
+    "textEn": "which I define as the process of having original ideas that have value --",
+    "textVi": "mà tôi định nghĩa là quá trình có được những ý tưởng độc đáo có giá trị --",
+    "words": [
+      "which",
+      "I",
+      "define",
+      "as",
+      "the",
+      "process",
+      "of",
+      "having",
+      "original",
+      "ideas",
+      "that",
+      "have",
+      "value",
+      "--"
+    ]
+  },
+  {
+    "id": 298,
+    "start": 820.51,
+    "duration": 1.93,
+    "end": 822.44,
+    "textEn": "more often than not comes about",
+    "textVi": "thường xuyên xảy ra",
+    "words": [
+      "more",
+      "often",
+      "than",
+      "not",
+      "comes",
+      "about"
+    ]
+  },
+  {
+    "id": 299,
+    "start": 822.47,
+    "duration": 3.56,
+    "end": 826.03,
+    "textEn": "through the interaction of different disciplinary ways of seeing things.",
+    "textVi": "thông qua sự tương tác của các cách nhìn nhận sự vật có tính kỷ luật khác nhau.",
+    "words": [
+      "through",
+      "the",
+      "interaction",
+      "of",
+      "different",
+      "disciplinary",
+      "ways",
+      "of",
+      "seeing",
+      "things."
+    ]
+  },
+  {
+    "id": 300,
+    "start": 827.47,
+    "duration": 3.63,
+    "end": 831.1,
+    "textEn": "By the way, there's a shaft of nerves that joins the two halves of the brain,",
+    "textVi": "Nhân tiện, có một trục dây thần kinh nối hai nửa não,",
+    "words": [
+      "By",
+      "the",
+      "way,",
+      "there's",
+      "a",
+      "shaft",
+      "of",
+      "nerves",
+      "that",
+      "joins",
+      "the",
+      "two",
+      "halves",
+      "of",
+      "the",
+      "brain,"
+    ]
+  },
+  {
+    "id": 301,
+    "start": 831.13,
+    "duration": 1.3,
+    "end": 832.43,
+    "textEn": "called the corpus callosum.",
+    "textVi": "được gọi là thể chai.",
+    "words": [
+      "called",
+      "the",
+      "corpus",
+      "callosum."
+    ]
+  },
+  {
+    "id": 302,
+    "start": 832.45,
+    "duration": 1.22,
+    "end": 833.67,
+    "textEn": "It's thicker in women.",
+    "textVi": "Nó dày hơn ở phụ nữ.",
+    "words": [
+      "It's",
+      "thicker",
+      "in",
+      "women."
+    ]
+  },
+  {
+    "id": 303,
+    "start": 834.47,
+    "duration": 1.72,
+    "end": 836.19,
+    "textEn": "Following off from Helen yesterday,",
+    "textVi": "Theo chân Helen ngày hôm qua,",
+    "words": [
+      "Following",
+      "off",
+      "from",
+      "Helen",
+      "yesterday,"
+    ]
+  },
+  {
+    "id": 304,
+    "start": 836.22,
+    "duration": 3.01,
+    "end": 839.23,
+    "textEn": "this is probably why women are better at multitasking.",
+    "textVi": "đây có lẽ là lý do tại sao phụ nữ giỏi làm nhiều việc cùng lúc hơn.",
+    "words": [
+      "this",
+      "is",
+      "probably",
+      "why",
+      "women",
+      "are",
+      "better",
+      "at",
+      "multitasking."
+    ]
+  },
+  {
+    "id": 305,
+    "start": 839.25,
+    "duration": 1.82,
+    "end": 841.07,
+    "textEn": "Because you are, aren't you?",
+    "textVi": "Bởi vì bạn, phải không?",
+    "words": [
+      "Because",
+      "you",
+      "are,",
+      "aren't",
+      "you?"
+    ]
+  },
+  {
+    "id": 306,
+    "start": 841.1,
+    "duration": 3.33,
+    "end": 844.43,
+    "textEn": "There's a raft of research, but I know it from my personal life.",
+    "textVi": "Có rất nhiều nghiên cứu, nhưng tôi biết điều đó từ cuộc sống cá nhân của mình.",
+    "words": [
+      "There's",
+      "a",
+      "raft",
+      "of",
+      "research,",
+      "but",
+      "I",
+      "know",
+      "it",
+      "from",
+      "my",
+      "personal",
+      "life."
+    ]
+  },
+  {
+    "id": 307,
+    "start": 844.87,
+    "duration": 2.94,
+    "end": 847.81,
+    "textEn": "If my wife is cooking a meal at home, which is not often ...",
+    "textVi": "Nếu vợ tôi nấu bữa ăn ở nhà, điều đó không thường xuyên ...",
+    "words": [
+      "If",
+      "my",
+      "wife",
+      "is",
+      "cooking",
+      "a",
+      "meal",
+      "at",
+      "home,",
+      "which",
+      "is",
+      "not",
+      "often",
+      "..."
+    ]
+  },
+  {
+    "id": 308,
+    "start": 849.22,
+    "duration": 1.17,
+    "end": 850.39,
+    "textEn": "thankfully.",
+    "textVi": "thật may mắn.",
+    "words": [
+      "thankfully."
+    ]
+  },
+  {
+    "id": 309,
+    "start": 850.41,
+    "duration": 2.69,
+    "end": 853.1,
+    "textEn": "(Laughter)",
+    "textVi": "(Cười)",
+    "words": [
+      "(Laughter)"
+    ]
+  },
+  {
+    "id": 310,
+    "start": 853.13,
+    "duration": 1.45,
+    "end": 854.58,
+    "textEn": "No, she's good at some things.",
+    "textVi": "Không, cô ấy giỏi một số thứ.",
+    "words": [
+      "No,",
+      "she's",
+      "good",
+      "at",
+      "some",
+      "things."
+    ]
+  },
+  {
+    "id": 311,
+    "start": 854.6,
+    "duration": 2.9,
+    "end": 857.5,
+    "textEn": "But if she's cooking, she's dealing with people on the phone,",
+    "textVi": "Nhưng nếu cô ấy đang nấu ăn, cô ấy đang nói chuyện với mọi người qua điện thoại,",
+    "words": [
+      "But",
+      "if",
+      "she's",
+      "cooking,",
+      "she's",
+      "dealing",
+      "with",
+      "people",
+      "on",
+      "the",
+      "phone,"
+    ]
+  },
+  {
+    "id": 312,
+    "start": 857.52,
+    "duration": 2.65,
+    "end": 860.17,
+    "textEn": "she's talking to the kids, she's painting the ceiling --",
+    "textVi": "cô ấy đang nói chuyện với bọn trẻ, cô ấy đang sơn trần nhà --",
+    "words": [
+      "she's",
+      "talking",
+      "to",
+      "the",
+      "kids,",
+      "she's",
+      "painting",
+      "the",
+      "ceiling",
+      "--"
+    ]
+  },
+  {
+    "id": 313,
+    "start": 860.19,
+    "duration": 1.01,
+    "end": 861.2,
+    "textEn": "(Laughter)",
+    "textVi": "(Cười)",
+    "words": [
+      "(Laughter)"
+    ]
+  },
+  {
+    "id": 314,
+    "start": 861.23,
+    "duration": 2.02,
+    "end": 863.25,
+    "textEn": "she's doing open-heart surgery over here.",
+    "textVi": "cô ấy đang phẫu thuật tim hở ở đây.",
+    "words": [
+      "she's",
+      "doing",
+      "open-heart",
+      "surgery",
+      "over",
+      "here."
+    ]
+  },
+  {
+    "id": 315,
+    "start": 863.28,
+    "duration": 3.0,
+    "end": 866.28,
+    "textEn": "If I'm cooking, the door is shut, the kids are out,",
+    "textVi": "Nếu tôi đang nấu ăn, cửa đóng, bọn trẻ ra ngoài,",
+    "words": [
+      "If",
+      "I'm",
+      "cooking,",
+      "the",
+      "door",
+      "is",
+      "shut,",
+      "the",
+      "kids",
+      "are",
+      "out,"
+    ]
+  },
+  {
+    "id": 316,
+    "start": 866.3,
+    "duration": 1.24,
+    "end": 867.54,
+    "textEn": "the phone's on the hook,",
+    "textVi": "điện thoại đang bị treo,",
+    "words": [
+      "the",
+      "phone's",
+      "on",
+      "the",
+      "hook,"
+    ]
+  },
+  {
+    "id": 317,
+    "start": 867.57,
+    "duration": 1.69,
+    "end": 869.26,
+    "textEn": "if she comes in, I get annoyed.",
+    "textVi": "nếu cô ấy bước vào, tôi sẽ khó chịu.",
+    "words": [
+      "if",
+      "she",
+      "comes",
+      "in,",
+      "I",
+      "get",
+      "annoyed."
+    ]
+  },
+  {
+    "id": 318,
+    "start": 869.28,
+    "duration": 2.79,
+    "end": 872.07,
+    "textEn": "I say, \"Terry, please, I'm trying to fry an egg in here.\"",
+    "textVi": "Tôi nói, \"Terry, làm ơn, tôi đang rán trứng ở đây.\"",
+    "words": [
+      "I",
+      "say,",
+      "\"Terry,",
+      "please,",
+      "I'm",
+      "trying",
+      "to",
+      "fry",
+      "an",
+      "egg",
+      "in",
+      "here.\""
+    ]
+  },
+  {
+    "id": 319,
+    "start": 872.1,
+    "duration": 6.73,
+    "end": 878.83,
+    "textEn": "(Laughter)",
+    "textVi": "(Cười)",
+    "words": [
+      "(Laughter)"
+    ]
+  },
+  {
+    "id": 320,
+    "start": 879.25,
+    "duration": 1.2,
+    "end": 880.45,
+    "textEn": "\"Give me a break.\"",
+    "textVi": "\"Hãy cho tôi nghỉ ngơi.\"",
+    "words": [
+      "\"Give",
+      "me",
+      "a",
+      "break.\""
+    ]
+  },
+  {
+    "id": 321,
+    "start": 880.48,
+    "duration": 1.72,
+    "end": 882.2,
+    "textEn": "(Laughter)",
+    "textVi": "(Cười)",
+    "words": [
+      "(Laughter)"
+    ]
+  },
+  {
+    "id": 322,
+    "start": 882.22,
+    "duration": 2.5,
+    "end": 884.72,
+    "textEn": "Actually, do you know that old philosophical thing,",
+    "textVi": "Thực ra, bạn có biết triết lý cũ đó không,",
+    "words": [
+      "Actually,",
+      "do",
+      "you",
+      "know",
+      "that",
+      "old",
+      "philosophical",
+      "thing,"
+    ]
+  },
+  {
+    "id": 323,
+    "start": 884.75,
+    "duration": 3.48,
+    "end": 888.23,
+    "textEn": "\"If a tree falls in a forest, and nobody hears it, did it happen?\"",
+    "textVi": "\"Nếu một cái cây đổ trong rừng và không ai nghe thấy, điều đó có xảy ra không?\"",
+    "words": [
+      "\"If",
+      "a",
+      "tree",
+      "falls",
+      "in",
+      "a",
+      "forest,",
+      "and",
+      "nobody",
+      "hears",
+      "it,",
+      "did",
+      "it",
+      "happen?\""
+    ]
+  },
+  {
+    "id": 324,
+    "start": 888.25,
+    "duration": 1.33,
+    "end": 889.58,
+    "textEn": "Remember that old chestnut?",
+    "textVi": "Bạn có nhớ hạt dẻ cũ đó không?",
+    "words": [
+      "Remember",
+      "that",
+      "old",
+      "chestnut?"
+    ]
+  },
+  {
+    "id": 325,
+    "start": 889.61,
+    "duration": 2.91,
+    "end": 892.52,
+    "textEn": "I saw a great T-shirt recently, which said,",
+    "textVi": "Gần đây tôi thấy một chiếc áo phông tuyệt vời có dòng chữ,",
+    "words": [
+      "I",
+      "saw",
+      "a",
+      "great",
+      "T-shirt",
+      "recently,",
+      "which",
+      "said,"
+    ]
+  },
+  {
+    "id": 326,
+    "start": 892.54,
+    "duration": 3.44,
+    "end": 895.98,
+    "textEn": "\"If a man speaks his mind in a forest, and no woman hears him,",
+    "textVi": "\"Nếu một người đàn ông nói ra suy nghĩ của mình trong rừng và không có người phụ nữ nào nghe thấy anh ta,",
+    "words": [
+      "\"If",
+      "a",
+      "man",
+      "speaks",
+      "his",
+      "mind",
+      "in",
+      "a",
+      "forest,",
+      "and",
+      "no",
+      "woman",
+      "hears",
+      "him,"
+    ]
+  },
+  {
+    "id": 327,
+    "start": 896.0,
+    "duration": 1.4,
+    "end": 897.4,
+    "textEn": "is he still wrong?\"",
+    "textVi": "anh ấy vẫn sai à?\"",
+    "words": [
+      "is",
+      "he",
+      "still",
+      "wrong?\""
+    ]
+  },
+  {
+    "id": 328,
+    "start": 897.42,
+    "duration": 5.61,
+    "end": 903.03,
+    "textEn": "(Laughter)",
+    "textVi": "(Cười)",
+    "words": [
+      "(Laughter)"
+    ]
+  },
+  {
+    "id": 329,
+    "start": 905.09,
+    "duration": 2.04,
+    "end": 907.13,
+    "textEn": "And the third thing about intelligence is,",
+    "textVi": "Và điều thứ ba về trí thông minh là,",
+    "words": [
+      "And",
+      "the",
+      "third",
+      "thing",
+      "about",
+      "intelligence",
+      "is,"
+    ]
+  },
+  {
+    "id": 330,
+    "start": 907.15,
+    "duration": 1.37,
+    "end": 908.52,
+    "textEn": "it's distinct.",
+    "textVi": "nó khác biệt.",
+    "words": [
+      "it's",
+      "distinct."
+    ]
+  },
+  {
+    "id": 331,
+    "start": 909.11,
+    "duration": 2.5,
+    "end": 911.61,
+    "textEn": "I'm doing a new book at the moment called \"Epiphany,\"",
+    "textVi": "Hiện tại tôi đang viết một cuốn sách mới tên là \"Hiển Linh\",",
+    "words": [
+      "I'm",
+      "doing",
+      "a",
+      "new",
+      "book",
+      "at",
+      "the",
+      "moment",
+      "called",
+      "\"Epiphany,\""
+    ]
+  },
+  {
+    "id": 332,
+    "start": 911.64,
+    "duration": 2.44,
+    "end": 914.08,
+    "textEn": "which is based on a series of interviews with people",
+    "textVi": "dựa trên một loạt cuộc phỏng vấn với mọi người",
+    "words": [
+      "which",
+      "is",
+      "based",
+      "on",
+      "a",
+      "series",
+      "of",
+      "interviews",
+      "with",
+      "people"
+    ]
+  },
+  {
+    "id": 333,
+    "start": 914.11,
+    "duration": 1.86,
+    "end": 915.97,
+    "textEn": "about how they discovered their talent.",
+    "textVi": "về cách họ phát hiện ra tài năng của mình.",
+    "words": [
+      "about",
+      "how",
+      "they",
+      "discovered",
+      "their",
+      "talent."
+    ]
+  },
+  {
+    "id": 334,
+    "start": 916.0,
+    "duration": 2.12,
+    "end": 918.12,
+    "textEn": "I'm fascinated by how people got to be there.",
+    "textVi": "Tôi bị mê hoặc bởi cách mọi người đến đó.",
+    "words": [
+      "I'm",
+      "fascinated",
+      "by",
+      "how",
+      "people",
+      "got",
+      "to",
+      "be",
+      "there."
+    ]
+  },
+  {
+    "id": 335,
+    "start": 918.14,
+    "duration": 3.19,
+    "end": 921.33,
+    "textEn": "It's really prompted by a conversation I had with a wonderful woman",
+    "textVi": "Nó thực sự được thúc đẩy bởi cuộc trò chuyện giữa tôi với một người phụ nữ tuyệt vời",
+    "words": [
+      "It's",
+      "really",
+      "prompted",
+      "by",
+      "a",
+      "conversation",
+      "I",
+      "had",
+      "with",
+      "a",
+      "wonderful",
+      "woman"
+    ]
+  },
+  {
+    "id": 336,
+    "start": 921.36,
+    "duration": 2.68,
+    "end": 924.04,
+    "textEn": "who maybe most people have never heard of, Gillian Lynne.",
+    "textVi": "người mà có lẽ hầu hết mọi người chưa bao giờ nghe đến, Gillian Lynne.",
+    "words": [
+      "who",
+      "maybe",
+      "most",
+      "people",
+      "have",
+      "never",
+      "heard",
+      "of,",
+      "Gillian",
+      "Lynne."
+    ]
+  },
+  {
+    "id": 337,
+    "start": 924.06,
+    "duration": 1.6,
+    "end": 925.66,
+    "textEn": "Have you heard of her? Some have.",
+    "textVi": "Bạn đã nghe nói về cô ấy? Một số có.",
+    "words": [
+      "Have",
+      "you",
+      "heard",
+      "of",
+      "her?",
+      "Some",
+      "have."
+    ]
+  },
+  {
+    "id": 338,
+    "start": 925.68,
+    "duration": 2.45,
+    "end": 928.13,
+    "textEn": "She's a choreographer, and everybody knows her work.",
+    "textVi": "Cô ấy là một biên đạo múa và mọi người đều biết công việc của cô ấy.",
+    "words": [
+      "She's",
+      "a",
+      "choreographer,",
+      "and",
+      "everybody",
+      "knows",
+      "her",
+      "work."
+    ]
+  },
+  {
+    "id": 339,
+    "start": 928.15,
+    "duration": 2.02,
+    "end": 930.17,
+    "textEn": "She did \"Cats\" and \"Phantom of the Opera.\"",
+    "textVi": "Cô ấy đã diễn \"Cats\" và \"Phantom of the Opera\".",
+    "words": [
+      "She",
+      "did",
+      "\"Cats\"",
+      "and",
+      "\"Phantom",
+      "of",
+      "the",
+      "Opera.\""
+    ]
+  },
+  {
+    "id": 340,
+    "start": 930.19,
+    "duration": 1.15,
+    "end": 931.34,
+    "textEn": "She's wonderful.",
+    "textVi": "Cô ấy thật tuyệt vời.",
+    "words": [
+      "She's",
+      "wonderful."
+    ]
+  },
+  {
+    "id": 341,
+    "start": 931.37,
+    "duration": 2.95,
+    "end": 934.32,
+    "textEn": "I used to be on the board of The Royal Ballet, as you can see.",
+    "textVi": "Tôi đã từng tham gia đoàn kịch The Royal Ballet, như bạn thấy đấy.",
+    "words": [
+      "I",
+      "used",
+      "to",
+      "be",
+      "on",
+      "the",
+      "board",
+      "of",
+      "The",
+      "Royal",
+      "Ballet,",
+      "as",
+      "you",
+      "can",
+      "see."
+    ]
+  },
+  {
+    "id": 342,
+    "start": 934.34,
+    "duration": 1.93,
+    "end": 936.27,
+    "textEn": "(Laughter)",
+    "textVi": "(Cười)",
+    "words": [
+      "(Laughter)"
+    ]
+  },
+  {
+    "id": 343,
+    "start": 936.29,
+    "duration": 3.52,
+    "end": 939.81,
+    "textEn": "Gillian and I had lunch one day. I said, \"How did you get to be a dancer?\"",
+    "textVi": "Một ngày nọ Gillian và tôi ăn trưa. Tôi nói, \"Làm thế nào bạn trở thành một vũ công?\"",
+    "words": [
+      "Gillian",
+      "and",
+      "I",
+      "had",
+      "lunch",
+      "one",
+      "day.",
+      "I",
+      "said,",
+      "\"How",
+      "did",
+      "you",
+      "get",
+      "to",
+      "be",
+      "a",
+      "dancer?\""
+    ]
+  },
+  {
+    "id": 344,
+    "start": 939.84,
+    "duration": 1.15,
+    "end": 940.99,
+    "textEn": "It was interesting.",
+    "textVi": "Thật thú vị.",
+    "words": [
+      "It",
+      "was",
+      "interesting."
+    ]
+  },
+  {
+    "id": 345,
+    "start": 941.01,
+    "duration": 2.25,
+    "end": 943.26,
+    "textEn": "When she was at school, she was really hopeless.",
+    "textVi": "Khi đến trường, cô thực sự tuyệt vọng.",
+    "words": [
+      "When",
+      "she",
+      "was",
+      "at",
+      "school,",
+      "she",
+      "was",
+      "really",
+      "hopeless."
+    ]
+  },
+  {
+    "id": 346,
+    "start": 943.29,
+    "duration": 2.79,
+    "end": 946.08,
+    "textEn": "And the school, in the '30s, wrote to her parents and said,",
+    "textVi": "Và nhà trường, vào những năm 30, đã viết thư cho bố mẹ cô ấy và nói,",
+    "words": [
+      "And",
+      "the",
+      "school,",
+      "in",
+      "the",
+      "'30s,",
+      "wrote",
+      "to",
+      "her",
+      "parents",
+      "and",
+      "said,"
+    ]
+  },
+  {
+    "id": 347,
+    "start": 946.1,
+    "duration": 2.04,
+    "end": 948.14,
+    "textEn": "\"We think Gillian has a learning disorder.\"",
+    "textVi": "\"Chúng tôi nghĩ Gillian mắc chứng rối loạn học tập.\"",
+    "words": [
+      "\"We",
+      "think",
+      "Gillian",
+      "has",
+      "a",
+      "learning",
+      "disorder.\""
+    ]
+  },
+  {
+    "id": 348,
+    "start": 948.16,
+    "duration": 2.1,
+    "end": 950.26,
+    "textEn": "She couldn't concentrate; she was fidgeting.",
+    "textVi": "Cô không thể tập trung; cô ấy đang bồn chồn.",
+    "words": [
+      "She",
+      "couldn't",
+      "concentrate;",
+      "she",
+      "was",
+      "fidgeting."
+    ]
+  },
+  {
+    "id": 349,
+    "start": 950.28,
+    "duration": 1.88,
+    "end": 952.16,
+    "textEn": "I think now they'd say she had ADHD.",
+    "textVi": "Tôi nghĩ bây giờ họ sẽ nói cô ấy bị ADHD.",
+    "words": [
+      "I",
+      "think",
+      "now",
+      "they'd",
+      "say",
+      "she",
+      "had",
+      "ADHD."
+    ]
+  },
+  {
+    "id": 350,
+    "start": 952.18,
+    "duration": 1.3,
+    "end": 953.48,
+    "textEn": "Wouldn't you?",
+    "textVi": "Phải không?",
+    "words": [
+      "Wouldn't",
+      "you?"
+    ]
+  },
+  {
+    "id": 351,
+    "start": 953.5,
+    "duration": 4.18,
+    "end": 957.68,
+    "textEn": "But this was the 1930s, and ADHD hadn't been invented at this point.",
+    "textVi": "Nhưng đây là những năm 1930 và ADHD vẫn chưa được phát minh vào thời điểm này.",
+    "words": [
+      "But",
+      "this",
+      "was",
+      "the",
+      "1930s,",
+      "and",
+      "ADHD",
+      "hadn't",
+      "been",
+      "invented",
+      "at",
+      "this",
+      "point."
+    ]
+  },
+  {
+    "id": 352,
+    "start": 957.71,
+    "duration": 2.04,
+    "end": 959.75,
+    "textEn": "It wasn't an available condition.",
+    "textVi": "Đó không phải là một điều kiện có sẵn.",
+    "words": [
+      "It",
+      "wasn't",
+      "an",
+      "available",
+      "condition."
+    ]
+  },
+  {
+    "id": 353,
+    "start": 959.77,
+    "duration": 3.21,
+    "end": 962.98,
+    "textEn": "(Laughter)",
+    "textVi": "(Cười)",
+    "words": [
+      "(Laughter)"
+    ]
+  },
+  {
+    "id": 354,
+    "start": 963.01,
+    "duration": 2.04,
+    "end": 965.05,
+    "textEn": "People weren't aware they could have that.",
+    "textVi": "Mọi người không biết họ có thể có được điều đó.",
+    "words": [
+      "People",
+      "weren't",
+      "aware",
+      "they",
+      "could",
+      "have",
+      "that."
+    ]
+  },
+  {
+    "id": 355,
+    "start": 965.07,
+    "duration": 2.42,
+    "end": 967.49,
+    "textEn": "(Laughter)",
+    "textVi": "(Cười)",
+    "words": [
+      "(Laughter)"
+    ]
+  },
+  {
+    "id": 356,
+    "start": 967.52,
+    "duration": 4.18,
+    "end": 971.7,
+    "textEn": "Anyway, she went to see this specialist.",
+    "textVi": "Dù sao thì cô ấy cũng đã đến gặp chuyên gia này.",
+    "words": [
+      "Anyway,",
+      "she",
+      "went",
+      "to",
+      "see",
+      "this",
+      "specialist."
+    ]
+  },
+  {
+    "id": 357,
+    "start": 971.72,
+    "duration": 3.71,
+    "end": 975.43,
+    "textEn": "So, this oak-paneled room, and she was there with her mother,",
+    "textVi": "Vì vậy, căn phòng ốp gỗ sồi này, và cô ấy đã ở đó với mẹ mình,",
+    "words": [
+      "So,",
+      "this",
+      "oak-paneled",
+      "room,",
+      "and",
+      "she",
+      "was",
+      "there",
+      "with",
+      "her",
+      "mother,"
+    ]
+  },
+  {
+    "id": 358,
+    "start": 975.45,
+    "duration": 2.33,
+    "end": 977.78,
+    "textEn": "and she was led and sat on this chair at the end,",
+    "textVi": "và cô ấy được dẫn đến ngồi trên chiếc ghế ở cuối,",
+    "words": [
+      "and",
+      "she",
+      "was",
+      "led",
+      "and",
+      "sat",
+      "on",
+      "this",
+      "chair",
+      "at",
+      "the",
+      "end,"
+    ]
+  },
+  {
+    "id": 359,
+    "start": 977.8,
+    "duration": 1.95,
+    "end": 979.75,
+    "textEn": "and she sat on her hands for 20 minutes,",
+    "textVi": "và cô ấy ngồi khoanh tay trong 20 phút,",
+    "words": [
+      "and",
+      "she",
+      "sat",
+      "on",
+      "her",
+      "hands",
+      "for",
+      "20",
+      "minutes,"
+    ]
+  },
+  {
+    "id": 360,
+    "start": 979.77,
+    "duration": 1.68,
+    "end": 981.45,
+    "textEn": "while this man talked to her mother",
+    "textVi": "trong khi người đàn ông này nói chuyện với mẹ cô ấy",
+    "words": [
+      "while",
+      "this",
+      "man",
+      "talked",
+      "to",
+      "her",
+      "mother"
+    ]
+  },
+  {
+    "id": 361,
+    "start": 981.48,
+    "duration": 2.46,
+    "end": 983.94,
+    "textEn": "about all the problems Gillian was having at school,",
+    "textVi": "về tất cả những vấn đề Gillian gặp phải ở trường,",
+    "words": [
+      "about",
+      "all",
+      "the",
+      "problems",
+      "Gillian",
+      "was",
+      "having",
+      "at",
+      "school,"
+    ]
+  },
+  {
+    "id": 362,
+    "start": 983.97,
+    "duration": 3.55,
+    "end": 987.52,
+    "textEn": "because she was disturbing people, her homework was always late, and so on.",
+    "textVi": "bởi vì cô ấy làm phiền mọi người nên bài tập về nhà của cô ấy luôn bị trễ, v.v.",
+    "words": [
+      "because",
+      "she",
+      "was",
+      "disturbing",
+      "people,",
+      "her",
+      "homework",
+      "was",
+      "always",
+      "late,",
+      "and",
+      "so",
+      "on."
+    ]
+  },
+  {
+    "id": 363,
+    "start": 987.54,
+    "duration": 1.15,
+    "end": 988.69,
+    "textEn": "Little kid of eight.",
+    "textVi": "Đứa trẻ tám tuổi.",
+    "words": [
+      "Little",
+      "kid",
+      "of",
+      "eight."
+    ]
+  },
+  {
+    "id": 364,
+    "start": 988.72,
+    "duration": 2.91,
+    "end": 991.63,
+    "textEn": "In the end, the doctor went and sat next to Gillian and said,",
+    "textVi": "Cuối cùng, bác sĩ đến ngồi cạnh Gillian và nói:",
+    "words": [
+      "In",
+      "the",
+      "end,",
+      "the",
+      "doctor",
+      "went",
+      "and",
+      "sat",
+      "next",
+      "to",
+      "Gillian",
+      "and",
+      "said,"
+    ]
+  },
+  {
+    "id": 365,
+    "start": 991.65,
+    "duration": 2.71,
+    "end": 994.36,
+    "textEn": "\"I've listened to all these things your mother's told me.",
+    "textVi": "“Anh đã nghe tất cả những điều mẹ em kể với anh.",
+    "words": [
+      "\"I've",
+      "listened",
+      "to",
+      "all",
+      "these",
+      "things",
+      "your",
+      "mother's",
+      "told",
+      "me."
+    ]
+  },
+  {
+    "id": 366,
+    "start": 994.39,
+    "duration": 1.59,
+    "end": 995.98,
+    "textEn": "I need to speak to her privately.",
+    "textVi": "Tôi cần nói chuyện riêng với cô ấy.",
+    "words": [
+      "I",
+      "need",
+      "to",
+      "speak",
+      "to",
+      "her",
+      "privately."
+    ]
+  },
+  {
+    "id": 367,
+    "start": 996.0,
+    "duration": 2.32,
+    "end": 998.32,
+    "textEn": "Wait here. We'll be back. We won't be very long,\"",
+    "textVi": "Đợi ở đây. Chúng tôi sẽ quay lại. Chúng ta sẽ không đi lâu đâu,\"",
+    "words": [
+      "Wait",
+      "here.",
+      "We'll",
+      "be",
+      "back.",
+      "We",
+      "won't",
+      "be",
+      "very",
+      "long,\""
+    ]
+  },
+  {
+    "id": 368,
+    "start": 998.35,
+    "duration": 2.65,
+    "end": 1001.0,
+    "textEn": "and they went and left her.",
+    "textVi": "và họ đã đi và bỏ lại cô ấy.",
+    "words": [
+      "and",
+      "they",
+      "went",
+      "and",
+      "left",
+      "her."
+    ]
+  },
+  {
+    "id": 369,
+    "start": 1001.02,
+    "duration": 1.64,
+    "end": 1002.66,
+    "textEn": "But as they went out of the room,",
+    "textVi": "Nhưng khi họ ra khỏi phòng,",
+    "words": [
+      "But",
+      "as",
+      "they",
+      "went",
+      "out",
+      "of",
+      "the",
+      "room,"
+    ]
+  },
+  {
+    "id": 370,
+    "start": 1002.68,
+    "duration": 2.86,
+    "end": 1005.54,
+    "textEn": "he turned on the radio that was sitting on his desk.",
+    "textVi": "anh ấy bật chiếc radio đang đặt trên bàn làm việc của mình lên.",
+    "words": [
+      "he",
+      "turned",
+      "on",
+      "the",
+      "radio",
+      "that",
+      "was",
+      "sitting",
+      "on",
+      "his",
+      "desk."
+    ]
+  },
+  {
+    "id": 371,
+    "start": 1005.56,
+    "duration": 1.64,
+    "end": 1007.2,
+    "textEn": "And when they got out of the room,",
+    "textVi": "Và khi họ ra khỏi phòng,",
+    "words": [
+      "And",
+      "when",
+      "they",
+      "got",
+      "out",
+      "of",
+      "the",
+      "room,"
+    ]
+  },
+  {
+    "id": 372,
+    "start": 1007.23,
+    "duration": 2.38,
+    "end": 1009.61,
+    "textEn": "he said to her mother, \"Just stand and watch her.\"",
+    "textVi": "anh ấy nói với mẹ cô ấy, \"Hãy đứng và nhìn cô ấy.\"",
+    "words": [
+      "he",
+      "said",
+      "to",
+      "her",
+      "mother,",
+      "\"Just",
+      "stand",
+      "and",
+      "watch",
+      "her.\""
+    ]
+  },
+  {
+    "id": 373,
+    "start": 1009.63,
+    "duration": 2.51,
+    "end": 1012.14,
+    "textEn": "And the minute they left the room,",
+    "textVi": "Và ngay khi họ rời khỏi phòng,",
+    "words": [
+      "And",
+      "the",
+      "minute",
+      "they",
+      "left",
+      "the",
+      "room,"
+    ]
+  },
+  {
+    "id": 374,
+    "start": 1012.16,
+    "duration": 2.6,
+    "end": 1014.76,
+    "textEn": "she was on her feet, moving to the music.",
+    "textVi": "cô ấy đứng dậy và di chuyển theo điệu nhạc.",
+    "words": [
+      "she",
+      "was",
+      "on",
+      "her",
+      "feet,",
+      "moving",
+      "to",
+      "the",
+      "music."
+    ]
+  },
+  {
+    "id": 375,
+    "start": 1014.78,
+    "duration": 3.5,
+    "end": 1018.28,
+    "textEn": "And they watched for a few minutes, and he turned to her mother and said,",
+    "textVi": "Và họ quan sát trong vài phút, rồi ông quay sang mẹ cô và nói,",
+    "words": [
+      "And",
+      "they",
+      "watched",
+      "for",
+      "a",
+      "few",
+      "minutes,",
+      "and",
+      "he",
+      "turned",
+      "to",
+      "her",
+      "mother",
+      "and",
+      "said,"
+    ]
+  },
+  {
+    "id": 376,
+    "start": 1018.31,
+    "duration": 1.98,
+    "end": 1020.29,
+    "textEn": "\"Mrs. Lynne, Gillian isn't sick.",
+    "textVi": "“Bà Lynne, Gillian không bị bệnh.",
+    "words": [
+      "\"Mrs.",
+      "Lynne,",
+      "Gillian",
+      "isn't",
+      "sick."
+    ]
+  },
+  {
+    "id": 377,
+    "start": 1020.31,
+    "duration": 1.66,
+    "end": 1021.97,
+    "textEn": "She's a dancer.",
+    "textVi": "Cô ấy là một vũ công.",
+    "words": [
+      "She's",
+      "a",
+      "dancer."
+    ]
+  },
+  {
+    "id": 378,
+    "start": 1023.34,
+    "duration": 1.39,
+    "end": 1024.73,
+    "textEn": "Take her to a dance school.\"",
+    "textVi": "Hãy đưa cô ấy đến trường dạy khiêu vũ.\"",
+    "words": [
+      "Take",
+      "her",
+      "to",
+      "a",
+      "dance",
+      "school.\""
+    ]
+  },
+  {
+    "id": 379,
+    "start": 1024.75,
+    "duration": 1.23,
+    "end": 1025.98,
+    "textEn": "I said, \"What happened?\"",
+    "textVi": "Tôi nói, “Chuyện gì đã xảy ra vậy?”",
+    "words": [
+      "I",
+      "said,",
+      "\"What",
+      "happened?\""
+    ]
+  },
+  {
+    "id": 380,
+    "start": 1026.0,
+    "duration": 2.98,
+    "end": 1028.98,
+    "textEn": "She said, \"She did. I can't tell you how wonderful it was.",
+    "textVi": "Cô ấy nói, \"Cô ấy đã làm vậy. Tôi không thể diễn tả cho bạn biết điều đó tuyệt vời đến thế nào.",
+    "words": [
+      "She",
+      "said,",
+      "\"She",
+      "did.",
+      "I",
+      "can't",
+      "tell",
+      "you",
+      "how",
+      "wonderful",
+      "it",
+      "was."
+    ]
+  },
+  {
+    "id": 381,
+    "start": 1029.0,
+    "duration": 2.83,
+    "end": 1031.83,
+    "textEn": "We walked in this room, and it was full of people like me --",
+    "textVi": "Chúng tôi bước vào căn phòng này, và nó đầy những người như tôi --",
+    "words": [
+      "We",
+      "walked",
+      "in",
+      "this",
+      "room,",
+      "and",
+      "it",
+      "was",
+      "full",
+      "of",
+      "people",
+      "like",
+      "me",
+      "--"
+    ]
+  },
+  {
+    "id": 382,
+    "start": 1031.85,
+    "duration": 2.22,
+    "end": 1034.07,
+    "textEn": "people who couldn't sit still,",
+    "textVi": "những người không thể ngồi yên,",
+    "words": [
+      "people",
+      "who",
+      "couldn't",
+      "sit",
+      "still,"
+    ]
+  },
+  {
+    "id": 383,
+    "start": 1034.1,
+    "duration": 2.91,
+    "end": 1037.01,
+    "textEn": "people who had to move to think.\"",
+    "textVi": "những người phải di chuyển để suy nghĩ.\"",
+    "words": [
+      "people",
+      "who",
+      "had",
+      "to",
+      "move",
+      "to",
+      "think.\""
+    ]
+  },
+  {
+    "id": 384,
+    "start": 1037.03,
+    "duration": 1.83,
+    "end": 1038.86,
+    "textEn": "Who had to move to think.",
+    "textVi": "Ai đã phải di chuyển để suy nghĩ.",
+    "words": [
+      "Who",
+      "had",
+      "to",
+      "move",
+      "to",
+      "think."
+    ]
+  },
+  {
+    "id": 385,
+    "start": 1038.89,
+    "duration": 3.61,
+    "end": 1042.5,
+    "textEn": "They did ballet, they did tap, jazz; they did modern; they did contemporary.",
+    "textVi": "Họ tập múa ba lê, tập tap, nhạc jazz; họ đã làm hiện đại; họ đã làm đương đại.",
+    "words": [
+      "They",
+      "did",
+      "ballet,",
+      "they",
+      "did",
+      "tap,",
+      "jazz;",
+      "they",
+      "did",
+      "modern;",
+      "they",
+      "did",
+      "contemporary."
+    ]
+  },
+  {
+    "id": 386,
+    "start": 1042.52,
+    "duration": 2.75,
+    "end": 1045.27,
+    "textEn": "She was eventually auditioned for the Royal Ballet School.",
+    "textVi": "Cuối cùng cô đã được thử giọng vào Trường Ballet Hoàng gia.",
+    "words": [
+      "She",
+      "was",
+      "eventually",
+      "auditioned",
+      "for",
+      "the",
+      "Royal",
+      "Ballet",
+      "School."
+    ]
+  },
+  {
+    "id": 387,
+    "start": 1045.29,
+    "duration": 3.25,
+    "end": 1048.54,
+    "textEn": "She became a soloist; she had a wonderful career at the Royal Ballet.",
+    "textVi": "Cô ấy trở thành nghệ sĩ độc tấu; cô ấy đã có một sự nghiệp tuyệt vời tại Royal Ballet.",
+    "words": [
+      "She",
+      "became",
+      "a",
+      "soloist;",
+      "she",
+      "had",
+      "a",
+      "wonderful",
+      "career",
+      "at",
+      "the",
+      "Royal",
+      "Ballet."
+    ]
+  },
+  {
+    "id": 388,
+    "start": 1048.57,
+    "duration": 2.56,
+    "end": 1051.13,
+    "textEn": "She eventually graduated from the Royal Ballet School,",
+    "textVi": "Cuối cùng cô đã tốt nghiệp trường Ballet Hoàng gia,",
+    "words": [
+      "She",
+      "eventually",
+      "graduated",
+      "from",
+      "the",
+      "Royal",
+      "Ballet",
+      "School,"
+    ]
+  },
+  {
+    "id": 389,
+    "start": 1051.15,
+    "duration": 1.93,
+    "end": 1053.08,
+    "textEn": "founded the Gillian Lynne Dance Company,",
+    "textVi": "thành lập Vũ đoàn Gillian Lynne,",
+    "words": [
+      "founded",
+      "the",
+      "Gillian",
+      "Lynne",
+      "Dance",
+      "Company,"
+    ]
+  },
+  {
+    "id": 390,
+    "start": 1053.1,
+    "duration": 1.24,
+    "end": 1054.34,
+    "textEn": "met Andrew Lloyd Webber.",
+    "textVi": "đã gặp Andrew Lloyd Webber.",
+    "words": [
+      "met",
+      "Andrew",
+      "Lloyd",
+      "Webber."
+    ]
+  },
+  {
+    "id": 391,
+    "start": 1054.36,
+    "duration": 1.3,
+    "end": 1055.66,
+    "textEn": "She's been responsible for",
+    "textVi": "Cô ấy phải chịu trách nhiệm về",
+    "words": [
+      "She's",
+      "been",
+      "responsible",
+      "for"
+    ]
+  },
+  {
+    "id": 392,
+    "start": 1055.68,
+    "duration": 3.15,
+    "end": 1058.83,
+    "textEn": "some of the most successful musical theater productions in history,",
+    "textVi": "một số vở nhạc kịch thành công nhất trong lịch sử,",
+    "words": [
+      "some",
+      "of",
+      "the",
+      "most",
+      "successful",
+      "musical",
+      "theater",
+      "productions",
+      "in",
+      "history,"
+    ]
+  },
+  {
+    "id": 393,
+    "start": 1058.85,
+    "duration": 1.6,
+    "end": 1060.45,
+    "textEn": "she's given pleasure to millions,",
+    "textVi": "cô ấy đã mang lại niềm vui cho hàng triệu người,",
+    "words": [
+      "she's",
+      "given",
+      "pleasure",
+      "to",
+      "millions,"
+    ]
+  },
+  {
+    "id": 394,
+    "start": 1060.47,
+    "duration": 1.41,
+    "end": 1061.88,
+    "textEn": "and she's a multimillionaire.",
+    "textVi": "và cô ấy là một triệu phú.",
+    "words": [
+      "and",
+      "she's",
+      "a",
+      "multimillionaire."
+    ]
+  },
+  {
+    "id": 395,
+    "start": 1061.9,
+    "duration": 3.71,
+    "end": 1065.61,
+    "textEn": "Somebody else might have put her on medication and told her to calm down.",
+    "textVi": "Ai đó có thể đã cho cô ấy uống thuốc và bảo cô ấy bình tĩnh lại.",
+    "words": [
+      "Somebody",
+      "else",
+      "might",
+      "have",
+      "put",
+      "her",
+      "on",
+      "medication",
+      "and",
+      "told",
+      "her",
+      "to",
+      "calm",
+      "down."
+    ]
+  },
+  {
+    "id": 396,
+    "start": 1065.64,
+    "duration": 6.78,
+    "end": 1072.42,
+    "textEn": "(Applause)",
+    "textVi": "(Vỗ tay)",
+    "words": [
+      "(Applause)"
+    ]
+  },
+  {
+    "id": 397,
+    "start": 1073.6,
+    "duration": 1.57,
+    "end": 1075.17,
+    "textEn": "What I think it comes to is this:",
+    "textVi": "Những gì tôi nghĩ nó dẫn đến là thế này:",
+    "words": [
+      "What",
+      "I",
+      "think",
+      "it",
+      "comes",
+      "to",
+      "is",
+      "this:"
+    ]
+  },
+  {
+    "id": 398,
+    "start": 1075.2,
+    "duration": 1.78,
+    "end": 1076.98,
+    "textEn": "Al Gore spoke the other night",
+    "textVi": "Al Gore đã nói chuyện vào đêm nọ",
+    "words": [
+      "Al",
+      "Gore",
+      "spoke",
+      "the",
+      "other",
+      "night"
+    ]
+  },
+  {
+    "id": 399,
+    "start": 1077.0,
+    "duration": 4.52,
+    "end": 1081.52,
+    "textEn": "about ecology and the revolution that was triggered by Rachel Carson.",
+    "textVi": "về hệ sinh thái và cuộc cách mạng do Rachel Carson gây ra.",
+    "words": [
+      "about",
+      "ecology",
+      "and",
+      "the",
+      "revolution",
+      "that",
+      "was",
+      "triggered",
+      "by",
+      "Rachel",
+      "Carson."
+    ]
+  },
+  {
+    "id": 400,
+    "start": 1082.26,
+    "duration": 2.11,
+    "end": 1084.37,
+    "textEn": "I believe our only hope for the future",
+    "textVi": "Tôi tin rằng hy vọng duy nhất của chúng ta cho tương lai",
+    "words": [
+      "I",
+      "believe",
+      "our",
+      "only",
+      "hope",
+      "for",
+      "the",
+      "future"
+    ]
+  },
+  {
+    "id": 401,
+    "start": 1084.39,
+    "duration": 3.88,
+    "end": 1088.27,
+    "textEn": "is to adopt a new conception of human ecology,",
+    "textVi": "là áp dụng một quan niệm mới về sinh thái nhân văn,",
+    "words": [
+      "is",
+      "to",
+      "adopt",
+      "a",
+      "new",
+      "conception",
+      "of",
+      "human",
+      "ecology,"
+    ]
+  },
+  {
+    "id": 402,
+    "start": 1088.29,
+    "duration": 2.53,
+    "end": 1090.82,
+    "textEn": "one in which we start to reconstitute our conception",
+    "textVi": "một trong đó chúng ta bắt đầu xây dựng lại quan niệm của mình",
+    "words": [
+      "one",
+      "in",
+      "which",
+      "we",
+      "start",
+      "to",
+      "reconstitute",
+      "our",
+      "conception"
+    ]
+  },
+  {
+    "id": 403,
+    "start": 1090.84,
+    "duration": 2.26,
+    "end": 1093.1,
+    "textEn": "of the richness of human capacity.",
+    "textVi": "về sự phong phú của năng lực con người.",
+    "words": [
+      "of",
+      "the",
+      "richness",
+      "of",
+      "human",
+      "capacity."
+    ]
+  },
+  {
+    "id": 404,
+    "start": 1093.13,
+    "duration": 3.37,
+    "end": 1096.5,
+    "textEn": "Our education system has mined our minds",
+    "textVi": "Hệ thống giáo dục của chúng ta đã khai thác trí óc của chúng ta",
+    "words": [
+      "Our",
+      "education",
+      "system",
+      "has",
+      "mined",
+      "our",
+      "minds"
+    ]
+  },
+  {
+    "id": 405,
+    "start": 1096.52,
+    "duration": 3.44,
+    "end": 1099.96,
+    "textEn": "in the way that we strip-mine the earth for a particular commodity.",
+    "textVi": "theo cách chúng ta khai thác đất để tìm một loại hàng hóa cụ thể.",
+    "words": [
+      "in",
+      "the",
+      "way",
+      "that",
+      "we",
+      "strip-mine",
+      "the",
+      "earth",
+      "for",
+      "a",
+      "particular",
+      "commodity."
+    ]
+  },
+  {
+    "id": 406,
+    "start": 1100.38,
+    "duration": 2.42,
+    "end": 1102.8,
+    "textEn": "And for the future, it won't serve us.",
+    "textVi": "Và trong tương lai, nó sẽ không phục vụ chúng ta.",
+    "words": [
+      "And",
+      "for",
+      "the",
+      "future,",
+      "it",
+      "won't",
+      "serve",
+      "us."
+    ]
+  },
+  {
+    "id": 407,
+    "start": 1102.82,
+    "duration": 2.15,
+    "end": 1104.97,
+    "textEn": "We have to rethink the fundamental principles",
+    "textVi": "Chúng ta phải suy nghĩ lại các nguyên tắc cơ bản",
+    "words": [
+      "We",
+      "have",
+      "to",
+      "rethink",
+      "the",
+      "fundamental",
+      "principles"
+    ]
+  },
+  {
+    "id": 408,
+    "start": 1105.0,
+    "duration": 2.06,
+    "end": 1107.06,
+    "textEn": "on which we're educating our children.",
+    "textVi": "mà chúng ta đang giáo dục con cái chúng ta.",
+    "words": [
+      "on",
+      "which",
+      "we're",
+      "educating",
+      "our",
+      "children."
+    ]
+  },
+  {
+    "id": 409,
+    "start": 1107.09,
+    "duration": 2.67,
+    "end": 1109.76,
+    "textEn": "There was a wonderful quote by Jonas Salk, who said,",
+    "textVi": "Có một câu nói tuyệt vời của Jonas Salk, người đã nói,",
+    "words": [
+      "There",
+      "was",
+      "a",
+      "wonderful",
+      "quote",
+      "by",
+      "Jonas",
+      "Salk,",
+      "who",
+      "said,"
+    ]
+  },
+  {
+    "id": 410,
+    "start": 1109.79,
+    "duration": 5.1,
+    "end": 1114.89,
+    "textEn": "\"If all the insects were to disappear from the Earth,",
+    "textVi": "\"Nếu tất cả côn trùng biến mất khỏi Trái đất,",
+    "words": [
+      "\"If",
+      "all",
+      "the",
+      "insects",
+      "were",
+      "to",
+      "disappear",
+      "from",
+      "the",
+      "Earth,"
+    ]
+  },
+  {
+    "id": 411,
+    "start": 1114.91,
+    "duration": 2.78,
+    "end": 1117.69,
+    "textEn": "within 50 years, all life on Earth would end.",
+    "textVi": "trong vòng 50 năm nữa, toàn bộ sự sống trên Trái đất sẽ kết thúc.",
+    "words": [
+      "within",
+      "50",
+      "years,",
+      "all",
+      "life",
+      "on",
+      "Earth",
+      "would",
+      "end."
+    ]
+  },
+  {
+    "id": 412,
+    "start": 1118.77,
+    "duration": 3.04,
+    "end": 1121.81,
+    "textEn": "If all human beings disappeared from the Earth,",
+    "textVi": "Nếu tất cả loài người biến mất khỏi Trái đất,",
+    "words": [
+      "If",
+      "all",
+      "human",
+      "beings",
+      "disappeared",
+      "from",
+      "the",
+      "Earth,"
+    ]
+  },
+  {
+    "id": 413,
+    "start": 1121.83,
+    "duration": 2.63,
+    "end": 1124.46,
+    "textEn": "within 50 years, all forms of life would flourish.\"",
+    "textVi": "trong vòng 50 năm nữa, mọi dạng sống sẽ phát triển mạnh mẽ.\"",
+    "words": [
+      "within",
+      "50",
+      "years,",
+      "all",
+      "forms",
+      "of",
+      "life",
+      "would",
+      "flourish.\""
+    ]
+  },
+  {
+    "id": 414,
+    "start": 1125.38,
+    "duration": 1.28,
+    "end": 1126.66,
+    "textEn": "And he's right.",
+    "textVi": "Và anh ấy đã đúng.",
+    "words": [
+      "And",
+      "he's",
+      "right."
+    ]
+  },
+  {
+    "id": 415,
+    "start": 1127.39,
+    "duration": 3.73,
+    "end": 1131.12,
+    "textEn": "What TED celebrates is the gift of the human imagination.",
+    "textVi": "Điều TED tôn vinh là món quà trí tưởng tượng của con người.",
+    "words": [
+      "What",
+      "TED",
+      "celebrates",
+      "is",
+      "the",
+      "gift",
+      "of",
+      "the",
+      "human",
+      "imagination."
+    ]
+  },
+  {
+    "id": 416,
+    "start": 1131.53,
+    "duration": 4.23,
+    "end": 1135.76,
+    "textEn": "We have to be careful now that we use this gift wisely,",
+    "textVi": "Bây giờ chúng ta phải cẩn thận khi sử dụng món quà này một cách khôn ngoan,",
+    "words": [
+      "We",
+      "have",
+      "to",
+      "be",
+      "careful",
+      "now",
+      "that",
+      "we",
+      "use",
+      "this",
+      "gift",
+      "wisely,"
+    ]
+  },
+  {
+    "id": 417,
+    "start": 1135.79,
+    "duration": 3.23,
+    "end": 1139.02,
+    "textEn": "and that we avert some of the scenarios that we've talked about.",
+    "textVi": "và rằng chúng ta ngăn chặn được một số tình huống mà chúng ta đã nói tới.",
+    "words": [
+      "and",
+      "that",
+      "we",
+      "avert",
+      "some",
+      "of",
+      "the",
+      "scenarios",
+      "that",
+      "we've",
+      "talked",
+      "about."
+    ]
+  },
+  {
+    "id": 418,
+    "start": 1139.04,
+    "duration": 3.75,
+    "end": 1142.79,
+    "textEn": "And the only way we'll do it is by seeing our creative capacities",
+    "textVi": "Và cách duy nhất chúng ta có thể làm được là nhìn thấy khả năng sáng tạo của mình",
+    "words": [
+      "And",
+      "the",
+      "only",
+      "way",
+      "we'll",
+      "do",
+      "it",
+      "is",
+      "by",
+      "seeing",
+      "our",
+      "creative",
+      "capacities"
+    ]
+  },
+  {
+    "id": 419,
+    "start": 1142.82,
+    "duration": 1.79,
+    "end": 1144.61,
+    "textEn": "for the richness they are",
+    "textVi": "vì sự giàu có của họ",
+    "words": [
+      "for",
+      "the",
+      "richness",
+      "they",
+      "are"
+    ]
+  },
+  {
+    "id": 420,
+    "start": 1144.63,
+    "duration": 3.18,
+    "end": 1147.81,
+    "textEn": "and seeing our children for the hope that they are.",
+    "textVi": "và nhìn thấy con cái của chúng tôi với hy vọng rằng chúng sẽ như vậy.",
+    "words": [
+      "and",
+      "seeing",
+      "our",
+      "children",
+      "for",
+      "the",
+      "hope",
+      "that",
+      "they",
+      "are."
+    ]
+  },
+  {
+    "id": 421,
+    "start": 1147.84,
+    "duration": 2.4,
+    "end": 1150.24,
+    "textEn": "And our task is to educate their whole being,",
+    "textVi": "Và nhiệm vụ của chúng ta là giáo dục toàn bộ con người họ,",
+    "words": [
+      "And",
+      "our",
+      "task",
+      "is",
+      "to",
+      "educate",
+      "their",
+      "whole",
+      "being,"
+    ]
+  },
+  {
+    "id": 422,
+    "start": 1150.26,
+    "duration": 1.41,
+    "end": 1151.67,
+    "textEn": "so they can face this future.",
+    "textVi": "để họ có thể đối mặt với tương lai này.",
+    "words": [
+      "so",
+      "they",
+      "can",
+      "face",
+      "this",
+      "future."
+    ]
+  },
+  {
+    "id": 423,
+    "start": 1151.7,
+    "duration": 2.5,
+    "end": 1154.2,
+    "textEn": "By the way -- we may not see this future,",
+    "textVi": "Nhân tiện -- chúng ta có thể không nhìn thấy được tương lai này,",
+    "words": [
+      "By",
+      "the",
+      "way",
+      "--",
+      "we",
+      "may",
+      "not",
+      "see",
+      "this",
+      "future,"
+    ]
+  },
+  {
+    "id": 424,
+    "start": 1154.23,
+    "duration": 1.56,
+    "end": 1155.79,
+    "textEn": "but they will.",
+    "textVi": "nhưng họ sẽ làm vậy.",
+    "words": [
+      "but",
+      "they",
+      "will."
+    ]
+  },
+  {
+    "id": 425,
+    "start": 1155.82,
+    "duration": 2.72,
+    "end": 1158.54,
+    "textEn": "And our job is to help them make something of it.",
+    "textVi": "Và công việc của chúng tôi là giúp họ làm được điều gì đó.",
+    "words": [
+      "And",
+      "our",
+      "job",
+      "is",
+      "to",
+      "help",
+      "them",
+      "make",
+      "something",
+      "of",
+      "it."
+    ]
+  },
+  {
+    "id": 426,
+    "start": 1158.56,
+    "duration": 1.19,
+    "end": 1159.75,
+    "textEn": "Thank you very much.",
+    "textVi": "Cảm ơn rất nhiều.",
+    "words": [
+      "Thank",
+      "you",
+      "very",
+      "much."
+    ]
+  },
+  {
+    "id": 427,
+    "start": 1159.77,
+    "duration": 5.45,
+    "end": 1165.22,
+    "textEn": "(Applause)",
+    "textVi": "(Vỗ tay)",
+    "words": [
+      "(Applause)"
+    ]
+  }
+]
