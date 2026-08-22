@@ -76,24 +76,12 @@ export const InteractiveTranscript: React.FC<InteractiveTranscriptProps> = ({
   return (
     <div className='flex flex-col h-full bg-white dark:bg-dark-card rounded-2xl shadow-lg border border-gray-100 dark:border-gray-800 overflow-hidden'>
       {/* Header & Controls */}
-      <div className='p-4 border-b border-gray-100 dark:border-gray-800 flex flex-wrap items-center justify-between gap-3 bg-gray-50/50 dark:bg-gray-800/40'>
-        <div>
-          <h3 className='font-display font-bold text-base text-gray-900 dark:text-white flex items-center gap-2'>
-            <span>Phụ đề Song Ngữ</span>
-            <span className='px-2 py-0.5 rounded-full text-xs bg-primary-100 dark:bg-primary-900/40 text-primary-600 dark:text-primary-400 font-semibold'>
-              {cues.length} câu
-            </span>
-          </h3>
-          <p className='text-xs text-gray-500 dark:text-gray-400'>
-            Nhấp vào từ bất kỳ để tra nghĩa & lưu Flashcard
-          </p>
-        </div>
-
+      <div className='p-2.5 sm:p-3 border-b border-gray-100 dark:border-gray-800/80 flex items-center justify-between gap-2 bg-gray-50/70 dark:bg-gray-800/40'>
         {/* Subtitle Mode Controls */}
-        <div className='flex items-center gap-1.5 bg-gray-100 dark:bg-gray-800 p-1 rounded-xl text-xs'>
+        <div className='flex items-center gap-1 bg-gray-200/80 dark:bg-gray-800 p-0.5 rounded-xl text-[11px] sm:text-xs'>
           <button
             onClick={() => setSubMode('both')}
-            className={`px-2.5 py-1 rounded-lg font-medium transition-all ${
+            className={`px-2 py-1 rounded-lg font-bold transition-all ${
               subMode === 'both'
                 ? 'bg-white dark:bg-gray-700 text-primary-600 dark:text-primary-400 shadow-sm'
                 : 'text-gray-500 dark:text-gray-400'
@@ -103,7 +91,7 @@ export const InteractiveTranscript: React.FC<InteractiveTranscriptProps> = ({
           </button>
           <button
             onClick={() => setSubMode('en-only')}
-            className={`px-2.5 py-1 rounded-lg font-medium transition-all ${
+            className={`px-2 py-1 rounded-lg font-bold transition-all ${
               subMode === 'en-only'
                 ? 'bg-white dark:bg-gray-700 text-primary-600 dark:text-primary-400 shadow-sm'
                 : 'text-gray-500 dark:text-gray-400'
@@ -113,28 +101,41 @@ export const InteractiveTranscript: React.FC<InteractiveTranscriptProps> = ({
           </button>
           <button
             onClick={() => setSubMode('hover-vi')}
-            className={`px-2.5 py-1 rounded-lg font-medium transition-all ${
+            className={`px-2 py-1 rounded-lg font-bold transition-all ${
               subMode === 'hover-vi'
                 ? 'bg-white dark:bg-gray-700 text-primary-600 dark:text-primary-400 shadow-sm'
                 : 'text-gray-500 dark:text-gray-400'
             }`}
-            title='Chỉ hiện tiếng Việt khi di chuột vào câu'
+            title='Chỉ hiện tiếng Việt khi chạm hoặc di chuột'
           >
-            Ẩn VI (Hover)
+            Ẩn VI
           </button>
         </div>
+
+        {/* Counter Badge */}
+        <span className='text-[10px] sm:text-xs font-mono font-bold text-gray-400 dark:text-gray-500'>
+          {filteredCues.length} câu
+        </span>
       </div>
 
       {/* Search in transcript */}
-      <div className='px-4 py-2 border-b border-gray-100 dark:border-gray-800/60 flex items-center gap-2 bg-white dark:bg-dark-card'>
-        <Search size={16} className='text-gray-400' />
+      <div className='px-3 py-1.5 border-b border-gray-100 dark:border-gray-800/60 flex items-center gap-2 bg-white dark:bg-dark-card'>
+        <Search size={14} className='text-gray-400 shrink-0' />
         <input
           type='text'
-          placeholder='Tìm kiếm câu thoại hoặc từ vựng trong video...'
+          placeholder='Tìm từ hoặc câu thoại...'
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className='w-full text-xs bg-transparent border-none focus:outline-none text-gray-700 dark:text-gray-200'
+          className='w-full text-xs bg-transparent border-none focus:outline-none text-gray-700 dark:text-gray-200 placeholder:text-gray-400'
         />
+        {searchQuery && (
+          <button
+            onClick={() => setSearchQuery('')}
+            className='text-xs text-gray-400 hover:text-gray-600 p-0.5'
+          >
+            ✕
+          </button>
+        )}
       </div>
 
       {/* Transcript Scroll Area */}
