@@ -158,16 +158,22 @@ export const InteractiveTranscript: React.FC<InteractiveTranscriptProps> = ({
     return cues[0]?.id ?? null
   }, [cues, currentTime])
 
-  // Smooth scroll ONLY when active cue changes to prevent frame stutter
+  // Smooth scroll ONLY inside this container (never scroll parent page / window)
   useEffect(() => {
     if (!activeCueId || activeCueId === prevActiveIdRef.current) return
     prevActiveIdRef.current = activeCueId
 
+    const container = containerRef.current
     const el = document.getElementById(`cue-item-${activeCueId}`)
-    if (el && containerRef.current) {
-      el.scrollIntoView({
+    if (container && el) {
+      const containerRect = container.getBoundingClientRect()
+      const elRect = el.getBoundingClientRect()
+      const relativeTop = elRect.top - containerRect.top + container.scrollTop
+      const targetScrollTop = relativeTop - container.clientHeight / 2 + el.offsetHeight / 2
+
+      container.scrollTo({
+        top: Math.max(0, targetScrollTop),
         behavior: 'smooth',
-        block: 'center',
       })
     }
   }, [activeCueId])
