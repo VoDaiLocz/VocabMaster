@@ -159,9 +159,9 @@ export const VideoLearning: React.FC = () => {
   const currentCue = cues.find((c) => currentTime >= c.start && currentTime <= c.end)
 
   return (
-    <div className='p-2 sm:p-4 md:p-6 max-w-7xl mx-auto space-y-3 sm:space-y-4'>
+    <div className='p-2 sm:p-4 md:p-6 max-w-7xl mx-auto flex flex-col h-[calc(100dvh-70px)] md:h-auto overflow-hidden md:overflow-visible space-y-2 sm:space-y-4'>
       {/* Top Minimal Header */}
-      <div className='flex items-center justify-between gap-2 px-1'>
+      <div className='flex items-center justify-between gap-2 px-1 shrink-0'>
         <div className='flex items-center gap-2 min-w-0'>
           <div className='p-1.5 sm:p-2 rounded-xl bg-red-600 text-white shadow-sm shrink-0'>
             <Youtube size={18} className='sm:w-5 sm:h-5' />
@@ -189,7 +189,7 @@ export const VideoLearning: React.FC = () => {
 
       {/* Loading State */}
       {loading ? (
-        <div className='h-64 sm:h-80 flex flex-col items-center justify-center p-6 bg-white dark:bg-dark-card rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm'>
+        <div className='flex-1 flex flex-col items-center justify-center p-6 bg-white dark:bg-dark-card rounded-2xl border border-gray-100 dark:border-gray-800 shadow-sm'>
           <div className='w-full max-w-md space-y-4 text-center'>
             <div className='w-12 h-12 rounded-2xl bg-primary-100 dark:bg-primary-950/60 text-primary-600 dark:text-primary-400 flex items-center justify-center mx-auto shadow-inner'>
               <Sparkles size={24} className='animate-pulse text-primary-500' />
@@ -209,9 +209,9 @@ export const VideoLearning: React.FC = () => {
           </div>
         </div>
       ) : currentVideoId ? (
-        <div className='grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4 items-start'>
-          {/* Left Column on Desktop / Main Player on Mobile */}
-          <div className='lg:col-span-7 space-y-3'>
+        <div className='flex-1 min-h-0 flex flex-col lg:grid lg:grid-cols-12 gap-2 sm:gap-4 items-stretch lg:items-start overflow-hidden lg:overflow-visible'>
+          {/* Video Player (Pinned at top on mobile, 7 cols on desktop) */}
+          <div className='shrink-0 w-full lg:col-span-7 space-y-3'>
             <YouTubePlayer
               videoId={currentVideoId}
               onTimeUpdate={setCurrentTime}
@@ -236,8 +236,8 @@ export const VideoLearning: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Column on Desktop / Immediate Subtitle Stream on Mobile */}
-          <div className='lg:col-span-5 h-[calc(100dvh-290px)] sm:h-[480px] lg:h-[620px]'>
+          {/* Transcript Stream (Fills exactly remaining viewport space on mobile, 5 cols on desktop) */}
+          <div className='flex-1 min-h-0 w-full lg:col-span-5 lg:h-[620px] overflow-hidden'>
             <InteractiveTranscript
               cues={cues}
               currentTime={currentTime}

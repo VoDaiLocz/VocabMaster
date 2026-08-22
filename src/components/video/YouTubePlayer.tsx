@@ -404,7 +404,7 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
   const watchUrl = `https://www.youtube.com/watch?v=${videoId}`
 
   return (
-    <div className='flex flex-col rounded-2xl overflow-hidden bg-black shadow-xl border border-gray-800 transition-all'>
+    <div className='flex flex-col shrink-0 rounded-2xl overflow-hidden bg-black shadow-xl border border-gray-800 transition-all'>
       {/* Video Container (Aspect 16:9 on all screens) */}
       <div className='relative w-full aspect-video bg-black overflow-hidden flex items-center justify-center'>
         {isElectron ? (
@@ -420,8 +420,8 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
         )}
       </div>
 
-      {/* Mobile-First Learning Control Toolbar */}
-      <div className='p-2.5 sm:p-3 bg-gray-950/95 backdrop-blur-md border-t border-gray-800/80 flex flex-wrap items-center justify-between gap-2 text-white'>
+      {/* Mobile-First Learning Control Toolbar (Single row, never wraps) */}
+      <div className='p-2 sm:p-3 bg-gray-950/95 backdrop-blur-md border-t border-gray-800/80 flex items-center justify-between gap-1.5 sm:gap-2 text-white overflow-x-auto no-scrollbar'>
         {/* Navigation & Loop Buttons */}
         <div className='flex items-center gap-1.5 sm:gap-2'>
           <button
