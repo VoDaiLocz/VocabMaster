@@ -134,7 +134,7 @@ export function Settings() {
   }, [settings.soundEnabled, updateSetting])
 
   return (
-    <div className='p-8 max-w-2xl'>
+    <div className='p-4 sm:p-6 md:p-8 max-w-2xl space-y-6'>
       <h1 className='text-2xl font-bold mb-8'>Cài đặt</h1>
 
       <ThemeSection theme={settings.theme} onChange={handleThemeChange} />

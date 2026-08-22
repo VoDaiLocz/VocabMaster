@@ -72,7 +72,7 @@ export function Library() {
   )
 
   return (
-    <div className='p-8'>
+    <div className='p-4 sm:p-6 md:p-8 space-y-6'>
       <Header totalDecks={decks.length} totalWords={totalWords} />
       <FilterTabs filter={filter} onFilterChange={setFilter} />
       {error && <p className='text-red-500 mt-2'>{error}</p>}

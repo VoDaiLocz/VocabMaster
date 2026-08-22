@@ -102,7 +102,7 @@ export function DeckDetail() {
   const counts = getWordCounts(words)
 
   return (
-    <div className='p-8'>
+    <div className='p-4 sm:p-6 md:p-8 space-y-6'>
       <DeckHeader deck={currentDeck} onStudy={handleStudy} onDelete={handleDeleteDeck} />
       <StatsCards counts={counts} totalWords={words.length} />
       <WordsList

@@ -30,7 +30,7 @@ export function Achievements() {
     .reduce((sum, a) => sum + a.xp_reward, 0)
 
   return (
-    <div className='p-8'>
+    <div className='p-4 sm:p-6 md:p-8 space-y-6'>
       <Header unlockedCount={unlockedCount} totalCount={achievements.length} />
       <LevelCard levelInfo={levelInfo} totalXP={totalXP} />
       <StatsCards

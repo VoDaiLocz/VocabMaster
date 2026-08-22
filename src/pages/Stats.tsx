@@ -80,7 +80,7 @@ export function Stats() {
   const maxWords = Math.max(...weeklyData.map((d) => d.words), 1)
 
   return (
-    <div className='p-8 space-y-8'>
+    <div className='p-4 sm:p-6 md:p-8 space-y-6 sm:space-y-8'>
       <h1 className='text-2xl font-bold'>Thống kê</h1>
 
       <SummaryCards stats={totalStats} />
