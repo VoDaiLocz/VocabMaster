@@ -19,7 +19,7 @@ export const WordLookupPopover: React.FC<WordLookupPopoverProps> = ({
   onClose,
   onSaved,
 }) => {
-  const { decks, createWord } = useDeckStore()
+  const { decks, createWord, createDeck } = useDeckStore()
   const [selectedDeckId, setSelectedDeckId] = useState<number | null>(
     decks.length > 0 ? decks[0].id : null,
   )
