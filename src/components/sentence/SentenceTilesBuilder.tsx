@@ -57,6 +57,7 @@ export const SentenceTilesBuilder: React.FC<SentenceTilesBuilderProps> = ({
   const [status, setStatus] = useState<'idle' | 'correct' | 'wrong'>('idle')
   const [hintLevel, setHintLevel] = useState<number>(0) // 0: None, 1: Next Word, 2: Grammar Pattern
   const [highlightedTileIdx, setHighlightedTileIdx] = useState<number | null>(null)
+  const [hintMessage, setHintMessage] = useState<string | null>(null)
   const [errorFeedback, setErrorFeedback] = useState<string | null>(null)
   const [isSaved, setIsSaved] = useState(false)
   const [isPlayingAudio, setIsPlayingAudio] = useState(false)
@@ -66,64 +67,87 @@ export const SentenceTilesBuilder: React.FC<SentenceTilesBuilderProps> = ({
     return deterministicShuffle(sentence.wordTiles, sentence.id || sentence.textEn)
   }, [sentence])
 
-  // Split target sentence into expected token words
-  const expectedTokens = useMemo(() => {
-    return sentence.textEn.split(/\s+/).map((w) => normalizeWord(w))
-  }, [sentence])
-
   // Reset state when moving to a new sentence
   useEffect(() => {
     setSelectedIndices([])
     setStatus('idle')
     setHintLevel(0)
     setHighlightedTileIdx(null)
+    setHintMessage(null)
     setErrorFeedback(null)
     setIsSaved(false)
   }, [sentence])
 
-  // Find the tile index for the next expected word
+  // Find the tile index in shuffledTiles for the next expected word tile
   const findNextExpectedTileIndex = useCallback(() => {
     const nextPos = selectedIndices.length
-    if (nextPos >= expectedTokens.length) return null
+    if (nextPos >= sentence.wordTiles.length) return null
 
-    const expectedWord = expectedTokens[nextPos]
+    const expectedWord = sentence.wordTiles[nextPos]
 
-    // Find the first unselected tile in shuffledTiles that matches this word
+    // Find the first unselected tile in shuffledTiles that matches this expected word
     for (let i = 0; i < shuffledTiles.length; i++) {
-      if (!selectedIndices.includes(i) && normalizeWord(shuffledTiles[i]) === expectedWord) {
+      if (
+        !selectedIndices.includes(i) &&
+        (shuffledTiles[i] === expectedWord ||
+          normalizeWord(shuffledTiles[i]) === normalizeWord(expectedWord))
+      ) {
         return i
       }
     }
-    return null
-  }, [expectedTokens, selectedIndices, shuffledTiles])
 
-  // Trigger progressive hint (Tier 1: Next Word Highlight, Tier 2: Grammar Breakdown)
+    // Fallback: search for any unselected tile that belongs to the sentence
+    for (let pos = 0; pos < sentence.wordTiles.length; pos++) {
+      const w = sentence.wordTiles[pos]
+      for (let i = 0; i < shuffledTiles.length; i++) {
+        if (
+          !selectedIndices.includes(i) &&
+          (shuffledTiles[i] === w || normalizeWord(shuffledTiles[i]) === normalizeWord(w))
+        ) {
+          return i
+        }
+      }
+    }
+    return null
+  }, [sentence.wordTiles, selectedIndices, shuffledTiles])
+
+  // Trigger progressive hint (Tier 1: Glowing Yellow Word Highlight + TTS, Tier 2: Grammar Breakdown)
   const handleTriggerHint = () => {
     const nextTile = findNextExpectedTileIndex()
     if (nextTile !== null) {
       setHighlightedTileIdx(nextTile)
       setHintLevel(1)
+      const word = shuffledTiles[nextTile]
+      speakWord(word)
+      setHintMessage(`Từ tiếp theo là "${word}" (đang sáng màu vàng)`)
     } else {
       setHintLevel(2)
+      setHintMessage('Xem giải thích khung cấu trúc bên dưới để hoàn chỉnh câu!')
     }
   }
 
-  // Tap on available tile in pool
+  // Tap on available tile in pool (speaks word instantly)
   const handleTileClick = (index: number) => {
     if (status === 'correct') return
     if (!selectedIndices.includes(index)) {
+      speakWord(shuffledTiles[index])
       setSelectedIndices((prev) => [...prev, index])
       setStatus('idle')
       setErrorFeedback(null)
       if (highlightedTileIdx === index) {
         setHighlightedTileIdx(null)
+        setHintMessage(null)
       }
     }
   }
 
-  // Tap on selected tile to remove from answer slot
+  // Tap on selected tile to remove from answer slot (speaks word)
   const handleRemoveTile = (selectedIndexPos: number) => {
     if (status === 'correct') return
+    const tileIdx = selectedIndices[selectedIndexPos]
+    if (tileIdx !== undefined) {
+      speakWord(shuffledTiles[tileIdx])
+    }
     setSelectedIndices((prev) => prev.filter((_, idx) => idx !== selectedIndexPos))
     setStatus('idle')
     setErrorFeedback(null)
@@ -134,6 +158,14 @@ export const SentenceTilesBuilder: React.FC<SentenceTilesBuilderProps> = ({
     setIsPlayingAudio(true)
     speakWord(sentence.textEn, rate)
     setTimeout(() => setIsPlayingAudio(false), 2000)
+  }
+
+  // Speak the user's currently constructed sentence in the answer box
+  const playConstructedAudio = () => {
+    const constructedSentence = selectedIndices.map((idx) => shuffledTiles[idx]).join(' ')
+    if (constructedSentence) {
+      speakWord(constructedSentence, 1.0)
+    }
   }
 
   // Clean string helper for checking
@@ -158,6 +190,7 @@ export const SentenceTilesBuilder: React.FC<SentenceTilesBuilderProps> = ({
       setStatus('correct')
       setErrorFeedback(null)
       setHighlightedTileIdx(null)
+      setHintMessage(null)
       playAudio(1.0)
       if (onCorrectAnswer) onCorrectAnswer()
     } else {
@@ -166,8 +199,8 @@ export const SentenceTilesBuilder: React.FC<SentenceTilesBuilderProps> = ({
       let mismatchPos = -1
       for (let i = 0; i < constructedWords.length; i++) {
         if (
-          i >= expectedTokens.length ||
-          normalizeWord(constructedWords[i]) !== expectedTokens[i]
+          i >= sentence.wordTiles.length ||
+          normalizeWord(constructedWords[i]) !== normalizeWord(sentence.wordTiles[i])
         ) {
           mismatchPos = i + 1
           break
@@ -188,6 +221,7 @@ export const SentenceTilesBuilder: React.FC<SentenceTilesBuilderProps> = ({
     setSelectedIndices([])
     setStatus('idle')
     setHighlightedTileIdx(null)
+    setHintMessage(null)
     setErrorFeedback(null)
   }
 
@@ -217,20 +251,29 @@ export const SentenceTilesBuilder: React.FC<SentenceTilesBuilderProps> = ({
         </div>
 
         <div className='flex items-center gap-2'>
-          {/* Audio Shadowing Clue */}
+          {/* Audio Pronunciation Button (Standard 1.0x) */}
+          <button
+            onClick={() => playAudio(1.0)}
+            className='px-3 py-1.5 rounded-xl text-xs font-bold bg-primary-600 hover:bg-primary-500 text-white shadow-sm transition-all flex items-center gap-1.5 active:scale-95'
+            title='Nghe phát âm chuẩn cả câu'
+          >
+            <Volume2 size={15} className={isPlayingAudio ? 'animate-bounce' : ''} />
+            <span>Phát âm (1.0x)</span>
+          </button>
+
+          {/* Audio Shadowing Slow 0.8x */}
           <button
             onClick={() => playAudio(0.8)}
-            className='px-2.5 py-1 rounded-xl text-xs font-semibold bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-100 transition-colors flex items-center gap-1 border border-indigo-200 dark:border-indigo-800/50'
-            title='Nghe âm thanh gợi ý tốc độ chậm 0.8x'
+            className='px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-100 transition-colors flex items-center gap-1 border border-indigo-200 dark:border-indigo-800/50 active:scale-95'
+            title='Nghe âm thanh chậm 0.8x'
           >
-            <Volume2 size={14} className={isPlayingAudio ? 'animate-bounce' : ''} />
-            <span>Nghe mẫu (0.8x)</span>
+            <span>🐢 0.8x</span>
           </button>
 
           {/* Smart Next-Word Hint Button */}
           <button
             onClick={handleTriggerHint}
-            className={`px-3 py-1 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm active:scale-95 ${
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm active:scale-95 ${
               hintLevel > 0
                 ? 'bg-amber-500 text-white shadow-amber-500/25 ring-2 ring-amber-400'
                 : 'bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800/60 hover:bg-amber-100'
@@ -242,15 +285,53 @@ export const SentenceTilesBuilder: React.FC<SentenceTilesBuilderProps> = ({
         </div>
       </div>
 
-      {/* Target Vietnamese Prompt */}
-      <div className='p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-gray-50 to-primary-50/20 dark:from-gray-800/60 dark:to-primary-950/20 border border-gray-100 dark:border-gray-800'>
-        <span className='text-[11px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider block mb-1'>
-          Hãy đặt câu tiếng Anh cho ý sau:
-        </span>
-        <h2 className='text-lg sm:text-xl md:text-2xl font-bold font-display text-gray-900 dark:text-white leading-relaxed'>
-          "{sentence.textVi}"
-        </h2>
+      {/* Target Vietnamese Prompt with Prominent Audio Speaker */}
+      <div className='p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-gray-50 to-primary-50/20 dark:from-gray-800/60 dark:to-primary-950/20 border border-gray-100 dark:border-gray-800 flex items-center justify-between gap-3'>
+        <div>
+          <span className='text-[11px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider block mb-1'>
+            Hãy đặt câu tiếng Anh cho ý sau:
+          </span>
+          <h2 className='text-lg sm:text-xl md:text-2xl font-bold font-display text-gray-900 dark:text-white leading-relaxed'>
+            "{sentence.textVi}"
+          </h2>
+        </div>
+
+        <button
+          onClick={() => playAudio(1.0)}
+          className='p-3 rounded-2xl bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 hover:bg-primary-200 hover:scale-105 active:scale-95 transition-all shrink-0 shadow-sm'
+          title='Bấm để nghe phát âm mẫu'
+          aria-label='Play English Audio'
+        >
+          <Volume2 size={22} className={isPlayingAudio ? 'animate-bounce' : ''} />
+        </button>
       </div>
+
+      {/* Glowing Yellow Hint Notification Banner */}
+      {hintMessage && (
+        <motion.div
+          initial={{ opacity: 0, y: -5 }}
+          animate={{ opacity: 1, y: 0 }}
+          className='p-3 rounded-2xl bg-amber-100 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-700/60 text-amber-950 dark:text-amber-200 text-xs sm:text-sm font-semibold flex items-center justify-between gap-2 shadow-sm'
+        >
+          <div className='flex items-center gap-2'>
+            <Lightbulb
+              size={16}
+              className='text-amber-600 dark:text-amber-400 shrink-0 fill-amber-400'
+            />
+            <span>{hintMessage}</span>
+          </div>
+          {highlightedTileIdx !== null && (
+            <button
+              onClick={() => {
+                handleTileClick(highlightedTileIdx)
+              }}
+              className='px-2.5 py-1 rounded-xl bg-amber-500 hover:bg-amber-600 active:scale-95 text-white text-xs font-bold shrink-0 shadow-sm'
+            >
+              Chọn luôn từ này
+            </button>
+          )}
+        </motion.div>
+      )}
 
       {/* Grammar Pattern & Structure Banner (Tier 2 Hint) */}
       {hintLevel >= 2 && (
@@ -269,7 +350,7 @@ export const SentenceTilesBuilder: React.FC<SentenceTilesBuilderProps> = ({
 
       {/* Answer Slot (Where selected word tiles are placed) */}
       <div
-        className={`min-h-[85px] sm:min-h-[95px] p-3.5 sm:p-4 rounded-2xl border-2 border-dashed flex flex-wrap items-center gap-2 transition-all ${
+        className={`min-h-[85px] sm:min-h-[95px] p-3.5 sm:p-4 rounded-2xl border-2 border-dashed flex flex-wrap items-center gap-2 relative transition-all ${
           status === 'correct'
             ? 'bg-emerald-50/70 dark:bg-emerald-950/30 border-emerald-400 dark:border-emerald-700 shadow-inner'
             : status === 'wrong'
@@ -284,19 +365,31 @@ export const SentenceTilesBuilder: React.FC<SentenceTilesBuilderProps> = ({
             Chạm vào các khối từ bên dưới để ghép thành câu hoàn chỉnh...
           </span>
         ) : (
-          selectedIndices.map((tileIdx, pos) => (
-            <motion.button
-              key={`${tileIdx}-${pos}`}
-              layout
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              onClick={() => handleRemoveTile(pos)}
-              className='px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-xl bg-primary-600 text-white font-semibold text-xs sm:text-sm shadow-sm hover:bg-primary-700 active:scale-95 transition-all'
-              title='Chạm để bỏ từ này'
+          <>
+            {selectedIndices.map((tileIdx, pos) => (
+              <motion.button
+                key={`${tileIdx}-${pos}`}
+                layout
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                onClick={() => handleRemoveTile(pos)}
+                className='px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-xl bg-primary-600 text-white font-semibold text-xs sm:text-sm shadow-sm hover:bg-primary-700 active:scale-95 transition-all'
+                title='Chạm để bỏ từ này'
+              >
+                {shuffledTiles[tileIdx]}
+              </motion.button>
+            ))}
+
+            {/* Quick listen button for the currently constructed sentence */}
+            <button
+              onClick={playConstructedAudio}
+              className='ml-auto p-1.5 rounded-lg bg-primary-100 dark:bg-primary-900/60 text-primary-700 dark:text-primary-300 hover:bg-primary-200 transition-colors flex items-center gap-1 text-[11px] font-semibold'
+              title='Nghe câu bạn vừa ghép'
             >
-              {shuffledTiles[tileIdx]}
-            </motion.button>
-          ))
+              <Volume2 size={13} />
+              <span className='hidden sm:inline'>Nghe thử</span>
+            </button>
+          </>
         )}
       </div>
 
