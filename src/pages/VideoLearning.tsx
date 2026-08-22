@@ -18,19 +18,7 @@ import {
   VideoNotesDrawer,
   VideoNote,
 } from '@/components/video'
-import {
-  Youtube,
-  Sparkles,
-  Link2,
-  Subtitles,
-  FileText,
-  Volume2,
-  RotateCcw,
-  BookmarkPlus,
-  Compass,
-  X,
-} from 'lucide-react'
-import { speakWord } from '@/utils/quiz'
+import { Youtube, Sparkles, Link2, Compass, X } from 'lucide-react'
 import { useDeckStore } from '@/store/deckStore'
 
 export const VideoLearning: React.FC = () => {
@@ -50,7 +38,6 @@ export const VideoLearning: React.FC = () => {
   const [autoPause, setAutoPause] = useState(false)
   const [activeWordLookup, setActiveWordLookup] = useState<WordLookupResult | null>(null)
   const [notes, setNotes] = useState<VideoNote[]>([])
-  const [activeMobileTab, setActiveMobileTab] = useState<'transcript' | 'notes'>('transcript')
 
   // Ensure decks are loaded
   useEffect(() => {
@@ -223,9 +210,8 @@ export const VideoLearning: React.FC = () => {
         </div>
       ) : currentVideoId ? (
         <div className='grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4 items-start'>
-          {/* Main Video & Live Subtitles (7 Columns on Desktop, Full Width on Mobile) */}
-          <div className='lg:col-span-7 space-y-2.5 sm:space-y-3'>
-            {/* Top Video Player */}
+          {/* Left Column on Desktop / Main Player on Mobile */}
+          <div className='lg:col-span-7 space-y-3'>
             <YouTubePlayer
               videoId={currentVideoId}
               onTimeUpdate={setCurrentTime}
@@ -237,79 +223,8 @@ export const VideoLearning: React.FC = () => {
               seekToTime={seekToTime}
             />
 
-            {/* LIVE ACTIVE SUBTITLE FOCUS BOX (Right below video player in immediate eye-line) */}
-            <div className='p-3.5 sm:p-4 rounded-2xl bg-gradient-to-br from-white via-primary-50/20 to-indigo-50/30 dark:from-dark-card dark:via-primary-950/20 dark:to-gray-900 border border-primary-200 dark:border-primary-800/80 shadow-md relative overflow-hidden transition-all'>
-              {/* Highlight pill indicator */}
-              <div className='flex items-center justify-between gap-2 mb-2'>
-                <div className='flex items-center gap-1.5'>
-                  <span className='inline-block w-2 h-2 rounded-full bg-primary-500 animate-ping' />
-                  <span className='text-[10px] font-bold uppercase tracking-wider text-primary-600 dark:text-primary-400'>
-                    Phụ đề trực tiếp
-                  </span>
-                </div>
-
-                {/* Direct quick action buttons */}
-                {currentCue && (
-                  <div className='flex items-center gap-1'>
-                    <button
-                      onClick={() => speakWord(currentCue.textEn)}
-                      className='p-1.5 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors'
-                      title='Nghe phát âm cả câu'
-                    >
-                      <Volume2 size={15} />
-                    </button>
-                    <button
-                      onClick={handleRepeatSentence}
-                      className='p-1.5 rounded-lg bg-gray-100 dark:bg-gray-800 text-primary-600 dark:text-primary-400 hover:bg-primary-100 transition-colors'
-                      title='Lặp lại câu này'
-                    >
-                      <RotateCcw size={15} />
-                    </button>
-                    <button
-                      onClick={() =>
-                        handleAddNote({
-                          timestamp: Math.round(currentCue.start),
-                          quote: currentCue.textEn,
-                          userNote: currentCue.textVi,
-                        })
-                      }
-                      className='p-1.5 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:text-primary-600 transition-colors'
-                      title='Lưu câu vào ghi chú'
-                    >
-                      <BookmarkPlus size={15} />
-                    </button>
-                  </div>
-                )}
-              </div>
-
-              {/* Active English text with clickable words */}
-              {currentCue ? (
-                <div className='space-y-1.5'>
-                  <p className='text-base sm:text-lg font-bold text-gray-900 dark:text-white leading-relaxed'>
-                    {currentCue.words.map((word, wIdx) => (
-                      <span
-                        key={wIdx}
-                        onClick={() => handleWordClick(word, currentCue.textEn)}
-                        className='inline cursor-pointer rounded px-0.5 hover:bg-primary-200 dark:hover:bg-primary-800/80 hover:text-primary-700 dark:hover:text-primary-300 underline decoration-primary-400/50 decoration-1 underline-offset-2 transition-colors'
-                        title='Nhấp để tra nghĩa & lưu từ vựng'
-                      >
-                        {word}{' '}
-                      </span>
-                    ))}
-                  </p>
-                  <p className='text-xs sm:text-sm font-medium text-primary-600 dark:text-primary-300 leading-normal'>
-                    {currentCue.textVi}
-                  </p>
-                </div>
-              ) : (
-                <div className='py-2 text-center text-xs text-gray-400 dark:text-gray-500 italic'>
-                  Đang phát video...
-                </div>
-              )}
-            </div>
-
             {/* Desktop Notes Drawer (Hidden on Mobile) */}
-            <div className='hidden lg:block h-64'>
+            <div className='hidden lg:block h-72'>
               <VideoNotesDrawer
                 notes={notes}
                 currentTime={currentTime}
@@ -321,61 +236,21 @@ export const VideoLearning: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Column / Mobile Lower Half: Full Interactive Transcript & Notes */}
-          <div className='lg:col-span-5 h-[340px] sm:h-[440px] lg:h-[620px] flex flex-col'>
-            {/* Mobile Tab Switcher */}
-            <div className='flex lg:hidden rounded-xl bg-gray-100 dark:bg-gray-800 p-1 mb-2 border border-gray-200 dark:border-gray-700/60 shrink-0'>
-              <button
-                onClick={() => setActiveMobileTab('transcript')}
-                className={`flex-1 py-1.5 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${
-                  activeMobileTab === 'transcript'
-                    ? 'bg-white dark:bg-gray-700 text-primary-600 dark:text-primary-400 shadow-sm'
-                    : 'text-gray-500 dark:text-gray-400'
-                }`}
-              >
-                <Subtitles size={14} />
-                <span>Toàn bộ phụ đề ({cues.length})</span>
-              </button>
-              <button
-                onClick={() => setActiveMobileTab('notes')}
-                className={`flex-1 py-1.5 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${
-                  activeMobileTab === 'notes'
-                    ? 'bg-white dark:bg-gray-700 text-primary-600 dark:text-primary-400 shadow-sm'
-                    : 'text-gray-500 dark:text-gray-400'
-                }`}
-              >
-                <FileText size={14} />
-                <span>Ghi chú ({notes.length})</span>
-              </button>
-            </div>
-
-            {/* Content stream */}
-            <div className='flex-1 min-h-0'>
-              {activeMobileTab === 'transcript' ? (
-                <InteractiveTranscript
-                  cues={cues}
-                  currentTime={currentTime}
-                  onSeek={(time) => setSeekToTime(time)}
-                  onWordClick={handleWordClick}
-                  onAddNote={(cue) => {
-                    handleAddNote({
-                      timestamp: Math.round(cue.start),
-                      quote: cue.textEn,
-                      userNote: cue.textVi,
-                    })
-                  }}
-                />
-              ) : (
-                <VideoNotesDrawer
-                  notes={notes}
-                  currentTime={currentTime}
-                  currentQuote={currentCue?.textEn}
-                  onAddNote={handleAddNote}
-                  onDeleteNote={handleDeleteNote}
-                  onSeek={(time) => setSeekToTime(time)}
-                />
-              )}
-            </div>
+          {/* Right Column on Desktop / Immediate Subtitle Stream on Mobile */}
+          <div className='lg:col-span-5 h-[calc(100dvh-290px)] sm:h-[480px] lg:h-[620px]'>
+            <InteractiveTranscript
+              cues={cues}
+              currentTime={currentTime}
+              onSeek={(time) => setSeekToTime(time)}
+              onWordClick={handleWordClick}
+              onAddNote={(cue) => {
+                handleAddNote({
+                  timestamp: Math.round(cue.start),
+                  quote: cue.textEn,
+                  userNote: cue.textVi,
+                })
+              }}
+            />
           </div>
         </div>
       ) : null}
