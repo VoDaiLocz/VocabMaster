@@ -18,6 +18,7 @@ import {
 import { SentenceItem } from '@/data/sentence-patterns/types'
 import { useDeckStore } from '@/store/deckStore'
 import { speakWord } from '@/utils/quiz'
+import { SentenceDeepGuide } from './SentenceDeepGuide'
 
 interface SentenceTilesBuilderProps {
   sentence: SentenceItem
@@ -111,7 +112,7 @@ export const SentenceTilesBuilder: React.FC<SentenceTilesBuilderProps> = ({
     return null
   }, [sentence.wordTiles, selectedIndices, shuffledTiles])
 
-  // Trigger progressive hint (Tier 1: Glowing Yellow Word Highlight + TTS, Tier 2: Grammar Breakdown)
+  // Trigger progressive hint (Tier 1: Glowing Yellow Word Highlight + TTS with position explanation, Tier 2: Grammar Breakdown)
   const handleTriggerHint = () => {
     const nextTile = findNextExpectedTileIndex()
     if (nextTile !== null) {
@@ -119,16 +120,22 @@ export const SentenceTilesBuilder: React.FC<SentenceTilesBuilderProps> = ({
       setHintLevel(1)
       const word = shuffledTiles[nextTile]
       speakWord(word)
-      setHintMessage(`Từ tiếp theo là "${word}" (đang sáng màu vàng)`)
+      const nextPos = selectedIndices.length + 1
+      setHintMessage(
+        `Vị trí ${nextPos}: Hãy chọn từ "${word}" (đang sáng màu vàng) để tiếp nối cấu trúc câu!`,
+      )
     } else {
       setHintLevel(2)
-      setHintMessage('Xem giải thích khung cấu trúc bên dưới để hoàn chỉnh câu!')
+      setHintMessage('Xem cẩm nang phân tích 4 bước bên dưới để hiểu sâu và hoàn chỉnh câu!')
     }
   }
 
-  // Tap on available tile in pool (speaks word instantly)
+  // Tap on available tile in pool (speaks word instantly or full sentence if complete)
   const handleTileClick = (index: number) => {
-    if (status === 'correct') return
+    if (status === 'correct') {
+      playAudio(1.0)
+      return
+    }
     if (!selectedIndices.includes(index)) {
       speakWord(shuffledTiles[index])
       setSelectedIndices((prev) => [...prev, index])
@@ -141,9 +148,13 @@ export const SentenceTilesBuilder: React.FC<SentenceTilesBuilderProps> = ({
     }
   }
 
-  // Tap on selected tile to remove from answer slot (speaks word)
+  // Tap on selected tile in answer slot (speaks word during build or speaks full sentence if complete)
   const handleRemoveTile = (selectedIndexPos: number) => {
-    if (status === 'correct') return
+    if (status === 'correct') {
+      // Khi đã hoàn thiện câu, chạm vào bất kỳ từ nào cũng phát âm toàn bộ câu tiếng Anh
+      playAudio(1.0)
+      return
+    }
     const tileIdx = selectedIndices[selectedIndexPos]
     if (tileIdx !== undefined) {
       speakWord(shuffledTiles[tileIdx])
@@ -424,22 +435,54 @@ export const SentenceTilesBuilder: React.FC<SentenceTilesBuilderProps> = ({
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className='p-4 rounded-2xl bg-emerald-100 dark:bg-emerald-950/50 border border-emerald-300 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200 space-y-2'
+            className='p-4 sm:p-5 rounded-2xl bg-emerald-100 dark:bg-emerald-950/60 border-2 border-emerald-400 dark:border-emerald-700 text-emerald-950 dark:text-emerald-100 space-y-3 shadow-md'
           >
-            <div className='flex items-center justify-between'>
-              <div className='flex items-center gap-2 font-bold text-sm sm:text-base'>
-                <CheckCircle2 size={20} className='text-emerald-600 dark:text-emerald-400' />
+            <div className='flex items-center justify-between flex-wrap gap-2'>
+              <div className='flex items-center gap-2 font-bold text-sm sm:text-base text-emerald-800 dark:text-emerald-300'>
+                <CheckCircle2 size={22} className='text-emerald-600 dark:text-emerald-400' />
                 <span>CHÍNH XÁC! (+15 XP)</span>
               </div>
-              <button
-                onClick={() => playAudio(1.0)}
-                className='p-1.5 rounded-lg bg-emerald-200 dark:bg-emerald-900 text-emerald-800 dark:text-emerald-100 hover:bg-emerald-300 transition-colors'
-                title='Nghe phát âm cả câu'
-              >
-                <Volume2 size={18} />
-              </button>
+              <div className='flex items-center gap-2'>
+                <button
+                  onClick={() => playAudio(0.8)}
+                  className='px-2.5 py-1 rounded-xl bg-emerald-200 dark:bg-emerald-900/80 hover:bg-emerald-300 text-emerald-900 dark:text-emerald-100 font-bold text-xs flex items-center gap-1 transition-all active:scale-95'
+                  title='Nghe chậm 0.8x'
+                >
+                  <span>🐢 0.8x</span>
+                </button>
+                <button
+                  onClick={() => playAudio(1.0)}
+                  className='px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm flex items-center gap-1.5 text-xs font-bold transition-all active:scale-95'
+                  title='Nghe phát âm chuẩn cả câu'
+                >
+                  <Volume2 size={16} className={isPlayingAudio ? 'animate-bounce' : ''} />
+                  <span>Phát âm cả câu</span>
+                </button>
+              </div>
             </div>
-            <p className='text-xs text-emerald-700 dark:text-emerald-300'>{sentence.explanation}</p>
+
+            {/* Clickable Full English Sentence Banner */}
+            <div
+              onClick={() => playAudio(1.0)}
+              className='p-3.5 rounded-xl bg-white/80 dark:bg-dark-card/80 border border-emerald-300 dark:border-emerald-700/60 cursor-pointer hover:bg-white dark:hover:bg-dark-card transition-all flex items-center justify-between group shadow-xs'
+              title='Chạm để nghe phát âm cả câu'
+            >
+              <div>
+                <span className='text-[10px] uppercase tracking-wider font-extrabold text-emerald-600 dark:text-emerald-400 block mb-0.5'>
+                  Câu hoàn chỉnh (Chạm để nghe):
+                </span>
+                <p className='text-base sm:text-lg font-bold font-display text-emerald-950 dark:text-white group-hover:text-primary-600 transition-colors'>
+                  "{sentence.textEn}"
+                </p>
+              </div>
+              <div className='p-2 rounded-lg bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 group-hover:scale-110 transition-transform shrink-0 ml-2'>
+                <Volume2 size={18} />
+              </div>
+            </div>
+
+            <p className='text-xs text-emerald-800 dark:text-emerald-200 leading-relaxed font-medium'>
+              💡 {sentence.explanation}
+            </p>
           </motion.div>
         )}
 
@@ -467,6 +510,9 @@ export const SentenceTilesBuilder: React.FC<SentenceTilesBuilderProps> = ({
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Deep Pedagogical Guide: Grammar, Vocab & Context */}
+      <SentenceDeepGuide sentence={sentence} defaultExpanded={status === 'correct'} />
 
       {/* Control Action Buttons */}
       <div className='flex items-center justify-between pt-2 border-t border-gray-100 dark:border-gray-800'>
