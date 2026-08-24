@@ -87,8 +87,7 @@
     "linux": {
       "target": [
         "AppImage",
-        "deb",
-        "rpm"
+        "dir"
       ],
       "category": "Education",
       "synopsis": "Master English vocabulary easily",

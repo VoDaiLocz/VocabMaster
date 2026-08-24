@@ -380,6 +380,30 @@ app.whenReady().then(async () => {
       },
     )
 
+    // Block display-capture and remote desktop portal dialogs on Linux Wayland/GNOME
+    session.defaultSession.setPermissionCheckHandler((_webContents, permission) => {
+      if (permission === 'display-capture' || permission === 'media' || permission === 'screen') {
+        return false
+      }
+      return true
+    })
+
+    session.defaultSession.setPermissionRequestHandler((_webContents, permission, callback) => {
+      if (permission === 'display-capture' || permission === 'media' || permission === 'screen') {
+        callback(false)
+        return
+      }
+      callback(true)
+    })
+
+    if (typeof (session.defaultSession as any).setDisplayMediaRequestHandler === 'function') {
+      ;(session.defaultSession as any).setDisplayMediaRequestHandler(
+        (_request: any, callback: any) => {
+          callback({ video: null, audio: null })
+        },
+      )
+    }
+
     log('Initializing Logger...')
     initLogger()
     log('Logger Initialized')
