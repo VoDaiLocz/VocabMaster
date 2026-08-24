@@ -94,8 +94,8 @@ export const SentenceMaster: React.FC = () => {
             </h1>
           </div>
           <p className='text-sm text-gray-500 dark:text-gray-400'>
-            Làm chủ hơn 1.000+ khung câu phản xạ qua 4 giai đoạn từ Nền tảng, Đời sống, Công sở đến
-            Chuyên ngành IT.
+            Làm chủ hơn 1.000+ khung câu phản xạ qua 5 giai đoạn từ Nền tảng, Đời sống, Công sở,
+            Chuyên ngành IT đến Luyện Đặt Câu Dài & Đoạn Văn Phản Xạ.
           </p>
         </div>
       )}
@@ -123,12 +123,12 @@ export const SentenceMaster: React.FC = () => {
 
             <div className='flex items-center gap-3'>
               {combo > 1 && (
-                <div className='flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-100 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 text-xs font-bold animate-pulse'>
-                  <Zap size={14} /> Combo x{combo}!
+                <div className='flex items-center gap-1 px-3 py-1 rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-800/60 font-bold text-xs animate-bounce'>
+                  <Zap size={14} className='fill-amber-400' /> Combo x{combo}
                 </div>
               )}
-              <div className='flex items-center gap-1 text-xs font-bold text-primary-600 dark:text-primary-400'>
-                <Award size={16} /> +{earnedXp} XP
+              <div className='flex items-center gap-1.5 px-3 py-1 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/60 font-bold text-xs'>
+                <Award size={14} /> +{earnedXp} XP
               </div>
             </div>
           </div>
@@ -143,10 +143,10 @@ export const SentenceMaster: React.FC = () => {
             />
           </div>
 
-          {/* Practice Builder or Completion Card */}
+          {/* Completion Screen or Interactive Arena */}
           {isCompleted ? (
-            <div className='w-full max-w-xl mx-auto bg-white dark:bg-dark-card rounded-3xl p-8 text-center border border-gray-100 dark:border-gray-800 shadow-2xl space-y-6'>
-              <div className='w-20 h-20 mx-auto rounded-3xl bg-gradient-to-tr from-amber-400 to-amber-600 text-white flex items-center justify-center shadow-lg shadow-amber-500/30'>
+            <div className='max-w-md mx-auto p-8 rounded-3xl bg-white dark:bg-dark-card border border-gray-100 dark:border-gray-800 shadow-xl text-center space-y-6'>
+              <div className='w-20 h-20 rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto'>
                 <Trophy size={40} />
               </div>
               <div>
@@ -191,13 +191,14 @@ export const SentenceMaster: React.FC = () => {
       ) : (
         /* Topics & Stages Browser */
         <div className='space-y-6'>
-          {/* 4 Stages Tab Selector */}
-          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3'>
+          {/* 5 Stages Tab Selector */}
+          <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3'>
             {STAGES_METADATA.map((stage) => {
               const isActive = activeStageId === stage.id
               return (
                 <div
                   key={stage.id}
+                  id={`stage-tab-${stage.id}`}
                   onClick={() => setActiveStageId(stage.id)}
                   className={`p-4 rounded-2xl cursor-pointer border transition-all relative overflow-hidden ${
                     isActive
@@ -243,6 +244,7 @@ export const SentenceMaster: React.FC = () => {
               {currentTopics.map((topic, idx) => (
                 <div
                   key={topic.id}
+                  id={`topic-card-${topic.id}`}
                   onClick={() => handleSelectTopic(topic)}
                   className='p-5 rounded-2xl bg-white dark:bg-dark-card border border-gray-100 dark:border-gray-800 hover:border-primary-300 dark:hover:border-primary-800 hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between space-y-4'
                 >

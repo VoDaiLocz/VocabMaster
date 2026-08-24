@@ -317,6 +317,57 @@ export const SentenceTilesBuilder: React.FC<SentenceTilesBuilderProps> = ({
         </button>
       </div>
 
+      {/* Paragraph Context / Real-life Scenario */}
+      {sentence.paragraphIdea && (
+        <div className='px-3.5 py-2.5 rounded-xl bg-purple-50/80 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-900/60 text-purple-950 dark:text-purple-200 text-xs flex items-center gap-2'>
+          <Sparkles size={15} className='text-purple-600 dark:text-purple-400 shrink-0' />
+          <span>
+            <strong>Ngữ cảnh ứng dụng:</strong> {sentence.paragraphIdea.topicContext}
+          </span>
+        </div>
+      )}
+
+      {/* Multi-Clause Thinking Pathway (Lego-Block Architecture) */}
+      {sentence.clauses && sentence.clauses.length > 0 && (
+        <div className='p-3.5 sm:p-4 rounded-2xl bg-gradient-to-r from-blue-50/70 via-indigo-50/50 to-purple-50/70 dark:from-blue-950/40 dark:via-indigo-950/30 dark:to-purple-950/40 border border-indigo-100 dark:border-indigo-900/50 space-y-2.5'>
+          <div className='flex items-center justify-between flex-wrap gap-1'>
+            <span className='text-[11px] font-black uppercase tracking-wider text-indigo-700 dark:text-indigo-300 flex items-center gap-1.5'>
+              <Layers size={14} /> Sơ đồ tư duy bóc tách các vế câu (Multi-Clause Lego Blocks):
+            </span>
+            <span className='text-[10px] text-gray-500 dark:text-gray-400'>
+              Chạm loa để nghe riêng từng vế
+            </span>
+          </div>
+          <div className='grid grid-cols-1 sm:grid-cols-3 gap-2'>
+            {sentence.clauses.map((clause, cIdx) => (
+              <div
+                key={cIdx}
+                className='p-2.5 rounded-xl bg-white dark:bg-dark-card border border-indigo-100 dark:border-indigo-900/50 space-y-1 shadow-2xs hover:border-indigo-300 transition-all'
+              >
+                <div className='flex items-center justify-between'>
+                  <span className='text-[10px] font-bold text-indigo-600 dark:text-indigo-400 font-mono'>
+                    {clause.label}
+                  </span>
+                  <button
+                    onClick={() => speakWord(clause.en, 1.0)}
+                    className='p-1 rounded-md bg-indigo-50 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100 transition-colors'
+                    title={`Nghe vế: ${clause.en}`}
+                  >
+                    <Volume2 size={13} />
+                  </button>
+                </div>
+                <p className='text-xs font-bold text-gray-900 dark:text-white font-mono line-clamp-1'>
+                  "{clause.en}"
+                </p>
+                <p className='text-[11px] text-gray-500 dark:text-gray-400 line-clamp-1'>
+                  {clause.vi}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Glowing Yellow Hint Notification Banner */}
       {hintMessage && (
         <motion.div

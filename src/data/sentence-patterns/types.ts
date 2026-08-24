@@ -1,8 +1,14 @@
-// ============================================
-// Sentence Master Data Types
-// ============================================
+export type SentenceStageId =
+  '1_foundation' | '2_daily' | '3_workplace' | '4_it_tech' | '5_complex_paragraphs'
 
-export type SentenceStageId = '1_foundation' | '2_daily' | '3_workplace' | '4_it_tech'
+export interface ClauseBreakdown {
+  label: string
+  en: string
+  vi: string
+  connector?: string
+  roleTip: string
+  wordTiles: string[]
+}
 
 export interface SentenceTopic {
   id: string
@@ -24,6 +30,13 @@ export interface SentenceItem {
   hint?: string
   wordTiles: string[]
   alternatives?: string[]
+  clauses?: ClauseBreakdown[]
+  paragraphIdea?: {
+    topicContext: string
+    step1Prompt: string
+    step2Prompt: string
+    step3Prompt: string
+  }
 }
 
 export interface StageMetadata {

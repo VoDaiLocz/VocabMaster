@@ -7,6 +7,7 @@ import { STAGE_1_TOPICS } from './stage1_foundation'
 import { STAGE_2_TOPICS } from './stage2_daily'
 import { STAGE_3_TOPICS } from './stage3_workplace'
 import { STAGE_4_TOPICS } from './stage4_it_tech'
+import { STAGE_5_TOPICS } from './stage5_complex_paragraphs'
 
 export * from './types'
 
@@ -15,6 +16,7 @@ export const ALL_SENTENCE_TOPICS: SentenceTopic[] = [
   ...STAGE_2_TOPICS,
   ...STAGE_3_TOPICS,
   ...STAGE_4_TOPICS,
+  ...STAGE_5_TOPICS,
 ]
 
 export const STAGES_METADATA: StageMetadata[] = [
@@ -57,6 +59,17 @@ export const STAGES_METADATA: StageMetadata[] = [
     icon: 'Terminal',
     topicCount: STAGE_4_TOPICS.length,
     sentenceCount: STAGE_4_TOPICS.reduce((acc, t) => acc + t.sentences.length, 0),
+  },
+  {
+    id: '5_complex_paragraphs',
+    name: 'Giai Đoạn 5: Luyện Đặt Câu Dài & Đoạn Văn Phản Xạ',
+    subtitle: 'Tư duy logic đa mệnh đề',
+    description:
+      'Nối câu dài với từ nối logic (Because, Although, In order to), tư duy ghép đoạn văn 3 bước.',
+    color: 'from-rose-500 to-pink-600',
+    icon: 'Sparkles',
+    topicCount: STAGE_5_TOPICS.length,
+    sentenceCount: STAGE_5_TOPICS.reduce((acc, t) => acc + t.sentences.length, 0),
   },
 ]
 

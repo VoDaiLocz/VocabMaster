@@ -1,6 +1,6 @@
 {
   "name": "vocabmaster",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "description": "English Vocabulary Learning App",
   "author": "VocabMaster <vocabmaster@example.com>",
   "main": "dist-electron/main.js",
@@ -53,6 +53,7 @@
     "eslint-plugin-react-refresh": "^0.4.26",
     "husky": "^9.1.7",
     "lint-staged": "^17.3.0",
+    "playwright": "^1.62.1",
     "postcss": "^8.4.35",
     "prettier": "^3.9.6",
     "tailwindcss": "^3.4.1",
