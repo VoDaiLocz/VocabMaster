@@ -4,10 +4,9 @@
 
 import React, { useState, useEffect, useCallback } from 'react'
 import {
-  extractYouTubeVideoId,
   fetchYouTubeBilingualTranscript,
   TranscriptCue,
-  CURATED_LEARNING_VIDEOS,
+  ALL_CURATED_LEARNING_VIDEOS,
   VideoInfo,
 } from '@/services/youtubeTranscriptService'
 import { lookupWord, WordLookupResult } from '@/services/dictionaryService'
@@ -16,20 +15,20 @@ import {
   InteractiveTranscript,
   WordLookupPopover,
   VideoNotesDrawer,
+  VideoExplorerModal,
   VideoNote,
 } from '@/components/video'
-import { Youtube, Sparkles, Link2, Compass, X } from 'lucide-react'
+import { Youtube, Sparkles, Compass } from 'lucide-react'
 import { useDeckStore } from '@/store/deckStore'
 
 export const VideoLearning: React.FC = () => {
   const { fetchDecks } = useDeckStore()
-  const [inputUrl, setInputUrl] = useState('')
   const [showSearchModal, setShowSearchModal] = useState(false)
   const [currentVideoId, setCurrentVideoId] = useState<string | null>('UF8uR6Z6KLc') // Default to Steve Jobs
   const [currentVideoInfo, setCurrentVideoInfo] = useState<VideoInfo | null>(
-    CURATED_LEARNING_VIDEOS[0].info,
+    ALL_CURATED_LEARNING_VIDEOS[0].info,
   )
-  const [cues, setCues] = useState<TranscriptCue[]>(CURATED_LEARNING_VIDEOS[0].sampleCues)
+  const [cues, setCues] = useState<TranscriptCue[]>(ALL_CURATED_LEARNING_VIDEOS[0].sampleCues)
   const [loading, setLoading] = useState(false)
   const [loadProgress, setLoadProgress] = useState(0)
   const [loadStatus, setLoadStatus] = useState('Đang kết nối...')
@@ -53,7 +52,7 @@ export const VideoLearning: React.FC = () => {
     setCurrentTime(0)
     setSeekToTime(0)
 
-    const foundCurated = CURATED_LEARNING_VIDEOS.find((v) => v.info.videoId === videoId)
+    const foundCurated = ALL_CURATED_LEARNING_VIDEOS.find((v) => v.info.videoId === videoId)
     if (info) {
       setCurrentVideoInfo(info)
     } else if (foundCurated) {
@@ -95,20 +94,6 @@ export const VideoLearning: React.FC = () => {
       clearTimeout(progressTimer2)
       setLoading(false)
       setLoadProgress(0)
-    }
-  }
-
-  // Handle URL submit
-  const handleUrlSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!inputUrl.trim()) return
-
-    const videoId = extractYouTubeVideoId(inputUrl)
-    if (videoId) {
-      handleLoadVideo(videoId)
-      setInputUrl('')
-    } else {
-      alert('Đường dẫn YouTube không hợp lệ. Vui lòng kiểm tra lại link.')
     }
   }
 
@@ -257,95 +242,11 @@ export const VideoLearning: React.FC = () => {
 
       {/* Modal / Dialog for Video Search & Curated Recommendations */}
       {showSearchModal && (
-        <div className='fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fadeIn'>
-          <div className='w-full max-w-lg bg-white dark:bg-dark-card rounded-2xl p-5 shadow-2xl border border-gray-200 dark:border-gray-800 space-y-4 max-h-[85vh] flex flex-col'>
-            {/* Modal Header */}
-            <div className='flex items-center justify-between pb-2 border-b border-gray-100 dark:border-gray-800'>
-              <div className='flex items-center gap-2'>
-                <Compass size={18} className='text-primary-500' />
-                <h3 className='font-display font-bold text-base text-gray-900 dark:text-white'>
-                  Chọn Video Học Tiếng Anh
-                </h3>
-              </div>
-              <button
-                onClick={() => setShowSearchModal(false)}
-                className='p-1 rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors'
-              >
-                <X size={18} />
-              </button>
-            </div>
-
-            {/* Custom URL Input Form */}
-            <form
-              onSubmit={(e) => {
-                handleUrlSubmit(e)
-                setShowSearchModal(false)
-              }}
-              className='flex items-center gap-2'
-            >
-              <div className='relative flex-1'>
-                <Link2
-                  size={16}
-                  className='absolute left-3 top-1/2 -translate-y-1/2 text-gray-400'
-                />
-                <input
-                  type='text'
-                  value={inputUrl}
-                  onChange={(e) => setInputUrl(e.target.value)}
-                  placeholder='Dán link YouTube bất kỳ...'
-                  className='w-full pl-9 pr-3 py-2 rounded-xl text-xs sm:text-sm bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500'
-                  autoFocus
-                />
-              </div>
-              <button
-                type='submit'
-                className='px-3.5 py-2 rounded-xl bg-primary-600 hover:bg-primary-500 text-white text-xs sm:text-sm font-semibold shadow-md shadow-primary-500/25 transition-all shrink-0'
-              >
-                Mở
-              </button>
-            </form>
-
-            {/* Curated list */}
-            <div className='flex-1 overflow-y-auto space-y-2 pr-1'>
-              <div className='text-xs font-semibold text-gray-400 uppercase tracking-wider'>
-                Video đề xuất hay nhất
-              </div>
-              <div className='space-y-2'>
-                {CURATED_LEARNING_VIDEOS.map((item) => {
-                  const isSelected = currentVideoId === item.info.videoId
-                  return (
-                    <div
-                      key={item.info.videoId}
-                      onClick={() => {
-                        handleLoadVideo(item.info.videoId, item.info)
-                        setShowSearchModal(false)
-                      }}
-                      className={`p-2.5 rounded-xl flex items-center gap-3 cursor-pointer transition-all border ${
-                        isSelected
-                          ? 'bg-primary-50/80 dark:bg-primary-950/30 border-primary-300 dark:border-primary-800 shadow-sm'
-                          : 'bg-white dark:bg-gray-800/40 border-gray-100 dark:border-gray-800 hover:border-primary-200'
-                      }`}
-                    >
-                      <img
-                        src={item.info.thumbnailUrl}
-                        alt={item.info.title}
-                        className='w-16 h-11 object-cover rounded-lg'
-                      />
-                      <div className='flex-1 min-w-0'>
-                        <h4 className='text-xs font-bold text-gray-900 dark:text-gray-100 truncate'>
-                          {item.info.title}
-                        </h4>
-                        <p className='text-[10px] text-gray-500 dark:text-gray-400 truncate mt-0.5'>
-                          {item.info.channel} • {item.info.durationFormatted}
-                        </p>
-                      </div>
-                    </div>
-                  )
-                })}
-              </div>
-            </div>
-          </div>
-        </div>
+        <VideoExplorerModal
+          currentVideoId={currentVideoId}
+          onSelectVideo={(id, info) => handleLoadVideo(id, info)}
+          onClose={() => setShowSearchModal(false)}
+        />
       )}
 
       {/* Word Lookup Modal */}

@@ -46,6 +46,7 @@ export default function App() {
               <Route path='/learn' element={<Learn />} />
               <Route path='/sentence-master' element={<SentenceMaster />} />
               <Route path='/video-learning' element={<VideoLearning />} />
+              <Route path='/video' element={<VideoLearning />} />
               <Route path='/quiz' element={<Quiz />} />
               <Route path='/typing' element={<Typing />} />
               <Route path='/decks' element={<Decks />} />

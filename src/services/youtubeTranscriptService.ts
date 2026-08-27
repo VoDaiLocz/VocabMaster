@@ -18,6 +18,11 @@ export interface VideoInfo {
   channel: string
   thumbnailUrl: string
   durationFormatted?: string
+  category?: 'speeches' | 'daily' | 'work' | 'tech' | 'movies' | 'news'
+  level?: 'A2 - Cơ bản' | 'B1 - Trung cấp' | 'B2 - Khá' | 'C1 - Nâng cao'
+  sentenceCount?: number
+  description?: string
+  tags?: string[]
 }
 
 // Curated English Learning Videos with 100% Full Official Transcript Tracks
@@ -29,6 +34,11 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
       channel: 'Stanford University',
       thumbnailUrl: 'https://img.youtube.com/vi/UF8uR6Z6KLc/hqdefault.jpg',
       durationFormatted: '15:04',
+      category: 'speeches',
+      level: 'C1 - Nâng cao',
+      sentenceCount: 244,
+      description: 'Bài diễn thuyết kinh điển về việc kết nối các dấu mốc, tìm kiếm đam mê và sống cuộc đời của chính mình.',
+      tags: ['Diễn thuyết', 'Steve Jobs', 'Stanford', 'Động lực'],
     },
     sampleCues: [
       {
@@ -4778,6 +4788,11 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
       channel: 'TEDx Talks',
       thumbnailUrl: 'https://img.youtube.com/vi/iG9CE55wbtY/hqdefault.jpg',
       durationFormatted: '18:26',
+      category: 'speeches',
+      level: 'B2 - Khá',
+      sentenceCount: 312,
+      description: 'Khám phá 5 nguyên tắc cốt lõi và 7 hành động thực tế giúp bạn làm chủ bất kỳ ngôn ngữ nào chỉ trong 6 tháng.',
+      tags: ['TEDx', 'Học ngoại ngữ', 'Phương pháp học', 'Động lực'],
     },
     sampleCues: [
       {
@@ -12236,11 +12251,18 @@ export function extractYouTubeVideoId(urlOrId: string): string | null {
   return match ? match[1] : null
 }
 
+import { EXTENDED_CURATED_VIDEOS } from '@/data/curatedVideos'
+
+export const ALL_CURATED_LEARNING_VIDEOS = [
+  ...CURATED_LEARNING_VIDEOS,
+  ...EXTENDED_CURATED_VIDEOS,
+]
+
 /**
  * Dynamically fetch 100% full official transcript for ANY YouTube video
  */
 export async function fetchYouTubeBilingualTranscript(videoId: string): Promise<TranscriptCue[]> {
-  // 1. Try Dynamic Native Electron IPC Extractor (works for ANY YouTube video)
+  // 1. Try Dynamic Native Electron IPC Extractor (works for ANY YouTube video on Desktop)
   if (
     typeof window !== 'undefined' &&
     window.electronAPI &&
@@ -12256,22 +12278,23 @@ export async function fetchYouTubeBilingualTranscript(videoId: string): Promise<
     }
   }
 
-  // 2. Curated fallback
-  const found = CURATED_LEARNING_VIDEOS.find((v) => v.info.videoId === videoId)
+  // 2. Curated & Extended Library fallback
+  const found = ALL_CURATED_LEARNING_VIDEOS.find((v) => v.info.videoId === videoId)
   if (found && found.sampleCues && found.sampleCues.length > 0) {
     return found.sampleCues
   }
 
-  // 3. Simple fallback
+  // 3. Fallback for custom unindexed videos
   return [
     {
       id: 1,
       start: 0,
       duration: 5,
       end: 5,
-      textEn: 'Welcome to this English video lesson.',
-      textVi: 'Chào mừng bạn đến với bài học tiếng Anh qua video này.',
+      textEn: 'Welcome to this English video lesson. Watch, listen, and shadow along with the audio.',
+      textVi: 'Chào mừng bạn đến với bài học video tiếng Anh này. Hãy lắng nghe và luyện nói nhại lại theo video.',
       words: ['Welcome', 'to', 'this', 'English', 'video', 'lesson.'],
-    }
+    },
   ]
 }
+

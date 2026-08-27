@@ -121,6 +121,7 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
 }) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const webviewRef = useRef<any>(null)
+  const iframeRef = useRef<HTMLIFrameElement | null>(null)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const ytPlayerRef = useRef<any>(null)
   const [isPlaying, setIsPlaying] = useState(false)
@@ -129,12 +130,63 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
 
   const isElectron =
     typeof window !== 'undefined' &&
-    Boolean(
-      (window as unknown as { electronAPI?: unknown }).electronAPI ||
-      navigator.userAgent.toLowerCase().includes('electron'),
-    )
+    (navigator.userAgent.toLowerCase().includes('electron') ||
+      Boolean(
+        (window as unknown as { process?: { versions?: { electron?: string } } })
+          .process?.versions?.electron,
+      ))
 
-  // 1. Load YouTube IFrame API for Android & Web
+  // Helper to send command directly via postMessage to iframe
+  const postIframeCommand = useCallback((func: string, args: unknown[] = []) => {
+    if (iframeRef.current?.contentWindow) {
+      try {
+        iframeRef.current.contentWindow.postMessage(
+          JSON.stringify({
+            event: 'command',
+            func,
+            args,
+          }),
+          '*',
+        )
+      } catch (err) {
+        console.warn('postIframeCommand error:', err)
+      }
+    }
+  }, [])
+
+  // 1. Listen to YouTube postMessage events for real-time time & state synchronization
+  useEffect(() => {
+    if (isElectron) return
+
+    const handleWindowMessage = (e: MessageEvent) => {
+      try {
+        const data = typeof e.data === 'string' ? JSON.parse(e.data) : e.data
+        if (!data) return
+
+        if (data.event === 'infoDelivery' && data.info) {
+          if (typeof data.info.currentTime === 'number' && !isNaN(data.info.currentTime)) {
+            onTimeUpdate(data.info.currentTime)
+          }
+          if (typeof data.info.playerState === 'number') {
+            setIsPlaying(data.info.playerState === 1)
+          }
+        } else if (data.event === 'onStateChange') {
+          if (typeof data.info === 'number') {
+            setIsPlaying(data.info === 1)
+          }
+        } else if (data.event === 'onReady') {
+          setIsApiReady(true)
+        }
+      } catch {
+        // Non-JSON message from other sources
+      }
+    }
+
+    window.addEventListener('message', handleWindowMessage)
+    return () => window.removeEventListener('message', handleWindowMessage)
+  }, [isElectron, onTimeUpdate])
+
+  // 2. Load YouTube IFrame API script as enhancement
   useEffect(() => {
     if (isElectron) return
 
@@ -168,10 +220,10 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
     return () => clearInterval(checkInterval)
   }, [isElectron])
 
-  // 2. Initialize YouTube Player instance on Android / Web
+  // 3. Initialize / Bind YT.Player instance to existing iframe
   const playerId = `yt-player-${videoId}`
   useEffect(() => {
-    if (isElectron || !isApiReady || !window.YT) return
+    if (isElectron || !isApiReady || !window.YT || !iframeRef.current) return
 
     if (ytPlayerRef.current?.destroy) {
       try {
@@ -182,28 +234,12 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
       ytPlayerRef.current = null
     }
 
-    const container = document.getElementById(playerId)
-    if (!container) return
-
     try {
-      ytPlayerRef.current = new window.YT.Player(playerId, {
-        videoId,
-        playerVars: {
-          autoplay: 1,
-          enablejsapi: 1,
-          rel: 0,
-          playsinline: 1,
-          modestbranding: 1,
-          origin: window.location.origin,
-        },
+      ytPlayerRef.current = new window.YT.Player(iframeRef.current, {
         events: {
-          onReady: (event: { target: unknown }) => {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            const p = event.target as any
-            if (p.playVideo) {
-              p.playVideo()
-              setIsPlaying(true)
-            }
+          onReady: () => {
+            setIsApiReady(true)
+            postIframeCommand('listening')
           },
           onStateChange: (event: { data: number }) => {
             if (event.data === 1) {
@@ -215,7 +251,7 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
         },
       })
     } catch (err) {
-      console.error('Error initializing YT Player:', err)
+      console.warn('YT.Player binding note (falling back to direct postMessage):', err)
     }
 
     return () => {
@@ -228,9 +264,9 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
       }
       ytPlayerRef.current = null
     }
-  }, [isElectron, isApiReady, videoId, playerId])
+  }, [isElectron, isApiReady, videoId, postIframeCommand])
 
-  // 3. Time Polling loop (Runs on both Android/Web YT.Player and Electron Webview)
+  // 4. Time Polling loop (Runs on both Android/Web and Electron Webview)
   useEffect(() => {
     const interval = setInterval(async () => {
       // Electron webview branch
@@ -252,10 +288,10 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
         return
       }
 
-      // Android & Web YT.Player branch
-      if (!isElectron && ytPlayerRef.current) {
-        try {
-          if (typeof ytPlayerRef.current.getCurrentTime === 'function') {
+      // Android & Web branch: poll via YT Player or request info
+      if (!isElectron) {
+        if (ytPlayerRef.current && typeof ytPlayerRef.current.getCurrentTime === 'function') {
+          try {
             const currentTime = ytPlayerRef.current.getCurrentTime()
             if (typeof currentTime === 'number' && !isNaN(currentTime)) {
               onTimeUpdate(currentTime)
@@ -264,17 +300,20 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
               const state = ytPlayerRef.current.getPlayerState()
               setIsPlaying(state === 1)
             }
+          } catch {
+            // Player initializing
           }
-        } catch {
-          // Player not fully ready
+        } else {
+          // Ping iframe to deliver info
+          postIframeCommand('listening')
         }
       }
     }, 150)
 
     return () => clearInterval(interval)
-  }, [isElectron, onTimeUpdate])
+  }, [isElectron, onTimeUpdate, postIframeCommand])
 
-  // 4. Electron CSS and Dom-ready injection
+  // 5. Electron CSS and Dom-ready injection
   useEffect(() => {
     if (!isElectron || !webviewRef.current) return
 
@@ -304,7 +343,7 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
     }
   }, [isElectron, videoId])
 
-  // 5. Seek To Time Handler
+  // 6. Seek To Time Handler
   useEffect(() => {
     if (seekToTime !== null && seekToTime !== undefined) {
       if (isElectron && webviewRef.current?.executeJavaScript) {
@@ -317,19 +356,25 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
             }
           })()
         `)
-      } else if (!isElectron && ytPlayerRef.current?.seekTo) {
-        try {
-          ytPlayerRef.current.seekTo(seekToTime, true)
-          ytPlayerRef.current.playVideo()
-        } catch {
-          // ignore
+      } else if (!isElectron) {
+        if (ytPlayerRef.current?.seekTo) {
+          try {
+            ytPlayerRef.current.seekTo(seekToTime, true)
+            ytPlayerRef.current.playVideo?.()
+          } catch {
+            postIframeCommand('seekTo', [seekToTime, true])
+            postIframeCommand('playVideo')
+          }
+        } else {
+          postIframeCommand('seekTo', [seekToTime, true])
+          postIframeCommand('playVideo')
         }
       }
       setIsPlaying(true)
     }
-  }, [seekToTime, isElectron])
+  }, [seekToTime, isElectron, postIframeCommand])
 
-  // 6. Play / Pause Toggle
+  // 7. Play / Pause Toggle
   const togglePlay = useCallback(() => {
     if (isElectron && webviewRef.current?.executeJavaScript) {
       webviewRef.current.executeJavaScript(`
@@ -341,22 +386,26 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
         })()
       `)
       setIsPlaying((prev) => !prev)
-    } else if (!isElectron && ytPlayerRef.current) {
-      try {
-        if (isPlaying) {
-          ytPlayerRef.current.pauseVideo?.()
-          setIsPlaying(false)
+    } else if (!isElectron) {
+      if (isPlaying) {
+        if (ytPlayerRef.current?.pauseVideo) {
+          ytPlayerRef.current.pauseVideo()
         } else {
-          ytPlayerRef.current.playVideo?.()
-          setIsPlaying(true)
+          postIframeCommand('pauseVideo')
         }
-      } catch {
-        // ignore
+        setIsPlaying(false)
+      } else {
+        if (ytPlayerRef.current?.playVideo) {
+          ytPlayerRef.current.playVideo()
+        } else {
+          postIframeCommand('playVideo')
+        }
+        setIsPlaying(true)
       }
     }
-  }, [isElectron, isPlaying])
+  }, [isElectron, isPlaying, postIframeCommand])
 
-  // 7. Change Speed Handler
+  // 8. Change Speed Handler
   const handleRateChange = (rate: number) => {
     setPlaybackRate(rate)
     if (isElectron && webviewRef.current?.executeJavaScript) {
@@ -366,16 +415,20 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
           if (v) v.playbackRate = ${rate};
         })()
       `)
-    } else if (!isElectron && ytPlayerRef.current?.setPlaybackRate) {
-      try {
-        ytPlayerRef.current.setPlaybackRate(rate)
-      } catch {
-        // ignore
+    } else if (!isElectron) {
+      if (ytPlayerRef.current?.setPlaybackRate) {
+        try {
+          ytPlayerRef.current.setPlaybackRate(rate)
+        } catch {
+          postIframeCommand('setPlaybackRate', [rate])
+        }
+      } else {
+        postIframeCommand('setPlaybackRate', [rate])
       }
     }
   }
 
-  // 8. Keyboard Shortcuts
+  // 9. Keyboard Shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (['INPUT', 'TEXTAREA', 'SELECT'].includes((e.target as HTMLElement)?.tagName)) {
@@ -402,6 +455,7 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
   }, [togglePlay, onPrevSentence, onNextSentence, onRepeatSentence])
 
   const watchUrl = `https://www.youtube.com/watch?v=${videoId}`
+  const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}?enablejsapi=1&playsinline=1&rel=0&autoplay=0&iv_load_policy=3&fs=0`
 
   return (
     <div className='flex flex-col shrink-0 rounded-2xl overflow-hidden bg-black shadow-xl border border-gray-800 transition-all'>
@@ -416,7 +470,15 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
             webpreferences='allowRunningInsecureContent, nativeWindowOpen=true'
           />
         ) : (
-          <div id={playerId} className='w-full h-full' />
+          <iframe
+            ref={iframeRef}
+            id={playerId}
+            src={embedUrl}
+            title='YouTube video player'
+            className='w-full h-full border-0 bg-black'
+            allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+            allowFullScreen={false}
+          />
         )}
       </div>
 
