@@ -59,6 +59,29 @@ const COMMON_WORD_MAP: Record<string, Partial<WordLookupResult>> = {
   },
   mastering: { definition: 'tinh thông, làm chủ', phonetic: '/ˈmæs.tɚ.ɪŋ/', partOfSpeech: 'verb' },
   context: { definition: 'ngữ cảnh, bối cảnh', phonetic: '/ˈkɑːn.tekst/', partOfSpeech: 'noun' },
+  generative: { definition: 'tạo sinh, có khả năng tạo mới', phonetic: '/ˈdʒen.ər.ə.tɪv/', partOfSpeech: 'adj' },
+  intelligence: { definition: 'trí tuệ, trí thông minh', phonetic: '/ɪnˈtel.ə.dʒəns/', partOfSpeech: 'noun' },
+  transformer: { definition: 'kiến trúc mạng nơ-ron Transformer', phonetic: '/trænsˈfɔːr.mɚ/', partOfSpeech: 'noun' },
+  prompt: { definition: 'câu lệnh chỉ dẫn cho AI', phonetic: '/prɑːmpt/', partOfSpeech: 'noun' },
+  engineering: { definition: 'ngành kỹ thuật, kỹ nghệ', phonetic: '/ˌen.dʒɪˈnɪr.ɪŋ/', partOfSpeech: 'noun' },
+  neural: { definition: 'thuộc về nơ-ron thần kinh', phonetic: '/ˈnʊr.əl/', partOfSpeech: 'adj' },
+  networks: { definition: 'các mạng lưới, hệ thống mạng', phonetic: '/ˈnet.wɝːks/', partOfSpeech: 'noun' },
+  clean: { definition: 'sạch sẽ, chuẩn mực, rõ ràng', phonetic: '/kliːn/', partOfSpeech: 'adj' },
+  code: { definition: 'mã nguồn, lập trình', phonetic: '/koʊd/', partOfSpeech: 'noun' },
+  feature: { definition: 'tính năng, đặc điểm nổi bật', phonetic: '/ˈfiː.tʃɚ/', partOfSpeech: 'noun' },
+  allow: { definition: 'cho phép, thừa nhận', phonetic: '/əˈlaʊ/', partOfSpeech: 'verb' },
+  isolation: { definition: 'sự độc lập, cô lập', phonetic: '/ˌaɪ.səˈleɪ.ʃən/', partOfSpeech: 'noun' },
+  effective: { definition: 'hiệu quả, có tác dụng', phonetic: '/əˈfek.tɪv/', partOfSpeech: 'adj' },
+  instructions: { definition: 'các chỉ dẫn, hướng dẫn', phonetic: '/ɪnˈstrʌk.ʃənz/', partOfSpeech: 'noun' },
+  developer: { definition: 'lập trình viên, kỹ sư phần mềm', phonetic: '/dɪˈvel.ə.pɚ/', partOfSpeech: 'noun' },
+  developers: { definition: 'các lập trình viên, kỹ sư phát triển phần mềm', phonetic: '/dɪˈvel.ə.pɚz/', partOfSpeech: 'noun' },
+  branch: { definition: 'nhánh mã nguồn (Git branch)', phonetic: '/bræntʃ/', partOfSpeech: 'noun' },
+  branches: { definition: 'các nhánh mã nguồn trong Git', phonetic: '/ˈbræn.tʃɪz/', partOfSpeech: 'noun' },
+  interview: { definition: 'buổi phỏng vấn xin việc', phonetic: '/ˈɪn.t̬ɚ.vjuː/', partOfSpeech: 'noun' },
+  architecture: { definition: 'kiến trúc hệ thống phần mềm', phonetic: '/ˈɑːr.kə.tek.tʃɚ/', partOfSpeech: 'noun' },
+  microservices: { definition: 'kiến trúc vi dịch vụ', phonetic: '/ˈmaɪ.kroʊˌsɝː.vɪ.sɪz/', partOfSpeech: 'noun' },
+  monolith: { definition: 'kiến trúc khối đơn nhất', phonetic: '/ˈmɑː.nə.lɪθ/', partOfSpeech: 'noun' },
+  standup: { definition: 'buổi họp nhanh hàng ngày (Scrum)', phonetic: '/ˈstænd.ʌp/', partOfSpeech: 'noun' },
 }
 
 /**
@@ -90,12 +113,12 @@ export async function lookupWord(
     }
   }
 
-  // 1. Check local cache
+  // 1. Check local cache (Instant 0ms response)
   if (COMMON_WORD_MAP[term]) {
     const cached = COMMON_WORD_MAP[term]
     return {
       term,
-      definition: cached.definition || 'Đang cập nhật...',
+      definition: cached.definition || 'Từ vựng trong ngữ cảnh bài học',
       phonetic: cached.phonetic || '',
       partOfSpeech: cached.partOfSpeech || 'word',
       example: contextSentence || '',
@@ -119,11 +142,17 @@ export async function lookupWord(
     meanings?: DictMeaning[]
   }
 
-  // 2. Fetch free public dictionary API
+  // 2. Fetch free public dictionary API with 600ms timeout
   try {
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), 600)
+
     const res = await fetch(
       `https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(term)}`,
+      { signal: controller.signal },
     )
+    clearTimeout(timeoutId)
+
     if (res.ok) {
       const data = (await res.json()) as DictEntry[]
       if (Array.isArray(data) && data[0]) {
@@ -147,7 +176,7 @@ export async function lookupWord(
       }
     }
   } catch (err) {
-    console.warn('[DictionaryService] Free dictionary fetch fallback:', err)
+    // Graceful offline fallback
   }
 
   // 3. Fallback
