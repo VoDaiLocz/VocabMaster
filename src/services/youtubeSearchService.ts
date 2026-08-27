@@ -52,6 +52,20 @@ function formatDuration(seconds: number): string {
   return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
 }
 
+async function promiseAny<T>(promises: Promise<T>[]): Promise<T> {
+  return new Promise((resolve, reject) => {
+    let errors: any[] = []
+    let pending = promises.length
+    if (pending === 0) return reject(new Error('No promises'))
+    promises.forEach((p) =>
+      p.then(resolve).catch((err) => {
+        errors.push(err)
+        if (--pending === 0) reject(errors)
+      }),
+    )
+  })
+}
+
 /**
  * Live search on YouTube with multi-endpoint parallel race and instant fallback
  */
@@ -110,7 +124,7 @@ export async function searchYouTubeDirectly(query: string): Promise<YouTubeSearc
       throw new Error('No valid results from this endpoint')
     })
 
-    const liveResults = await Promise.any(searchPromises)
+    const liveResults = await promiseAny(searchPromises)
     if (liveResults && liveResults.length > 0) {
       return liveResults
     }

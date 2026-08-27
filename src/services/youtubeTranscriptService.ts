@@ -12272,11 +12272,11 @@ export const ALL_CURATED_LEARNING_VIDEOS = Array.from(uniqueVideoMap.values())
 /**
  * Helper to fetch English to Vietnamese translation via public Google Translate endpoint
  */
-async function translateEnToVi(text: string): Promise<string> {
+export async function translateEnToVi(text: string): Promise<string> {
   if (!text) return ''
   try {
     const controller = new AbortController()
-    const timeoutId = setTimeout(() => controller.abort(), 1200)
+    const timeoutId = setTimeout(() => controller.abort(), 2000)
     const res = await fetch(
       `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=vi&dt=t&q=${encodeURIComponent(text)}`,
       { signal: controller.signal },
@@ -12292,6 +12292,28 @@ async function translateEnToVi(text: string): Promise<string> {
     // Ignore and fallback
   }
   return ''
+}
+
+/**
+ * Background full-transcript batch translator (translates entire video in parallel chunks)
+ */
+export async function translateFullTranscriptInBackground(cues: TranscriptCue[]): Promise<void> {
+  const CHUNK_SIZE = 12
+  const missingIndices = cues
+    .map((cue, idx) => (!cue.textVi ? idx : -1))
+    .filter((idx) => idx !== -1)
+
+  for (let i = 0; i < missingIndices.length; i += CHUNK_SIZE) {
+    const chunk = missingIndices.slice(i, i + CHUNK_SIZE)
+    await Promise.all(
+      chunk.map(async (cueIdx) => {
+        const cue = cues[cueIdx]
+        if (cue && !cue.textVi) {
+          cue.textVi = await translateEnToVi(cue.textEn)
+        }
+      }),
+    )
+  }
 }
 
 /**
@@ -12346,7 +12368,7 @@ function parseVttToCues(vttText: string): TranscriptCue[] {
         duration,
         end: +end.toFixed(2),
         textEn: rawText,
-        textVi: '', // Will be populated by batch translator or on-demand
+        textVi: '',
         words,
       })
     }
@@ -12368,6 +12390,8 @@ export async function fetchYouTubeBilingualTranscript(videoId: string): Promise<
     try {
       const dynamicCues = await window.electronAPI.fetchYouTubeTranscript(videoId)
       if (Array.isArray(dynamicCues) && dynamicCues.length > 0) {
+        // Trigger background full translation for any remaining untranslated lines
+        translateFullTranscriptInBackground(dynamicCues as TranscriptCue[])
         return dynamicCues as TranscriptCue[]
       }
     } catch (err) {
@@ -12386,12 +12410,13 @@ export async function fetchYouTubeBilingualTranscript(videoId: string): Promise<
     'https://invidious.drgns.space',
     'https://vid.priv.au',
     'https://inv.nadeko.net',
+    'https://invidious.nerdvpn.de',
   ]
 
   for (const host of CAPTION_HOSTS) {
     try {
       const controller = new AbortController()
-      const timeoutId = setTimeout(() => controller.abort(), 3000)
+      const timeoutId = setTimeout(() => controller.abort(), 3500)
 
       const infoRes = await fetch(`${host}/api/v1/captions/${videoId}`, { signal: controller.signal })
       clearTimeout(timeoutId)
@@ -12415,15 +12440,18 @@ export async function fetchYouTubeBilingualTranscript(videoId: string): Promise<
               const parsedCues = parseVttToCues(vttContent)
 
               if (parsedCues.length > 0) {
-                // Batch translate first 10 cues for instant bilingual display
-                const topCues = parsedCues.slice(0, 15)
+                // Immediately translate the first 25 cues so user can start learning instantly
+                const initialBatch = parsedCues.slice(0, 25)
                 await Promise.all(
-                  topCues.map(async (c) => {
+                  initialBatch.map(async (c) => {
                     if (!c.textVi) {
                       c.textVi = await translateEnToVi(c.textEn)
                     }
                   }),
                 )
+
+                // Asynchronously translate ALL remaining cues (100% of video) in parallel background stream
+                translateFullTranscriptInBackground(parsedCues)
                 return parsedCues
               }
             }

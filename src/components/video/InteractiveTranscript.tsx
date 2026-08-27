@@ -1,9 +1,5 @@
-// ============================================
-// Interactive Bilingual Subtitles Transcript with Memoized Rendering & Smooth Scrolling
-// ============================================
-
 import React, { useEffect, useRef, useState, useMemo, memo } from 'react'
-import { TranscriptCue } from '@/services/youtubeTranscriptService'
+import { TranscriptCue, translateEnToVi } from '@/services/youtubeTranscriptService'
 import { BookmarkPlus, Search, Volume2, Play } from 'lucide-react'
 import { speakWord } from '@/utils/quiz'
 
@@ -23,7 +19,6 @@ const formatTimestamp = (seconds: number) => {
   return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
 }
 
-// Memoized individual cue item to prevent re-rendering all 200+ cues on every 150ms tick
 interface CueItemProps {
   cue: TranscriptCue
   isActive: boolean
@@ -35,6 +30,21 @@ interface CueItemProps {
 
 const CueItem = memo<CueItemProps>(
   ({ cue, isActive, subMode, onSeek, onWordClick, onAddNote }) => {
+    const [viTranslation, setViTranslation] = useState(cue.textVi || '')
+
+    useEffect(() => {
+      if (cue.textVi) {
+        setViTranslation(cue.textVi)
+      } else if (isActive && !viTranslation) {
+        translateEnToVi(cue.textEn).then((translated) => {
+          if (translated) {
+            cue.textVi = translated
+            setViTranslation(translated)
+          }
+        })
+      }
+    }, [cue.textVi, isActive, cue.textEn, viTranslation])
+
     return (
       <div
         id={`cue-item-${cue.id}`}
@@ -115,7 +125,7 @@ const CueItem = memo<CueItemProps>(
                 : 'font-normal text-gray-500 dark:text-gray-400'
             } ${subMode === 'hover-vi' ? 'opacity-0 hover:opacity-100' : 'opacity-100'}`}
           >
-            {cue.textVi}
+            {viTranslation || cue.textVi || (isActive ? 'Đang dịch tiếng Việt...' : '')}
           </p>
         )}
       </div>
@@ -125,7 +135,8 @@ const CueItem = memo<CueItemProps>(
     return (
       prev.isActive === next.isActive &&
       prev.subMode === next.subMode &&
-      prev.cue.id === next.cue.id
+      prev.cue.id === next.cue.id &&
+      prev.cue.textVi === next.cue.textVi
     )
   },
 )

@@ -1,6 +1,6 @@
 {
   "name": "vocabmaster",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "English Vocabulary Learning App",
   "author": "VocabMaster <vocabmaster@example.com>",
   "main": "dist-electron/main.js",
