@@ -1,5 +1,5 @@
 // ============================================
-// In-App YouTube Video Explorer Modal
+// In-App YouTube Video Explorer & IT/AI Flows Modal
 // ============================================
 
 import React, { useState, useMemo } from 'react'
@@ -13,23 +13,34 @@ import {
   Link2,
   CheckCircle2,
   Filter,
+  Layers,
+  ChevronRight,
+  Sparkles,
+  ArrowRight,
+  GraduationCap,
 } from 'lucide-react'
-import { VideoInfo, ALL_CURATED_LEARNING_VIDEOS, extractYouTubeVideoId } from '@/services/youtubeTranscriptService'
+import {
+  VideoInfo,
+  ALL_CURATED_LEARNING_VIDEOS,
+  extractYouTubeVideoId,
+} from '@/services/youtubeTranscriptService'
+import { IT_AI_LEARNING_FLOWS } from '@/data/itLearningFlows'
 
 interface VideoExplorerModalProps {
   currentVideoId: string | null
-  onSelectVideo: (videoId: string, info?: VideoInfo) => void
+  onSelectVideo: (videoId: string, info?: VideoInfo, flowContext?: { flowTitle: string; step: number; totalSteps: number }) => void
   onClose: () => void
 }
 
-type CategoryType = 'all' | 'speeches' | 'daily' | 'work' | 'tech' | 'movies'
+type TabMode = 'flows' | 'videos'
+type CategoryType = 'all' | 'tech' | 'work' | 'speeches' | 'daily' | 'movies'
 
 const CATEGORIES: { id: CategoryType; label: string; icon: string }[] = [
   { id: 'all', label: '🌟 Tất cả', icon: '🌟' },
+  { id: 'tech', label: '💻 IT & Trí Tuệ Nhân Tạo (AI)', icon: '💻' },
+  { id: 'work', label: '💼 Phỏng Vấn & Công Sở', icon: '💼' },
   { id: 'speeches', label: '🎤 Diễn Thuyết & TED', icon: '🎤' },
   { id: 'daily', label: '💬 Đời Sống & Giao Tiếp', icon: '💬' },
-  { id: 'work', label: '💼 Phỏng Vấn & Công Sở', icon: '💼' },
-  { id: 'tech', label: '💻 Công Nghệ & IT', icon: '💻' },
   { id: 'movies', label: '🎬 Phim Ảnh & Cảm Hứng', icon: '🎬' },
 ]
 
@@ -38,11 +49,13 @@ export const VideoExplorerModal: React.FC<VideoExplorerModalProps> = ({
   onSelectVideo,
   onClose,
 }) => {
+  const [tabMode, setTabMode] = useState<TabMode>('flows')
   const [activeCategory, setActiveCategory] = useState<CategoryType>('all')
   const [searchQuery, setSearchQuery] = useState('')
   const [customUrl, setCustomUrl] = useState('')
   const [showCustomInput, setShowCustomInput] = useState(false)
   const [urlError, setUrlError] = useState('')
+  const [expandedFlowId, setExpandedFlowId] = useState<string>(IT_AI_LEARNING_FLOWS[0].id)
 
   // Filter video catalog based on category and live search query
   const filteredVideos = useMemo(() => {
@@ -63,6 +76,25 @@ export const VideoExplorerModal: React.FC<VideoExplorerModalProps> = ({
       return matchesCategory && matchesSearch
     })
   }, [activeCategory, searchQuery])
+
+  // Filter flows based on search query
+  const filteredFlows = useMemo(() => {
+    const q = searchQuery.toLowerCase().trim()
+    if (!q) return IT_AI_LEARNING_FLOWS
+
+    return IT_AI_LEARNING_FLOWS.filter((flow) => {
+      return (
+        flow.title.toLowerCase().includes(q) ||
+        flow.subtitle.toLowerCase().includes(q) ||
+        flow.description.toLowerCase().includes(q) ||
+        flow.videos.some(
+          (v) =>
+            v.info.title.toLowerCase().includes(q) ||
+            v.info.tags?.some((t) => t.toLowerCase().includes(q)),
+        )
+      )
+    })
+  }, [searchQuery])
 
   // Handle custom URL submission
   const handleCustomUrlSubmit = (e: React.FormEvent) => {
@@ -86,23 +118,20 @@ export const VideoExplorerModal: React.FC<VideoExplorerModalProps> = ({
   }
 
   return (
-    <div className='fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/75 backdrop-blur-md animate-fadeIn'>
-      <div className='w-full max-w-3xl bg-white dark:bg-dark-card rounded-3xl p-4 sm:p-6 shadow-2xl border border-gray-200/80 dark:border-gray-800 space-y-4 max-h-[90vh] flex flex-col'>
+    <div className='fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-black/80 backdrop-blur-md animate-fadeIn'>
+      <div className='w-full max-w-4xl bg-white dark:bg-dark-card rounded-3xl p-4 sm:p-6 shadow-2xl border border-gray-200/80 dark:border-gray-800 space-y-4 max-h-[92vh] flex flex-col'>
         {/* Header */}
-        <div className='flex items-center justify-between pb-3 border-b border-gray-100 dark:border-gray-800/80'>
-          <div className='flex items-center gap-2.5'>
-            <div className='p-2 rounded-2xl bg-primary-50 dark:bg-primary-950/40 text-primary-600 dark:text-primary-400'>
+        <div className='flex items-center justify-between pb-3 border-b border-gray-100 dark:border-gray-800/80 shrink-0'>
+          <div className='flex items-center gap-3'>
+            <div className='p-2.5 rounded-2xl bg-gradient-to-tr from-primary-600 to-indigo-500 text-white shadow-md shadow-primary-500/25'>
               <Compass size={22} />
             </div>
             <div>
-              <h3 className='font-display font-black text-lg sm:text-xl text-gray-900 dark:text-white flex items-center gap-2'>
-                Kho Video Học Tiếng Anh Song Ngữ
-                <span className='px-2 py-0.5 rounded-full text-[10px] font-bold bg-primary-100 dark:bg-primary-900/40 text-primary-600 dark:text-primary-400'>
-                  {ALL_CURATED_LEARNING_VIDEOS.length} Video
-                </span>
+              <h3 className='font-display font-black text-base sm:text-xl text-gray-900 dark:text-white flex items-center gap-2'>
+                Học Tiếng Anh Video Song Ngữ & Lộ Trình IT/AI
               </h3>
               <p className='text-xs text-gray-500 dark:text-gray-400'>
-                Chọn video trực tiếp bên dưới hoặc tìm kiếm theo chủ đề mà không cần dán link
+                Chọn theo Lộ trình bài bản (Flows) hoặc khám phá theo chủ đề riêng lẻ
               </p>
             </div>
           </div>
@@ -115,44 +144,74 @@ export const VideoExplorerModal: React.FC<VideoExplorerModalProps> = ({
           </button>
         </div>
 
-        {/* Live Search & Custom Link Toggle */}
-        <div className='space-y-2.5'>
-          <div className='flex items-center gap-2'>
-            <div className='relative flex-1'>
-              <Search
-                size={16}
-                className='absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400'
-              />
-              <input
-                type='text'
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder='Tìm video, diễn giả, chủ đề (Steve Jobs, Daily English, TED, Interview, IT...)...'
-                className='w-full pl-10 pr-4 py-2.5 rounded-2xl text-xs sm:text-sm bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all placeholder:text-gray-400'
-                autoFocus
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery('')}
-                  className='absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 text-xs'
-                >
-                  <X size={14} />
-                </button>
-              )}
-            </div>
+        {/* Mode Switcher Tabs (Lộ Trình Flows vs Thư Viện Videos) */}
+        <div className='flex items-center justify-between gap-2 shrink-0 flex-wrap'>
+          <div className='flex items-center p-1 rounded-2xl bg-gray-100 dark:bg-gray-800/80 border border-gray-200/60 dark:border-gray-700/60'>
+            <button
+              onClick={() => setTabMode('flows')}
+              className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                tabMode === 'flows'
+                  ? 'bg-white dark:bg-gray-900 text-primary-600 dark:text-primary-400 shadow-sm'
+                  : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+              }`}
+            >
+              <GraduationCap size={15} />
+              <span>🗺️ Lộ Trình IT & AI ({IT_AI_LEARNING_FLOWS.length} Flows)</span>
+            </button>
 
             <button
-              onClick={() => setShowCustomInput((prev) => !prev)}
-              className={`px-3 py-2.5 rounded-2xl text-xs font-semibold border transition-all flex items-center gap-1.5 shrink-0 ${
-                showCustomInput
-                  ? 'bg-primary-50 dark:bg-primary-950/40 border-primary-300 dark:border-primary-800 text-primary-600'
-                  : 'bg-white dark:bg-gray-800/40 border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:border-gray-400'
+              onClick={() => setTabMode('videos')}
+              className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                tabMode === 'videos'
+                  ? 'bg-white dark:bg-gray-900 text-primary-600 dark:text-primary-400 shadow-sm'
+                  : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
               }`}
-              title='Nhập link YouTube tùy chỉnh'
             >
-              <Link2 size={15} />
-              <span className='hidden sm:inline'>Dán link riêng</span>
+              <Layers size={15} />
+              <span>🎥 Thư Viện ({ALL_CURATED_LEARNING_VIDEOS.length} Video)</span>
             </button>
+          </div>
+
+          {/* Quick Paste Link Button */}
+          <button
+            onClick={() => setShowCustomInput((prev) => !prev)}
+            className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all flex items-center gap-1.5 ${
+              showCustomInput
+                ? 'bg-primary-50 dark:bg-primary-950/40 border-primary-300 dark:border-primary-800 text-primary-600'
+                : 'bg-white dark:bg-gray-800/40 border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:border-gray-400'
+            }`}
+          >
+            <Link2 size={14} />
+            <span>Dán link YouTube riêng</span>
+          </button>
+        </div>
+
+        {/* Live Search & Custom Input */}
+        <div className='space-y-2 shrink-0'>
+          <div className='relative'>
+            <Search
+              size={16}
+              className='absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400'
+            />
+            <input
+              type='text'
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder={
+                tabMode === 'flows'
+                  ? 'Tìm kiếm lộ trình học (AI, LLM, Clean Code, Git, Phỏng vấn IT...)...'
+                  : 'Tìm video, diễn giả, từ khóa (Steve Jobs, Generative AI, Standup, Docker...)...'
+              }
+              className='w-full pl-10 pr-4 py-2.5 rounded-2xl text-xs sm:text-sm bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all placeholder:text-gray-400'
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className='absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 text-xs'
+              >
+                <X size={14} />
+              </button>
+            )}
           </div>
 
           {/* Collapsible Custom URL Input */}
@@ -180,152 +239,327 @@ export const VideoExplorerModal: React.FC<VideoExplorerModalProps> = ({
             </form>
           )}
 
-          {/* Category Tabs */}
-          <div className='flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5'>
-            {CATEGORIES.map((cat) => {
-              const isActive = activeCategory === cat.id
-              return (
-                <button
-                  key={cat.id}
-                  onClick={() => setActiveCategory(cat.id)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0 active:scale-95 ${
-                    isActive
-                      ? 'bg-primary-600 text-white shadow-md shadow-primary-500/25 ring-2 ring-primary-500/20'
-                      : 'bg-gray-100 dark:bg-gray-800/60 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
-                  }`}
-                >
-                  {cat.label}
-                </button>
-              )
-            })}
-          </div>
-        </div>
-
-        {/* Video Grid / List */}
-        <div className='flex-1 overflow-y-auto pr-1 space-y-3 min-h-[250px]'>
-          {filteredVideos.length === 0 ? (
-            <div className='text-center py-12 space-y-2'>
-              <Filter size={32} className='mx-auto text-gray-300 dark:text-gray-600' />
-              <p className='text-sm font-semibold text-gray-500 dark:text-gray-400'>
-                Không tìm thấy video nào phù hợp với từ khóa "{searchQuery}"
-              </p>
-              <p className='text-xs text-gray-400'>
-                Hãy thử tìm bằng từ khóa khác hoặc dán link YouTube trực tiếp ở trên.
-              </p>
-            </div>
-          ) : (
-            <div className='grid grid-cols-1 md:grid-cols-2 gap-3'>
-              {filteredVideos.map((item) => {
-                const { info } = item
-                const isSelected = currentVideoId === info.videoId
-
+          {/* Category Tabs (When in Video Library Mode) */}
+          {tabMode === 'videos' && (
+            <div className='flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5'>
+              {CATEGORIES.map((cat) => {
+                const isActive = activeCategory === cat.id
                 return (
-                  <div
-                    key={info.videoId}
-                    id={`video-card-${info.videoId}`}
-                    onClick={() => {
-                      onSelectVideo(info.videoId, info)
-                      onClose()
-                    }}
-                    className={`p-3 rounded-2xl border transition-all cursor-pointer group flex flex-col justify-between space-y-3 relative overflow-hidden ${
-                      isSelected
-                        ? 'bg-primary-50/70 dark:bg-primary-950/30 border-primary-500 ring-2 ring-primary-500/20 shadow-md'
-                        : 'bg-white dark:bg-gray-800/50 border-gray-100 dark:border-gray-800 hover:border-primary-300 dark:hover:border-primary-800 hover:shadow-lg'
+                  <button
+                    key={cat.id}
+                    onClick={() => setActiveCategory(cat.id)}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0 active:scale-95 ${
+                      isActive
+                        ? 'bg-primary-600 text-white shadow-md shadow-primary-500/25 ring-2 ring-primary-500/20'
+                        : 'bg-gray-100 dark:bg-gray-800/60 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
                     }`}
                   >
-                    {/* Top row: Thumbnail & Badges */}
-                    <div className='flex gap-3'>
-                      <div className='relative w-28 sm:w-32 aspect-video rounded-xl overflow-hidden bg-black shrink-0 shadow-sm'>
-                        <img
-                          src={info.thumbnailUrl}
-                          alt={info.title}
-                          className='w-full h-full object-cover group-hover:scale-105 transition-transform duration-300'
-                          loading='lazy'
-                        />
-                        {/* Play Icon Overlay */}
-                        <div className='absolute inset-0 bg-black/25 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity'>
-                          <div className='p-1.5 rounded-full bg-primary-600 text-white shadow-lg'>
-                            <Play size={12} className='fill-white' />
-                          </div>
-                        </div>
-                        {/* Duration Badge */}
-                        {info.durationFormatted && (
-                          <div className='absolute bottom-1 right-1 px-1.5 py-0.5 rounded-md bg-black/80 text-[9px] font-mono font-bold text-white flex items-center gap-0.5'>
-                            <Clock size={9} />
-                            {info.durationFormatted}
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Info & Level */}
-                      <div className='flex-1 min-w-0 space-y-1'>
-                        <div className='flex items-center gap-1.5 flex-wrap'>
-                          {info.level && (
-                            <span className='px-1.5 py-0.5 rounded-md text-[9px] font-bold bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 border border-amber-200/60 dark:border-amber-900/50'>
-                              {info.level}
-                            </span>
-                          )}
-                          {info.sentenceCount && (
-                            <span className='px-1.5 py-0.5 rounded-md text-[9px] font-bold bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 border border-blue-200/60 dark:border-blue-900/50 flex items-center gap-0.5'>
-                              <BookOpen size={9} />
-                              {info.sentenceCount} câu
-                            </span>
-                          )}
-                        </div>
-
-                        <h4 className='text-xs sm:text-sm font-bold text-gray-900 dark:text-white line-clamp-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors leading-snug'>
-                          {info.title}
-                        </h4>
-
-                        <p className='text-[11px] text-gray-500 dark:text-gray-400 truncate'>
-                          {info.channel}
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Bottom: Description & Tags */}
-                    {info.description && (
-                      <p className='text-[11px] text-gray-600 dark:text-gray-300 line-clamp-2 leading-relaxed'>
-                        {info.description}
-                      </p>
-                    )}
-
-                    {/* Action button */}
-                    <div className='flex items-center justify-between pt-2 border-t border-gray-100 dark:border-gray-800/80'>
-                      <div className='flex items-center gap-1 overflow-hidden'>
-                        {info.tags?.slice(0, 2).map((tag, tIdx) => (
-                          <span
-                            key={tIdx}
-                            className='text-[10px] text-gray-400 dark:text-gray-500 font-medium'
-                          >
-                            #{tag}
-                          </span>
-                        ))}
-                      </div>
-
-                      <span
-                        className={`text-xs font-bold flex items-center gap-1 ${
-                          isSelected
-                            ? 'text-primary-600 dark:text-primary-400'
-                            : 'text-gray-500 group-hover:text-primary-600 dark:group-hover:text-primary-400'
-                        }`}
-                      >
-                        {isSelected ? (
-                          <>
-                            <CheckCircle2 size={13} />
-                            Đang học
-                          </>
-                        ) : (
-                          <>
-                            <Play size={11} className='fill-current' />
-                            Học ngay
-                          </>
-                        )}
-                      </span>
-                    </div>
-                  </div>
+                    {cat.label}
+                  </button>
                 )
               })}
+            </div>
+          )}
+        </div>
+
+        {/* Content Area */}
+        <div className='flex-1 overflow-y-auto pr-1 min-h-[300px]'>
+          {tabMode === 'flows' ? (
+            /* ========================================================== */
+            /* TAB 1: IT & AI LEARNING FLOWS (ROADMAP VIEW)              */
+            /* ========================================================== */
+            <div className='space-y-4'>
+              {filteredFlows.length === 0 ? (
+                <div className='text-center py-12 space-y-2'>
+                  <Filter size={32} className='mx-auto text-gray-300 dark:text-gray-600' />
+                  <p className='text-sm font-semibold text-gray-500 dark:text-gray-400'>
+                    Không tìm thấy lộ trình phù hợp với "{searchQuery}"
+                  </p>
+                </div>
+              ) : (
+                filteredFlows.map((flow) => {
+                  const isExpanded = expandedFlowId === flow.id
+                  const totalSteps = flow.videos.length
+
+                  return (
+                    <div
+                      key={flow.id}
+                      id={`flow-card-${flow.id}`}
+                      className={`rounded-3xl border transition-all duration-300 overflow-hidden ${
+                        isExpanded
+                          ? 'bg-gradient-to-b from-white to-gray-50/50 dark:from-dark-card dark:to-gray-900/50 border-primary-300 dark:border-primary-800/80 shadow-lg'
+                          : 'bg-white dark:bg-gray-850 border-gray-200/80 dark:border-gray-800 hover:border-gray-300'
+                      }`}
+                    >
+                      {/* Flow Header Banner */}
+                      <div
+                        onClick={() => setExpandedFlowId((prev) => (prev === flow.id ? '' : flow.id))}
+                        className='p-4 sm:p-5 flex items-start justify-between gap-3 cursor-pointer select-none group'
+                      >
+                        <div className='flex items-start gap-3.5 min-w-0'>
+                          <div className='text-3xl sm:text-4xl p-2 rounded-2xl bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700/60 shrink-0 group-hover:scale-105 transition-transform'>
+                            {flow.icon}
+                          </div>
+
+                          <div className='space-y-1 min-w-0'>
+                            <div className='flex items-center gap-2 flex-wrap'>
+                              <span className='px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-primary-50 dark:bg-primary-950/50 text-primary-600 dark:text-primary-400 border border-primary-200/60 dark:border-primary-800/60'>
+                                {flow.level}
+                              </span>
+                              <span className='px-2 py-0.5 rounded-full text-[10px] font-bold bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 flex items-center gap-1'>
+                                <Clock size={10} />
+                                {flow.estimatedHours}
+                              </span>
+                              <span className='px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400'>
+                                {totalSteps} Bài học liên kết
+                              </span>
+                            </div>
+
+                            <h4 className='font-display font-extrabold text-base sm:text-lg text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors'>
+                              {flow.title}
+                            </h4>
+
+                            <p className='text-xs text-gray-500 dark:text-gray-400 line-clamp-2 leading-relaxed'>
+                              {flow.description}
+                            </p>
+                          </div>
+                        </div>
+
+                        <button
+                          className={`p-2 rounded-xl transition-transform duration-300 ${
+                            isExpanded
+                              ? 'rotate-90 bg-primary-100 dark:bg-primary-950/60 text-primary-600'
+                              : 'bg-gray-100 dark:bg-gray-800 text-gray-400'
+                          }`}
+                        >
+                          <ChevronRight size={18} />
+                        </button>
+                      </div>
+
+                      {/* Flow Steps List (Expanded) */}
+                      {isExpanded && (
+                        <div className='px-4 sm:px-5 pb-5 pt-2 border-t border-gray-100 dark:border-gray-800/80 space-y-3'>
+                          <div className='text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-1.5'>
+                            <Sparkles size={13} className='text-primary-500' />
+                            Các bước bài học trong lộ trình
+                          </div>
+
+                          <div className='grid grid-cols-1 md:grid-cols-3 gap-3'>
+                            {flow.videos.map((vItem) => {
+                              const isSelected = currentVideoId === vItem.info.videoId
+
+                              return (
+                                <div
+                                  key={vItem.info.videoId}
+                                  id={`flow-step-${vItem.info.videoId}`}
+                                  onClick={() => {
+                                    onSelectVideo(vItem.info.videoId, vItem.info, {
+                                      flowTitle: flow.title,
+                                      step: vItem.step,
+                                      totalSteps,
+                                    })
+                                    onClose()
+                                  }}
+                                  className={`p-3 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between space-y-2.5 group relative ${
+                                    isSelected
+                                      ? 'bg-primary-50/80 dark:bg-primary-950/40 border-primary-500 ring-2 ring-primary-500/20 shadow-md'
+                                      : 'bg-white dark:bg-gray-800/60 border-gray-200/80 dark:border-gray-700/80 hover:border-primary-300 dark:hover:border-primary-700 hover:shadow-md'
+                                  }`}
+                                >
+                                  {/* Step Badge & Duration */}
+                                  <div className='flex items-center justify-between'>
+                                    <span className='px-2 py-0.5 rounded-lg text-[10px] font-black bg-gradient-to-r from-primary-600 to-indigo-600 text-white shadow-xs'>
+                                      Bước {vItem.step}
+                                    </span>
+                                    <span className='text-[10px] font-mono font-bold text-gray-500 dark:text-gray-400 flex items-center gap-0.5'>
+                                      <Clock size={10} />
+                                      {vItem.info.durationFormatted}
+                                    </span>
+                                  </div>
+
+                                  {/* Thumbnail Preview */}
+                                  <div className='relative aspect-video rounded-xl overflow-hidden bg-black shadow-xs'>
+                                    <img
+                                      src={vItem.info.thumbnailUrl}
+                                      alt={vItem.info.title}
+                                      className='w-full h-full object-cover group-hover:scale-105 transition-transform duration-300'
+                                      loading='lazy'
+                                    />
+                                    <div className='absolute inset-0 bg-black/25 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity'>
+                                      <div className='p-2 rounded-full bg-primary-600 text-white shadow-lg'>
+                                        <Play size={13} className='fill-white' />
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  {/* Title & Channel */}
+                                  <div>
+                                    <h5 className='text-xs font-bold text-gray-900 dark:text-white line-clamp-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors leading-snug'>
+                                      {vItem.info.title}
+                                    </h5>
+                                    <p className='text-[10px] text-gray-400 truncate mt-0.5'>
+                                      {vItem.info.channel}
+                                    </p>
+                                  </div>
+
+                                  {/* Action CTA */}
+                                  <div className='pt-2 border-t border-gray-100 dark:border-gray-700/60 flex items-center justify-between'>
+                                    <span className='text-[10px] text-blue-600 dark:text-blue-400 font-bold'>
+                                      {vItem.info.sentenceCount} câu song ngữ
+                                    </span>
+
+                                    <span
+                                      className={`text-xs font-bold flex items-center gap-1 ${
+                                        isSelected
+                                          ? 'text-primary-600 dark:text-primary-400'
+                                          : 'text-gray-500 group-hover:text-primary-600'
+                                      }`}
+                                    >
+                                      {isSelected ? (
+                                        <>
+                                          <CheckCircle2 size={12} />
+                                          Đang học
+                                        </>
+                                      ) : (
+                                        <>
+                                          Học ngay
+                                          <ArrowRight size={12} />
+                                        </>
+                                      )}
+                                    </span>
+                                  </div>
+                                </div>
+                              )
+                            })}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )
+                })
+              )}
+            </div>
+          ) : (
+            /* ========================================================== */
+            /* TAB 2: ALL VIDEOS CATALOGUE                                */
+            /* ========================================================== */
+            <div>
+              {filteredVideos.length === 0 ? (
+                <div className='text-center py-12 space-y-2'>
+                  <Filter size={32} className='mx-auto text-gray-300 dark:text-gray-600' />
+                  <p className='text-sm font-semibold text-gray-500 dark:text-gray-400'>
+                    Không tìm thấy video nào phù hợp với "{searchQuery}"
+                  </p>
+                </div>
+              ) : (
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-3'>
+                  {filteredVideos.map((item) => {
+                    const { info } = item
+                    const isSelected = currentVideoId === info.videoId
+
+                    return (
+                      <div
+                        key={info.videoId}
+                        id={`video-card-${info.videoId}`}
+                        onClick={() => {
+                          onSelectVideo(info.videoId, info)
+                          onClose()
+                        }}
+                        className={`p-3 rounded-2xl border transition-all cursor-pointer group flex flex-col justify-between space-y-3 relative overflow-hidden ${
+                          isSelected
+                            ? 'bg-primary-50/70 dark:bg-primary-950/30 border-primary-500 ring-2 ring-primary-500/20 shadow-md'
+                            : 'bg-white dark:bg-gray-800/50 border-gray-100 dark:border-gray-800 hover:border-primary-300 dark:hover:border-primary-800 hover:shadow-lg'
+                        }`}
+                      >
+                        <div className='flex gap-3'>
+                          <div className='relative w-28 sm:w-32 aspect-video rounded-xl overflow-hidden bg-black shrink-0 shadow-sm'>
+                            <img
+                              src={info.thumbnailUrl}
+                              alt={info.title}
+                              className='w-full h-full object-cover group-hover:scale-105 transition-transform duration-300'
+                              loading='lazy'
+                            />
+                            <div className='absolute inset-0 bg-black/25 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity'>
+                              <div className='p-1.5 rounded-full bg-primary-600 text-white shadow-lg'>
+                                <Play size={12} className='fill-white' />
+                              </div>
+                            </div>
+                            {info.durationFormatted && (
+                              <div className='absolute bottom-1 right-1 px-1.5 py-0.5 rounded-md bg-black/80 text-[9px] font-mono font-bold text-white flex items-center gap-0.5'>
+                                <Clock size={9} />
+                                {info.durationFormatted}
+                              </div>
+                            )}
+                          </div>
+
+                          <div className='flex-1 min-w-0 space-y-1'>
+                            <div className='flex items-center gap-1.5 flex-wrap'>
+                              {info.level && (
+                                <span className='px-1.5 py-0.5 rounded-md text-[9px] font-bold bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 border border-amber-200/60 dark:border-amber-900/50'>
+                                  {info.level}
+                                </span>
+                              )}
+                              {info.sentenceCount && (
+                                <span className='px-1.5 py-0.5 rounded-md text-[9px] font-bold bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 border border-blue-200/60 dark:border-blue-900/50 flex items-center gap-0.5'>
+                                  <BookOpen size={9} />
+                                  {info.sentenceCount} câu
+                                </span>
+                              )}
+                            </div>
+
+                            <h4 className='text-xs sm:text-sm font-bold text-gray-900 dark:text-white line-clamp-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors leading-snug'>
+                              {info.title}
+                            </h4>
+
+                            <p className='text-[11px] text-gray-500 dark:text-gray-400 truncate'>
+                              {info.channel}
+                            </p>
+                          </div>
+                        </div>
+
+                        {info.description && (
+                          <p className='text-[11px] text-gray-600 dark:text-gray-300 line-clamp-2 leading-relaxed'>
+                            {info.description}
+                          </p>
+                        )}
+
+                        <div className='flex items-center justify-between pt-2 border-t border-gray-100 dark:border-gray-800/80'>
+                          <div className='flex items-center gap-1 overflow-hidden'>
+                            {info.tags?.slice(0, 2).map((tag, tIdx) => (
+                              <span
+                                key={tIdx}
+                                className='text-[10px] text-gray-400 dark:text-gray-500 font-medium'
+                              >
+                                #{tag}
+                              </span>
+                            ))}
+                          </div>
+
+                          <span
+                            className={`text-xs font-bold flex items-center gap-1 ${
+                              isSelected
+                                ? 'text-primary-600 dark:text-primary-400'
+                                : 'text-gray-500 group-hover:text-primary-600 dark:group-hover:text-primary-400'
+                            }`}
+                          >
+                            {isSelected ? (
+                              <>
+                                <CheckCircle2 size={13} />
+                                Đang học
+                              </>
+                            ) : (
+                              <>
+                                <Play size={11} className='fill-current' />
+                                Học ngay
+                              </>
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              )}
             </div>
           )}
         </div>

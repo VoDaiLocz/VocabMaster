@@ -12252,11 +12252,22 @@ export function extractYouTubeVideoId(urlOrId: string): string | null {
 }
 
 import { EXTENDED_CURATED_VIDEOS } from '@/data/curatedVideos'
+import { IT_AI_LEARNING_FLOWS } from '@/data/itLearningFlows'
 
-export const ALL_CURATED_LEARNING_VIDEOS = [
-  ...CURATED_LEARNING_VIDEOS,
-  ...EXTENDED_CURATED_VIDEOS,
-]
+const FLOW_VIDEOS = IT_AI_LEARNING_FLOWS.flatMap((flow) =>
+  flow.videos.map((v) => ({ info: v.info, sampleCues: v.sampleCues })),
+)
+
+// Deduplicated list of all curated and flow videos
+const uniqueVideoMap = new Map<string, { info: VideoInfo; sampleCues: TranscriptCue[] }>()
+;[...CURATED_LEARNING_VIDEOS, ...EXTENDED_CURATED_VIDEOS, ...FLOW_VIDEOS].forEach((item) => {
+  if (!uniqueVideoMap.has(item.info.videoId)) {
+    uniqueVideoMap.set(item.info.videoId, item)
+  }
+})
+
+export const ALL_CURATED_LEARNING_VIDEOS = Array.from(uniqueVideoMap.values())
+
 
 /**
  * Dynamically fetch 100% full official transcript for ANY YouTube video

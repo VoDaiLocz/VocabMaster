@@ -21,9 +21,16 @@ import {
 import { Youtube, Sparkles, Compass } from 'lucide-react'
 import { useDeckStore } from '@/store/deckStore'
 
+interface FlowContext {
+  flowTitle: string
+  step: number
+  totalSteps: number
+}
+
 export const VideoLearning: React.FC = () => {
   const { fetchDecks } = useDeckStore()
   const [showSearchModal, setShowSearchModal] = useState(false)
+  const [activeFlow, setActiveFlow] = useState<FlowContext | null>(null)
   const [currentVideoId, setCurrentVideoId] = useState<string | null>('UF8uR6Z6KLc') // Default to Steve Jobs
   const [currentVideoInfo, setCurrentVideoInfo] = useState<VideoInfo | null>(
     ALL_CURATED_LEARNING_VIDEOS[0].info,
@@ -44,7 +51,14 @@ export const VideoLearning: React.FC = () => {
   }, [fetchDecks])
 
   // Load Video Transcript with explicit percentage steps
-  const handleLoadVideo = async (videoId: string, info?: VideoInfo) => {
+  const handleLoadVideo = async (
+    videoId: string,
+    info?: VideoInfo,
+    flowCtx?: FlowContext,
+  ) => {
+    if (flowCtx) {
+      setActiveFlow(flowCtx)
+    }
     setLoading(true)
     setLoadProgress(10)
     setLoadStatus('Đang kết nối tới YouTube...')
@@ -167,10 +181,34 @@ export const VideoLearning: React.FC = () => {
           className='flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-primary-50 dark:bg-primary-950/50 text-primary-600 dark:text-primary-400 border border-primary-200 dark:border-primary-800/60 text-xs font-bold hover:bg-primary-100 transition-all shrink-0 active:scale-95 shadow-sm'
         >
           <Compass size={14} />
-          <span className='hidden sm:inline'>Đổi Video / Link</span>
-          <span className='sm:hidden'>Đổi video</span>
+          <span className='hidden sm:inline'>Khám Phá & Lộ Trình</span>
+          <span className='sm:hidden'>Lộ trình / Đổi</span>
         </button>
       </div>
+
+      {/* Active Flow Roadmap Banner */}
+      {activeFlow && (
+        <div className='flex items-center justify-between px-3 py-2 rounded-2xl bg-gradient-to-r from-primary-500/10 via-indigo-500/10 to-primary-500/5 dark:from-primary-950/40 dark:via-indigo-950/40 dark:to-primary-950/20 border border-primary-200/80 dark:border-primary-800/80 text-xs shrink-0 animate-fadeIn'>
+          <div className='flex items-center gap-2 min-w-0'>
+            <span className='px-2 py-0.5 rounded-lg bg-primary-600 text-white text-[10px] font-extrabold shadow-xs shrink-0'>
+              Lộ trình
+            </span>
+            <span className='font-bold text-gray-900 dark:text-white truncate'>
+              {activeFlow.flowTitle}
+            </span>
+            <span className='text-[11px] font-medium text-primary-600 dark:text-primary-400 shrink-0'>
+              • Bài {activeFlow.step}/{activeFlow.totalSteps}
+            </span>
+          </div>
+
+          <button
+            onClick={() => setShowSearchModal(true)}
+            className='text-[11px] font-bold text-primary-600 hover:text-primary-700 dark:text-primary-400 hover:underline shrink-0 ml-2'
+          >
+            Đổi bài
+          </button>
+        </div>
+      )}
 
       {/* Loading State */}
       {loading ? (
@@ -244,7 +282,7 @@ export const VideoLearning: React.FC = () => {
       {showSearchModal && (
         <VideoExplorerModal
           currentVideoId={currentVideoId}
-          onSelectVideo={(id, info) => handleLoadVideo(id, info)}
+          onSelectVideo={(id, info, flowCtx) => handleLoadVideo(id, info, flowCtx)}
           onClose={() => setShowSearchModal(false)}
         />
       )}
