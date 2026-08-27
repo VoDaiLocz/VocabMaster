@@ -1,5 +1,5 @@
 // ============================================
-// In-App Direct YouTube Video Picker & IT/AI Flows
+// In-App Direct YouTube Video Picker & Real YouTube Web Explorer
 // ============================================
 
 import React, { useState, useMemo, useEffect } from 'react'
@@ -19,6 +19,7 @@ import {
   GraduationCap,
   Youtube,
   Tv,
+  Globe,
 } from 'lucide-react'
 import {
   VideoInfo,
@@ -42,7 +43,7 @@ interface VideoExplorerModalProps {
   onClose: () => void
 }
 
-type TabMode = 'yt_direct' | 'flows' | 'videos'
+type TabMode = 'yt_direct' | 'yt_browser' | 'flows' | 'videos'
 type CategoryType = 'all' | 'tech' | 'work' | 'speeches' | 'daily' | 'movies'
 
 const CATEGORIES: { id: CategoryType; label: string; icon: string }[] = [
@@ -65,7 +66,6 @@ export const VideoExplorerModal: React.FC<VideoExplorerModalProps> = ({
   const [ytResults, setYtResults] = useState<YouTubeSearchResult[]>([])
   const [isSearchingYt, setIsSearchingYt] = useState(false)
   const [customUrl, setCustomUrl] = useState('')
-  const [showCustomInput, setShowCustomInput] = useState(false)
   const [urlError, setUrlError] = useState('')
   const [expandedFlowId, setExpandedFlowId] = useState<string>(IT_AI_LEARNING_FLOWS[0].id)
 
@@ -124,12 +124,10 @@ export const VideoExplorerModal: React.FC<VideoExplorerModalProps> = ({
     })
   }, [searchQuery])
 
-  // Handle custom URL submission
-  const handleCustomUrlSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+  // Handle URL submission
+  const handlePickFromUrl = (urlOrId: string) => {
     setUrlError('')
-
-    const id = extractYouTubeVideoId(customUrl.trim())
+    const id = extractYouTubeVideoId(urlOrId.trim())
     if (!id) {
       setUrlError('Link YouTube không hợp lệ. Vui lòng kiểm tra lại!')
       return
@@ -140,14 +138,14 @@ export const VideoExplorerModal: React.FC<VideoExplorerModalProps> = ({
       title: `YouTube Video (${id})`,
       channel: 'YouTube Creator',
       thumbnailUrl: `https://img.youtube.com/vi/${id}/hqdefault.jpg`,
-      durationFormatted: 'Bilingual',
+      durationFormatted: 'Bilingual Track',
     })
     onClose()
   }
 
   return (
     <div className='fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-black/80 backdrop-blur-md animate-fadeIn'>
-      <div className='w-full max-w-4xl bg-white dark:bg-dark-card rounded-3xl p-4 sm:p-6 shadow-2xl border border-gray-200/80 dark:border-gray-800 space-y-4 max-h-[92vh] flex flex-col'>
+      <div className='w-full max-w-4xl bg-white dark:bg-dark-card rounded-3xl p-4 sm:p-6 shadow-2xl border border-gray-200/80 dark:border-gray-800 space-y-4 max-h-[94vh] flex flex-col'>
         {/* Header */}
         <div className='flex items-center justify-between pb-3 border-b border-gray-100 dark:border-gray-800/80 shrink-0'>
           <div className='flex items-center gap-3'>
@@ -174,25 +172,37 @@ export const VideoExplorerModal: React.FC<VideoExplorerModalProps> = ({
 
         {/* Mode Switcher Tabs */}
         <div className='flex items-center justify-between gap-2 shrink-0 flex-wrap'>
-          <div className='flex items-center p-1 rounded-2xl bg-gray-100 dark:bg-gray-800/80 border border-gray-200/60 dark:border-gray-700/60'>
+          <div className='flex items-center p-1 rounded-2xl bg-gray-100 dark:bg-gray-800/80 border border-gray-200/60 dark:border-gray-700/60 overflow-x-auto no-scrollbar'>
             <button
               onClick={() => {
                 setTabMode('yt_direct')
                 handleSearchYouTube(searchQuery || 'AI')
               }}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0 ${
                 tabMode === 'yt_direct'
                   ? 'bg-red-600 text-white shadow-sm'
                   : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
               }`}
             >
               <Tv size={14} />
-              <span>🔴 Trỏ Chọn YouTube (Trực Tiếp)</span>
+              <span>🔴 Trỏ Chọn YouTube</span>
+            </button>
+
+            <button
+              onClick={() => setTabMode('yt_browser')}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0 ${
+                tabMode === 'yt_browser'
+                  ? 'bg-red-600 text-white shadow-sm'
+                  : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+              }`}
+            >
+              <Globe size={14} />
+              <span>🌐 Lướt Web YouTube Trực Tiếp</span>
             </button>
 
             <button
               onClick={() => setTabMode('flows')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0 ${
                 tabMode === 'flows'
                   ? 'bg-white dark:bg-gray-900 text-primary-600 dark:text-primary-400 shadow-sm'
                   : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
@@ -204,7 +214,7 @@ export const VideoExplorerModal: React.FC<VideoExplorerModalProps> = ({
 
             <button
               onClick={() => setTabMode('videos')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0 ${
                 tabMode === 'videos'
                   ? 'bg-white dark:bg-gray-900 text-primary-600 dark:text-primary-400 shadow-sm'
                   : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
@@ -214,150 +224,157 @@ export const VideoExplorerModal: React.FC<VideoExplorerModalProps> = ({
               <span>🎥 Thư Viện ({ALL_CURATED_LEARNING_VIDEOS.length})</span>
             </button>
           </div>
-
-          {/* Quick Paste Link Option */}
-          <button
-            onClick={() => setShowCustomInput((prev) => !prev)}
-            className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all flex items-center gap-1.5 ${
-              showCustomInput
-                ? 'bg-primary-50 dark:bg-primary-950/40 border-primary-300 dark:border-primary-800 text-primary-600'
-                : 'bg-white dark:bg-gray-800/40 border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:border-gray-400'
-            }`}
-          >
-            <Link2 size={14} />
-            <span>Dán link YouTube</span>
-          </button>
         </div>
 
-        {/* Live Search Bar */}
-        <div className='space-y-2 shrink-0'>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault()
-              if (tabMode === 'yt_direct') {
-                handleSearchYouTube(searchQuery)
-              }
-            }}
-            className='flex items-center gap-2'
-          >
-            <div className='relative flex-1'>
-              <Search
-                size={16}
-                className='absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400'
-              />
-              <input
-                type='text'
-                value={searchQuery}
-                onChange={(e) => {
-                  setSearchQuery(e.target.value)
-                  if (tabMode === 'yt_direct') {
-                    handleSearchYouTube(e.target.value)
-                  }
-                }}
-                placeholder={
-                  tabMode === 'yt_direct'
-                    ? 'Tìm trực tiếp trên YouTube (VD: Python, Machine Learning, Clean Code, TED, Steve Jobs...)...'
-                    : tabMode === 'flows'
-                      ? 'Tìm kiếm lộ trình học (AI, LLM, Clean Code, Git, Phỏng vấn IT...)...'
-                      : 'Tìm video, diễn giả, từ khóa...'
-                }
-                className='w-full pl-10 pr-4 py-2.5 rounded-2xl text-xs sm:text-sm bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-red-500 transition-all placeholder:text-gray-400'
-                autoFocus
-              />
-              {searchQuery && (
-                <button
-                  type='button'
-                  onClick={() => {
-                    setSearchQuery('')
-                    if (tabMode === 'yt_direct') handleSearchYouTube('')
-                  }}
-                  className='absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 text-xs'
-                >
-                  <X size={14} />
-                </button>
-              )}
-            </div>
-
-            {tabMode === 'yt_direct' && (
-              <button
-                type='submit'
-                className='px-4 py-2.5 rounded-2xl bg-red-600 hover:bg-red-500 text-white text-xs font-bold shadow-md shadow-red-500/20 transition-all shrink-0 flex items-center gap-1.5'
-              >
-                <Search size={14} />
-                <span className='hidden sm:inline'>Tìm YouTube</span>
-              </button>
-            )}
-          </form>
-
-          {/* Quick Search Chips (When in YouTube Direct Picker Mode) */}
-          {tabMode === 'yt_direct' && (
-            <div className='flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5'>
-              {POPULAR_YOUTUBE_TOPICS.map((topic, tIdx) => (
-                <button
-                  key={tIdx}
-                  onClick={() => {
-                    setSearchQuery(topic.query)
-                    handleSearchYouTube(topic.query)
-                  }}
-                  className='px-3 py-1 rounded-xl text-[11px] font-semibold bg-gray-100 dark:bg-gray-800/60 text-gray-700 dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-950/30 hover:text-red-600 dark:hover:text-red-400 transition-colors shrink-0'
-                >
-                  {topic.label}
-                </button>
-              ))}
-            </div>
-          )}
-
-          {/* Collapsible Custom URL Input */}
-          {showCustomInput && (
+        {/* Live Search Bar (Except in Web Browser Mode) */}
+        {tabMode !== 'yt_browser' && (
+          <div className='space-y-2 shrink-0'>
             <form
-              onSubmit={handleCustomUrlSubmit}
-              className='p-3 rounded-2xl bg-gray-50 dark:bg-gray-800/40 border border-gray-200 dark:border-gray-700/80 space-y-2 animate-fadeIn'
+              onSubmit={(e) => {
+                e.preventDefault()
+                if (tabMode === 'yt_direct') {
+                  handleSearchYouTube(searchQuery)
+                }
+              }}
+              className='flex items-center gap-2'
             >
-              <div className='flex items-center gap-2'>
+              <div className='relative flex-1'>
+                <Search
+                  size={16}
+                  className='absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400'
+                />
                 <input
                   type='text'
-                  value={customUrl}
-                  onChange={(e) => setCustomUrl(e.target.value)}
-                  placeholder='Dán link YouTube (VD: https://www.youtube.com/watch?v=...)'
-                  className='flex-1 px-3.5 py-2 rounded-xl text-xs bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500'
+                  value={searchQuery}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value)
+                    if (tabMode === 'yt_direct') {
+                      handleSearchYouTube(e.target.value)
+                    }
+                  }}
+                  placeholder={
+                    tabMode === 'yt_direct'
+                      ? 'Tìm trực tiếp trên YouTube (VD: Python, AI, Machine Learning, Clean Code, TED, Steve Jobs...)...'
+                      : tabMode === 'flows'
+                        ? 'Tìm kiếm lộ trình học (AI, LLM, Clean Code, Git, Phỏng vấn IT...)...'
+                        : 'Tìm video, diễn giả, từ khóa...'
+                  }
+                  className='w-full pl-10 pr-4 py-2.5 rounded-2xl text-xs sm:text-sm bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-red-500 transition-all placeholder:text-gray-400'
+                  autoFocus
                 />
+                {searchQuery && (
+                  <button
+                    type='button'
+                    onClick={() => {
+                      setSearchQuery('')
+                      if (tabMode === 'yt_direct') handleSearchYouTube('')
+                    }}
+                    className='absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 text-xs'
+                  >
+                    <X size={14} />
+                  </button>
+                )}
+              </div>
+
+              {tabMode === 'yt_direct' && (
                 <button
                   type='submit'
-                  className='px-4 py-2 rounded-xl bg-primary-600 hover:bg-primary-500 text-white text-xs font-bold shadow-md shadow-primary-500/20 transition-all shrink-0'
+                  className='px-4 py-2.5 rounded-2xl bg-red-600 hover:bg-red-500 text-white text-xs font-bold shadow-md shadow-red-500/20 transition-all shrink-0 flex items-center gap-1.5'
                 >
-                  Mở Video
+                  <Search size={14} />
+                  <span className='hidden sm:inline'>Tìm YouTube</span>
                 </button>
-              </div>
-              {urlError && <p className='text-xs text-rose-500 font-medium'>{urlError}</p>}
+              )}
             </form>
-          )}
 
-          {/* Category Tabs (When in Video Library Mode) */}
-          {tabMode === 'videos' && (
-            <div className='flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5'>
-              {CATEGORIES.map((cat) => {
-                const isActive = activeCategory === cat.id
-                return (
+            {/* Quick Search Chips */}
+            {tabMode === 'yt_direct' && (
+              <div className='flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5'>
+                {POPULAR_YOUTUBE_TOPICS.map((topic, tIdx) => (
+                  <button
+                    key={tIdx}
+                    onClick={() => {
+                      setSearchQuery(topic.query)
+                      handleSearchYouTube(topic.query)
+                    }}
+                    className='px-3 py-1 rounded-xl text-[11px] font-semibold bg-gray-100 dark:bg-gray-800/60 text-gray-700 dark:text-gray-300 hover:bg-red-50 dark:hover:bg-red-950/30 hover:text-red-600 dark:hover:text-red-400 transition-colors shrink-0'
+                  >
+                    {topic.label}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {tabMode === 'videos' && (
+              <div className='flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5'>
+                {CATEGORIES.map((cat) => (
                   <button
                     key={cat.id}
                     onClick={() => setActiveCategory(cat.id)}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0 active:scale-95 ${
-                      isActive
-                        ? 'bg-primary-600 text-white shadow-md shadow-primary-500/25 ring-2 ring-primary-500/20'
-                        : 'bg-gray-100 dark:bg-gray-800/60 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                    className={`px-3 py-1 rounded-xl text-[11px] font-semibold transition-colors shrink-0 ${
+                      activeCategory === cat.id
+                        ? 'bg-primary-600 text-white shadow-sm'
+                        : 'bg-gray-100 dark:bg-gray-800/60 text-gray-700 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-primary-950/30'
                     }`}
                   >
                     {cat.label}
                   </button>
-                )
-              })}
-            </div>
-          )}
-        </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Content Area */}
-        <div className='flex-1 overflow-y-auto pr-1 min-h-[300px]'>
-          {tabMode === 'yt_direct' ? (
+        <div className='flex-1 overflow-y-auto pr-1 min-h-[320px]'>
+          {tabMode === 'yt_browser' ? (
+            /* ========================================================== */
+            /* TAB: IN-APP INTERACTIVE REAL YOUTUBE WEB EXPLORER         */
+            /* ========================================================== */
+            <div className='h-full flex flex-col space-y-3'>
+              {/* Smart Sniffer Toolbar */}
+              <div className='p-3 rounded-2xl bg-gradient-to-r from-red-50 to-primary-50 dark:from-red-950/40 dark:to-primary-950/40 border border-red-200 dark:border-red-900/60 space-y-2 shrink-0'>
+                <div className='flex items-center justify-between'>
+                  <span className='text-xs font-bold text-red-600 dark:text-red-400 flex items-center gap-1.5'>
+                    <Sparkles size={14} />
+                    Trình Duyệt YouTube Trực Tiếp (Lướt web và trỏ chọn bất kỳ video nào)
+                  </span>
+                </div>
+
+                <div className='flex items-center gap-2'>
+                  <div className='relative flex-1'>
+                    <Link2 size={15} className='absolute left-3 top-1/2 -translate-y-1/2 text-gray-400' />
+                    <input
+                      type='text'
+                      value={customUrl}
+                      onChange={(e) => setCustomUrl(e.target.value)}
+                      placeholder='Dán hoặc gõ link/mã video YouTube (VD: UF8uR6Z6KLc hoặc https://youtu.be/...)'
+                      className='w-full pl-9 pr-3 py-2 rounded-xl text-xs bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-red-500'
+                    />
+                  </div>
+                  <button
+                    onClick={() => handlePickFromUrl(customUrl)}
+                    className='px-4 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-white text-xs font-bold shadow-md shadow-red-500/20 transition-all shrink-0 flex items-center gap-1'
+                  >
+                    <Play size={12} className='fill-white' />
+                    <span>Học Video Này</span>
+                  </button>
+                </div>
+                {urlError && <p className='text-xs text-rose-500 font-semibold'>{urlError}</p>}
+              </div>
+
+              {/* Embedded YouTube Web View */}
+              <div className='flex-1 min-h-[380px] rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800 bg-black relative shadow-inner'>
+                <iframe
+                  src='https://www.youtube-nocookie.com/embed?listType=search&list=English+Learning+Podcasts+TED'
+                  title='YouTube Interactive Explorer'
+                  className='w-full h-full border-0'
+                  allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+                  allowFullScreen
+                />
+              </div>
+            </div>
+          ) : tabMode === 'yt_direct' ? (
             /* ========================================================== */
             /* TAB 1: DIRECT YOUTUBE SEARCH & VIDEO PICKER               */
             /* ========================================================== */
