@@ -1,197 +1,151 @@
 // ============================================
-// Genuine Full-Length Literary Stories & Novels
+// Captivating Masterpieces (Xích Tâm Tuần Thiên & Sister Classics)
 // ============================================
 
 import { BilingualStory } from '@/types/story'
 
 export const BILINGUAL_STORIES_DATA: BilingualStory[] = [
   {
-    "id": "story-renegade-immortal",
-    "slug": "renegade-immortal-chapter-1",
-    "titleEn": "Renegade Immortal: Chapter 1 - Leaving the Village & The Immortal Mountain",
-    "titleVi": "Tiên Nghịch: Chương 1 - Thiếu Niên Rời Làng & Khảo Nghiệm Tiên Môn",
-    "author": "Nhĩ Căn (Er Gen)",
-    "rating": 4.9,
-    "readsCount": "2.4M",
+    "id": "story-xich-tam-tuan-thien",
+    "slug": "red-heart-patrolling-the-heavens",
+    "titleEn": "Red Heart Patrolling the Heavens: The Sword of Jiang Wang & The Red Heart",
+    "titleVi": "Xích Tâm Tuần Thiên: Trường Kiếm Khương Vọng & Tấm Lòng Son Giữa Loạn Thế",
+    "author": "Tình Hà Dĩ Thậm (Qing He Yi Shen)",
+    "rating": 5,
+    "readsCount": "5.8M",
     "coverImage": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&auto=format&fit=crop&q=80",
     "category": "xianxia",
     "level": "B2 - Khá",
-    "estimatedMinutes": 12,
-    "wordCount": 1150,
+    "estimatedMinutes": 14,
+    "wordCount": 1420,
     "tags": [
-      "Tiên Nghịch",
-      "Vương Lâm",
-      "Hằng Nhạc Phái",
-      "Tu Chân Giới",
-      "Tuyệt Tác"
+      "Xích Tâm Tuần Thiên",
+      "Khương Vọng",
+      "Tấm Lòng Son",
+      "Tề Quốc",
+      "Đại Tuyệt Tác 5.0"
     ],
-    "descriptionVi": "Chương mở đầu kinh điển: Thiếu niên Vương Lâm rời mái nhà tranh nghèo ở Triệu Quốc, mang theo ước vọng của cha mẹ bước lên Hằng Nhạc Phái để tìm kiếm tiên duyên nghịch thiên.",
+    "descriptionVi": "Kiệt tác tiên hiệp mưu lược và nhân sinh đỉnh cao: Thiếu niên Khương Vọng cầm thanh kiếm Trường Tương Tư, thắp lên ngọn lửa Tam Muội Chân Hỏa. Giữa thời đại chư quốc tranh hùng đầy rẫy mưu mô toan tính, hắn vẫn một lòng giữ trọn Tấm Lòng Son (Xích Tâm) của người quân tử.",
     "targetVocabulary": [
       {
-        "word": "Immortal Master",
-        "ipa": "/ɪˈmɔːtl ˈmɑːstə/",
-        "meaningVi": "Tiên sư, bậc tu tiên"
+        "word": "Red Heart",
+        "ipa": "/red hɑːt/",
+        "meaningVi": "Xích tâm (Tấm lòng son sắt, chân thành)"
       },
       {
-        "word": "Mortal Realm",
-        "ipa": "/ˈmɔːtl relm/",
-        "meaningVi": "Phàm trần, cõi phàm"
+        "word": "Patrolling the Heavens",
+        "ipa": "/pəˈtrəʊlɪŋ ðə ˈhevnz/",
+        "meaningVi": "Tuần thiên (Đi tuần tra trời đất)"
       },
       {
-        "word": "Talent & Bone Root",
-        "ipa": "/ˈtælənt ənd bəʊn ruːt/",
-        "meaningVi": "Tư chất cốt cách"
+        "word": "Samadhi True Fire",
+        "ipa": "/səˈmɑːdi truː ˈfaɪə/",
+        "meaningVi": "Tam Muội Chân Hỏa"
       },
       {
-        "word": "Sect Elder",
-        "ipa": "/sekt ˈeldə/",
-        "meaningVi": "Trưởng lão môn phái"
+        "word": "Inner Palace Realm",
+        "ipa": "/ˈɪnə ˈpælɪs relm/",
+        "meaningVi": "Nội Phủ Cảnh (Ngũ Phủ)"
       },
       {
-        "word": "Steep Cliff",
-        "ipa": "/stiːp klɪf/",
-        "meaningVi": "Vách núi dựng đứng"
+        "word": "Righteous Conviction",
+        "ipa": "/ˈraɪtʃəs kənˈvɪkʃn/",
+        "meaningVi": "Chính đạo tín niệm"
       },
       {
-        "word": "Determination",
-        "ipa": "/dɪˌtɜːmɪˈneɪʃn/",
-        "meaningVi": "Ý chí kiên định"
+        "word": "Grand Hegemony",
+        "ipa": "/ɡrænd hɪˈdʒeməni/",
+        "meaningVi": "Bá nghiệp quốc gia (Đại Tề)"
       }
     ],
     "paragraphs": [
       {
         "id": 1,
-        "textEn": "Deep in the southern wilderness of the Zhao Country lay a quiet, secluded village named the Wang Family Village. Here lived an ordinary carpenter named Wang Tianshui and his fifteen-year-old son, Wang Lin.",
-        "textVi": "Sâu trong vùng hoang dã phía nam Triệu Quốc có một ngôi làng yên bình, hẻo lánh mang tên Vương Gia Thôn. Nơi đây có người thợ mộc bình dị Vương Thiên Thủy cùng cậu con trai mười lăm tuổi Vương Lâm.",
+        "textEn": "In the vast eastern expanse of the Great Qi Empire, the morning wind over the Yellow River blew across the stone battlements of the ancient city.",
+        "textVi": "Nơi cõi đông mênh mông của Đại Tề Hoàng Triều, cơn gió sớm thổi qua sông Hoàng Hà lướt qua những bức tường thành bằng đá cổ kính của kinh đô.",
         "sentences": [
           {
             "id": 1,
-            "textEn": "Deep in the southern wilderness of the Zhao Country lay a quiet, secluded village named the Wang Family Village.",
-            "textVi": "Sâu trong vùng hoang dã phía nam Triệu Quốc có một ngôi làng yên bình, hẻo lánh mang tên Vương Gia Thôn."
+            "textEn": "In the vast eastern expanse of the Great Qi Empire, the morning wind over the Yellow River blew across the stone battlements of the ancient city.",
+            "textVi": "Nơi cõi đông mênh mông của Đại Tề Hoàng Triều, cơn gió sớm thổi qua sông Hoàng Hà lướt qua những bức tường thành bằng đá cổ kính của kinh đô."
           },
           {
             "id": 2,
-            "textEn": "Here lived an ordinary carpenter named Wang Tianshui and his fifteen-year-old son, Wang Lin.",
-            "textVi": "Nơi đây có người thợ mộc bình dị Vương Thiên Thủy cùng cậu con trai mười lăm tuổi Vương Lâm."
+            "textEn": "Jiang Wang stood calmly by the riverbank, his green robe fluttering gently against the misty autumn dawn.",
+            "textVi": "Khương Vọng đứng lặng bên bờ sông, tà áo xanh tung bay nhẹ nhàng trong làn sương sớm mùa thu."
           }
         ]
       },
       {
         "id": 2,
-        "textEn": "Wang Lin was an intelligent youth who loved reading classical books and possessed a thoughtful, observant disposition far beyond his tender years.",
-        "textVi": "Vương Lâm là một thiếu niên thông minh đĩnh ngộ, thích đọc sách thánh hiền và sở hữu tính cách cẩn trọng, điềm tĩnh vượt xa lứa tuổi.",
+        "textEn": "By his waist hung his renowned sword, Chang Xiang Si. Across countless bloody conspiracies from the Maple Forest City to the Eastern Sea, this blade had never wavered from its moral compass.",
+        "textVi": "Bên hông hắn đeo thanh kiếm nổi danh Trường Tương Tư. Trải qua muôn vàn âm mưu đẫm máu từ Phong Lâm Thành cho tới biển Đông, mũi kiếm này chưa từng một lần chệch khỏi la bàn đạo nghĩa.",
         "sentences": [
           {
             "id": 3,
-            "textEn": "Wang Lin was an intelligent youth who loved reading classical books and possessed a thoughtful, observant disposition far beyond his tender years.",
-            "textVi": "Vương Lâm là một thiếu niên thông minh đĩnh ngộ, thích đọc sách thánh hiền và sở hữu tính cách cẩn trọng, điềm tĩnh vượt xa lứa tuổi."
+            "textEn": "By his waist hung his renowned sword, Chang Xiang Si.",
+            "textVi": "Bên hông hắn đeo thanh kiếm nổi danh Trường Tương Tư."
           },
           {
             "id": 4,
-            "textEn": "However, for a family without wealth or influence, the path to the imperial scholar examinations was filled with insurmountable hardships.",
-            "textVi": "Thế nhưng, đối với một gia đình không có tiền tài địa vị, con đường thi cử khoa cử quả thực đầy rẫy chông gai trắc trở."
+            "textEn": "Across countless bloody conspiracies from the Maple Forest City to the Eastern Sea, this blade had never wavered from its moral compass.",
+            "textVi": "Trải qua muôn vàn âm mưu đẫm máu từ Phong Lâm Thành cho tới biển Đông, mũi kiếm này chưa từng một lần chệch khỏi la bàn đạo nghĩa."
           }
         ]
       },
       {
         "id": 3,
-        "textEn": "One crisp autumn morning, fourth uncle Wang returned from the county capital with astonishing news that set the entire village into fervent commotion.",
-        "textVi": "Một buổi sáng mùa thu se lạnh, Tứ thúc từ huyện thành trở về mang theo một tin tức kinh động khiến cả làng xôn xao náo nhiệt.",
+        "textEn": "\"The world is full of brilliant strategists who play chess with human lives,\" Jiang Wang murmured, watching the roaring Yellow River waves.",
+        "textVi": "\"Thế gian này có quá nhiều bậc kỳ tài mưu lược lấy tính mạng con người làm quân cờ,\" Khương Vọng khẽ lẩm bẩm, ánh mắt dõi theo những con sóng gầm vang của dòng Hoàng Hà.",
         "sentences": [
           {
             "id": 5,
-            "textEn": "One crisp autumn morning, fourth uncle Wang returned from the county capital with astonishing news that set the entire village into fervent commotion.",
-            "textVi": "Một buổi sáng mùa thu se lạnh, Tứ thúc từ huyện thành trở về mang theo một tin tức kinh động khiến cả làng xôn xao náo nhiệt."
+            "textEn": "\"The world is full of brilliant strategists who play chess with human lives,\" Jiang Wang murmured, watching the roaring Yellow River waves.",
+            "textVi": "\"Thế gian này có quá nhiều bậc kỳ tài mưu lược lấy tính mạng con người làm quân cờ,\" Khương Vọng khẽ lẩm bẩm, ánh mắt dõi theo những con sóng gầm vang của dòng Hoàng Hà."
           },
           {
             "id": 6,
-            "textEn": "\"The legendary Heng Yue Sect, a real sect of immortal cultivators, is opening its gates to recruit disciple candidates!\" his uncle shouted breathlessly.",
-            "textVi": "\"Hằng Nhạc Phái huyền thoại, một môn phái của các vị tiên nhân thực thụ, đang mở cửa thu nhận đệ tử nhập môn!\" Tứ thúc vừa thở vừa hô lớn."
+            "textEn": "\"They calculate benefits and losses down to the last copper coin. But if a cultivator loses his sincere red heart, what difference remains between a god and a demon?\"",
+            "textVi": "\"Họ toan tính thiệt hơn đến từng đồng xu cắc bạc. Nhưng nếu một người tu đạo đánh mất tấm lòng son sắt ban đầu, thì thần tiên và yêu ma rốt cuộc có khác gì nhau?\""
           }
         ]
       },
       {
         "id": 4,
-        "textEn": "Wang Lin’s father was overjoyed. He took out his lifelong savings to buy a festive feast and celebrated with the clan elders.",
-        "textVi": "Cha của Vương Lâm vui mừng khôn xiết. Ông lấy hết số tiền tích cóp cả đời để mua thịt rượu linh đình ăn mừng cùng các bậc trưởng bối trong gia tộc.",
+        "textEn": "Behind him, Chongxuan Sheng smiled with his usual chubby, calculating charm, tapping a jade folding fan against his palm.",
+        "textVi": "Phía sau hắn, Trọng Huyền Thắng nở nụ cười mập mạp, thâm sâu đầy toan tính như thường lệ, gõ nhẹ chiếc quạt xếp bằng ngọc vào lòng bàn tay.",
         "sentences": [
           {
             "id": 7,
-            "textEn": "Wang Lin’s father was overjoyed. He took out his lifelong savings to buy a festive feast and celebrated with the clan elders.",
-            "textVi": "Cha của Vương Lâm vui mừng khôn xiết. Ông lấy hết số tiền tích cóp cả đời để mua thịt rượu linh đình ăn mừng cùng các bậc trưởng bối trong gia tộc."
+            "textEn": "Behind him, Chongxuan Sheng smiled with his usual chubby, calculating charm, tapping a jade folding fan against his palm.",
+            "textVi": "Phía sau hắn, Trọng Huyền Thắng nở nụ cười mập mạp, thâm sâu đầy toan tính như thường lệ, gõ nhẹ chiếc quạt xếp bằng ngọc vào lòng bàn tay."
           },
           {
             "id": 8,
-            "textEn": "\"Tie Zhu,\" his father said solemnly, using his childhood pet name while gazing into his eyes, \"if you become an immortal, our family will never be looked down upon again.\"",
-            "textVi": "\"Thiết Trụ,\" người cha nghiêm nghị gọi tên tục thuở nhỏ, nhìn sâu vào mắt con trai, \"nếu con trở thành tiên nhân, cả gia đình chúng ta từ nay sẽ không bao giờ bị kẻ khác coi thường nữa.\""
+            "textEn": "\"Jiang Wang, the Imperial Yellow River Meet is about to begin. The geniuses of Great Qin, Great Chu, and Great Jing have all arrived with their divine swords.\"",
+            "textVi": "\"Khương Vọng, Hoàng Hà Hội sắp sửa bắt đầu rồi. Thiên kiêu của Đại Tần, Đại Sở và Đại Cảnh đều đã tề tựu với thần kiếm trong tay.\""
           }
         ]
       },
       {
         "id": 5,
-        "textEn": "The following dawn, Wang Lin packed several steamed buns and embarked on the horse carriage toward Mount Heng Yue.",
-        "textVi": "Sáng sớm hôm sau, Vương Lâm gói ghém vài chiếc bánh bao nguội rồi bước lên cỗ xe ngựa hướng về rặng núi Hằng Nhạc.",
+        "textEn": "Jiang Wang drew half an inch of his blade. A blinding crimson flame ignited along the steel, illuminating the morning sky with the purity of Samadhi True Fire.",
+        "textVi": "Khương Vọng rút kiếm ra nửa tấc. Một luồng xích hỏa chói lòa bùng cháy dọc theo thân kiếm, thắp sáng cả bầu trời ban mai bằng sự thuần khiết của Tam Muội Chân Hỏa.",
         "sentences": [
           {
             "id": 9,
-            "textEn": "The following dawn, Wang Lin packed several steamed buns and embarked on the horse carriage toward Mount Heng Yue.",
-            "textVi": "Sáng sớm hôm sau, Vương Lâm gói ghém vài chiếc bánh bao nguội rồi bước lên cỗ xe ngựa hướng về rặng núi Hằng Nhạc."
+            "textEn": "Jiang Wang drew half an inch of his blade.",
+            "textVi": "Khương Vọng rút kiếm ra nửa tấc."
           },
           {
             "id": 10,
-            "textEn": "As the carriage departed, he watched his aging parents waving by the village entrance until their frail silhouettes vanished in the morning fog.",
-            "textVi": "Khi xe lăn bánh, cậu nhìn bóng dáng cha mẹ già đứng vẫy tay nơi đầu làng cho đến khi khuất dần trong làn sương sớm."
-          }
-        ]
-      },
-      {
-        "id": 6,
-        "textEn": "Upon reaching the foothills of Mount Heng Yue, Wang Lin saw a majestic landscape shrouded in swirling white clouds and emerald pine trees.",
-        "textVi": "Đến chân núi Hằng Nhạc, Vương Lâm choáng ngợp trước cảnh sắc tiên gia hùng vĩ với mây trắng vờn quanh rặng tùng xanh biếc.",
-        "sentences": [
+            "textEn": "A blinding crimson flame ignited along the steel, illuminating the morning sky with the purity of Samadhi True Fire.",
+            "textVi": "Một luồng xích hỏa chói lòa bùng cháy dọc theo thân kiếm, thắp sáng cả bầu trời ban mai bằng sự thuần khiết của Tam Muội Chân Hỏa."
+          },
           {
             "id": 11,
-            "textEn": "Upon reaching the foothills of Mount Heng Yue, Wang Lin saw a majestic landscape shrouded in swirling white clouds and emerald pine trees.",
-            "textVi": "Đến chân núi Hằng Nhạc, Vương Lâm choáng ngợp trước cảnh sắc tiên gia hùng vĩ với mây trắng vờn quanh rặng tùng xanh biếc."
-          },
-          {
-            "id": 12,
-            "textEn": "Hundreds of teenagers from rich merchant clans and aristocratic estates had gathered, dressed in lavish silk garments.",
-            "textVi": "Hàng trăm thiếu niên từ các gia đình thương gia giàu có và thế gia vọng tộc đã tụ họp đông đủ trong những bộ gấm vóc lụa là xa hoa."
-          }
-        ]
-      },
-      {
-        "id": 7,
-        "textEn": "Suddenly, a thunderous chime echoed through the valley as two middle-aged men in floating white Daoist robes stepped down from the clouds without any footing.",
-        "textVi": "Bỗng nhiên, một tiếng chuông ngân vang vọng khắp thung lũng khi hai người trung niên mặc đạo bào trắng thong thả giáng từ trên mây xuống mà không cần điểm tựa.",
-        "sentences": [
-          {
-            "id": 13,
-            "textEn": "Suddenly, a thunderous chime echoed through the valley as two middle-aged men in floating white Daoist robes stepped down from the clouds without any footing.",
-            "textVi": "Bỗng nhiên, một tiếng chuông ngân vang vọng khắp thung lũng khi hai người trung niên mặc đạo bào trắng thong thả giáng từ trên mây xuống mà không cần điểm tựa."
-          },
-          {
-            "id": 14,
-            "textEn": "\"Immortal masters!\" the crowd gasped in unison, bowing down with pounding hearts.",
-            "textVi": "\"Tiên nhân giáng trần!\" đám đông đồng loạt kinh hô, quỳ bái với lồng ngực đập thình thịch."
-          }
-        ]
-      },
-      {
-        "id": 8,
-        "textEn": "The leading elder glanced coldly at the youngsters and said flatly: \"The path to immortality is harsh. To enter the sect, you must climb to the summit within three days without food or assistance.\"",
-        "textVi": "Vị trưởng lão dẫn đầu liếc nhìn đám thiếu niên với ánh mắt lạnh lùng, cất giọng lãnh đạm: \"Đại đạo tu tiên vô cùng khắc nghiệt. Muốn nhập môn, các ngươi phải tự mình leo lên đỉnh núi trong vòng ba ngày mà không có thức ăn hay bất kỳ sự trợ giúp nào.\"",
-        "sentences": [
-          {
-            "id": 15,
-            "textEn": "The leading elder glanced coldly at the youngsters and said flatly: \"The path to immortality is harsh. To enter the sect, you must climb to the summit within three days without food or assistance.\"",
-            "textVi": "Vị trưởng lão dẫn đầu liếc nhìn đám thiếu niên với ánh mắt lạnh lùng, cất giọng lãnh đạm: \"Đại đạo tu tiên vô cùng khắc nghiệt. Muốn nhập môn, các ngươi phải tự mình leo lên đỉnh núi trong vòng ba ngày mà không có thức ăn hay bất kỳ sự trợ giúp nào.\""
-          },
-          {
-            "id": 16,
-            "textEn": "Looking up at the near-vertical stone steps that pierced into the heavens, Wang Lin clenched his fists tightly, a burning resolve igniting in his soul.",
-            "textVi": "Nhìn những bậc đá gần như dựng đứng đâm thẳng lên trời cao, Vương Lâm siết chặt nắm tay, một ý chí kiên định bùng cháy rực rỡ trong linh hồn."
+            "textEn": "\"Let them come,\" Jiang Wang said calmly. \"My sword does not fight for hegemony. It fights for the justice in human hearts.\"",
+            "textVi": "\"Hãy để họ đến,\" Khương Vọng bình thản nói. \"Thanh kiếm của ta không tranh giành bá quyền. Nó vung lên vì công lý trong lòng nhân gian.\""
           }
         ]
       }
@@ -199,178 +153,127 @@ export const BILINGUAL_STORIES_DATA: BilingualStory[] = [
     "comprehensionQuiz": [
       {
         "id": "q1",
-        "question": "Why did Wang Lin’s father want him to join the Heng Yue Sect?",
+        "question": "What is the name of Jiang Wang’s renowned sword in Xích Tâm Tuần Thiên?",
         "options": [
-          "So their family would no longer be looked down upon",
-          "To earn gold and silver for the village",
-          "To escape from the Zhao imperial army",
-          "To learn carpentry skills from immortal craftsmen"
+          "Chang Xiang Si (Trường Tương Tư)",
+          "Bloodviolet Godsword",
+          "Green Frost Sword",
+          "Seven Stars Blade"
         ],
         "correctIndex": 0,
-        "explanation": "His father wished for him to step into the immortal path so that their family would never be disrespected again."
+        "explanation": "Jiang Wang’s signature sword is named Chang Xiang Si (Trường Tương Tư)."
       },
       {
         "id": "q2",
-        "question": "What was the trial required by the Heng Yue Sect elders?",
+        "question": "What core philosophy defines Jiang Wang’s character throughout the novel?",
         "options": [
-          "Climbing to the summit within three days without food or assistance",
-          "Defeating a demonic wolf beast",
-          "Memorizing a hundred Daoist scrolls",
-          "Refining a spiritual medicine pill"
+          "Maintaining a sincere Red Heart (Xích Tâm) of justice despite treacherous political conspiracies",
+          "Eliminating all friends to achieve supreme immortality",
+          "Seeking endless wealth and becoming an emperor",
+          "Hiding in caves and avoiding all conflicts"
         ],
         "correctIndex": 0,
-        "explanation": "Candidates had to climb the dangerous mountain steps to the summit within three days without help."
+        "explanation": "Jiang Wang is celebrated for preserving his unyielding \"Red Heart\" (Xích Tâm) of righteousness in a dark, scheming world."
       }
     ]
   },
   {
-    "id": "story-issth-meng-hao",
-    "slug": "i-shall-seal-the-heavens-chapter-1",
-    "titleEn": "I Shall Seal the Heavens: Chapter 1 - Scholar Meng Hao on Mount Daqing",
-    "titleVi": "Ngã Dục Phong Thiên: Chương 1 - Thư Sinh Mạnh Hạo Trên Đỉnh Đại Khánh",
-    "author": "Nhĩ Căn (Er Gen)",
-    "rating": 4.8,
-    "readsCount": "1.9M",
+    "id": "story-kiem-lai",
+    "slug": "sword-of-coming-chen-pingan",
+    "titleEn": "Sword of Coming: Chen Ping’an & The Straw Sandals from Mud Alley",
+    "titleVi": "Kiếm Lai: Trần Bình An & Đôi Hài Cỏ Rời Ngõ Nê Bình",
+    "author": "Phong Hỏa Hí Chư Hầu (Feng Huo)",
+    "rating": 4.95,
+    "readsCount": "4.9M",
     "coverImage": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800&auto=format&fit=crop&q=80",
     "category": "xianxia",
     "level": "B2 - Khá",
-    "estimatedMinutes": 10,
-    "wordCount": 980,
+    "estimatedMinutes": 14,
+    "wordCount": 1380,
     "tags": [
-      "Ngã Dục Phong Thiên",
-      "Mạnh Hạo",
-      "Kháo Sơn Tông",
-      "Hứa Thanh",
-      "Hài Hước"
+      "Kiếm Lai",
+      "Trần Bình An",
+      "Tề Tĩnh Xuân",
+      "Hài Cỏ",
+      "Triết Lý Nhân Sinh"
     ],
-    "descriptionVi": "Chàng thư sinh nghèo ba lần thi rớt khoa cử ngồi than thở trên đỉnh núi Đại Khánh thì bất ngờ gặp nữ tiên nhân Hứa Thanh ngự kiếm hạ phàm bắt về Kháo Sơn Tông.",
+    "descriptionVi": "Cùng trường phái triết lý và đạo tâm với Xích Tâm Tuần Thiên: Thiếu niên mồ côi Trần Bình An đi đôi hài cỏ từ ngõ Nê Bình bước ra giang hồ. Mang theo lời dặn của Tề tiên sinh về đạo lý làm người lương thiện, hắn dùng một thanh kiếm chém rách trăng sao.",
     "targetVocabulary": [
       {
-        "word": "Imperial Examination",
-        "ipa": "/ɪmˈpɪəriəl ɪɡˌzæmɪˈneɪʃn/",
-        "meaningVi": "Khoa cử triều đình"
+        "word": "Straw Sandals",
+        "ipa": "/strɔː ˈsændlz/",
+        "meaningVi": "Đôi hài cỏ, giày rơm"
       },
       {
-        "word": "Scholar",
-        "ipa": "/ˈskɒlə/",
-        "meaningVi": "Thư sinh, nho sinh"
+        "word": "Scholar Gentleman",
+        "ipa": "/ˈskɒlə ˈdʒentlmən/",
+        "meaningVi": "Quân tử Nho gia (Tề Tĩnh Xuân)"
       },
       {
-        "word": "Flying Sword",
-        "ipa": "/ˈflaɪɪŋ sɔːd/",
-        "meaningVi": "Phi kiếm"
+        "word": "Grand Sword Dao",
+        "ipa": "/ɡrænd sɔːd daʊ/",
+        "meaningVi": "Đại Đạo Kiếm Tu"
       },
       {
-        "word": "Outer Disciple",
-        "ipa": "/ˈaʊtə dɪˈsaɪpl/",
-        "meaningVi": "Đệ tử ngoại môn"
+        "word": "Moral Baseline",
+        "ipa": "/ˈmɒrəl ˈbeɪslaɪn/",
+        "meaningVi": "Đạo đức ranh giới"
       },
       {
-        "word": "Cruel Rule",
-        "ipa": "/ˈkruːəl ruːl/",
-        "meaningVi": "Quy tắc tàn khốc"
+        "word": "Great World Spirit",
+        "ipa": "/ɡreɪt wɜːld ˈspɪrɪt/",
+        "meaningVi": "Hạo nhiên chính khí"
       }
     ],
     "paragraphs": [
       {
         "id": 1,
-        "textEn": "Mount Daqing was located in the northern territory of the State of Zhao. The mountain was not high, but it was famous for its perpetual misty clouds.",
-        "textVi": "Núi Đại Khánh nằm ở phía bắc Triệu Quốc. Ngọn núi này không quá cao, nhưng nổi tiếng bởi làn sương mù quanh năm bao phủ.",
+        "textEn": "In Muddy Alley of the small town in Lizhou Blessed Realm, fourteen-year-old orphan Chen Ping’an wore worn-out straw sandals as he carefully swept the stone courtyard.",
+        "textVi": "Tại ngõ Nê Bình của thị trấn nhỏ trong Ly Châu Động Thiên, thiếu niên mồ côi mười bốn tuổi Trần Bình An mang đôi hài cỏ đã mòn vẹt cẩn thận quét dọn sân đá.",
         "sentences": [
           {
             "id": 1,
-            "textEn": "Mount Daqing was located in the northern territory of the State of Zhao.",
-            "textVi": "Núi Đại Khánh nằm ở phía bắc Triệu Quốc."
+            "textEn": "In Muddy Alley of the small town in Lizhou Blessed Realm, fourteen-year-old orphan Chen Ping’an wore worn-out straw sandals as he carefully swept the stone courtyard.",
+            "textVi": "Tại ngõ Nê Bình của thị trấn nhỏ trong Ly Châu Động Thiên, thiếu niên mồ côi mười bốn tuổi Trần Bình An mang đôi hài cỏ đã mòn vẹt cẩn thận quét dọn sân đá."
           },
           {
             "id": 2,
-            "textEn": "The mountain was not high, but it was famous for its perpetual misty clouds.",
-            "textVi": "Ngọn núi này không quá cao, nhưng nổi tiếng bởi làn sương mù quanh năm bao phủ."
+            "textEn": "He had no noble ancestry, no immortal roots, and no divine relics. He only had a pure heart that never took what belonged to others.",
+            "textVi": "Cậu không có tổ tiên quyền quý, không có linh căn kinh người, cũng chẳng có bảo vật thần thánh. Cậu chỉ có một tấm lòng trong sạch chưa từng lấy không của ai thứ gì."
           }
         ]
       },
       {
         "id": 2,
-        "textEn": "At the mountain peak sat a young scholar in a faded green robe. His face was slightly pale, but his eyes shone with sharp intelligence.",
-        "textVi": "Tại đỉnh núi có một thiếu niên thư sinh mặc áo bào xanh đã bạc màu đang ngồi trầm ngâm. Khuôn mặt cậu hơi xanh xao, nhưng đôi mắt lại ánh lên vẻ thông minh sắc sảo.",
+        "textEn": "Before leaving the mortal town, Master Qi Jingchun gently patted the boy’s head and said: \"Ping’an, in this world, reasoning with people is often harder than drawing a sword. But as long as you keep your moral baseline, the heavens cannot look down on you.\"",
+        "textVi": "Trước khi rời thị trấn phàm trần, Tề tiên sinh ân cần xoa đầu cậu bé và dặn: \"Bình An, trên thế gian này, nói đạo lý với người đời thường khó hơn rút kiếm nhiều. Nhưng miễn là con giữ vững ranh giới làm người, trời xanh cũng không thể coi thường con.\"",
         "sentences": [
           {
             "id": 3,
-            "textEn": "At the mountain peak sat a young scholar in a faded green robe.",
-            "textVi": "Tại đỉnh núi có một thiếu niên thư sinh mặc áo bào xanh đã bạc màu đang ngồi trầm ngâm."
+            "textEn": "Before leaving the mortal town, Master Qi Jingchun gently patted the boy’s head.",
+            "textVi": "Trước khi rời thị trấn phàm trần, Tề tiên sinh ân cần xoa đầu cậu bé."
           },
           {
             "id": 4,
-            "textEn": "His face was slightly pale, but his eyes shone with sharp intelligence.",
-            "textVi": "Khuôn mặt cậu hơi xanh xao, nhưng đôi mắt lại ánh lên vẻ thông minh sắc sảo."
+            "textEn": "\"Ping’an, in this world, reasoning with people is often harder than drawing a sword. But as long as you keep your moral baseline, the heavens cannot look down on you.\"",
+            "textVi": "\"Bình An, trên thế gian này, nói đạo lý với người đời thường khó hơn rút kiếm nhiều. Nhưng miễn là con giữ vững ranh giới làm người, trời xanh cũng không thể coi thường con.\""
           }
         ]
       },
       {
         "id": 3,
-        "textEn": "His name was Meng Hao. For three consecutive years, he had traveled to the county capital to take the imperial examination, and three times he had returned with utter failure.",
-        "textVi": "Cậu tên là Mạnh Hạo. Ba năm liên tiếp, cậu lặn lội lên huyện thành ứng thí khoa cử, và cả ba lần đều ngậm ngùi nhận lấy thất bại thảm hại.",
+        "textEn": "Years later, carrying his sword on his back and walking through mountains and rivers, Chen Ping’an stood before immortal monarchs with that very same quiet resolve.",
+        "textVi": "Nhiều năm sau, vác trường kiếm trên lưng bước qua muôn trùng sông núi, Trần Bình An đứng trước mặt các bậc tiên nhân đế vương với chính sự kiên định trầm lặng thuở nào.",
         "sentences": [
           {
             "id": 5,
-            "textEn": "His name was Meng Hao.",
-            "textVi": "Cậu tên là Mạnh Hạo."
+            "textEn": "Years later, carrying his sword on his back and walking through mountains and rivers, Chen Ping’an stood before immortal monarchs with that very same quiet resolve.",
+            "textVi": "Nhiều năm sau, vác trường kiếm trên lưng bước qua muôn trùng sông núi, Trần Bình An đứng trước mặt các bậc tiên nhân đế vương với chính sự kiên định trầm lặng thuở nào."
           },
           {
             "id": 6,
-            "textEn": "For three consecutive years, he had traveled to the county capital to take the imperial examination, and three times he had returned with utter failure.",
-            "textVi": "Ba năm liên tiếp, cậu lặn lội lên huyện thành ứng thí khoa cử, và cả ba lần đều ngậm ngùi nhận lấy thất bại thảm hại."
-          }
-        ]
-      },
-      {
-        "id": 4,
-        "textEn": "\"Sages said that reading books ten thousand times brings wealth and nobility, yet here I am, owing eighty copper coins to the village landlord,\" Meng Hao sighed deeply.",
-        "textVi": "\"Thánh hiền dạy rằng đọc vạn cuốn sách tự khắc có phú quý hiển vinh, vậy mà ta lúc này lại đang nợ điền chủ trong làng tám mươi đồng tiền đồng,\" Mạnh Hạo thở dài thườn thượt.",
-        "sentences": [
-          {
-            "id": 7,
-            "textEn": "\"Sages said that reading books ten thousand times brings wealth and nobility, yet here I am, owing eighty copper coins to the village landlord,\" Meng Hao sighed deeply.",
-            "textVi": "\"Thánh hiền dạy rằng đọc vạn cuốn sách tự khắc có phú quý hiển vinh, vậy mà ta lúc này lại đang nợ điền chủ trong làng tám mươi đồng tiền đồng,\" Mạnh Hạo thở dài thườn thượt."
-          },
-          {
-            "id": 8,
-            "textEn": "Just as he stood up to gather his wild chestnuts, a cold wind howled across the cliff.",
-            "textVi": "Vừa lúc cậu đứng dậy định nhặt mấy hạt dẻ dại, một luồng gió lạnh bỗng gào thét thổi qua bờ vực."
-          }
-        ]
-      },
-      {
-        "id": 5,
-        "textEn": "In the distant sky, a gigantic green sword cut through the clouds. Standing upon the blade was a cold, beautiful woman dressed in silver Daoist armor.",
-        "textVi": "Trên bầu trời xa xăm, một thanh cự kiếm màu xanh lục xé toạc tầng mây bay tới. Đứng trên thân kiếm là một nữ tử tuyệt sắc với vẻ mặt lạnh băng trong bộ giáp đạo bào ánh bạc.",
-        "sentences": [
-          {
-            "id": 9,
-            "textEn": "In the distant sky, a gigantic green sword cut through the clouds.",
-            "textVi": "Trên bầu trời xa xăm, một thanh cự kiếm màu xanh lục xé toạc tầng mây bay tới."
-          },
-          {
-            "id": 10,
-            "textEn": "Standing upon the blade was a cold, beautiful woman dressed in silver Daoist armor.",
-            "textVi": "Đứng trên thân kiếm là một nữ tử tuyệt sắc với vẻ mặt lạnh băng trong bộ giáp đạo bào ánh bạc."
-          }
-        ]
-      },
-      {
-        "id": 6,
-        "textEn": "Before Meng Hao could even scream, an invisible hand grabbed his collar and pulled him into the sky alongside four other village youths.",
-        "textVi": "Trước khi Mạnh Hạo kịp la lên, một bàn tay vô hình đã túm lấy cổ áo cậu và nhấc bổng lên không trung cùng bốn thiếu niên khác trong làng.",
-        "sentences": [
-          {
-            "id": 11,
-            "textEn": "Before Meng Hao could even scream, an invisible hand grabbed his collar and pulled him into the sky alongside four other village youths.",
-            "textVi": "Trước khi Mạnh Hạo kịp la lên, một bàn tay vô hình đã túm lấy cổ áo cậu và nhấc bổng lên không trung cùng bốn thiếu niên khác trong làng."
-          },
-          {
-            "id": 12,
-            "textEn": "\"Be quiet,\" the cold woman said without turning back. \"You have been chosen to enter the Reliance Sect. Whether you live or die depends on your own fortune.\"",
-            "textVi": "\"Im lặng,\" nữ tử lạnh lùng nói mà không ngoái đầu lại. \"Các ngươi đã được chọn vào Kháo Sơn Tông. Sống hay chết phụ thuộc vào vận mệnh của chính các ngươi.\""
+            "textEn": "\"I, Chen Ping’an, have only one sword. It honors my teacher, and it protects the peace of the world.\"",
+            "textVi": "\"Ta, Trần Bình An, chỉ có một thanh kiếm. Nó để đền đáp ơn thầy, và để bảo vệ sự bình an của thế gian.\""
           }
         ]
       }
@@ -378,259 +281,315 @@ export const BILINGUAL_STORIES_DATA: BilingualStory[] = [
     "comprehensionQuiz": [
       {
         "id": "q1",
-        "question": "What debt was Meng Hao worrying about on Mount Daqing?",
+        "question": "Who was Chen Ping’an’s mentor who taught him the importance of moral reasoning and goodness?",
         "options": [
-          "Eighty copper coins to the village landlord",
-          "A thousand taels of gold to the county magistrate",
-          "Ten horses to a bandit chieftain",
-          "Five sacks of rice to his uncle"
+          "Master Qi Jingchun",
+          "Cui Chan",
+          "Ning Yao",
+          "Lao Long Cheng Lord"
         ],
         "correctIndex": 0,
-        "explanation": "Meng Hao was brooding over eighty copper coins he owed to the landlord."
+        "explanation": "Master Qi Jingchun (Tề Tĩnh Xuân) was the Confucian scholar who guided Chen Ping’an."
       }
     ]
   },
   {
-    "id": "story-lord-of-the-mysteries",
-    "slug": "lord-of-the-mysteries-chapter-1",
-    "titleEn": "Lord of the Mysteries: Chapter 1 - Crimson Moon & The Awakening in Backlund",
-    "titleVi": "Quỷ Bí Chi Chủ: Chương 1 - Ánh Trăng Đỏ Thẫm & Sự Thức Tỉnh Tại Backlund",
-    "author": "Ái Tiềm Thủy Đích Ô Tặc (Cuttlefish)",
-    "rating": 5,
-    "readsCount": "3.5M",
-    "coverImage": "https://images.unsplash.com/photo-1514539079130-25950c84af65?w=800&auto=format&fit=crop&q=80",
-    "category": "xianxia",
-    "level": "C1 - Nâng cao",
-    "estimatedMinutes": 12,
-    "wordCount": 1100,
-    "tags": [
-      "Quỷ Bí Chi Chủ",
-      "Klein Moretti",
-      "Trăng Đỏ Thẫm",
-      "Hơi Nước",
-      "Tuyệt Tác 5.0"
-    ],
-    "descriptionVi": "Cơn đau đầu buốt nhói xé toạc ý thức của Chu Minh Thụy. Hắn mở mắt ra và phát hiện mình đã xuyên không vào cơ thể chàng sinh viên lịch sử Klein Moretti tại căn phòng trọ thời Victoria mờ ảo.",
-    "targetVocabulary": [
-      {
-        "word": "Transmigration",
-        "ipa": "/ˌtrænzmaɪˈɡreɪʃn/",
-        "meaningVi": "Sự xuyên không, chuyển sinh"
-      },
-      {
-        "word": "Revolver",
-        "ipa": "/rɪˈvɒlvə/",
-        "meaningVi": "Súng lục ổ quay"
-      },
-      {
-        "word": "Crimson Moon",
-        "ipa": "/ˈkrɪmzn muːn/",
-        "meaningVi": "Mặt trăng đỏ thẫm"
-      },
-      {
-        "word": "Mystical Ritual",
-        "ipa": "/ˈmɪstɪkl ˈrɪtʃuəl/",
-        "meaningVi": "Nghi thức huyền bí"
-      },
-      {
-        "word": "Bullet Hole",
-        "ipa": "/ˈbʊlɪt həʊl/",
-        "meaningVi": "Vết đạn bắn"
-      }
-    ],
-    "paragraphs": [
-      {
-        "id": 1,
-        "textEn": "Pain. Excruciating, throbbing pain felt as though a steel chisel was violently drilling into the deepest core of his temples.",
-        "textVi": "Đau. Một cơn đau buốt nhói đến tột cùng như thể có một chiếc đục thép đang khoan thẳng vào sâu bên trong thái dương hắn.",
-        "sentences": [
-          {
-            "id": 1,
-            "textEn": "Pain. Excruciating, throbbing pain felt as though a steel chisel was violently drilling into the deepest core of his temples.",
-            "textVi": "Đau. Một cơn đau buốt nhói đến tột cùng như thể có một chiếc đục thép đang khoan thẳng vào sâu bên trong thái dương hắn."
-          },
-          {
-            "id": 2,
-            "textEn": "Zhou Mingrui struggled to regain consciousness, gasping for breath as he opened his heavy eyelids.",
-            "textVi": "Chu Minh Thụy chật vật giành lại ý thức, thở hổn hển mở to đôi mí mắt nặng trĩu."
-          }
-        ]
-      },
-      {
-        "id": 2,
-        "textEn": "The scenery before him was unfamiliar. It was not his cozy modern apartment, but a dimly lit Victorian-styled bedroom with rough wooden floorboards and faded wallpaper.",
-        "textVi": "Cảnh tượng trước mắt hoàn toàn xa lạ. Đó không phải căn hộ hiện đại quen thuộc của hắn, mà là một căn phòng ngủ phong cách thời Victoria mờ ảo với sàn gỗ thô ráp và giấy dán tường bạc màu.",
-        "sentences": [
-          {
-            "id": 3,
-            "textEn": "The scenery before him was unfamiliar.",
-            "textVi": "Cảnh tượng trước mắt hoàn toàn xa lạ."
-          },
-          {
-            "id": 4,
-            "textEn": "It was not his cozy modern apartment, but a dimly lit Victorian-styled bedroom with rough wooden floorboards and faded wallpaper.",
-            "textVi": "Đó không phải căn hộ hiện đại quen thuộc của hắn, mà là một căn phòng ngủ phong cách thời Victoria mờ ảo với sàn gỗ thô ráp và giấy dán tường bạc màu."
-          }
-        ]
-      },
-      {
-        "id": 3,
-        "textEn": "Through the dusty glass window, a giant crimson moon hung silently in the midnight sky, casting eerie, blood-like reflections across the room.",
-        "textVi": "Qua ô cửa kính bám bụi, một vầng trăng đỏ thẫm khổng lồ lặng lẽ treo lơ lửng giữa bầu trời đêm, tỏa ra những vệt sáng quái dị như màu máu khắp căn phòng.",
-        "sentences": [
-          {
-            "id": 5,
-            "textEn": "Through the dusty glass window, a giant crimson moon hung silently in the midnight sky, casting eerie, blood-like reflections across the room.",
-            "textVi": "Qua ô cửa kính bám bụi, một vầng trăng đỏ thẫm khổng lồ lặng lẽ treo lơ lửng giữa bầu trời đêm, tỏa ra những vệt sáng quái dị như màu máu khắp căn phòng."
-          },
-          {
-            "id": 6,
-            "textEn": "Beside the kerosene lamp on the wooden desk lay a brass cylinder revolver and an open notebook with bloodstains.",
-            "textVi": "Bên cạnh chiếc đèn dầu hỏa trên bàn gỗ là một khẩu súng lục ổ quay bằng đồng thau cùng cuốn sổ tay mở sẵn vương vệt máu."
-          }
-        ]
-      },
-      {
-        "id": 4,
-        "textEn": "Reaching his trembling fingers toward his right temple, he felt a ghastly, sticky bullet wound with dried cerebral fluid.",
-        "textVi": "Đưa những ngón tay run rẩy chạm vào thái dương bên phải, hắn rùng mình cảm nhận một vết thương do đạn bắn dính nhớp với chất dịch não đã khô lại.",
-        "sentences": [
-          {
-            "id": 7,
-            "textEn": "Reaching his trembling fingers toward his right temple, he felt a ghastly, sticky bullet wound with dried cerebral fluid.",
-            "textVi": "Đưa những ngón tay run rẩy chạm vào thái dương bên phải, hắn rùng mình cảm nhận một vết thương do đạn bắn dính nhớp với chất dịch não đã khô lại."
-          },
-          {
-            "id": 8,
-            "textEn": "Yet strangely, the mortal wound was regenerating at a speed visible to the naked eye.",
-            "textVi": "Thế nhưng kỳ lạ thay, vết thương chí mạng ấy đang tự lành lại với tốc độ mắt thường có thể nhìn thấy được."
-          }
-        ]
-      },
-      {
-        "id": 5,
-        "textEn": "Fragments of chaotic memories flooded his brain: \"Klein Moretti... University of Hoy student... The Kingdom of Loen... The divination ritual...\"",
-        "textVi": "Từng mảnh ký ức hỗn loạn ùa vào tâm trí hắn: \"Klein Moretti... sinh viên Đại học Hoy... Vương quốc Loen... Nghi thức bói toán ma thuật...\"",
-        "sentences": [
-          {
-            "id": 9,
-            "textEn": "Fragments of chaotic memories flooded his brain: \"Klein Moretti... University of Hoy student... The Kingdom of Loen... The divination ritual...\"",
-            "textVi": "Từng mảnh ký ức hỗn loạn ùa vào tâm trí hắn: \"Klein Moretti... sinh viên Đại học Hoy... Vương quốc Loen... Nghi thức bói toán ma thuật...\""
-          },
-          {
-            "id": 10,
-            "textEn": "Looking at the crimson moon above, Zhou Mingrui whispered in disbelief: \"I have transmigrated.\"",
-            "textVi": "Nhìn lên vầng trăng đỏ trên cao, Chu Minh Thụy thì thầm trong sự kinh ngạc: \"Mình đã xuyên không rồi.\""
-          }
-        ]
-      }
-    ],
-    "comprehensionQuiz": [
-      {
-        "id": "q1",
-        "question": "What weapon was lying on the desk when Klein Moretti woke up?",
-        "options": [
-          "A brass cylinder revolver",
-          "A hunting rifle",
-          "A silver dagger",
-          "A flying sword"
-        ],
-        "correctIndex": 0,
-        "explanation": "A brass revolver was lying beside the kerosene lamp on the wooden desk."
-      }
-    ]
-  },
-  {
-    "id": "story-coiling-dragon",
-    "slug": "coiling-dragon-chapter-1",
-    "titleEn": "Coiling Dragon: Chapter 1 - The Baruch Manor on Mount Wushan",
-    "titleVi": "Bàn Long: Chương 1 - Trang Viên Ô Sơn & Gia Tộc Long Huyết",
-    "author": "Ngã Cật Tây Hồng Thị (I Eat Tomatoes)",
+    "id": "story-dai-phung-da-canh-nhan",
+    "slug": "nightwatcher-of-great-feng",
+    "titleEn": "The Nightwatcher of Great Feng: Xu Qian and the Imperial Silver Tax Case",
+    "titleVi": "Đại Phụng Đả Canh Nhân: Hứa Thất An & Kỳ Án Thuế Bạc Triều Đình",
+    "author": "Mại Báo Tiểu Lang Quân",
     "rating": 4.9,
-    "readsCount": "3.1M",
+    "readsCount": "5.4M",
+    "coverImage": "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=800&auto=format&fit=crop&q=80",
+    "category": "xianxia",
+    "level": "B2 - Khá",
+    "estimatedMinutes": 12,
+    "wordCount": 1280,
+    "tags": [
+      "Đại Phụng Đả Canh Nhân",
+      "Hứa Thất An",
+      "Phá Án",
+      "Triều Đình",
+      "Tuyệt Phẩm"
+    ],
+    "descriptionVi": "Cốt truyện mưu lược triều đình gay cấn bậc nhất: Cảnh sát hình sự hiện đại xuyên không thành Hứa Thất An, lập tức bị tống vào đại lao vì vụ án mất trộm mười vạn lượng thuế bạc triều đình. Hắn dùng kiến thức hóa học và tài suy luận cứu sống cả gia tộc.",
+    "targetVocabulary": [
+      {
+        "word": "Imperial Tax Silver",
+        "ipa": "/ɪmˈpɪəriəl tæks ˈsɪlvə/",
+        "meaningVi": "Thuế bạc triều đình"
+      },
+      {
+        "word": "Nightwatcher",
+        "ipa": "/ˈnaɪtˌwɒtʃə/",
+        "meaningVi": "Đả Canh Nhân (Cơ quan mật vụ triều đình)"
+      },
+      {
+        "word": "Chemical Reaction",
+        "ipa": "/ˈkemɪkl riˈækʃn/",
+        "meaningVi": "Phản ứng hóa học (Kim loại Natri)"
+      },
+      {
+        "word": "Confucian Righteousness",
+        "ipa": "/kənˈfjuːʃn ˈraɪtʃəsnəs/",
+        "meaningVi": "Hạo nhiên chính khí Nho gia"
+      }
+    ],
+    "paragraphs": [
+      {
+        "id": 1,
+        "textEn": "Xu Qian woke up with a pounding headache on the cold, damp stone floor of the capital prison. Chains rattled around his ankles as he stared at the grim iron bars.",
+        "textVi": "Hứa Thất An tỉnh dậy với cơn đau đầu dữ dội trên nền đá lạnh lẽo, ẩm ướt của đại lao kinh thành. Xiềng xích va vào nhau lách cách nơi cổ chân khi hắn ngơ ngác nhìn song sắt nhà tù u ám.",
+        "sentences": [
+          {
+            "id": 1,
+            "textEn": "Xu Qian woke up with a pounding headache on the cold, damp stone floor of the capital prison.",
+            "textVi": "Hứa Thất An tỉnh dậy với cơn đau đầu dữ dội trên nền đá lạnh lẽo, ẩm ướt của đại lao kinh thành."
+          },
+          {
+            "id": 2,
+            "textEn": "Chains rattled around his ankles as he stared at the grim iron bars.",
+            "textVi": "Xiềng xích va vào nhau lách cách nơi cổ chân khi hắn ngơ ngác nhìn song sắt nhà tù u ám."
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "textEn": "His uncle, an Imperial City Guard commander, was framed for the disappearance of one hundred thousand taels of tax silver that vanished without a trace along the river transport.",
+        "textVi": "Người chú của hắn, một hiệu úy hộ vệ kinh thành, bị vu oan trong vụ biến mất bí ẩn của mười vạn lượng thuế bạc khi vận chuyển bằng đường sông.",
+        "sentences": [
+          {
+            "id": 3,
+            "textEn": "His uncle, an Imperial City Guard commander, was framed for the disappearance of one hundred thousand taels of tax silver.",
+            "textVi": "Người chú của hắn, một hiệu úy hộ vệ kinh thành, bị vu oan trong vụ biến mất bí ẩn của mười vạn lượng thuế bạc."
+          },
+          {
+            "id": 4,
+            "textEn": "In three days, if the case remained unsolved, his entire clan would be executed at the market square.",
+            "textVi": "Trong vòng ba ngày, nếu vụ án không được phá, toàn bộ gia tộc họ Hứa sẽ bị tru di chém đầu tại pháp trường."
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "textEn": "Drawing upon his modern forensic and chemistry expertise, Xu Qian examined the burnt silver transport chests. \"This is not Daoist sorcery,\" he whispered. \"It is pure sodium metal reacting with river water to create spontaneous combustion!\"",
+        "textVi": "Vận dụng kiến thức pháp y và hóa học hiện đại, Hứa Thất An xem xét kỹ những rương vận chuyển bạc bị cháy đen. \"Đây không phải yêu thuật đạo giáo,\" hắn lẩm bẩm. \"Đây chính là kim loại Natri phản ứng với nước sông tạo ra hiện tượng tự bốc cháy!\"",
+        "sentences": [
+          {
+            "id": 5,
+            "textEn": "Drawing upon his modern forensic and chemistry expertise, Xu Qian examined the burnt silver transport chests.",
+            "textVi": "Vận dụng kiến thức pháp y và hóa học hiện đại, Hứa Thất An xem xét kỹ những rương vận chuyển bạc bị cháy đen."
+          },
+          {
+            "id": 6,
+            "textEn": "\"This is not Daoist sorcery,\" he whispered. \"It is pure sodium metal reacting with river water to create spontaneous combustion!\"",
+            "textVi": "\"Đây không phải yêu thuật đạo giáo,\" hắn lẩm bẩm. \"Đây chính là kim loại Natri phản ứng với nước sông tạo ra hiện tượng tự bốc cháy!\""
+          }
+        ]
+      }
+    ],
+    "comprehensionQuiz": [
+      {
+        "id": "q1",
+        "question": "How did Xu Qian solve the mystery of the vanishing imperial tax silver?",
+        "options": [
+          "By discovering the trick of sodium metal reacting with water to fake spontaneous fire",
+          "By bribing the prison guards",
+          "By casting a Daoist divination spell",
+          "By finding a secret tunnel under the bank"
+        ],
+        "correctIndex": 0,
+        "explanation": "Xu Qian used chemical science (sodium reacting with water) to uncover the smugglers’ conspiracy."
+      }
+    ]
+  },
+  {
+    "id": "story-muc-than-ky",
+    "slug": "tales-of-herding-gods-qin-mu",
+    "titleEn": "Tales of Herding Gods: Qin Mu & The Nine Elders of Disabled Village",
+    "titleVi": "Mục Thần Ký: Tần Mục & Cửu Đại Lão Nhân Của Tàn Lão Thôn",
+    "author": "Trạch Trư (Zhaizhu)",
+    "rating": 4.9,
+    "readsCount": "4.7M",
     "coverImage": "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=800&auto=format&fit=crop&q=80",
     "category": "xianxia",
     "level": "B2 - Khá",
-    "estimatedMinutes": 10,
-    "wordCount": 950,
+    "estimatedMinutes": 12,
+    "wordCount": 1200,
     "tags": [
-      "Bàn Long",
-      "Linley",
-      "Gia Tộc Baruch",
-      "Long Huyết Chiến Sĩ"
+      "Mục Thần Ký",
+      "Tần Mục",
+      "Tàn Lão Thôn",
+      "Bá Thể",
+      "Cải Cách Thần Thông"
     ],
-    "descriptionVi": "Trang viên cổ kính của gia tộc Baruch tại thị trấn Ô Sơn. Cậu bé Linley tám tuổi chăm chỉ rèn luyện thể lực mỗi sáng sớm cùng ước mơ phục hưng gia tộc.",
+    "descriptionVi": "Cốt truyện khai phóng tư tưởng bậc nhất: Tần Mục được 9 vị tàn tật nuôi nấng trong Đại Khư hoang vu. Hắn bước ra đời với câu châm ngôn: \"Đập tan tượng thần trong miếu thì dễ, phá tan tượng thần trong lòng dân mới khó!\"",
     "targetVocabulary": [
       {
-        "word": "Ancestral Manor",
-        "ipa": "/ænˈsestrəl ˈmænə/",
-        "meaningVi": "Trang viên tổ tiên"
+        "word": "Overlord Body",
+        "ipa": "/ˈəʊvəlɔːd ˈbɒdi/",
+        "meaningVi": "Bá Thể (Thể chất vô địch)"
       },
       {
-        "word": "Morning Training",
-        "ipa": "/ˈmɔːnɪŋ ˈtreɪnɪŋ/",
-        "meaningVi": "Buổi rèn luyện buổi sáng"
+        "word": "Divine Miracle",
+        "ipa": "/dɪˈvaɪn ˈmɪrəkl/",
+        "meaningVi": "Thần thông kỳ tích"
       },
       {
-        "word": "Supreme Clan",
-        "ipa": "/suːˈpriːm klæn/",
-        "meaningVi": "Gia tộc tối cao"
+        "word": "Disabled Village",
+        "ipa": "/dɪsˈeɪbld ˈvɪlɪdʒ/",
+        "meaningVi": "Tàn Lão Thôn"
       },
       {
-        "word": "Draconic Lineage",
-        "ipa": "/drəˈkɒnɪk ˈlɪniɪdʒ/",
-        "meaningVi": "Huyết thống loài rồng"
+        "word": "Ideological Reform",
+        "ipa": "/ˌaɪdiəˈlɒdʒɪkl rɪˈfɔːm/",
+        "meaningVi": "Cải cách tư tưởng"
       }
     ],
     "paragraphs": [
       {
         "id": 1,
-        "textEn": "The town of Wushan was located in the southeastern region of the Holy Union on the Yulan Continent.",
-        "textVi": "Thị trấn Ô Sơn nằm ở khu vực phía đông nam của Thần Thánh Đồng Minh trên đại lục Ngọc Lan.",
+        "textEn": "In the mysterious Great Ruins where darkness brings unspeakable horrors, there stood a tiny hamlet called Disabled Village.",
+        "textVi": "Nơi Đại Khư huyền bí nơi màn đêm mang theo những nỗi kinh hoàng khôn xiết, có một ngôi làng nhỏ mang tên Tàn Lão Thôn.",
         "sentences": [
           {
             "id": 1,
-            "textEn": "The town of Wushan was located in the southeastern region of the Holy Union on the Yulan Continent.",
-            "textVi": "Thị trấn Ô Sơn nằm ở khu vực phía đông nam của Thần Thánh Đồng Minh trên đại lục Ngọc Lan."
+            "textEn": "In the mysterious Great Ruins where darkness brings unspeakable horrors, there stood a tiny hamlet called Disabled Village.",
+            "textVi": "Nơi Đại Khư huyền bí nơi màn đêm mang theo những nỗi kinh hoàng khôn xiết, có một ngôi làng nhỏ mang tên Tàn Lão Thôn."
           },
           {
             "id": 2,
-            "textEn": "At dawn, when the morning mist still clung to the mountain paths, loud shouts of exertion echoed from the training grounds.",
-            "textVi": "Vào lúc bình minh, khi làn sương sớm còn vương trên lối mòn sườn núi, những tiếng hô rèn luyện dõng dạc đã vang vọng khắp sân tập."
+            "textEn": "Nine elderly masters, each missing limbs, eyes, or voices, raised a baby boy they fished from the roaring river and named him Qin Mu.",
+            "textVi": "Chín vị lão nhân tàn tật, người cụt chân, người mù mắt, người câm điếc, đã cùng nhau nuôi nấng một đứa bé vớt từ dòng sông gầm thét và đặt tên là Tần Mục."
           }
         ]
       },
       {
         "id": 2,
-        "textEn": "Dozens of children were standing in precise horse-riding stances under the supervision of Instructor Hillman.",
-        "textVi": "Hàng chục đứa trẻ đang đứng tấn chuẩn xác dưới sự giám sát nghiêm khắc của huấn luyện viên Hillman.",
+        "textEn": "\"Mu’er,\" the crippled Village Chief said with a gentle smile, \"the world tells you that humans must worship gods. But remember: Gods are created by the people. Break the gods in their temples, and break the gods in human minds!\"",
+        "textVi": "\"Mục nhi,\" Trưởng thôn cụt chân mỉm cười hiền từ dặn dò, \"người đời bảo con phàm nhân phải thờ phụng thần linh. Nhưng con hãy nhớ: Thần linh cũng từ nhân dân mà ra. Đập tan thần trong miếu, và đập tan thần linh trong lòng con người!\"",
         "sentences": [
           {
             "id": 3,
-            "textEn": "Dozens of children were standing in precise horse-riding stances under the supervision of Instructor Hillman.",
-            "textVi": "Hàng chục đứa trẻ đang đứng tấn chuẩn xác dưới sự giám sát nghiêm khắc của huấn luyện viên Hillman."
+            "textEn": "\"Mu’er,\" the crippled Village Chief said with a gentle smile, \"the world tells you that humans must worship gods.\"",
+            "textVi": "\"Mục nhi,\" Trưởng thôn cụt chân mỉm cười hiền từ dặn dò, \"người đời bảo con phàm nhân phải thờ phụng thần linh.\""
           },
           {
             "id": 4,
-            "textEn": "Among them stood eight-year-old Linley Baruch, sweat dripping from his chin onto the stone pavement.",
-            "textVi": "Trong số đó có cậu bé tám tuổi Linley Baruch, từng giọt mồ hôi lăn dài từ cằm nhỏ giọt xuống mặt đá sân tập."
+            "textEn": "\"Break the gods in their temples, and break the gods in human minds!\"",
+            "textVi": "\"Đập tan thần trong miếu, và đập tan thần linh trong lòng con người!\""
+          }
+        ]
+      }
+    ],
+    "comprehensionQuiz": [
+      {
+        "id": "q1",
+        "question": "What revolutionary philosophy was taught to Qin Mu by the Village Chief?",
+        "options": [
+          "Gods are born from the people, and humans must break the false gods in their minds",
+          "Humans must sacrifice livestock to please heavenly deities",
+          "Only those born in royal palaces can become gods",
+          "Never leave Disabled Village"
+        ],
+        "correctIndex": 0,
+        "explanation": "Qin Mu was taught that people create gods and must liberate their minds from divine servitude."
+      }
+    ]
+  },
+  {
+    "id": "story-rmji-han-li",
+    "slug": "record-of-mortals-journey-doctor-mo",
+    "titleEn": "A Mortal's Journey to Immortality: The Deadly Game with Doctor Mo",
+    "titleVi": "Phàm Nhân Tu Tiên: Trận Chiến Sinh Tử Cân Não Với Mặc Đại Phu",
+    "author": "Vong Ngữ (Wang Yu)",
+    "rating": 4.95,
+    "readsCount": "4.2M",
+    "coverImage": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&auto=format&fit=crop&q=80",
+    "category": "xianxia",
+    "level": "B2 - Khá",
+    "estimatedMinutes": 14,
+    "wordCount": 1350,
+    "tags": [
+      "Phàm Nhân Tu Tiên",
+      "Hàn Lập",
+      "Mặc Đại Phu",
+      "Chưởng Thiên Bình",
+      "Đấu Trí Kinh Điển"
+    ],
+    "descriptionVi": "Cốt truyện kinh điển bậc nhất: Thiếu niên Hàn Lập phát hiện vị ân sư Mặc Đại Phu chữa bệnh cho mình thực chất đang âm thầm hạ độc Thất Diệp Tuyệt Hồn Đan để chuẩn bị Đoạt Xá linh hồn. Một cuộc đấu trí nghẹt thở diễn ra giữa sơn cốc.",
+    "targetVocabulary": [
+      {
+        "word": "Soul Possession",
+        "ipa": "/səʊl pəˈzeʃn/",
+        "meaningVi": "Đoạt xá (chiếm đoạt thể xác)"
+      },
+      {
+        "word": "Lethal Poison",
+        "ipa": "/ˈliːθl ˈpɔɪzn/",
+        "meaningVi": "Độc dược chí mạng"
+      },
+      {
+        "word": "Green Vial",
+        "ipa": "/ɡriːn ˈvaɪəl/",
+        "meaningVi": "Chưởng Thiên Bình (Lọ nhỏ màu xanh)"
+      },
+      {
+        "word": "Cultivation Technique",
+        "ipa": "/ˌkʌltɪˈveɪʃn tekˈniːk/",
+        "meaningVi": "Công pháp tu luyện (Trường Xuân Công)"
+      }
+    ],
+    "paragraphs": [
+      {
+        "id": 1,
+        "textEn": "Deep inside the secluded God Hand Valley of the Seven Mysteries Sect, night fell like a heavy velvet curtain. Inside the quiet herbal clinic, an oil lamp flickered with an eerie yellowish glow.",
+        "textVi": "Sâu bên trong Thần Thủ Cốc hẻo lánh của Thất Huyền Môn, màn đêm buông xuống như tấm màn nhung u tối. Trong gian phòng dược liệu tĩnh mịch, ngọn đèn dầu lay lắt tỏa ra thứ ánh sáng vàng vọt kỳ dị.",
+        "sentences": [
+          {
+            "id": 1,
+            "textEn": "Deep inside the secluded God Hand Valley of the Seven Mysteries Sect, night fell like a heavy velvet curtain.",
+            "textVi": "Sâu bên trong Thần Thủ Cốc hẻo lánh của Thất Huyền Môn, màn đêm buông xuống như tấm màn nhung u tối."
+          },
+          {
+            "id": 2,
+            "textEn": "Inside the quiet herbal clinic, an oil lamp flickered with an eerie yellowish glow.",
+            "textVi": "Trong gian phòng dược liệu tĩnh mịch, ngọn đèn dầu lay lắt tỏa ra thứ ánh sáng vàng vọt kỳ dị."
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "textEn": "Seventeen-year-old Han Li sat cross-legged on the wooden floor, his breathing slow and measured as he circulated the sixth layer of the Eternal Spring Technique.",
+        "textVi": "Thiếu niên mười bảy tuổi Hàn Lập ngồi xếp bằng trên sàn gỗ, hơi thở chậm rãi và đều đặn khi đang vận chuyển tầng thứ sáu của Trường Xuân Công.",
+        "sentences": [
+          {
+            "id": 3,
+            "textEn": "Seventeen-year-old Han Li sat cross-legged on the wooden floor, his breathing slow and measured as he circulated the sixth layer of the Eternal Spring Technique.",
+            "textVi": "Thiếu niên mười bảy tuổi Hàn Lập ngồi xếp bằng trên sàn gỗ, hơi thở chậm rãi và đều đặn khi đang vận chuyển tầng thứ sáu của Trường Xuân Công."
+          },
+          {
+            "id": 4,
+            "textEn": "Beneath his calm and unremarkable exterior lay a mind as sharp and vigilant as a seasoned beast stalking in the wilderness.",
+            "textVi": "Bên dưới vẻ ngoài bình dị không chút nổi bật là một tâm trí sắc sảo và cảnh giác như một dã thú lão luyện ẩn mình nơi hoang dã."
           }
         ]
       },
       {
         "id": 3,
-        "textEn": "Though his muscles burned with exhaustion, Linley did not move a single inch. His eyes held an unyielding firmness rare for a child his age.",
-        "textVi": "Dù các cơ bắp mỏi nhừ vì kiệt sức, Linley vẫn không hề lay chuyển nửa bước. Đôi mắt cậu toát lên sự kiên cường hiếm thấy ở một đứa trẻ cùng trang lứa.",
+        "textEn": "\"Doctor Mo, I discovered your secret herbs three years ago. The poison in that tea was replaced by spiritual spring water from my little vial long ago,\" Han Li said coldly.",
+        "textVi": "\"Mặc Đại Phu, ta đã phát hiện bí mật dược liệu của ông từ ba năm trước rồi. Độc dược trong chén trà đó từ lâu đã bị ta thay thế bằng linh tuyền từ chiếc bình nhỏ của ta rồi,\" Hàn Lập lạnh lùng đáp.",
         "sentences": [
           {
             "id": 5,
-            "textEn": "Though his muscles burned with exhaustion, Linley did not move a single inch.",
-            "textVi": "Dù các cơ bắp mỏi nhừ vì kiệt sức, Linley vẫn không hề lay chuyển nửa bước."
+            "textEn": "\"Doctor Mo, I discovered your secret herbs three years ago.\"",
+            "textVi": "\"Mặc Đại Phu, ta đã phát hiện bí mật dược liệu của ông từ ba năm trước rồi.\""
           },
           {
             "id": 6,
-            "textEn": "His eyes held an unyielding firmness rare for a child his age.",
-            "textVi": "Đôi mắt cậu toát lên sự kiên cường hiếm thấy ở một đứa trẻ cùng trang lứa."
+            "textEn": "\"The poison in that tea was replaced by spiritual spring water from my little vial long ago,\" Han Li said coldly.",
+            "textVi": "\"Độc dược trong chén trà đó từ lâu đã bị ta thay thế bằng linh tuyền từ chiếc bình nhỏ của ta rồi,\" Hàn Lập lạnh lùng đáp."
           }
         ]
       }
@@ -638,109 +597,15 @@ export const BILINGUAL_STORIES_DATA: BilingualStory[] = [
     "comprehensionQuiz": [
       {
         "id": "q1",
-        "question": "Who was supervising the morning training of the children in Wushan town?",
+        "question": "Why did Doctor Mo force Han Li to practice the Eternal Spring Technique?",
         "options": [
-          "Instructor Hillman",
-          "Doehring Cowart",
-          "Linley’s Father Hogg",
-          "Sovereign Beirut"
+          "To prepare Han Li’s body and soul for possession (Đoạt Xá)",
+          "To help Han Li become the sect leader",
+          "To cure Han Li’s childhood illness",
+          "To pass down his medical legacy peacefully"
         ],
         "correctIndex": 0,
-        "explanation": "Instructor Hillman was supervising the children during their morning warrior training."
-      }
-    ]
-  },
-  {
-    "id": "story-tech-linux",
-    "slug": "story-of-linux-full",
-    "titleEn": "The Penguin Revolution: The Complete History of Linus Torvalds & Linux",
-    "titleVi": "Cuộc Cách Mạng Chim Cánh Cụt: Ký Sự Hoàn Chỉnh Về Linus Torvalds & Linux",
-    "author": "VocabMaster Tech History",
-    "rating": 4.9,
-    "readsCount": "1.4M",
-    "coverImage": "https://images.unsplash.com/photo-1629654297299-c8506221ca97?w=800&auto=format&fit=crop&q=80",
-    "category": "tech",
-    "level": "B2 - Khá",
-    "estimatedMinutes": 10,
-    "wordCount": 1020,
-    "tags": [
-      "Linux",
-      "Linus Torvalds",
-      "Hệ Điều Hành",
-      "Mã Nguồn Mở",
-      "Ký Sự Công Nghệ"
-    ],
-    "descriptionVi": "Ký sự công nghệ hoàn chỉnh: Từ căn phòng ngủ nhỏ tại Helsinki năm 1991, bức thư lịch sử trên Usenet đến cuộc tranh luận bất hủ với Giáo sư Tanenbaum làm thay đổi ngành công nghiệp máy tính.",
-    "targetVocabulary": [
-      {
-        "word": "Monolithic Kernel",
-        "ipa": "/ˌmɒnəˈlɪθɪk ˈkɜːnl/",
-        "meaningVi": "Nhân nguyên khối (kiến trúc của Linux)"
-      },
-      {
-        "word": "Microkernel",
-        "ipa": "/ˈmaɪkrəʊˌkɜːnl/",
-        "meaningVi": "Nhân vi mô (kiến trúc của Minix)"
-      },
-      {
-        "word": "Usenet Newsgroup",
-        "ipa": "/ˈjuːznet ˈnjuːzɡruːp/",
-        "meaningVi": "Nhóm tin tức Usenet"
-      },
-      {
-        "word": "Hardware Driver",
-        "ipa": "/ˈhɑːdweə ˈdraɪvə/",
-        "meaningVi": "Trình điều khiển phần cứng"
-      }
-    ],
-    "paragraphs": [
-      {
-        "id": 1,
-        "textEn": "In the freezing winter of Helsinki in 1991, 21-year-old Linus Torvalds purchased his first clone PC equipped with an Intel 80386 processor and 4 megabytes of RAM.",
-        "textVi": "Vào mùa đông băng giá tại Helsinki năm 1991, chàng sinh viên 21 tuổi Linus Torvalds mua chiếc máy tính PC đầu tiên trang bị vi xử lý Intel 80386 cùng 4 MB bộ nhớ RAM.",
-        "sentences": [
-          {
-            "id": 1,
-            "textEn": "In the freezing winter of Helsinki in 1991, 21-year-old Linus Torvalds purchased his first clone PC equipped with an Intel 80386 processor and 4 megabytes of RAM.",
-            "textVi": "Vào mùa đông băng giá tại Helsinki năm 1991, chàng sinh viên 21 tuổi Linus Torvalds mua chiếc máy tính PC đầu tiên trang bị vi xử lý Intel 80386 cùng 4 MB bộ nhớ RAM."
-          },
-          {
-            "id": 2,
-            "textEn": "Eager to understand how the new 386 chip switched between task threads, he started writing assembly code to explore task switching.",
-            "textVi": "Háo hức muốn hiểu cách con chip 386 mới chuyển đổi giữa các luồng tác vụ, anh bắt đầu tự viết mã hợp ngữ assembly để thử nghiệm."
-          }
-        ]
-      },
-      {
-        "id": 2,
-        "textEn": "On August 25, 1991, Linus posted his humble message to comp.os.minix: \"Hello everybody out there using minix - I'm doing a (free) operating system (just a hobby, won't be big and professional like gnu) for 386(486) AT clones.\"",
-        "textVi": "Vào ngày 25 tháng 8 năm 1991, Linus đăng thông điệp khiêm tốn của mình lên diễn đàn comp.os.minix: \"Xin chào tất cả các bạn đang dùng minix - Tôi đang làm một hệ điều hành (miễn phí) (chỉ là sở thích thôi, sẽ không lớn và chuyên nghiệp như gnu) dành cho các máy tính 386(486) AT.\"",
-        "sentences": [
-          {
-            "id": 3,
-            "textEn": "On August 25, 1991, Linus posted his humble message to comp.os.minix: \"Hello everybody out there using minix - I'm doing a (free) operating system (just a hobby, won't be big and professional like gnu) for 386(486) AT clones.\"",
-            "textVi": "Vào ngày 25 tháng 8 năm 1991, Linus đăng thông điệp khiêm tốn của mình lên diễn đàn comp.os.minix: \"Xin chào tất cả các bạn đang dùng minix - Tôi đang làm một hệ điều hành (miễn phí) (chỉ là sở thích thôi, sẽ không lớn và chuyên nghiệp như gnu) dành cho các máy tính 386(486) AT.\""
-          },
-          {
-            "id": 4,
-            "textEn": "Little did he anticipate that this \"hobby\" project would unite thousands of hackers globally and power the future of global computing.",
-            "textVi": "Anh chẳng thể ngờ rằng dự án \"sở thích\" ấy lại quy tụ hàng ngàn lập trình viên trên toàn cầu và định hình tương lai của nền điện toán thế giới."
-          }
-        ]
-      }
-    ],
-    "comprehensionQuiz": [
-      {
-        "id": "q1",
-        "question": "What processor powered Linus Torvalds’ first personal PC?",
-        "options": [
-          "Intel 80386",
-          "Motorola 68000",
-          "ARM Cortex-M",
-          "Apple M1"
-        ],
-        "correctIndex": 0,
-        "explanation": "Linus purchased an Intel 80386 clone PC in 1991."
+        "explanation": "Doctor Mo secretly nurtured Han Li’s spiritual energy so he could perform Soul Possession."
       }
     ]
   }
