@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { Volume2, Image as ImageIcon, Sparkles } from 'lucide-react'
 import type { WordWithProgress } from '@/types'
 import { speakWord } from '@/utils/quiz'
-import { getWordImageUrl, ImageStyle } from '@/services/imageService'
+import { getWordImageUrl, getWordSvgFallback, ImageStyle } from '@/services/imageService'
 
 interface FlipCardProps {
   word: WordWithProgress
@@ -51,6 +51,10 @@ export const FlipCard = memo(function FlipCard({ word, isFlipped, onFlip }: Flip
                 src={imageUrl}
                 alt={word.term}
                 onLoad={() => setImgLoaded(true)}
+                onError={(e) => {
+                  e.currentTarget.src = getWordSvgFallback(word.term)
+                  setImgLoaded(true)
+                }}
                 className={
                   'w-full h-full object-cover transition-all duration-500 ' +
                   (imgLoaded ? 'scale-100 opacity-100' : 'scale-105 opacity-0 blur-sm')

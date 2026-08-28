@@ -8,7 +8,7 @@ import { ArrowLeft, RotateCcw, Volume2 } from 'lucide-react'
 import { Button } from '@/components/common/Button'
 import { useLearningStore } from '@/store/learningStore'
 import { speakWord } from '@/utils/quiz'
-import { getWordImageUrl } from '@/services/imageService'
+import { getWordImageUrl, getWordSvgFallback } from '@/services/imageService'
 import type { Quality } from '@/types'
 
 // ============================================
@@ -199,6 +199,9 @@ const FlashCard = memo(function FlashCard({ word, isFlipped, onFlip }: FlashCard
           <img
             src={imageUrl}
             alt={word.term}
+            onError={(e) => {
+              e.currentTarget.src = getWordSvgFallback(word.term)
+            }}
             className='w-full h-full object-cover transition-transform duration-500 hover:scale-105'
           />
         </div>

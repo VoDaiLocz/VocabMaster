@@ -11,7 +11,7 @@ import { Modal } from '@/components/common/Modal'
 import { useDeckStore } from '@/store/deckStore'
 import { useLearningStore } from '@/store/learningStore'
 import { speakWord } from '@/utils/quiz'
-import { getWordImageUrl } from '@/services/imageService'
+import { getWordImageUrl, getWordSvgFallback } from '@/services/imageService'
 import { WORD_STATUS } from '@/constants'
 import type { WordWithProgress, Deck } from '@/types'
 
@@ -258,7 +258,14 @@ const WordItem = memo(function WordItem({ word, onDelete }: WordItemProps) {
   return (
     <div className='bg-white dark:bg-gray-800 rounded-xl p-4 flex items-center gap-4 group hover:shadow-md transition-shadow'>
       <div className='w-12 h-12 rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-700 shrink-0 shadow-inner'>
-        <img src={imageUrl} alt={word.term} className='w-full h-full object-cover' />
+        <img
+          src={imageUrl}
+          alt={word.term}
+          onError={(e) => {
+            e.currentTarget.src = getWordSvgFallback(word.term)
+          }}
+          className='w-full h-full object-cover'
+        />
       </div>
       <button
         onClick={handleSpeak}

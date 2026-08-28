@@ -166,7 +166,23 @@ export function speakWord(text: string, rate: number = 0.95): void {
     }
   }
 
-  // 2. Check native Web SpeechSynthesis with proper synchronization
+  // 2. Direct Instant Stream for Android, iOS, Linux, and Electron (100% native audio stability)
+  const isDirectAudioPlatform =
+    typeof window !== 'undefined' &&
+    (!!(window as unknown as { electronAPI?: unknown }).electronAPI ||
+      !!(window as unknown as { Capacitor?: unknown }).Capacitor ||
+      navigator.userAgent.includes('Android') ||
+      navigator.userAgent.includes('iPhone') ||
+      navigator.userAgent.includes('iPad') ||
+      navigator.userAgent.includes('Electron') ||
+      navigator.platform.includes('Linux'))
+
+  if (isDirectAudioPlatform) {
+    playStreamAudio()
+    return
+  }
+
+  // 3. Check native Web SpeechSynthesis with proper synchronization on standard Web
   if ('speechSynthesis' in window && window.speechSynthesis) {
     try {
       const voices = window.speechSynthesis.getVoices()
@@ -174,8 +190,7 @@ export function speakWord(text: string, rate: number = 0.95): void {
         (v) => v.lang && (v.lang.startsWith('en') || v.lang.startsWith('en_')),
       )
 
-      // On Linux/Electron, if voices array is loaded but has no English voice, use stream directly
-      if (voices.length > 0 && !hasEnVoice) {
+      if (voices.length === 0 || !hasEnVoice) {
         playStreamAudio()
         return
       }
@@ -184,12 +199,10 @@ export function speakWord(text: string, rate: number = 0.95): void {
       utterance.lang = 'en-US'
       utterance.rate = Math.max(0.7, Math.min(1.5, rate))
 
-      if (hasEnVoice) {
-        const preferredVoice =
-          voices.find((v) => v.lang === 'en-US' || v.lang === 'en-GB') ||
-          voices.find((v) => v.lang.startsWith('en'))
-        if (preferredVoice) utterance.voice = preferredVoice
-      }
+      const preferredVoice =
+        voices.find((v) => v.lang === 'en-US' || v.lang === 'en-GB') ||
+        voices.find((v) => v.lang.startsWith('en'))
+      if (preferredVoice) utterance.voice = preferredVoice
 
       let hasStarted = false
       utterance.onstart = () => {
@@ -211,12 +224,12 @@ export function speakWord(text: string, rate: number = 0.95): void {
         }
       }
 
-      // Safe timeout fallback only if speech never started and synthesis is idle
+      // Fallback timeout only for standard web
       setTimeout(() => {
         if (currentSpeechToken === thisToken && !hasStarted && !window.speechSynthesis.speaking) {
           playStreamAudio()
         }
-      }, 600)
+      }, 500)
 
       window.speechSynthesis.speak(utterance)
       return
