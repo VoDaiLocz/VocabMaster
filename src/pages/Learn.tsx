@@ -8,6 +8,7 @@ import { ArrowLeft, RotateCcw, Volume2 } from 'lucide-react'
 import { Button } from '@/components/common/Button'
 import { useLearningStore } from '@/store/learningStore'
 import { speakWord } from '@/utils/quiz'
+import { getWordImageUrl } from '@/services/imageService'
 import type { Quality } from '@/types'
 
 // ============================================
@@ -171,6 +172,7 @@ interface FlashCardProps {
     phonetic: string | null
     definition: string
     example: string | null
+    image_url?: string | null
   }
   isFlipped: boolean
   onFlip: () => void
@@ -185,29 +187,50 @@ const FlashCard = memo(function FlashCard({ word, isFlipped, onFlip }: FlashCard
     [word.term],
   )
 
+  const imageUrl = getWordImageUrl(word.term, '3d', word.image_url)
+
   return (
-    <div className='w-full max-w-lg'>
+    <div className='w-full max-w-md mx-auto'>
       <div
         onClick={() => !isFlipped && onFlip()}
-        className='bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 min-h-[300px] flex flex-col items-center justify-center cursor-pointer hover:shadow-xl transition-shadow'
+        className='bg-white dark:bg-dark-card border border-gray-100 dark:border-gray-800 rounded-3xl shadow-xl p-6 min-h-[380px] flex flex-col items-center justify-center cursor-pointer hover:shadow-2xl transition-all'
       >
-        <h2 className='text-4xl font-bold text-gray-800 dark:text-white mb-2'>{word.term}</h2>
-        {word.phonetic && <p className='text-gray-500 text-lg mb-4'>{word.phonetic}</p>}
+        <div className='w-full h-40 mb-3 rounded-2xl overflow-hidden bg-gray-100 dark:bg-gray-800 shadow-inner'>
+          <img
+            src={imageUrl}
+            alt={word.term}
+            className='w-full h-full object-cover transition-transform duration-500 hover:scale-105'
+          />
+        </div>
+
+        <h2 className='text-3xl font-extrabold text-gray-900 dark:text-white mb-1'>{word.term}</h2>
+        {word.phonetic && (
+          <p className='text-gray-500 dark:text-gray-400 font-mono text-sm mb-3'>{word.phonetic}</p>
+        )}
         <button
           onClick={handleSpeak}
-          className='p-3 bg-primary-100 dark:bg-primary-900 rounded-full hover:bg-primary-200 transition-colors mb-4'
-          aria-label='Speak word'
+          className='p-3 bg-primary-100 dark:bg-primary-900/60 text-primary-600 dark:text-primary-400 rounded-full hover:bg-primary-500 hover:text-white transition-all shadow-sm mb-2'
+          aria-label='Phát âm'
+          title='Phát âm chuẩn'
         >
-          <Volume2 className='text-primary-500' size={24} />
+          <Volume2 size={20} />
         </button>
 
         {isFlipped ? (
-          <div className='text-center mt-4 border-t pt-4 w-full'>
-            <p className='text-xl text-gray-700 dark:text-gray-200 mb-2'>{word.definition}</p>
-            {word.example && <p className='text-gray-500 italic'>"{word.example}"</p>}
+          <div className='text-center mt-3 border-t border-gray-100 dark:border-gray-800 pt-3 w-full animate-in fade-in'>
+            <p className='text-xl font-bold text-gray-800 dark:text-white mb-1.5'>
+              {word.definition}
+            </p>
+            {word.example && (
+              <p className='text-xs text-gray-500 dark:text-gray-400 italic bg-gray-50 dark:bg-gray-800/40 p-2.5 rounded-xl'>
+                "{word.example}"
+              </p>
+            )}
           </div>
         ) : (
-          <p className='text-gray-400 text-sm mt-4'>Nhấn để xem nghĩa</p>
+          <p className='text-gray-400 dark:text-gray-500 text-xs font-medium mt-2'>
+            Chạm để xem nghĩa [Phím Space]
+          </p>
         )}
       </div>
     </div>
