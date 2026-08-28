@@ -1,5 +1,5 @@
 // ============================================
-// Ultra-Resilient YouTube Player (Watch Viewport Clean Injection)
+// Ultra-Resilient YouTube Player (Unified Embed Player)
 // ============================================
 
 import React, { useEffect, useRef, useState, useCallback } from 'react'
@@ -52,63 +52,6 @@ declare global {
   }
 }
 
-const CLEAN_PLAYER_CSS = `
-  #masthead-container,
-  #secondary,
-  #below,
-  #comments,
-  ytd-miniplayer,
-  #chat,
-  tp-yt-app-drawer,
-  #guide,
-  #ticker,
-  #voice-search-button,
-  .ytd-searchbox,
-  ytd-merch-shelf-renderer {
-    display: none !important;
-  }
-  #page-manager {
-    margin-top: 0 !important;
-    padding: 0 !important;
-  }
-  #primary, #primary-inner {
-    padding: 0 !important;
-    margin: 0 !important;
-    max-width: 100% !important;
-  }
-  #player-container-outer, #player-container-inner, #player-container {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    z-index: 999999 !important;
-    padding: 0 !important;
-    margin: 0 !important;
-  }
-  #player {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    z-index: 999999 !important;
-    padding: 0 !important;
-  }
-  #movie_player, .html5-video-player, video {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    object-fit: contain !important;
-  }
-  body, html, ytd-app {
-    overflow: hidden !important;
-    background: #000000 !important;
-  }
-`
-
 export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
   videoId,
   onTimeUpdate,
@@ -119,22 +62,12 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
   onToggleAutoPause,
   seekToTime,
 }) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const webviewRef = useRef<any>(null)
   const iframeRef = useRef<HTMLIFrameElement | null>(null)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const ytPlayerRef = useRef<any>(null)
   const [isPlaying, setIsPlaying] = useState(false)
   const [playbackRate, setPlaybackRate] = useState(1.0)
   const [isApiReady, setIsApiReady] = useState(false)
-
-  const isElectron =
-    typeof window !== 'undefined' &&
-    (navigator.userAgent.toLowerCase().includes('electron') ||
-      Boolean(
-        (window as unknown as { process?: { versions?: { electron?: string } } })
-          .process?.versions?.electron,
-      ))
 
   // Helper to send command directly via postMessage to iframe
   const postIframeCommand = useCallback((func: string, args: unknown[] = []) => {
@@ -154,42 +87,52 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
     }
   }, [])
 
-  // 1. Listen to YouTube postMessage events for real-time time & state synchronization
+  // 1. Listen to postMessage from YouTube iframe
   useEffect(() => {
-    if (isElectron) return
+    const handleMessage = (event: MessageEvent) => {
+      if (!event.data) return
 
-    const handleWindowMessage = (e: MessageEvent) => {
       try {
-        const data = typeof e.data === 'string' ? JSON.parse(e.data) : e.data
-        if (!data) return
+        let data = event.data
+        if (typeof data === 'string') {
+          data = JSON.parse(data)
+        }
 
         if (data.event === 'infoDelivery' && data.info) {
-          if (typeof data.info.currentTime === 'number' && !isNaN(data.info.currentTime)) {
+          if (typeof data.info.currentTime === 'number') {
             onTimeUpdate(data.info.currentTime)
           }
           if (typeof data.info.playerState === 'number') {
             setIsPlaying(data.info.playerState === 1)
           }
-        } else if (data.event === 'onStateChange') {
-          if (typeof data.info === 'number') {
-            setIsPlaying(data.info === 1)
+          if (typeof data.info.playbackRate === 'number') {
+            setPlaybackRate(data.info.playbackRate)
           }
-        } else if (data.event === 'onReady') {
+        }
+
+        if (data.event === 'onReady') {
           setIsApiReady(true)
+          postIframeCommand('listening')
+        }
+
+        if (data.event === 'onStateChange') {
+          if (data.info === 1) {
+            setIsPlaying(true)
+          } else if (data.info === 2 || data.info === 0) {
+            setIsPlaying(false)
+          }
         }
       } catch {
-        // Non-JSON message from other sources
+        // Not a JSON message from YT
       }
     }
 
-    window.addEventListener('message', handleWindowMessage)
-    return () => window.removeEventListener('message', handleWindowMessage)
-  }, [isElectron, onTimeUpdate])
+    window.addEventListener('message', handleMessage)
+    return () => window.removeEventListener('message', handleMessage)
+  }, [onTimeUpdate, postIframeCommand])
 
-  // 2. Load YouTube IFrame API script as enhancement
+  // 2. Load YouTube IFrame API script
   useEffect(() => {
-    if (isElectron) return
-
     if (window.YT && window.YT.Player) {
       setIsApiReady(true)
       return
@@ -218,12 +161,12 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
     }, 300)
 
     return () => clearInterval(checkInterval)
-  }, [isElectron])
+  }, [])
 
   // 3. Initialize / Bind YT.Player instance to existing iframe
-  const playerId = `yt-player-${videoId}`
+  const playerId = 'yt-player-' + videoId
   useEffect(() => {
-    if (isElectron || !isApiReady || !window.YT || !iframeRef.current) return
+    if (!isApiReady || !window.YT || !iframeRef.current) return
 
     if (ytPlayerRef.current?.destroy) {
       try {
@@ -264,176 +207,90 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
       }
       ytPlayerRef.current = null
     }
-  }, [isElectron, isApiReady, videoId, postIframeCommand])
+  }, [isApiReady, videoId, postIframeCommand])
 
-  // 4. Time Polling loop (Runs on both Android/Web and Electron Webview)
+  // 4. Time Polling loop
   useEffect(() => {
-    const interval = setInterval(async () => {
-      // Electron webview branch
-      if (isElectron && webviewRef.current?.executeJavaScript) {
+    const interval = setInterval(() => {
+      if (ytPlayerRef.current && typeof ytPlayerRef.current.getCurrentTime === 'function') {
         try {
-          const info = await webviewRef.current.executeJavaScript(`
-            (() => {
-              const v = document.querySelector('video');
-              return v ? { currentTime: v.currentTime, paused: v.paused, playbackRate: v.playbackRate } : null;
-            })()
-          `)
-          if (info && typeof info.currentTime === 'number') {
-            onTimeUpdate(info.currentTime)
-            setIsPlaying(!info.paused)
+          const currentTime = ytPlayerRef.current.getCurrentTime()
+          if (typeof currentTime === 'number' && !isNaN(currentTime)) {
+            onTimeUpdate(currentTime)
+          }
+          if (typeof ytPlayerRef.current.getPlayerState === 'function') {
+            const state = ytPlayerRef.current.getPlayerState()
+            setIsPlaying(state === 1)
           }
         } catch {
-          // Webview is loading
+          // Player initializing
         }
-        return
-      }
-
-      // Android & Web branch: poll via YT Player or request info
-      if (!isElectron) {
-        if (ytPlayerRef.current && typeof ytPlayerRef.current.getCurrentTime === 'function') {
-          try {
-            const currentTime = ytPlayerRef.current.getCurrentTime()
-            if (typeof currentTime === 'number' && !isNaN(currentTime)) {
-              onTimeUpdate(currentTime)
-            }
-            if (typeof ytPlayerRef.current.getPlayerState === 'function') {
-              const state = ytPlayerRef.current.getPlayerState()
-              setIsPlaying(state === 1)
-            }
-          } catch {
-            // Player initializing
-          }
-        } else {
-          // Ping iframe to deliver info
-          postIframeCommand('listening')
-        }
+      } else {
+        // Ping iframe to deliver info
+        postIframeCommand('listening')
       }
     }, 150)
 
     return () => clearInterval(interval)
-  }, [isElectron, onTimeUpdate, postIframeCommand])
+  }, [onTimeUpdate, postIframeCommand])
 
-  // 5. Electron CSS and Dom-ready injection
+  // 5. Seek To Time Handler
   useEffect(() => {
-    if (!isElectron || !webviewRef.current) return
-
-    const webview = webviewRef.current
-    const applyCleanView = () => {
-      try {
-        webview.insertCSS(CLEAN_PLAYER_CSS)
-        webview.executeJavaScript(`
-          (() => {
-            const v = document.querySelector('video');
-            if (v && v.paused) {
-              v.play().catch(() => {});
-            }
-          })()
-        `)
-      } catch {
-        // Silently ignore
-      }
-    }
-
-    webview.addEventListener('dom-ready', applyCleanView)
-    webview.addEventListener('did-finish-load', applyCleanView)
-
-    return () => {
-      webview.removeEventListener('dom-ready', applyCleanView)
-      webview.removeEventListener('did-finish-load', applyCleanView)
-    }
-  }, [isElectron, videoId])
-
-  // 6. Seek To Time Handler
-  useEffect(() => {
-    if (seekToTime !== null && seekToTime !== undefined) {
-      if (isElectron && webviewRef.current?.executeJavaScript) {
-        webviewRef.current.executeJavaScript(`
-          (() => {
-            const v = document.querySelector('video');
-            if (v) {
-              v.currentTime = ${seekToTime};
-              v.play().catch(() => {});
-            }
-          })()
-        `)
-      } else if (!isElectron) {
-        if (ytPlayerRef.current?.seekTo) {
-          try {
-            ytPlayerRef.current.seekTo(seekToTime, true)
-            ytPlayerRef.current.playVideo?.()
-          } catch {
-            postIframeCommand('seekTo', [seekToTime, true])
-            postIframeCommand('playVideo')
-          }
-        } else {
+    if (seekToTime !== null && seekToTime !== undefined && seekToTime >= 0) {
+      if (ytPlayerRef.current?.seekTo) {
+        try {
+          ytPlayerRef.current.seekTo(seekToTime, true)
+          ytPlayerRef.current.playVideo?.()
+        } catch {
           postIframeCommand('seekTo', [seekToTime, true])
           postIframeCommand('playVideo')
         }
+      } else {
+        postIframeCommand('seekTo', [seekToTime, true])
+        postIframeCommand('playVideo')
       }
       setIsPlaying(true)
     }
-  }, [seekToTime, isElectron, postIframeCommand])
+  }, [seekToTime, postIframeCommand])
 
-  // 7. Play / Pause Toggle
+  // 6. Play / Pause Toggle
   const togglePlay = useCallback(() => {
-    if (isElectron && webviewRef.current?.executeJavaScript) {
-      webviewRef.current.executeJavaScript(`
-        (() => {
-          const v = document.querySelector('video');
-          if (v) {
-            if (v.paused) { v.play().catch(() => {}); } else { v.pause(); }
-          }
-        })()
-      `)
-      setIsPlaying((prev) => !prev)
-    } else if (!isElectron) {
-      if (isPlaying) {
-        if (ytPlayerRef.current?.pauseVideo) {
-          ytPlayerRef.current.pauseVideo()
-        } else {
-          postIframeCommand('pauseVideo')
-        }
-        setIsPlaying(false)
+    if (isPlaying) {
+      if (ytPlayerRef.current?.pauseVideo) {
+        ytPlayerRef.current.pauseVideo()
       } else {
-        if (ytPlayerRef.current?.playVideo) {
-          ytPlayerRef.current.playVideo()
-        } else {
-          postIframeCommand('playVideo')
-        }
-        setIsPlaying(true)
+        postIframeCommand('pauseVideo')
       }
+      setIsPlaying(false)
+    } else {
+      if (ytPlayerRef.current?.playVideo) {
+        ytPlayerRef.current.playVideo()
+      } else {
+        postIframeCommand('playVideo')
+      }
+      setIsPlaying(true)
     }
-  }, [isElectron, isPlaying, postIframeCommand])
+  }, [isPlaying, postIframeCommand])
 
-  // 8. Change Speed Handler
+  // 7. Change Speed Handler
   const handleRateChange = (rate: number) => {
     setPlaybackRate(rate)
-    if (isElectron && webviewRef.current?.executeJavaScript) {
-      webviewRef.current.executeJavaScript(`
-        (() => {
-          const v = document.querySelector('video');
-          if (v) v.playbackRate = ${rate};
-        })()
-      `)
-    } else if (!isElectron) {
-      if (ytPlayerRef.current?.setPlaybackRate) {
-        try {
-          ytPlayerRef.current.setPlaybackRate(rate)
-        } catch {
-          postIframeCommand('setPlaybackRate', [rate])
-        }
-      } else {
+    if (ytPlayerRef.current?.setPlaybackRate) {
+      try {
+        ytPlayerRef.current.setPlaybackRate(rate)
+      } catch {
         postIframeCommand('setPlaybackRate', [rate])
       }
+    } else {
+      postIframeCommand('setPlaybackRate', [rate])
     }
   }
 
-  // 9. Keyboard Shortcuts
+  // 8. Keyboard Shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (['INPUT', 'TEXTAREA', 'SELECT'].includes((e.target as HTMLElement)?.tagName)) {
-        return
-      }
+      const target = e.target as HTMLElement
+      if (target && ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName)) return
 
       if (e.code === 'Space') {
         e.preventDefault()
@@ -454,32 +311,24 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [togglePlay, onPrevSentence, onNextSentence, onRepeatSentence])
 
-  const watchUrl = `https://www.youtube.com/watch?v=${videoId}`
-  const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}?enablejsapi=1&playsinline=1&rel=0&autoplay=0&iv_load_policy=3&fs=0`
+  const embedUrl =
+    'https://www.youtube.com/embed/' +
+    videoId +
+    '?enablejsapi=1&playsinline=1&rel=0&autoplay=0&iv_load_policy=3&fs=0'
 
   return (
     <div className='flex flex-col shrink-0 rounded-2xl overflow-hidden bg-black shadow-xl border border-gray-800 transition-all'>
       {/* Video Container (Aspect 16:9 on all screens) */}
       <div className='relative w-full aspect-video bg-black overflow-hidden flex items-center justify-center'>
-        {isElectron ? (
-          <webview
-            ref={webviewRef}
-            src={watchUrl}
-            className='w-full h-full border-0'
-            allowpopups='true'
-            webpreferences='allowRunningInsecureContent, nativeWindowOpen=true'
-          />
-        ) : (
-          <iframe
-            ref={iframeRef}
-            id={playerId}
-            src={embedUrl}
-            title='YouTube video player'
-            className='w-full h-full border-0 bg-black'
-            allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
-            allowFullScreen={false}
-          />
-        )}
+        <iframe
+          ref={iframeRef}
+          id={playerId}
+          src={embedUrl}
+          title='YouTube video player'
+          className='w-full h-full border-0 bg-black'
+          allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+          allowFullScreen={false}
+        />
       </div>
 
       {/* Mobile-First Learning Control Toolbar (Single row, never wraps) */}
@@ -511,8 +360,8 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
 
           <button
             onClick={onRepeatSentence}
-            className='p-2 sm:px-2.5 sm:py-2 rounded-xl bg-gray-800/90 active:bg-gray-700 hover:bg-gray-700 text-primary-400 transition-all flex items-center gap-1 text-xs active:scale-95 shadow-sm'
-            title='Lặp lại câu này (Phím R)'
+            className='p-2 sm:px-2.5 sm:py-2 rounded-xl bg-gray-800/90 active:bg-gray-700 hover:bg-gray-700 text-gray-200 transition-all flex items-center gap-1 text-xs active:scale-95 shadow-sm'
+            title='Lặp lại câu hiện tại (Phím R)'
             aria-label='Repeat Sentence'
           >
             <RotateCcw size={15} />
@@ -522,7 +371,7 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
           <button
             onClick={onNextSentence}
             className='p-2 sm:px-2.5 sm:py-2 rounded-xl bg-gray-800/90 active:bg-gray-700 hover:bg-gray-700 text-gray-200 transition-all flex items-center gap-1 text-xs active:scale-95 shadow-sm'
-            title='Câu sau (Phím D hoặc →)'
+            title='Câu tiếp theo (Phím D hoặc →)'
             aria-label='Next Sentence'
           >
             <span className='hidden sm:inline font-medium'>Câu sau [D]</span>
@@ -530,51 +379,50 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
           </button>
         </div>
 
-        {/* Speed Controls & Auto Pause */}
-        <div className='flex items-center gap-2 sm:gap-3'>
-          {/* Speed Selector */}
-          <div className='flex items-center gap-1 bg-gray-900/90 px-1.5 py-1 rounded-xl border border-gray-800 text-xs shadow-inner'>
-            <Gauge size={13} className='text-gray-400 ml-0.5' />
-            {[0.75, 1.0, 1.25].map((rate) => (
+        {/* Speed Controls & Auto-Pause */}
+        <div className='flex items-center gap-1.5 sm:gap-2'>
+          {/* Speed Pills */}
+          <div className='flex items-center bg-gray-900/90 border border-gray-800/90 rounded-xl p-0.5 shadow-inner'>
+            <Gauge size={13} className='text-gray-400 ml-1.5 mr-1 hidden sm:inline' />
+            {[0.75, 1.0, 1.25].map((speed) => (
               <button
-                key={rate}
-                onClick={() => handleRateChange(rate)}
-                className={`px-1.5 sm:px-2 py-0.5 rounded-lg text-[11px] sm:text-xs font-semibold transition-all ${
-                  playbackRate === rate
+                key={speed}
+                onClick={() => handleRateChange(speed)}
+                className={
+                  'px-1.5 sm:px-2 py-1 rounded-lg text-[11px] sm:text-xs font-semibold transition-all ' +
+                  (playbackRate === speed
                     ? 'bg-primary-600 text-white shadow-sm'
-                    : 'text-gray-400 hover:text-gray-200 active:bg-gray-800'
-                }`}
+                    : 'text-gray-400 hover:text-gray-200')
+                }
               >
-                {rate}x
+                {speed}x
               </button>
             ))}
           </div>
 
-          {/* Auto-pause toggle */}
+          {/* Auto-pause Toggle */}
           <button
             onClick={onToggleAutoPause}
-            className={`flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-xs font-medium border transition-all active:scale-95 ${
-              autoPause
-                ? 'bg-emerald-500/20 border-emerald-500/50 text-emerald-300 shadow-sm'
-                : 'bg-gray-900/90 border-gray-800 text-gray-400 hover:text-gray-200'
-            }`}
+            className={
+              'px-2 sm:px-2.5 py-1.5 rounded-xl border text-xs font-semibold flex items-center gap-1 transition-all active:scale-95 shadow-sm ' +
+              (autoPause
+                ? 'bg-emerald-500/20 border-emerald-500/60 text-emerald-400 shadow-emerald-500/10'
+                : 'bg-gray-900/90 border-gray-800/90 text-gray-400 hover:text-gray-200')
+            }
             title='Tự động dừng khi hết câu để đọc và nhại lại'
-            aria-label='Auto Pause Toggle'
           >
-            <Sparkles size={13} className={autoPause ? 'text-emerald-400' : 'text-gray-400'} />
-            <span className='text-[11px] sm:text-xs font-semibold'>
-              {autoPause ? 'Auto-pause' : 'Auto-pause'}
-            </span>
+            <Sparkles size={13} className={autoPause ? 'text-emerald-400 animate-pulse' : ''} />
+            <span className='hidden sm:inline'>Auto-pause</span>
+            <span className='sm:hidden'>Auto</span>
           </button>
 
-          {/* Direct Open Link fallback */}
+          {/* External YouTube Link */}
           <a
-            href={watchUrl}
+            href={'https://www.youtube.com/watch?v=' + videoId}
             target='_blank'
             rel='noopener noreferrer'
-            className='p-1.5 sm:p-2 rounded-xl bg-gray-900/90 hover:bg-gray-800 text-gray-400 hover:text-white transition-colors text-xs flex items-center gap-1 border border-gray-800'
-            title='Mở video trực tiếp trên YouTube'
-            aria-label='Open in YouTube'
+            className='p-2 rounded-xl bg-gray-900/90 border border-gray-800/90 text-gray-400 hover:text-gray-200 hover:bg-gray-800 transition-all'
+            title='Mở video trên YouTube'
           >
             <ExternalLink size={14} />
           </a>

@@ -1,5 +1,5 @@
 // ============================================
-// Bilingual Story & Novel Types
+// Bilingual Story & Multi-Chapter Novel Types
 // ============================================
 
 export interface StorySentence {
@@ -24,6 +24,19 @@ export interface StoryQuizQuestion {
   explanation: string
 }
 
+export interface StoryChapter {
+  id: number
+  chapterNumber: number
+  titleEn: string
+  titleVi: string
+  estimatedMinutes: number
+  wordCount: number
+  descriptionVi: string
+  targetVocabulary: { word: string; ipa: string; meaningVi: string }[]
+  paragraphs: StoryParagraph[]
+  comprehensionQuiz?: StoryQuizQuestion[]
+}
+
 export type StoryCategory = 'xianxia' | 'tech' | 'fables' | 'life'
 
 export interface BilingualStory {
@@ -32,16 +45,12 @@ export interface BilingualStory {
   titleEn: string
   titleVi: string
   author: string
-  rating: number // e.g. 4.9
-  readsCount: string // e.g. '1.2M'
+  rating: number
+  readsCount: string
   coverImage: string
   category: StoryCategory
   level: 'A1 - Sơ cấp' | 'A2 - Cơ bản' | 'B1 - Trung cấp' | 'B2 - Khá' | 'C1 - Nâng cao'
-  estimatedMinutes: number
-  wordCount: number
   descriptionVi: string
   tags: string[]
-  targetVocabulary: { word: string; ipa: string; meaningVi: string }[]
-  paragraphs: StoryParagraph[]
-  comprehensionQuiz?: StoryQuizQuestion[]
+  chapters: StoryChapter[]
 }

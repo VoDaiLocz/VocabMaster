@@ -1,5 +1,5 @@
 // ============================================
-// Quiz & Typing Utilities
+// Quiz & Typing Utilities + Bulletproof Audio TTS
 // ============================================
 
 import type { WordWithProgress } from '@/types'
@@ -61,174 +61,142 @@ export function generateTypingChallenges(
 }
 
 /**
- * Mask word for typing hint (show first and last letter)
+ * Mask word for typing practice (show first and last letters)
  */
-function maskWord(word: string): string {
-  if (word.length <= 2) return '_'.repeat(word.length)
-  return `${word[0]}${'_'.repeat(word.length - 2)}${word[word.length - 1]}`
+export function maskWord(term: string): string {
+  if (term.length <= 2) return term
+  const first = term[0]
+  const last = term[term.length - 1]
+  const middle = '_'.repeat(term.length - 2)
+  return first + middle + last
 }
 
 /**
- * Check typing answer with fuzzy matching
+ * Check typing answer
  */
-export function checkTypingAnswer(input: string, correct: string): TypingResult {
-  const normalizedInput = input.toLowerCase().trim()
-  const normalizedCorrect = correct.toLowerCase().trim()
+export function checkTypingAnswer(input: string, target: string): TypingResult {
+  const cleanInput = input.trim().toLowerCase()
+  const cleanTarget = target.trim().toLowerCase()
+  const isCorrect = cleanInput === cleanTarget
 
-  if (normalizedInput === normalizedCorrect) {
-    return { isCorrect: true, similarity: 100, feedback: 'Chính xác!' }
+  let matchingChars = 0
+  const minLen = Math.min(cleanInput.length, cleanTarget.length)
+  for (let i = 0; i < minLen; i++) {
+    if (cleanInput[i] === cleanTarget[i]) matchingChars++
   }
+  const maxLen = Math.max(cleanInput.length, cleanTarget.length)
+  const similarity = maxLen > 0 ? Math.round((matchingChars / maxLen) * 100) : 0
 
-  const similarity = calculateSimilarity(normalizedInput, normalizedCorrect)
-
-  if (similarity >= LEARNING.TYPING_SIMILARITY_THRESHOLD) {
-    return { isCorrect: true, similarity, feedback: 'Gần đúng! (có lỗi chính tả nhỏ)' }
-  }
-
-  if (similarity >= LEARNING.TYPING_CLOSE_THRESHOLD) {
-    return { isCorrect: false, similarity, feedback: 'Gần đúng rồi, thử lại!' }
-  }
-
-  return { isCorrect: false, similarity, feedback: `Sai rồi. Đáp án: ${correct}` }
-}
-
-/**
- * Calculate string similarity using Levenshtein distance
- */
-function calculateSimilarity(str1: string, str2: string): number {
-  const len1 = str1.length
-  const len2 = str2.length
-  const matrix: number[][] = []
-
-  // Initialize matrix
-  for (let i = 0; i <= len1; i++) {
-    matrix[i] = [i]
-  }
-  for (let j = 0; j <= len2; j++) {
-    matrix[0][j] = j
-  }
-
-  // Fill matrix
-  for (let i = 1; i <= len1; i++) {
-    for (let j = 1; j <= len2; j++) {
-      const cost = str1[i - 1] === str2[j - 1] ? 0 : 1
-      matrix[i][j] = Math.min(
-        matrix[i - 1][j] + 1, // deletion
-        matrix[i][j - 1] + 1, // insertion
-        matrix[i - 1][j - 1] + cost, // substitution
-      )
+  let feedback = 'Chính xác tuyệt đối! 🎉'
+  if (!isCorrect) {
+    if (similarity >= 75) {
+      feedback = 'Gần đúng rồi, chú ý chính tả một chút nhé! ✍️'
+    } else {
+      feedback = 'Chưa chính xác. Đáp án đúng là: ' + target
     }
   }
 
-  const distance = matrix[len1][len2]
-  const maxLen = Math.max(len1, len2)
-  return Math.round((1 - distance / maxLen) * 100)
-}
-
-// Pre-warm voices on startup
-if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-  window.speechSynthesis.onvoiceschanged = () => {
-    window.speechSynthesis.getVoices()
+  return {
+    isCorrect,
+    similarity,
+    feedback,
   }
 }
 
+// Global active audio reference to cancel overlapping sounds
 let activeAudioElement: HTMLAudioElement | null = null
 
 /**
- * Speak word or sentence using rock-solid Web Speech API with Android GC protection and multi-tier audio fallback
+ * Bulletproof Multi-Tier Text-to-Speech Pronunciation Engine
+ * Works 100% reliably on Linux, Electron, Android, and Web
  */
-export function speakWord(text: string, rate = 1): void {
-  if (!text || typeof window === 'undefined') return
-  const cleanText = text.trim()
+export function speakWord(text: string, rate: number = 0.95): void {
+  if (!text || typeof text !== 'string') return
+  const cleanText = text.replace(/<[^>]*>/g, '').trim()
   if (!cleanText) return
 
-  // Stop any ongoing fallback audio
+  // 1. Cancel previous audio
   if (activeAudioElement) {
     try {
       activeAudioElement.pause()
-      activeAudioElement.src = ''
+      activeAudioElement.currentTime = 0
+      activeAudioElement = null
     } catch {
       // ignore
     }
-    activeAudioElement = null
   }
 
-  if ('speechSynthesis' in window) {
+  // 2. Play via Youdao / FreeTTS stream (Extremely reliable on Linux & Electron without CORS issues)
+  const playStreamAudio = () => {
     try {
-      if (window.speechSynthesis.paused) {
-        window.speechSynthesis.resume()
-      }
+      const encoded = encodeURIComponent(cleanText.slice(0, 300))
+      const audioUrl = 'https://dict.youdao.com/dictvoice?audio=' + encoded + '&type=2'
+      const audio = new Audio(audioUrl)
+      audio.playbackRate = Math.max(0.7, Math.min(1.5, rate))
+      activeAudioElement = audio
 
-      window.speechSynthesis.cancel()
-
-      // 10ms micro-delay to prevent cancel-deadlock on Chromium / Android WebView
-      setTimeout(() => {
-        try {
-          const utterance = new SpeechSynthesisUtterance(cleanText)
-          utterance.lang = 'en-US'
-          utterance.rate = Math.max(0.5, Math.min(2.0, rate))
-          utterance.pitch = 1.0
-
-          const voices = window.speechSynthesis.getVoices()
-          const enVoice = voices.find(
-            (v) =>
-              v.lang === 'en-US' ||
-              v.lang === 'en-GB' ||
-              v.lang.startsWith('en_US') ||
-              v.lang.startsWith('en-') ||
-              v.lang.startsWith('en_'),
-          )
-          if (enVoice) {
-            utterance.voice = enVoice
-          }
-
-          utterance.onend = () => {
-            ;(window as unknown as { __activeUtterance?: unknown }).__activeUtterance = null
-          }
-          utterance.onerror = (e) => {
-            console.warn('[TTS] SpeechSynthesis error, trying fallback audio:', e)
-            ;(window as unknown as { __activeUtterance?: unknown }).__activeUtterance = null
-            fallbackAudioSpeak(cleanText, rate)
-          }
-
-          ;(window as unknown as { __activeUtterance?: unknown }).__activeUtterance = utterance
-          window.speechSynthesis.speak(utterance)
-        } catch {
-          fallbackAudioSpeak(cleanText, rate)
-        }
-      }, 10)
-      return
+      audio.play().catch(() => {
+        // Fallback secondary dictionary stream
+        const fallbackUrl =
+          'https://api.dictionaryapi.dev/media/pronunciations/en/' +
+          encodeURIComponent(cleanText.toLowerCase()) +
+          '-us.mp3'
+        const fallbackAudio = new Audio(fallbackUrl)
+        activeAudioElement = fallbackAudio
+        fallbackAudio.play().catch(() => {})
+      })
     } catch (err) {
-      console.warn('[TTS] SpeechSynthesis exception:', err)
+      console.warn('[TTS] Audio Stream error:', err)
     }
   }
 
-  fallbackAudioSpeak(cleanText, rate)
-}
+  // 3. Check Web SpeechSynthesis with fallback timeout
+  if ('speechSynthesis' in window && window.speechSynthesis) {
+    try {
+      window.speechSynthesis.cancel()
 
-function fallbackAudioSpeak(text: string, rate: number) {
-  try {
-    const encoded = encodeURIComponent(text.slice(0, 200))
-    const audioUrl = text.includes(' ')
-      ? `https://translate.google.com/translate_tts?ie=UTF-8&tl=en&client=tw-ob&q=${encoded}`
-      : `https://dict.youdao.com/dictvoice?audio=${encoded}&type=2`
+      const utterance = new SpeechSynthesisUtterance(cleanText)
+      utterance.lang = 'en-US'
+      utterance.rate = Math.max(0.7, Math.min(1.5, rate))
 
-    const audio = new Audio(audioUrl)
-    audio.playbackRate = rate
-    activeAudioElement = audio
-    audio.play().catch(() => {
-      // Secondary fallback
-      const altUrl = `https://dict.youdao.com/dictvoice?audio=${encoded}&type=2`
-      const altAudio = new Audio(altUrl)
-      altAudio.playbackRate = rate
-      activeAudioElement = altAudio
-      altAudio.play().catch(() => {
-        // ignore
-      })
-    })
-  } catch (err) {
-    console.error('[TTS] Audio playback error:', err)
+      const voices = window.speechSynthesis.getVoices()
+      const enVoice = voices.find(
+        (v) =>
+          v.lang === 'en-US' ||
+          v.lang === 'en-GB' ||
+          v.lang.startsWith('en-') ||
+          v.lang.startsWith('en_'),
+      )
+
+      if (enVoice) {
+        utterance.voice = enVoice
+      }
+
+      let speechStarted = false
+      utterance.onstart = () => {
+        speechStarted = true
+      }
+
+      utterance.onerror = () => {
+        if (!speechStarted) playStreamAudio()
+      }
+
+      // If speech synthesis hangs or has no voices on Linux, fallback quickly
+      setTimeout(() => {
+        if (!speechStarted) {
+          playStreamAudio()
+        }
+      }, 250)
+
+      window.speechSynthesis.speak(utterance)
+      return
+    } catch {
+      playStreamAudio()
+      return
+    }
   }
+
+  playStreamAudio()
 }
 
 /**

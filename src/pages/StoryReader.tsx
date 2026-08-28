@@ -1,11 +1,17 @@
 // ============================================
-// Interactive Bilingual Story Reader
+// Interactive Multi-Chapter Bilingual Story Reader
 // ============================================
 
 import React, { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { BILINGUAL_STORIES_DATA } from '@/data/stories'
-import { BilingualStory, StoryParagraph, StorySentence, StoryQuizQuestion } from '@/types/story'
+import {
+  BilingualStory,
+  StoryChapter,
+  StoryParagraph,
+  StorySentence,
+  StoryQuizQuestion,
+} from '@/types/story'
 import { speakWord } from '@/utils/quiz'
 import { lookupWord, WordLookupResult } from '@/services/dictionaryService'
 import { WordLookupPopover } from '@/components/video/WordLookupPopover'
@@ -17,16 +23,24 @@ import {
   Trophy,
   CheckCircle2,
   XCircle,
+  ChevronLeft,
+  ChevronRight,
+  BookOpen,
 } from 'lucide-react'
 
 type ReaderTheme = 'light' | 'sepia' | 'dark'
-type ReadingMode = 'tap_to_reveal' | 'side_by_side'
+type ReadingMode = 'tap_to_reveal' | 'interleaved'
 
 export const StoryReader: React.FC = () => {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
 
-  const story: BilingualStory | undefined = BILINGUAL_STORIES_DATA.find((s) => s.id === id)
+  const story: BilingualStory | undefined =
+    BILINGUAL_STORIES_DATA.find((s) => s.id === id) || BILINGUAL_STORIES_DATA[0]
+
+  // Chapter Navigation State
+  const [activeChapterIndex, setActiveChapterIndex] = useState<number>(0)
+  const currentChapter: StoryChapter = story.chapters[activeChapterIndex] || story.chapters[0]
 
   // Reader Settings
   const [theme, setTheme] = useState<ReaderTheme>('sepia')
@@ -43,24 +57,9 @@ export const StoryReader: React.FC = () => {
   const [quizSubmitted, setQuizSubmitted] = useState(false)
   const [earnedXp, setEarnedXp] = useState(0)
 
-  if (!story) {
-    return (
-      <div className='min-h-screen flex flex-col items-center justify-center p-4 bg-gray-50 dark:bg-dark-bg text-center'>
-        <p className='text-base font-bold text-gray-600 dark:text-gray-400'>
-          Không tìm thấy truyện yêu cầu.
-        </p>
-        <button
-          onClick={() => navigate('/stories')}
-          className='mt-4 px-6 py-2.5 rounded-2xl bg-emerald-600 text-white font-bold text-sm shadow-lg'
-        >
-          Quay lại Thư viện truyện
-        </button>
-      </div>
-    )
-  }
-
-  // Toggle reveal for a paragraph in tap-to-reveal mode
-  const handleToggleReveal = (pId: number) => {
+  // Toggle reveal for a specific paragraph
+  const handleToggleReveal = (pId: number, e?: React.MouseEvent) => {
+    if (e) e.stopPropagation()
     setRevealedParagraphs((prev) => ({
       ...prev,
       [pId]: !prev[pId],
@@ -68,7 +67,8 @@ export const StoryReader: React.FC = () => {
   }
 
   // Play audio for a sentence
-  const handleSpeakSentence = (sentence: StorySentence) => {
+  const handleSpeakSentence = (sentence: StorySentence, e?: React.MouseEvent) => {
+    if (e) e.stopPropagation()
     setActiveSentenceId(sentence.id)
     speakWord(sentence.textEn)
   }
@@ -78,6 +78,7 @@ export const StoryReader: React.FC = () => {
     e.stopPropagation()
     const cleanWord = word.replace(/[^a-zA-Z]/g, '').trim()
     if (cleanWord) {
+      speakWord(cleanWord)
       const data = await lookupWord(cleanWord)
       setSelectedWordData(data)
     }
@@ -90,9 +91,9 @@ export const StoryReader: React.FC = () => {
   }
 
   const handleSubmitQuiz = () => {
-    if (!story.comprehensionQuiz) return
+    if (!currentChapter.comprehensionQuiz) return
     let correctCount = 0
-    story.comprehensionQuiz.forEach((q: StoryQuizQuestion) => {
+    currentChapter.comprehensionQuiz.forEach((q: StoryQuizQuestion) => {
       if (quizAnswers[q.id] === q.correctIndex) {
         correctCount++
       }
@@ -101,58 +102,81 @@ export const StoryReader: React.FC = () => {
     setQuizSubmitted(true)
   }
 
+  const handleNextChapter = () => {
+    if (activeChapterIndex < story.chapters.length - 1) {
+      setActiveChapterIndex((prev) => prev + 1)
+      setRevealedParagraphs({})
+      setQuizAnswers({})
+      setQuizSubmitted(false)
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }
+
+  const handlePrevChapter = () => {
+    if (activeChapterIndex > 0) {
+      setActiveChapterIndex((prev) => prev - 1)
+      setRevealedParagraphs({})
+      setQuizAnswers({})
+      setQuizSubmitted(false)
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }
+
   return (
     <div
-      className={`min-h-screen transition-colors duration-300 pb-24 ${
-        theme === 'sepia'
-          ? 'bg-[#f4ebd0]'
-          : theme === 'dark'
-          ? 'bg-[#09090b]'
-          : 'bg-gray-100'
-      }`}
+      className={
+        'min-h-screen transition-colors duration-300 pb-24 ' +
+        (theme === 'sepia' ? 'bg-[#f4ebd0]' : theme === 'dark' ? 'bg-[#09090b]' : 'bg-gray-100')
+      }
     >
       {/* Reader Sticky Header */}
       <div
-        className={`sticky top-0 z-30 backdrop-blur-md border-b px-4 py-3 ${
-          theme === 'sepia'
+        className={
+          'sticky top-0 z-30 backdrop-blur-md border-b px-4 py-3 ' +
+          (theme === 'sepia'
             ? 'bg-[#fbf0d9]/90 border-[#e8d5b5] text-[#433422]'
             : theme === 'dark'
-            ? 'bg-[#18181b]/90 border-[#27272a] text-white'
-            : 'bg-white/90 border-gray-200 text-gray-900'
-        }`}
+              ? 'bg-[#18181b]/90 border-[#27272a] text-white'
+              : 'bg-white/90 border-gray-200 text-gray-900')
+        }
       >
-        <div className='max-w-4xl mx-auto flex items-center justify-between'>
+        <div className='max-w-4xl mx-auto flex items-center justify-between gap-2'>
           <button
             onClick={() => navigate('/stories')}
-            className='flex items-center gap-2 text-xs sm:text-sm font-bold opacity-80 hover:opacity-100 transition-opacity'
+            className='flex items-center gap-1.5 text-xs sm:text-sm font-bold opacity-80 hover:opacity-100 transition-opacity'
           >
             <ArrowLeft size={18} />
             <span className='hidden sm:inline'>Thư viện</span>
           </button>
 
-          {/* Reading Mode Selector */}
+          {/* 2 Explicit Reading Modes */}
           <div className='flex items-center gap-1 bg-black/5 dark:bg-white/5 p-1 rounded-xl'>
             <button
               onClick={() => setReadingMode('tap_to_reveal')}
-              className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${
-                readingMode === 'tap_to_reveal'
+              className={
+                'px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1 ' +
+                (readingMode === 'tap_to_reveal'
                   ? 'bg-emerald-600 text-white shadow-sm'
-                  : 'opacity-70 hover:opacity-100'
-              }`}
-              title='Chạm vào đoạn để mở bản dịch'
+                  : 'opacity-70 hover:opacity-100')
+              }
+              title='Chạm vào đoạn để mở bản dịch tiếng Việt'
             >
-              👁️ Chạm để dịch
+              <Eye size={13} />
+              <span>Chạm để dịch</span>
             </button>
+
             <button
-              onClick={() => setReadingMode('side_by_side')}
-              className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${
-                readingMode === 'side_by_side'
+              onClick={() => setReadingMode('interleaved')}
+              className={
+                'px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1 ' +
+                (readingMode === 'interleaved'
                   ? 'bg-emerald-600 text-white shadow-sm'
-                  : 'opacity-70 hover:opacity-100'
-              }`}
-              title='Song ngữ song song'
+                  : 'opacity-70 hover:opacity-100')
+              }
+              title='Hiển thị tiếng Anh & tiếng Việt đan xen'
             >
-              📖 Song ngữ
+              <BookOpen size={13} />
+              <span>Anh - Việt đan xen</span>
             </button>
           </div>
 
@@ -161,27 +185,33 @@ export const StoryReader: React.FC = () => {
             <div className='flex items-center gap-1'>
               <button
                 onClick={() => setTheme('light')}
-                className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold border ${
-                  theme === 'light' ? 'ring-2 ring-emerald-500' : ''
-                } bg-white text-gray-800 border-gray-300`}
+                className={
+                  'w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold border ' +
+                  (theme === 'light' ? 'ring-2 ring-emerald-500' : '') +
+                  ' bg-white text-gray-800 border-gray-300'
+                }
                 title='Nền Sáng'
               >
                 A
               </button>
               <button
                 onClick={() => setTheme('sepia')}
-                className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold border ${
-                  theme === 'sepia' ? 'ring-2 ring-emerald-500' : ''
-                } bg-[#fbf0d9] text-[#433422] border-[#e8d5b5]`}
+                className={
+                  'w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold border ' +
+                  (theme === 'sepia' ? 'ring-2 ring-emerald-500' : '') +
+                  ' bg-[#fbf0d9] text-[#433422] border-[#e8d5b5]'
+                }
                 title='Nền Giấy Cổ (Sepia)'
               >
                 A
               </button>
               <button
                 onClick={() => setTheme('dark')}
-                className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold border ${
-                  theme === 'dark' ? 'ring-2 ring-emerald-500' : ''
-                } bg-[#18181b] text-white border-gray-700`}
+                className={
+                  'w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold border ' +
+                  (theme === 'dark' ? 'ring-2 ring-emerald-500' : '') +
+                  ' bg-[#18181b] text-white border-gray-700'
+                }
                 title='Nền Đêm (Dark)'
               >
                 A
@@ -208,66 +238,104 @@ export const StoryReader: React.FC = () => {
       </div>
 
       {/* Main Reading Container */}
-      <div className='max-w-3xl mx-auto px-4 sm:px-6 pt-8 space-y-8'>
-        {/* Book Title Header */}
-        <div className='text-center space-y-3 pb-6 border-b border-black/10 dark:border-white/10'>
+      <div className='max-w-3xl mx-auto px-4 sm:px-6 pt-6 space-y-6'>
+        {/* Chapter Selection Bar */}
+        <div className='p-3 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-between gap-2 overflow-x-auto scrollbar-none'>
+          <div className='flex items-center gap-2'>
+            <span className='text-xs font-bold opacity-70 whitespace-nowrap'>📖 Chương:</span>
+            {story.chapters.map((ch, idx) => (
+              <button
+                key={ch.id}
+                onClick={() => {
+                  setActiveChapterIndex(idx)
+                  setRevealedParagraphs({})
+                  setQuizAnswers({})
+                  setQuizSubmitted(false)
+                }}
+                className={
+                  'px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all ' +
+                  (activeChapterIndex === idx
+                    ? 'bg-emerald-600 text-white shadow-md scale-105'
+                    : 'bg-white/60 dark:bg-black/40 opacity-70 hover:opacity-100')
+                }
+              >
+                Chương {ch.chapterNumber}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Book & Chapter Header */}
+        <div className='text-center space-y-2.5 pb-4 border-b border-black/10 dark:border-white/10'>
           <span className='px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20'>
-            {story.level} • {story.estimatedMinutes} phút đọc
+            {story.level} • {currentChapter.estimatedMinutes} phút đọc • {currentChapter.wordCount}{' '}
+            từ
           </span>
-          <h1 className='text-2xl sm:text-4xl font-extrabold font-serif tracking-tight'>
-            {story.titleEn}
+          <h1 className='text-2xl sm:text-3xl font-extrabold font-serif tracking-tight'>
+            {currentChapter.titleEn}
           </h1>
-          <p className='text-base sm:text-lg font-medium opacity-80'>
-            {story.titleVi}
-          </p>
+          <p className='text-base sm:text-lg font-medium opacity-80'>{currentChapter.titleVi}</p>
         </div>
 
         {/* Vocabulary Spotlight */}
         <div className='p-4 sm:p-5 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 space-y-2'>
           <div className='flex items-center gap-2 text-xs font-bold text-emerald-600 dark:text-emerald-400'>
-            <Sparkles size={16} /> Từ Vựng Then Chốt Trong Truyện:
+            <Sparkles size={16} /> Từ Vựng Then Chốt Trong Chương:
           </div>
           <div className='grid grid-cols-2 sm:grid-cols-3 gap-2.5 pt-1'>
-            {story.targetVocabulary.map((v: { word: string; ipa: string; meaningVi: string }) => (
-              <div
-                key={v.word}
-                onClick={(e) => handleWordClick(v.word, e)}
-                className='p-2 rounded-xl bg-white/60 dark:bg-black/40 border border-black/5 dark:border-white/10 hover:border-emerald-400 cursor-pointer transition-all'
-              >
-                <div className='flex items-center justify-between'>
-                  <span className='text-xs font-bold text-emerald-700 dark:text-emerald-300'>
-                    {v.word}
-                  </span>
-                  <Volume2 size={12} className='opacity-60' />
+            {currentChapter.targetVocabulary.map(
+              (v: { word: string; ipa: string; meaningVi: string }) => (
+                <div
+                  key={v.word}
+                  onClick={(e) => handleWordClick(v.word, e)}
+                  className='p-2 rounded-xl bg-white/60 dark:bg-black/40 border border-black/5 dark:border-white/10 hover:border-emerald-400 cursor-pointer transition-all'
+                >
+                  <div className='flex items-center justify-between'>
+                    <span className='text-xs font-bold text-emerald-700 dark:text-emerald-300'>
+                      {v.word}
+                    </span>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        speakWord(v.word)
+                      }}
+                      className='p-1 hover:text-emerald-500'
+                      title='Phát âm từ vựng'
+                    >
+                      <Volume2 size={13} className='opacity-75' />
+                    </button>
+                  </div>
+                  <p className='text-[10px] opacity-60 font-mono'>{v.ipa}</p>
+                  <p className='text-[11px] font-medium line-clamp-1 mt-0.5'>{v.meaningVi}</p>
                 </div>
-                <p className='text-[10px] opacity-60 font-mono'>{v.ipa}</p>
-                <p className='text-[11px] font-medium line-clamp-1 mt-0.5'>{v.meaningVi}</p>
-              </div>
-            ))}
+              ),
+            )}
           </div>
         </div>
 
         {/* Story Paragraphs */}
         <div className='space-y-6 font-serif leading-relaxed'>
-          {story.paragraphs.map((p: StoryParagraph) => {
-            const isRevealed = readingMode === 'side_by_side' || !!revealedParagraphs[p.id]
+          {currentChapter.paragraphs.map((p: StoryParagraph) => {
+            const isRevealed = readingMode === 'interleaved' || !!revealedParagraphs[p.id]
 
             return (
               <div
                 key={p.id}
                 onClick={() => readingMode === 'tap_to_reveal' && handleToggleReveal(p.id)}
-                className={`p-5 sm:p-6 rounded-3xl transition-all ${
-                  theme === 'sepia'
+                className={
+                  'p-5 sm:p-6 rounded-3xl transition-all ' +
+                  (theme === 'sepia'
                     ? 'bg-[#fbf0d9] shadow-sm'
                     : theme === 'dark'
-                    ? 'bg-[#18181b] shadow-sm'
-                    : 'bg-white shadow-sm'
-                } ${readingMode === 'tap_to_reveal' ? 'cursor-pointer hover:shadow-md' : ''}`}
+                      ? 'bg-[#18181b] shadow-sm'
+                      : 'bg-white shadow-sm') +
+                  (readingMode === 'tap_to_reveal' ? ' cursor-pointer hover:shadow-md' : '')
+                }
               >
-                {/* English Content with Interactive Words */}
+                {/* English Content with Interactive Words and Pronunciation Buttons */}
                 <div
-                  style={{ fontSize: `${fontSize}px`, lineHeight: '1.8' }}
-                  className='space-y-2'
+                  style={{ fontSize: fontSize + 'px', lineHeight: '1.85' }}
+                  className='space-y-2 text-justify'
                 >
                   {p.sentences.map((sent: StorySentence) => {
                     const isSentenceActive = activeSentenceId === sent.id
@@ -276,11 +344,10 @@ export const StoryReader: React.FC = () => {
                     return (
                       <span
                         key={sent.id}
-                        className={`inline transition-colors rounded px-1 py-0.5 ${
-                          isSentenceActive
-                            ? 'bg-amber-300/40 dark:bg-amber-500/30'
-                            : ''
-                        }`}
+                        className={
+                          'inline transition-colors rounded px-1 py-0.5 ' +
+                          (isSentenceActive ? 'bg-amber-300/40 dark:bg-amber-500/30' : '')
+                        }
                       >
                         {words.map((w: string, idx: number) => (
                           <span
@@ -292,28 +359,31 @@ export const StoryReader: React.FC = () => {
                           </span>
                         ))}
                         <button
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            handleSpeakSentence(sent)
-                          }}
-                          className='inline-flex items-center opacity-40 hover:opacity-100 hover:text-emerald-600 transition-all ml-1 align-middle'
-                          title='Phát âm câu này'
+                          onClick={(e) => handleSpeakSentence(sent, e)}
+                          className='inline-flex items-center justify-center w-5 h-5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-600 hover:text-white transition-all ml-1 align-middle'
+                          title='Phát âm toàn câu này'
                         >
-                          <Volume2 size={14} />
+                          <Volume2 size={11} />
                         </button>{' '}
                       </span>
                     )
                   })}
                 </div>
 
-                {/* Vietnamese Translation Accordion / Box */}
+                {/* Vietnamese Translation Accordion / Interleaved Box */}
                 {isRevealed ? (
-                  <div className='mt-4 pt-4 border-t border-black/10 dark:border-white/10 text-sm font-sans opacity-85 leading-relaxed text-emerald-900 dark:text-emerald-200 bg-emerald-500/5 p-3 rounded-2xl'>
+                  <div className='mt-4 pt-3.5 border-t border-black/10 dark:border-white/10 text-sm font-sans opacity-90 leading-relaxed text-emerald-950 dark:text-emerald-200 bg-emerald-500/10 p-3.5 rounded-2xl'>
+                    <div className='text-[11px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 mb-1'>
+                      🇻🇳 Bản dịch tiếng Việt:
+                    </div>
                     {p.textVi}
                   </div>
                 ) : (
-                  <div className='mt-3 flex items-center gap-1.5 text-xs font-sans font-semibold text-emerald-600 dark:text-emerald-400 opacity-60 hover:opacity-100 transition-opacity'>
-                    <Eye size={14} /> Chạm để xem bản dịch tiếng Việt
+                  <div
+                    onClick={(e) => handleToggleReveal(p.id, e)}
+                    className='mt-3 flex items-center gap-1.5 text-xs font-sans font-semibold text-emerald-600 dark:text-emerald-400 opacity-70 hover:opacity-100 transition-opacity cursor-pointer'
+                  >
+                    <Eye size={14} /> Chạm để xem bản dịch tiếng Việt của đoạn này
                   </div>
                 )}
               </div>
@@ -321,8 +391,41 @@ export const StoryReader: React.FC = () => {
           })}
         </div>
 
+        {/* Chapter Navigation Buttons */}
+        <div className='flex items-center justify-between gap-4 pt-4'>
+          <button
+            onClick={handlePrevChapter}
+            disabled={activeChapterIndex === 0}
+            className={
+              'flex items-center gap-2 px-5 py-3 rounded-2xl font-bold text-xs sm:text-sm transition-all ' +
+              (activeChapterIndex === 0
+                ? 'opacity-40 cursor-not-allowed bg-black/5 dark:bg-white/5'
+                : 'bg-white dark:bg-dark-card border border-gray-200 dark:border-gray-800 shadow-md hover:bg-emerald-50 dark:hover:bg-emerald-950/30')
+            }
+          >
+            <ChevronLeft size={16} /> Chương trước
+          </button>
+
+          <span className='text-xs font-bold opacity-60'>
+            Chương {currentChapter.chapterNumber} / {story.chapters.length}
+          </span>
+
+          <button
+            onClick={handleNextChapter}
+            disabled={activeChapterIndex === story.chapters.length - 1}
+            className={
+              'flex items-center gap-2 px-5 py-3 rounded-2xl font-bold text-xs sm:text-sm transition-all ' +
+              (activeChapterIndex === story.chapters.length - 1
+                ? 'opacity-40 cursor-not-allowed bg-black/5 dark:bg-white/5'
+                : 'bg-emerald-600 text-white shadow-lg shadow-emerald-500/25 hover:bg-emerald-500')
+            }
+          >
+            Chương tiếp theo <ChevronRight size={16} />
+          </button>
+        </div>
+
         {/* Comprehension Quiz Section */}
-        {story.comprehensionQuiz && story.comprehensionQuiz.length > 0 && (
+        {currentChapter.comprehensionQuiz && currentChapter.comprehensionQuiz.length > 0 && (
           <div className='p-6 sm:p-8 rounded-3xl bg-white dark:bg-dark-card border border-gray-200 dark:border-gray-800 shadow-xl space-y-6'>
             <div className='flex items-center gap-3'>
               <div className='w-10 h-10 rounded-2xl bg-amber-100 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 flex items-center justify-center'>
@@ -330,16 +433,16 @@ export const StoryReader: React.FC = () => {
               </div>
               <div>
                 <h3 className='text-lg font-bold font-display text-gray-900 dark:text-white'>
-                  Mini-Quiz Đọc Hiểu Cốt Truyện
+                  Mini-Quiz Đọc Hiểu Cốt Truyện Chương {currentChapter.chapterNumber}
                 </h3>
                 <p className='text-xs text-gray-500 dark:text-gray-400'>
-                  Trả lời đúng các câu hỏi để kiểm tra khả năng đọc hiểu và nhận +{earnedXp || 75} XP
+                  Trả lời câu hỏi trắc nghiệm để nhận +{earnedXp || 75} XP
                 </p>
               </div>
             </div>
 
             <div className='space-y-6'>
-              {story.comprehensionQuiz.map((q: StoryQuizQuestion, qIdx: number) => (
+              {currentChapter.comprehensionQuiz.map((q: StoryQuizQuestion, qIdx: number) => (
                 <div key={q.id} className='space-y-3'>
                   <p className='text-sm sm:text-base font-bold text-gray-800 dark:text-gray-200'>
                     Câu {qIdx + 1}: {q.question}
@@ -351,10 +454,15 @@ export const StoryReader: React.FC = () => {
                       const isCorrect = optIdx === q.correctIndex
                       const showResult = quizSubmitted
 
-                      let btnStyle = 'bg-gray-50 dark:bg-gray-800/40 border-gray-200 dark:border-gray-800 text-gray-700 dark:text-gray-300'
+                      let btnStyle =
+                        'bg-gray-50 dark:bg-gray-800/40 border-gray-200 dark:border-gray-800 text-gray-700 dark:text-gray-300'
                       if (showResult) {
-                        if (isCorrect) btnStyle = 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-500 text-emerald-700 dark:text-emerald-300'
-                        else if (isSelected && !isCorrect) btnStyle = 'bg-rose-50 dark:bg-rose-950/40 border-rose-500 text-rose-700 dark:text-rose-300'
+                        if (isCorrect)
+                          btnStyle =
+                            'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-500 text-emerald-700 dark:text-emerald-300'
+                        else if (isSelected && !isCorrect)
+                          btnStyle =
+                            'bg-rose-50 dark:bg-rose-950/40 border-rose-500 text-rose-700 dark:text-rose-300'
                       } else if (isSelected) {
                         btnStyle = 'bg-emerald-600 text-white border-emerald-600 shadow-md'
                       }
@@ -364,11 +472,18 @@ export const StoryReader: React.FC = () => {
                           key={optIdx}
                           disabled={quizSubmitted}
                           onClick={() => handleAnswerQuiz(q.id, optIdx)}
-                          className={`p-3.5 rounded-2xl text-left text-xs sm:text-sm font-medium border transition-all flex items-center justify-between ${btnStyle}`}
+                          className={
+                            'p-3.5 rounded-2xl text-left text-xs sm:text-sm font-medium border transition-all flex items-center justify-between ' +
+                            btnStyle
+                          }
                         >
                           <span>{opt}</span>
-                          {showResult && isCorrect && <CheckCircle2 size={16} className='text-emerald-500 shrink-0' />}
-                          {showResult && isSelected && !isCorrect && <XCircle size={16} className='text-rose-500 shrink-0' />}
+                          {showResult && isCorrect && (
+                            <CheckCircle2 size={16} className='text-emerald-500 shrink-0' />
+                          )}
+                          {showResult && isSelected && !isCorrect && (
+                            <XCircle size={16} className='text-rose-500 shrink-0' />
+                          )}
                         </button>
                       )
                     })}
@@ -393,17 +508,11 @@ export const StoryReader: React.FC = () => {
             ) : (
               <div className='p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-center space-y-2'>
                 <p className='text-base font-bold text-emerald-600 dark:text-emerald-400'>
-                  🎉 Chúc Mừng Bạn Đã Hoàn Thành Truyện!
+                  🎉 Chúc Mừng Bạn Đã Hoàn Thành Chương Này!
                 </p>
                 <p className='text-xs text-gray-500 dark:text-gray-400'>
-                  Bạn đã xuất sắc nhận được +{earnedXp} XP. Hãy tiếp tục khám phá các truyện khác!
+                  Bạn đã xuất sắc nhận được +{earnedXp} XP.
                 </p>
-                <button
-                  onClick={() => navigate('/stories')}
-                  className='mt-2 px-6 py-2.5 rounded-2xl bg-emerald-600 text-white font-bold text-xs shadow-md'
-                >
-                  Khám phá truyện tiếp theo
-                </button>
               </div>
             )}
           </div>
@@ -412,10 +521,7 @@ export const StoryReader: React.FC = () => {
 
       {/* Word Lookup Popover */}
       {selectedWordData && (
-        <WordLookupPopover
-          wordData={selectedWordData}
-          onClose={() => setSelectedWordData(null)}
-        />
+        <WordLookupPopover wordData={selectedWordData} onClose={() => setSelectedWordData(null)} />
       )}
     </div>
   )

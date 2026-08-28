@@ -226,7 +226,14 @@ const TodayProgressCard = memo(function TodayProgressCard({
 
 const StudyModesSection = memo(function StudyModesSection() {
   const modes = [
-    { to: '/learn', icon: BookOpen, label: 'Flashcard', desc: 'Lật thẻ học từ', color: 'blue' },
+    {
+      to: '/stories',
+      icon: BookOpen,
+      label: 'Đọc truyện',
+      desc: 'Tiên hiệp & Tiểu thuyết',
+      color: 'emerald',
+    },
+    { to: '/learn', icon: Sparkles, label: 'Flashcard', desc: 'Lật thẻ học từ', color: 'blue' },
     {
       to: '/sentence-master',
       icon: Sparkles,
@@ -254,7 +261,7 @@ const StudyModesSection = memo(function StudyModesSection() {
   return (
     <div>
       <h2 className='text-lg font-semibold mb-4'>Chế độ học</h2>
-      <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4'>
+      <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4'>
         {modes.map(({ to, icon: Icon, label, desc, color }) => (
           <Link
             key={to}
