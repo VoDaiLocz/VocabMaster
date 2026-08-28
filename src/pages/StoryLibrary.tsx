@@ -11,6 +11,7 @@ import {
   Search,
   Clock,
   ChevronRight,
+  Star,
 } from 'lucide-react'
 
 export const StoryLibrary: React.FC = () => {
@@ -115,9 +116,14 @@ export const StoryLibrary: React.FC = () => {
                 />
                 <div className='absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent' />
 
-                {/* Level badge */}
-                <div className='absolute top-3 left-3 px-2.5 py-1 rounded-xl bg-black/60 backdrop-blur-md text-[11px] font-bold text-amber-300 border border-white/10'>
-                  {story.level}
+                {/* Level and Rating badge */}
+                <div className='absolute top-3 left-3 flex items-center gap-1.5'>
+                  <span className='px-2.5 py-1 rounded-xl bg-black/60 backdrop-blur-md text-[11px] font-bold text-amber-300 border border-white/10'>
+                    {story.level}
+                  </span>
+                  <span className='flex items-center gap-1 px-2 py-1 rounded-xl bg-amber-500/90 backdrop-blur-md text-[11px] font-extrabold text-white shadow-sm'>
+                    <Star size={12} className='fill-current' /> {story.rating}
+                  </span>
                 </div>
 
                 <div className='absolute top-3 right-3 px-2.5 py-1 rounded-xl bg-emerald-600/90 backdrop-blur-md text-[11px] font-bold text-white shadow-sm'>
@@ -129,8 +135,9 @@ export const StoryLibrary: React.FC = () => {
                 </div>
 
                 <div className='absolute bottom-3 left-3 right-3 text-white'>
-                  <p className='text-xs text-emerald-300 font-medium line-clamp-1'>
-                    {story.author}
+                  <p className='text-xs text-emerald-300 font-medium line-clamp-1 flex items-center justify-between'>
+                    <span>{story.author}</span>
+                    <span className='text-[10px] text-amber-200 font-mono'>🔥 {story.readsCount} lượt đọc</span>
                   </p>
                   <h3 className='text-base font-bold font-display line-clamp-1 group-hover:text-amber-300 transition-colors'>
                     {story.titleEn}
@@ -165,6 +172,20 @@ export const StoryLibrary: React.FC = () => {
                     </span>
                   )}
                 </div>
+
+                {/* Tags preview */}
+                {story.tags && (
+                  <div className='flex flex-wrap gap-1'>
+                    {story.tags.slice(0, 3).map((t: string) => (
+                      <span
+                        key={t}
+                        className='px-2 py-0.5 rounded-md bg-gray-100 dark:bg-gray-800/60 text-gray-600 dark:text-gray-400 text-[10px] font-medium'
+                      >
+                        #{t}
+                      </span>
+                    ))}
+                  </div>
+                )}
 
                 {/* Footer stats */}
                 <div className='pt-3 border-t border-gray-100 dark:border-gray-800/60 flex items-center justify-between text-xs text-gray-400'>

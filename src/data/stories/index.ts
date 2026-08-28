@@ -1,289 +1,681 @@
 // ============================================
-// Bilingual Stories Library (Xianxia, Tech, Fables)
+// Bilingual Stories & Top-Rated Xianxia Library
 // ============================================
 
 import { BilingualStory } from '@/types/story'
 
 export const BILINGUAL_STORIES_DATA: BilingualStory[] = [
-  // 1. Xianxia: Awakening Spirit Root
   {
-    id: 'story-xianxia-spirit-root',
-    slug: 'awakening-spirit-root',
-    titleEn: 'The Path of the Immortal: Awakening the Spirit Root',
-    titleVi: 'Đại Đạo Tu Tiên: Thức Tỉnh Linh Căn Cửu Thiên',
-    author: 'Er Gen & I Eat Tomatoes (Adapted)',
-    coverImage: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&auto=format&fit=crop&q=80',
-    category: 'xianxia',
-    level: 'B2 - Khá',
-    estimatedMinutes: 6,
-    wordCount: 420,
-    descriptionVi: 'Hành trình bước vào con đường tu tiên nghịch thiên, hấp thu linh khí đất trời và ngưng tụ Linh Căn Cửu Thiên.',
-    targetVocabulary: [
-      { word: 'Cultivation', ipa: '/ˌkʌltɪˈveɪʃn/', meaningVi: 'Sự tu luyện, tu chân' },
-      { word: 'Spiritual Energy', ipa: '/ˈspɪrɪtʃuəl ˈenədʒi/', meaningVi: 'Linh khí đất trời' },
-      { word: 'Dantian', ipa: '/dænˈtjæn/', meaningVi: 'Đan điền (nơi tụ khí)' },
-      { word: 'Meridians', ipa: '/məˈrɪdiənz/', meaningVi: 'Kinh mạch' },
-      { word: 'Tribulation', ipa: '/ˌtrɪbjuˈleɪʃn/', meaningVi: 'Thiên kiếp, lôi kiếp' },
-      { word: 'Foundation Establishment', ipa: '/faʊnˈdeɪʃn ɪˈstæblɪʃmənt/', meaningVi: 'Trúc Cơ kỳ' },
+    "id": "story-renegade-immortal",
+    "slug": "renegade-immortal-slaughter-dao",
+    "titleEn": "Renegade Immortal: The Slaughter Dao & Heaven-Defying Bead",
+    "titleVi": "Tiên Nghịch: Đạo Sát Lục Của Vương Lâm & Thiên Nghịch Châu",
+    "author": "Nhĩ Căn (Er Gen)",
+    "rating": 4.9,
+    "readsCount": "2.4M",
+    "coverImage": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&auto=format&fit=crop&q=80",
+    "category": "xianxia",
+    "level": "B2 - Khá",
+    "estimatedMinutes": 6,
+    "wordCount": 450,
+    "tags": [
+      "Tiên Nghịch",
+      "Vương Lâm",
+      "Sát Lục Chi Đạo",
+      "Thiên Nghịch Châu",
+      "Top 1"
     ],
-    paragraphs: [
+    "descriptionVi": "Hành trình một phàm nhân bình thường bước lên con đường nghịch thiên tu đạo, ngưng tụ Sát Lục Chi Đạo làm chấn động toàn bộ Tu Chân Giới.",
+    "targetVocabulary": [
       {
-        id: 1,
-        textEn: 'In the vast realm of the Azure Cloud Continent, mortal beings looked up at the towering mountains with boundless reverence.',
-        textVi: 'Tại đại lục Thanh Vân mênh mông vô tận, phàm nhân luôn ngước nhìn những rặng núi sừng sững với sự tôn kính vô bờ bến.',
-        sentences: [
-          { id: 1, textEn: 'In the vast realm of the Azure Cloud Continent, mortal beings looked up at the towering mountains with boundless reverence.', textVi: 'Tại đại lục Thanh Vân mênh mông vô tận, phàm nhân luôn ngước nhìn những rặng núi sừng sững với sự tôn kính vô bờ bến.' },
-          { id: 2, textEn: 'Legends said that immortal cultivators dwelt above the sea of clouds, commanding flying swords and defying the heavens.', textVi: 'Truyền thuyết kể rằng các bậc tiên nhân tu chân cư ngụ trên biển mây, ngự phi kiếm và nghịch thiên cải mệnh.' }
+        "word": "Heaven-Defying",
+        "ipa": "/ˈhevn dɪˈfaɪɪŋ/",
+        "meaningVi": "Nghịch thiên (chống lại ý trời)"
+      },
+      {
+        "word": "Slaughter Dao",
+        "ipa": "/ˈslɔːtə daʊ/",
+        "meaningVi": "Đạo Sát Lục"
+      },
+      {
+        "word": "Nascent Soul",
+        "ipa": "/ˈnæsnt səʊl/",
+        "meaningVi": "Nguyên Anh kỳ"
+      },
+      {
+        "word": "Ancient God",
+        "ipa": "/ˈeɪnʃənt ɡɒd/",
+        "meaningVi": "Cổ Thần"
+      },
+      {
+        "word": "Divine Sense",
+        "ipa": "/dɪˈvaɪn sens/",
+        "meaningVi": "Thần thức"
+      },
+      {
+        "word": "Flying Sword",
+        "ipa": "/ˈflaɪɪŋ sɔːd/",
+        "meaningVi": "Phi kiếm"
+      }
+    ],
+    "paragraphs": [
+      {
+        "id": 1,
+        "textEn": "Wang Lin stood atop the Blood Peak of Mount Heng, the howling autumn wind whipping his blood-stained black robe.",
+        "textVi": "Vương Lâm đứng sừng sững trên đỉnh Huyết Phong của núi Hằng Nhạc, cơn gió thu gào thét thổi bay tà áo bào đen nhuộm máu của hắn.",
+        "sentences": [
+          {
+            "id": 1,
+            "textEn": "Wang Lin stood atop the Blood Peak of Mount Heng, the howling autumn wind whipping his blood-stained black robe.",
+            "textVi": "Vương Lâm đứng sừng sững trên đỉnh Huyết Phong của núi Hằng Nhạc, cơn gió thu gào thét thổi bay tà áo bào đen nhuộm máu của hắn."
+          },
+          {
+            "id": 2,
+            "textEn": "In his hand rested the mysterious gray bead, pulsing with an aura that defied the very laws of the celestial heavens.",
+            "textVi": "Trong lòng bàn tay hắn là hạt châu màu xám thần bí, tỏa ra khí tức nghịch thiên thách thức mọi quy luật của thiên đạo."
+          }
         ]
       },
       {
-        id: 2,
-        textEn: 'Lin Feng sat cross-legged atop a lonely granite cliff, his breathing synchronized with the rising dawn.',
-        textVi: 'Lâm Phong ngồi xếp bằng trên đỉnh vách đá hoa cương cô độc, hơi thở hòa nhịp cùng ánh bình minh đang lên.',
-        sentences: [
-          { id: 3, textEn: 'Lin Feng sat cross-legged atop a lonely granite cliff, his breathing synchronized with the rising dawn.', textVi: 'Lâm Phong ngồi xếp bằng trên đỉnh vách đá hoa cương cô độc, hơi thở hòa nhịp cùng ánh bình minh đang lên.' },
-          { id: 4, textEn: 'For three years, he had been ridiculed as a discarded disciple with crippled meridians.', textVi: 'Suốt ba năm qua, hắn bị chế giễu là đệ tử phế vật với kinh mạch tàn phế.' },
-          { id: 5, textEn: 'Yet beneath his calm gaze burned an unyielding determination to forge his own Dao.', textVi: 'Thế nhưng bên dưới ánh mắt bình thản ấy là ý chí kiên định bất khuất muốn khắc họa Đạo của riêng mình.' }
+        "id": 2,
+        "textEn": "\"The path of cultivation is fraught with slaughter; if the heavens wish to crush me, I shall slaughter the heavens!\"",
+        "textVi": "\"Con đường tu chân vốn đẫm máu sát phạt; nếu trời xanh muốn diệt ta, ta sẽ nghịch thiên trảm đạo!\"",
+        "sentences": [
+          {
+            "id": 3,
+            "textEn": "\"The path of cultivation is fraught with slaughter; if the heavens wish to crush me, I shall slaughter the heavens!\"",
+            "textVi": "\"Con đường tu chân vốn đẫm máu sát phạt; nếu trời xanh muốn diệt ta, ta sẽ nghịch thiên trảm đạo!\""
+          },
+          {
+            "id": 4,
+            "textEn": "With a cold wave of his sleeve, countless crimson sword lights erupted from his flying sword, slicing through the clouds.",
+            "textVi": "Với một cái phất tay lạnh lùng, vô số luồng huyết quang từ phi kiếm rít gào phóng ra, chém rách tầng mây."
+          }
         ]
       },
       {
-        id: 3,
-        textEn: 'As the first ray of golden sunlight pierced the morning mist, a surge of primordial spiritual energy resonated within his Dantian.',
-        textVi: 'Khi tia nắng vàng đầu tiên xuyên qua làn sương sớm, một luồng hồng hoang linh khí bỗng cộng hưởng mãnh liệt trong đan điền hắn.',
-        sentences: [
-          { id: 6, textEn: 'As the first ray of golden sunlight pierced the morning mist, a surge of primordial spiritual energy resonated within his Dantian.', textVi: 'Khi tia nắng vàng đầu tiên xuyên qua làn sương sớm, một luồng hồng hoang linh khí bỗng cộng hưởng mãnh liệt trong đan điền hắn.' },
-          { id: 7, textEn: 'The ancient dragon pendant on his chest glowed with dazzling azure radiance.', textVi: 'Mảnh ngọc bội hình rồng cổ xưa trên ngực hắn phát ra ánh hào quang xanh biếc rực rỡ.' },
-          { id: 8, textEn: 'The blocked meridians shattered like brittle ice under the roaring torrent of celestial power.', textVi: 'Những kinh mạch bế tắc vỡ vụn như băng mỏng trước dòng thác thần lực ngập tràn trời đất.' }
-        ]
-      },
-      {
-        id: 4,
-        textEn: 'Thunder roared across the cloudless sky as a nine-colored spiritual root materialized behind him.',
-        textVi: 'Sấm sét ầm vang khắp bầu trời không một gợn mây khi một gốc Cửu Thải Linh Căn hiển hiện sau lưng hắn.',
-        sentences: [
-          { id: 9, textEn: 'Thunder roared across the cloudless sky as a nine-colored spiritual root materialized behind him.', textVi: 'Sấm sét ầm vang khắp bầu trời không một gợn mây khi một gốc Cửu Thải Linh Căn hiển hiện sau lưng hắn.' },
-          { id: 10, textEn: 'He had broken through the barrier of Qi Condensation and touched the threshold of Foundation Establishment.', textVi: 'Hắn đã phá vỡ rào cản Luyện Khí kỳ và chạm tới ngưỡng cửa Trúc Cơ.' },
-          { id: 11, textEn: '"From this day forward," Lin Feng murmured, looking at the distant immortal sects, "my destiny belongs to no heaven."', textVi: '"Kể từ ngày hôm nay," Lâm Phong lẩm bẩm, nhìn về các tiên môn xa xăm, "vận mệnh của ta không do trời định."' }
+        "id": 3,
+        "textEn": "His divine sense expanded for thousands of miles, locking onto the fleeing Core Formation elders of the Teng Clan.",
+        "textVi": "Thần thức của hắn bành trướng vạn dặm, khóa chặt những trưởng lão Kết Đan kỳ đang bỏ chạy của Đằng gia.",
+        "sentences": [
+          {
+            "id": 5,
+            "textEn": "His divine sense expanded for thousands of miles, locking onto the fleeing Core Formation elders of the Teng Clan.",
+            "textVi": "Thần thức của hắn bành trướng vạn dặm, khóa chặt những trưởng lão Kết Đan kỳ đang bỏ chạy của Đằng gia."
+          },
+          {
+            "id": 6,
+            "textEn": "The Ji Realm lightning crackled in his pupils, a terrifying power that extinguished souls with a single glance.",
+            "textVi": "Tia sét Cực Cảnh lách tách trong đồng tử hắn, một thứ sức mạnh kinh thiên có thể diệt sát linh hồn chỉ bằng một ánh nhìn."
+          }
         ]
       }
     ],
-    comprehensionQuiz: [
+    "comprehensionQuiz": [
       {
-        id: 'q1',
-        question: 'Why was Lin Feng ridiculed for three years before his breakthrough?',
-        options: [
-          'He was believed to have crippled meridians',
-          'He refused to practice sword techniques',
-          'He stole a treasure from the sect',
-          'He was a mortal prince without ambitions'
+        "id": "q1",
+        "question": "What is the legendary power inside Wang Lin’s pupils that can extinguish souls with a glance?",
+        "options": [
+          "The Ji Realm Lightning",
+          "The Heavenly Flame Array",
+          "The Nine Dragons Barrier",
+          "The Netherworld Mist"
         ],
-        correctIndex: 0,
-        explanation: 'Lin Feng was mocked as a discarded disciple because his meridians were thought to be crippled.'
-      },
-      {
-        id: 'q2',
-        question: 'What artifact awakened Lin Feng’s primordial spiritual energy?',
-        options: [
-          'A flying sword',
-          'An ancient dragon pendant',
-          'A celestial pill',
-          'A golden talisman'
-        ],
-        correctIndex: 1,
-        explanation: 'The ancient dragon pendant on his chest glowed with azure radiance and shattered his blocked meridians.'
+        "correctIndex": 0,
+        "explanation": "The Ji Realm lightning crackles in Wang Lin’s eyes, allowing him to destroy enemies of the same realm instantly."
       }
     ]
   },
-
-  // 2. Xianxia: Coiling Dragon
   {
-    id: 'story-xianxia-coiling-dragon',
-    slug: 'coiling-dragon-sovereign-ring',
-    titleEn: 'Coiling Dragon: The Ring of the Sovereign',
-    titleVi: 'Bàn Long: Chiếc Nhẫn Thần Bí Của Chủ Thần',
-    author: 'I Eat Tomatoes (Adapted)',
-    coverImage: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800&auto=format&fit=crop&q=80',
-    category: 'xianxia',
-    level: 'B2 - Khá',
-    estimatedMinutes: 5,
-    wordCount: 380,
-    descriptionVi: 'Linley khám phá bí mật của chiếc nhẫn Bàn Long và bước chân vào thế giới của các Ma Pháp Sư và Chiến Sĩ Đỉnh Cao.',
-    targetVocabulary: [
-      { word: 'Sovereign', ipa: '/ˈsɒvrɪn/', meaningVi: 'Chủ Thần, Đấng Tối Cao' },
-      { word: 'Elemental Laws', ipa: '/ˌelɪˈmentl lɔːz/', meaningVi: 'Quy luật Nguyên tố' },
-      { word: 'Magus', ipa: '/ˈmeɪɡəs/', meaningVi: 'Ma Pháp Sư' },
-      { word: 'Lineage', ipa: '/ˈlɪniɪdʒ/', meaningVi: 'Huyết thống gia tộc' },
+    "id": "story-issth-meng-hao",
+    "slug": "i-shall-seal-the-heavens-meng-hao",
+    "titleEn": "I Shall Seal the Heavens: Meng Hao and the Demon Sealing Hex",
+    "titleVi": "Ngã Dục Phong Thiên: Mạnh Hạo & Phong Yêu Bát Quyết",
+    "author": "Nhĩ Căn (Er Gen)",
+    "rating": 4.8,
+    "readsCount": "1.9M",
+    "coverImage": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800&auto=format&fit=crop&q=80",
+    "category": "xianxia",
+    "level": "B2 - Khá",
+    "estimatedMinutes": 5,
+    "wordCount": 410,
+    "tags": [
+      "Ngã Dục Phong Thiên",
+      "Mạnh Hạo",
+      "Kháo Sơn Tông",
+      "Phong Yêu Sư"
     ],
-    paragraphs: [
+    "descriptionVi": "Chàng thư sinh nghèo Mạnh Hạo gia nhập Kháo Sơn Tông, tìm thấy chiếc gương đồng nhân bản vạn vật và trở thành Phong Yêu Sư đời thứ chín.",
+    "targetVocabulary": [
       {
-        id: 1,
-        textEn: 'In the ancient town of Wushan, the Baruch clan possessed a glorious ancestry as the legendary Dragonblood Warriors.',
-        textVi: 'Tại thị trấn Ô Sơn cổ kính, gia tộc Baruch từng sở hữu tổ tiên lẫy lừng là các Chiến Sĩ Long Huyết huyền thoại.',
-        sentences: [
-          { id: 1, textEn: 'In the ancient town of Wushan, the Baruch clan possessed a glorious ancestry as the legendary Dragonblood Warriors.', textVi: 'Tại thị trấn Ô Sơn cổ kính, gia tộc Baruch từng sở hữu tổ tiên lẫy lừng là các Chiến Sĩ Long Huyết huyền thoại.' },
-          { id: 2, textEn: 'However, centuries of decline had left the clan in poverty, with only ancestral relics remaining.', textVi: 'Tuy nhiên, hàng thế kỷ suy tàn đã khiến gia tộc rơi vào cảnh bần hàn, chỉ còn lại những di vật của tổ tiên.' }
+        "word": "Demon Sealer",
+        "ipa": "/ˈdiːmən ˈsiːlə/",
+        "meaningVi": "Phong Yêu Sư"
+      },
+      {
+        "word": "Copper Mirror",
+        "ipa": "/ˈkɒpə ˈmɪrə/",
+        "meaningVi": "Gương đồng cổ bí ẩn"
+      },
+      {
+        "word": "Spiritual Stones",
+        "ipa": "/ˈspɪrɪtʃuəl stəʊnz/",
+        "meaningVi": "Linh thạch"
+      },
+      {
+        "word": "Daoist Magic",
+        "ipa": "/ˈdaʊɪst ˈmædʒɪk/",
+        "meaningVi": "Đạo thuật, tiên pháp"
+      }
+    ],
+    "paragraphs": [
+      {
+        "id": 1,
+        "textEn": "Meng Hao was once an impoverished scholar who failed the imperial examinations three times on Mount Daqing.",
+        "textVi": "Mạnh Hạo từng là một thư sinh nghèo ba lần thi trượt khoa cử trên đỉnh núi Đại Khánh.",
+        "sentences": [
+          {
+            "id": 1,
+            "textEn": "Meng Hao was once an impoverished scholar who failed the imperial examinations three times on Mount Daqing.",
+            "textVi": "Mạnh Hạo từng là một thư sinh nghèo ba lần thi trượt khoa cử trên đỉnh núi Đại Khánh."
+          },
+          {
+            "id": 2,
+            "textEn": "Everything changed when he was swept into the Reliance Sect and discovered the mysterious copper mirror.",
+            "textVi": "Mọi thứ đã thay đổi khi hắn bị cuốn vào Kháo Sơn Tông và phát hiện ra chiếc gương đồng thần bí."
+          }
         ]
       },
       {
-        id: 2,
-        textEn: 'While exploring the dilapidated manor, young Linley stumbled upon an unassuming black ring buried beneath the rubble.',
-        textVi: 'Khi khám phá trang viên đổ nát, cậu bé Linley tình cờ phát hiện một chiếc nhẫn đen bình dị bị chôn vùi dưới đống gạch vụn.',
-        sentences: [
-          { id: 3, textEn: 'While exploring the dilapidated manor, young Linley stumbled upon an unassuming black ring buried beneath the rubble.', textVi: 'Khi khám phá trang viên đổ nát, cậu bé Linley tình cờ phát hiện một chiếc nhẫn đen bình dị bị chôn vùi dưới đống gạch vụn.' },
-          { id: 4, textEn: 'When a drop of his blood accidentally touched the ring, a powerful soul entity emerged from the void.', textVi: 'Khi một giọt máu của cậu vô tình chạm vào chiếc nhẫn, một linh hồn cường đại bỗng xuất hiện từ hư không.' }
-        ]
-      },
-      {
-        id: 3,
-        textEn: 'It was Doehring Cowart, a Grand Magus of the Saint realm whose soul had been sealed inside the Coiling Dragon ring for thousands of years.',
-        textVi: 'Đó chính là Đức Lâm Kha Hoạt, một Thánh Vực Đại Ma Đạo Sư có linh hồn bị phong ấn bên trong chiếc nhẫn Bàn Long suốt hàng ngàn năm.',
-        sentences: [
-          { id: 5, textEn: 'It was Doehring Cowart, a Grand Magus of the Saint realm whose soul had been sealed inside the Coiling Dragon ring for thousands of years.', textVi: 'Đó chính là Đức Lâm Kha Hoạt, một Thánh Vực Đại Ma Đạo Sư có linh hồn bị phong ấn bên trong chiếc nhẫn Bàn Long suốt hàng ngàn năm.' },
-          { id: 6, textEn: 'Under Doehring Cowart’s guidance, Linley embarked on a dual path of earth magic and martial sword mastery.', textVi: 'Dưới sự chỉ dẫn của Đức Lâm, Linley bắt đầu con đường song tu ma pháp hệ Thổ và kiếm thuật đỉnh cao.' }
+        "id": 2,
+        "textEn": "\"If I want something, the heavens shall not lack it; if I do not want it, the heavens had better not possess it!\"",
+        "textVi": "\"Nếu ta muốn, trời không được thiếu; nếu ta không muốn, trời chớ có sinh!\"",
+        "sentences": [
+          {
+            "id": 3,
+            "textEn": "\"If I want something, the heavens shall not lack it; if I do not want it, the heavens had better not possess it!\"",
+            "textVi": "\"Nếu ta muốn, trời không được thiếu; nếu ta không muốn, trời chớ có sinh!\""
+          },
+          {
+            "id": 4,
+            "textEn": "Chanting the ancient incantation, Meng Hao channeled his Golden Core cultivation into the Demon Sealing Hex.",
+            "textVi": "Niệm chú cổ ngữ, Mạnh Hạo dồn toàn bộ tu vi Kim Đan kỳ vào Phong Yêu Bát Quyết."
+          }
         ]
       }
     ],
-    comprehensionQuiz: [
+    "comprehensionQuiz": [
       {
-        id: 'q1',
-        question: 'Who was sealed inside the Coiling Dragon ring?',
-        options: [
-          'A Saint-realm Grand Magus named Doehring Cowart',
-          'An ancient evil dragon demon',
-          'Linley’s ancestor from the Baruch clan',
-          'A Sovereign god of the Netherworld'
+        "id": "q1",
+        "question": "What special treasure did Meng Hao find in the Reliance Sect?",
+        "options": [
+          "A mysterious Copper Mirror",
+          "A Golden Pagoda",
+          "An ancient flute",
+          "A Phoenix Feather"
         ],
-        correctIndex: 0,
-        explanation: 'Doehring Cowart was a Saint-realm Grand Magus sealed inside the ring.'
+        "correctIndex": 0,
+        "explanation": "Meng Hao possessed the mysterious Copper Mirror that could duplicate magical items."
       }
     ]
   },
-
-  // 3. Tech: The Story of Linux & Linus Torvalds
   {
-    id: 'story-tech-linux',
-    slug: 'story-of-linux',
-    titleEn: 'The Penguin Revolution: How Linus Torvalds Created Linux',
-    titleVi: 'Cuộc Cách Mạng Chim Cánh Cụt: Linus Torvalds Đã Tạo Ra Linux Như Thế Nào',
-    author: 'VocabMaster Tech Stories',
-    coverImage: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?w=800&auto=format&fit=crop&q=80',
-    category: 'tech',
-    level: 'B1 - Trung cấp',
-    estimatedMinutes: 5,
-    wordCount: 360,
-    descriptionVi: 'Câu chuyện chàng sinh viên 21 tuổi người Phần Lan đã viết nên hạt nhân hệ điều hành làm thay đổi toàn bộ thế giới công nghệ.',
-    targetVocabulary: [
-      { word: 'Operating System', ipa: '/ˈɒpəreɪtɪŋ ˈsɪstəm/', meaningVi: 'Hệ điều hành' },
-      { word: 'Open Source', ipa: '/ˌəʊpən ˈsɔːs/', meaningVi: 'Mã nguồn mở' },
-      { word: 'Kernel', ipa: '/ˈkɜːnl/', meaningVi: 'Nhân hệ điều hành' },
-      { word: 'Collaboration', ipa: '/kəˌlæbəˈreɪʃn/', meaningVi: 'Sự hợp tác' },
+    "id": "story-a-will-eternal",
+    "slug": "a-will-eternal-bai-xiaochun",
+    "titleEn": "A Will Eternal: The Legend of Bai Xiaochun",
+    "titleVi": "Nhất Niệm Vĩnh Hằng: Huyền Thoại Bạch Tiểu Thuần Sợ Chết",
+    "author": "Nhĩ Căn (Er Gen)",
+    "rating": 4.8,
+    "readsCount": "1.6M",
+    "coverImage": "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=800&auto=format&fit=crop&q=80",
+    "category": "xianxia",
+    "level": "B1 - Trung cấp",
+    "estimatedMinutes": 5,
+    "wordCount": 370,
+    "tags": [
+      "Nhất Niệm Vĩnh Hằng",
+      "Bạch Tiểu Thuần",
+      "Linh Khê Tông",
+      "Bất Tử Công"
     ],
-    paragraphs: [
+    "descriptionVi": "Bạch Tiểu Thuần với ước mơ trường sinh bất lão, luyện Bất Tử Thao Thiết Công và những màn luyện đan dở khóc dở cười tại Linh Khê Tông.",
+    "targetVocabulary": [
       {
-        id: 1,
-        textEn: 'In 1991, a 21-year-old computer science student at the University of Helsinki named Linus Torvalds was frustrated with the limitations of existing operating systems.',
-        textVi: 'Năm 1991, một sinh viên khoa học máy tính 21 tuổi tại Đại học Helsinki tên là Linus Torvalds cảm thấy thất vọng trước những hạn chế của các hệ điều hành lúc bấy giờ.',
-        sentences: [
-          { id: 1, textEn: 'In 1991, a 21-year-old computer science student at the University of Helsinki named Linus Torvalds was frustrated with the limitations of existing operating systems.', textVi: 'Năm 1991, một sinh viên khoa học máy tính 21 tuổi tại Đại học Helsinki tên là Linus Torvalds cảm thấy thất vọng trước những hạn chế của các hệ điều hành lúc bấy giờ.' },
-          { id: 2, textEn: 'Commercial Unix licenses were exorbitantly expensive, while Minix was strictly educational.', textVi: 'Bản quyền Unix thương mại thì đắt đỏ một cách quá đáng, trong khi Minix chỉ giới hạn cho mục đích học tập.' }
+        "word": "Immortality",
+        "ipa": "/ˌɪmɔːˈtæləti/",
+        "meaningVi": "Sự trường sinh bất tử"
+      },
+      {
+        "word": "Alchemy Furnace",
+        "ipa": "/ˈælkəmi ˈfɜːnɪs/",
+        "meaningVi": "Lò luyện đan"
+      },
+      {
+        "word": "Spiritual Pill",
+        "ipa": "/ˈspɪrɪtʃuəl pɪl/",
+        "meaningVi": "Linh đan diệu dược"
+      }
+    ],
+    "paragraphs": [
+      {
+        "id": 1,
+        "textEn": "Bai Xiaochun was a timid village boy whose only goal in life was to live forever.",
+        "textVi": "Bạch Tiểu Thuần là một thiếu niên nhút nhát ở thôn làng với mục tiêu duy nhất trong đời là được sống trường thọ mãi mãi.",
+        "sentences": [
+          {
+            "id": 1,
+            "textEn": "Bai Xiaochun was a timid village boy whose only goal in life was to live forever.",
+            "textVi": "Bạch Tiểu Thuần là một thiếu niên nhút nhát ở thôn làng với mục tiêu duy nhất trong đời là được sống trường thọ mãi mãi."
+          },
+          {
+            "id": 2,
+            "textEn": "Holding an incense stick to summon immortal masters, he accidentally joined the Spirit Stream Sect.",
+            "textVi": "Cầm nén nhang cầu gọi tiên nhân, hắn vô tình gia nhập Linh Khê Tông danh chấn phương xa."
+          }
         ]
       },
       {
-        id: 2,
-        textEn: 'Sitting in his small bedroom, Linus began writing a new kernel from scratch for his Intel 386 PC.',
-        textVi: 'Ngồi trong căn phòng ngủ nhỏ của mình, Linus bắt đầu tự tay viết một kernel mới từ đầu cho chiếc máy tính Intel 386 của mình.',
-        sentences: [
-          { id: 3, textEn: 'Sitting in his small bedroom, Linus began writing a new kernel from scratch for his Intel 386 PC.', textVi: 'Ngồi trong căn phòng ngủ nhỏ của mình, Linus bắt đầu tự tay viết một kernel mới từ đầu cho chiếc máy tính Intel 386 của mình.' },
-          { id: 4, textEn: 'On August 25, 1991, he posted a legendary message on the Usenet newsgroup: "I\'m doing a free operating system, just a hobby, won\'t be big and professional like gnu."', textVi: 'Vào ngày 25 tháng 8 năm 1991, anh đăng một thông điệp huyền thoại lên nhóm tin tức Usenet: "Tôi đang làm một hệ điều hành miễn phí, chỉ là sở thích thôi, sẽ không lớn và chuyên nghiệp như gnu đâu."' }
-        ]
-      },
-      {
-        id: 3,
-        textEn: 'Developers around the globe joined in to contribute code, fix bugs, and add hardware drivers.',
-        textVi: 'Các lập trình viên trên toàn thế giới đã cùng nhau đóng góp mã nguồn, sửa lỗi và thêm driver phần cứng.',
-        sentences: [
-          { id: 5, textEn: 'Developers around the globe joined in to contribute code, fix bugs, and add hardware drivers.', textVi: 'Các lập trình viên trên toàn thế giới đã cùng nhau đóng góp mã nguồn, sửa lỗi và thêm driver phần cứng.' },
-          { id: 6, textEn: 'Today, Linux powers over ninety percent of the world\'s supercomputers, cloud servers, and billions of Android smartphones.', textVi: 'Ngày nay, Linux vận hành hơn 90% siêu máy tính trên thế giới, các máy chủ đám mây và hàng tỷ điện thoại thông minh Android.' }
+        "id": 2,
+        "textEn": "Despite his fear of death, his talent in physical cultivation and pill refining shook the entire world.",
+        "textVi": "Dù vô cùng sợ chết, thiên phú về luyện thể Bất Tử Công và thuật luyện đan của hắn đã làm rung chuyển cả giới tu tiên.",
+        "sentences": [
+          {
+            "id": 3,
+            "textEn": "Despite his fear of death, his talent in physical cultivation and pill refining shook the entire world.",
+            "textVi": "Dù vô cùng sợ chết, thiên phú về luyện thể Bất Tử Công và thuật luyện đan của hắn đã làm rung chuyển cả giới tu tiên."
+          },
+          {
+            "id": 4,
+            "textEn": "Whenever his furnace exploded, clouds of multicolored lightning showered down, leaving fellow disciples in awe.",
+            "textVi": "Mỗi khi lò đan của hắn nổ tung, từng quầng mây sét ngũ sắc trút xuống khiến các đồng môn vừa sợ vừa kính."
+          }
         ]
       }
     ],
-    comprehensionQuiz: [
+    "comprehensionQuiz": [
       {
-        id: 'q1',
-        question: 'What inspired Linus Torvalds to start writing Linux?',
-        options: [
-          'Expensive Unix licenses and limitations of Minix',
-          'A school assignment from his professor',
-          'A multi-million dollar corporate contract',
-          'He wanted to build a video game engine'
+        "id": "q1",
+        "question": "What is Bai Xiaochun’s primary motivation for cultivating?",
+        "options": [
+          "Fear of death and desire for immortality",
+          "Vengeance against enemies",
+          "Greed for gold and jewels",
+          "Becoming a sect leader"
         ],
-        correctIndex: 0,
-        explanation: 'Linus was frustrated because commercial Unix was too expensive and Minix was limited.'
+        "correctIndex": 0,
+        "explanation": "Bai Xiaochun is famous for his obsession with staying alive and achieving immortality."
       }
     ]
   },
-
-  // 4. Fables: The Boy Who Cried Wolf
   {
-    id: 'story-fable-cried-wolf',
-    slug: 'the-boy-who-cried-wolf',
-    titleEn: 'Aesop’s Fables: The Boy Who Cried Wolf',
-    titleVi: 'Truyện Ngụ Ngôn Aesop: Cậu Bé Chăn Cừu Và Con Sói',
-    author: 'Aesop',
-    coverImage: 'https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=800&auto=format&fit=crop&q=80',
-    category: 'fables',
-    level: 'A2 - Cơ bản',
-    estimatedMinutes: 3,
-    wordCount: 220,
-    descriptionVi: 'Bài học kinh điển về sự trung thực và lòng tin: Kẻ hay nói dối sẽ không ai tin kể cả khi nói thật.',
-    targetVocabulary: [
-      { word: 'Shepherd', ipa: '/ˈʃepəd/', meaningVi: 'Người chăn cừu' },
-      { word: 'Villagers', ipa: '/ˈvɪlɪdʒəz/', meaningVi: 'Dân làng' },
-      { word: 'Deceive', ipa: '/dɪˈsiːv/', meaningVi: 'Lừa dối' },
-      { word: 'Trustworthiness', ipa: '/ˈtrʌstwɜːðinəs/', meaningVi: 'Sự đáng tin cậy' },
+    "id": "story-coiling-dragon",
+    "slug": "coiling-dragon-linley",
+    "titleEn": "Coiling Dragon: Linley and the Dragonblood Awakening",
+    "titleVi": "Bàn Long: Linley Baruch Thức Tỉnh Huyết Mạch Long Huyết",
+    "author": "Ngã Cật Tây Hồng Thị (I Eat Tomatoes)",
+    "rating": 4.9,
+    "readsCount": "3.1M",
+    "coverImage": "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=800&auto=format&fit=crop&q=80",
+    "category": "xianxia",
+    "level": "B2 - Khá",
+    "estimatedMinutes": 6,
+    "wordCount": 420,
+    "tags": [
+      "Bàn Long",
+      "Linley",
+      "Long Huyết Chiến Sĩ",
+      "Chủ Thần"
     ],
-    paragraphs: [
+    "descriptionVi": "Linley Baruch phục hưng gia tộc Chiến Sĩ Long Huyết, lĩnh ngộ các Quy luật Nguyên tố Thổ và Phong để bước lên đỉnh cao Chủ Thần.",
+    "targetVocabulary": [
       {
-        id: 1,
-        textEn: 'There once was a shepherd boy who was bored as he sat on the hillside watching the village sheep.',
-        textVi: 'Ngày xưa có một cậu bé chăn cừu cảm thấy buồn chán khi ngồi trên sườn đồi trông nom đàn cừu của làng.',
-        sentences: [
-          { id: 1, textEn: 'There once was a shepherd boy who was bored as he sat on the hillside watching the village sheep.', textVi: 'Ngày xưa có một cậu bé chăn cừu cảm thấy buồn chán khi ngồi trên sườn đồi trông nom đàn cừu của làng.' },
-          { id: 2, textEn: 'To amuse himself, he took a great breath and sang out, "Wolf! Wolf! The Wolf is chasing the sheep!"', textVi: 'Để giải khuây, cậu hít một hơi thật sâu và hét to: "Sói! Sói! Có sói đang đuổi cừu!"' }
-        ]
+        "word": "Dragonblood Warrior",
+        "ipa": "/ˈdræɡnblʌd ˈwɒriə/",
+        "meaningVi": "Chiến Sĩ Long Huyết"
       },
       {
-        id: 2,
-        textEn: 'The villagers came running up the hill to help the boy drive the wolf away.',
-        textVi: 'Dân làng vội vã chạy lên đồi để giúp cậu bé xua đuổi con sói.',
-        sentences: [
-          { id: 3, textEn: 'The villagers came running up the hill to help the boy drive the wolf away.', textVi: 'Dân làng vội vã chạy lên đồi để giúp cậu bé xua đuổi con sói.' },
-          { id: 4, textEn: 'When they arrived at the top of the hill, they found no wolf, but the boy laughed at their angry faces.', textVi: 'Khi lên tới đỉnh đồi, họ chẳng thấy con sói nào, chỉ thấy cậu bé đang cười lớn trước vẻ mặt tức giận của họ.' }
-        ]
+        "word": "Saint Realm",
+        "ipa": "/seɪnt relm/",
+        "meaningVi": "Thánh Vực"
       },
       {
-        id: 3,
-        textEn: 'A few days later, a real wolf came out from the forest and attacked the flock.',
-        textVi: 'Vài ngày sau, một con sói thật sự từ trong rừng xông ra và tấn công đàn cừu.',
-        sentences: [
-          { id: 5, textEn: 'A few days later, a real wolf came out from the forest and attacked the flock.', textVi: 'Vài ngày sau, một con sói thật sự từ trong rừng xông ra và tấn công đàn cừu.' },
-          { id: 6, textEn: 'The boy cried out in terror, "Wolf! Wolf!", but the villagers thought he was trying to fool them again, and nobody came.', textVi: 'Cậu bé hét lên trong hoảng sợ: "Sói! Sói!", nhưng dân làng nghĩ cậu lại lừa họ nên chẳng một ai chạy đến.' },
-          { id: 7, textEn: 'The moral of the story is that nobody believes a liar, even when he tells the truth.', textVi: 'Bài học của câu chuyện là không ai tin kẻ nói dối, ngay cả khi hắn nói sự thật.' }
+        "word": "Profound Truths",
+        "ipa": "/prəˈfaʊnd truːðz/",
+        "meaningVi": "Huyền ảo nguyên tố"
+      }
+    ],
+    "paragraphs": [
+      {
+        "id": 1,
+        "textEn": "Deep in the Forest of Darkness, the roaring of magical beasts echoed across the ancient trees.",
+        "textVi": "Sâu trong Ma Thú Sơn Mạch, tiếng gầm rú của ma thú vọng qua những tán cây cổ thụ ngút ngàn.",
+        "sentences": [
+          {
+            "id": 1,
+            "textEn": "Deep in the Forest of Darkness, the roaring of magical beasts echoed across the ancient trees.",
+            "textVi": "Sâu trong Ma Thú Sơn Mạch, tiếng gầm rú của ma thú vọng qua những tán cây cổ thụ ngút ngàn."
+          },
+          {
+            "id": 2,
+            "textEn": "Linley held his Bloodviolet Godsword, his body covered in draconic azure scales as his Dragonblood awakened.",
+            "textVi": "Linley cầm chặt Thanh Huyết Thần Kiếm, toàn thân phủ kín lớp vảy rồng xanh biếc khi huyết mạch Long Huyết thức tỉnh."
+          }
         ]
       }
     ],
-    comprehensionQuiz: [
+    "comprehensionQuiz": [
       {
-        id: 'q1',
-        question: 'Why did the villagers not come when the real wolf attacked?',
-        options: [
-          'They thought the boy was lying again',
-          'They were too busy working in the fields',
-          'They did not hear the boy shouting',
-          'They were afraid of the dark forest'
+        "id": "q1",
+        "question": "What weapon did Linley wield when his Dragonblood warrior form awakened?",
+        "options": [
+          "Bloodviolet Godsword",
+          "Golden Spear",
+          "Celestial Bow",
+          "Obsidian Hammer"
         ],
-        correctIndex: 0,
-        explanation: 'Because the boy had lied before, the villagers assumed he was playing another prank.'
+        "correctIndex": 0,
+        "explanation": "Linley wields the legendary Bloodviolet Godsword."
+      }
+    ]
+  },
+  {
+    "id": "story-lord-of-the-mysteries",
+    "slug": "lord-of-the-mysteries-klein",
+    "titleEn": "Lord of the Mysteries: Klein Moretti and the Tarot Club",
+    "titleVi": "Quỷ Bí Chi Chủ: Klein Moretti & Hội Tarot Trên Sương Mù Xám",
+    "author": "Ái Tiềm Thủy Đích Ô Tặc (Cuttlefish)",
+    "rating": 5,
+    "readsCount": "3.5M",
+    "coverImage": "https://images.unsplash.com/photo-1514539079130-25950c84af65?w=800&auto=format&fit=crop&q=80",
+    "category": "xianxia",
+    "level": "C1 - Nâng cao",
+    "estimatedMinutes": 7,
+    "wordCount": 460,
+    "tags": [
+      "Quỷ Bí Chi Chủ",
+      "Klein Moretti",
+      "Kẻ Khờ",
+      "Hội Tarot",
+      "Tuyệt Tác 5.0"
+    ],
+    "descriptionVi": "Tuyệt phẩm phương Tây kết hợp tu chân huyền bí: Klein Moretti thức tỉnh trên sương mù xám, trở thành \"Kẻ Khờ\" (The Fool) và triệu tập Hội Tarot huyền thoại.",
+    "targetVocabulary": [
+      {
+        "word": "Potion Pathway",
+        "ipa": "/ˈpəʊʃn ˈpɑːθweɪ/",
+        "meaningVi": "Danh sách Ma Dược"
+      },
+      {
+        "word": "The Fool",
+        "ipa": "/ðə fuːl/",
+        "meaningVi": "Kẻ Khờ (Danh hiệu của Klein)"
+      },
+      {
+        "word": "Tarot Club",
+        "ipa": "/ˈtærəʊ klʌb/",
+        "meaningVi": "Hội Tarot bí ẩn"
+      },
+      {
+        "word": "Beyond the Gray Fog",
+        "ipa": "/bɪˈjɒnd ðə ɡreɪ fɒɡ/",
+        "meaningVi": "Bên trên màn sương mù xám"
+      }
+    ],
+    "paragraphs": [
+      {
+        "id": 1,
+        "textEn": "Above the boundless gray fog stood a majestic divine palace made of ancient stone pillars.",
+        "textVi": "Bên trên màn sương mù xám vô tận sừng sững một tòa thần điện nguy nga làm từ những cột đá cổ kính.",
+        "sentences": [
+          {
+            "id": 1,
+            "textEn": "Above the boundless gray fog stood a majestic divine palace made of ancient stone pillars.",
+            "textVi": "Bên trên màn sương mù xám vô tận sừng sững một tòa thần điện nguy nga làm từ những cột đá cổ kính."
+          },
+          {
+            "id": 2,
+            "textEn": "Klein Moretti sat on the high-backed chair at the head of the long bronze table, shrouded in deep crimson light.",
+            "textVi": "Klein Moretti ngồi trên chiếc ghế lưng cao ở đầu bàn đồng dài, được bao phủ bởi ánh sáng đỏ thẫm huyền bí."
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "textEn": "\"The Fool that doesn't belong to this era; The Mysterious Ruler above the gray fog; The King of Yellow and Black who wields good luck.\"",
+        "textVi": "\"Kẻ Khờ không thuộc về thời đại này; Chúa tể thần bí bên trên màn sương xám; Vị vua Vàng và Đen nắm giữ vận may.\"",
+        "sentences": [
+          {
+            "id": 3,
+            "textEn": "\"The Fool that doesn't belong to this era; The Mysterious Ruler above the gray fog; The King of Yellow and Black who wields good luck.\"",
+            "textVi": "\"Kẻ Khờ không thuộc về thời đại này; Chúa tể thần bí bên trên màn sương xám; Vị vua Vàng và Đen nắm giữ vận may.\""
+          },
+          {
+            "id": 4,
+            "textEn": "With a gentle knock on the table, two stars materialized into Justice and The Hanged Man, marking the historic inception of the Tarot Club.",
+            "textVi": "Gõ nhẹ tay lên mặt bàn, hai vì sao lập tức ngưng tụ thành Chính Nghĩa và Người Treo Ngược, đánh dấu sự ra đời lịch sử của Hội Tarot."
+          }
+        ]
+      }
+    ],
+    "comprehensionQuiz": [
+      {
+        "id": "q1",
+        "question": "Where does Klein Moretti hold the gatherings of the Tarot Club?",
+        "options": [
+          "Above the boundless Gray Fog in the divine palace",
+          "In a hidden underground cathedral",
+          "At the royal palace of Backlund",
+          "Inside a steam train station"
+        ],
+        "correctIndex": 0,
+        "explanation": "Klein convenes the Tarot Club members above the boundless Gray Fog."
+      }
+    ]
+  },
+  {
+    "id": "story-martial-world",
+    "slug": "martial-world-lin-ming",
+    "titleEn": "Martial World: Lin Ming and the Magic Cube",
+    "titleVi": "Vũ Cực Thiên Hạ: Lâm Minh & Ma Phương Thần Bí",
+    "author": "Tàm Tàm Khô Mộc (Cocooned Cowry)",
+    "rating": 4.8,
+    "readsCount": "2.1M",
+    "coverImage": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&auto=format&fit=crop&q=80",
+    "category": "xianxia",
+    "level": "B2 - Khá",
+    "estimatedMinutes": 5,
+    "wordCount": 390,
+    "tags": [
+      "Vũ Cực Thiên Hạ",
+      "Lâm Minh",
+      "Ma Phương",
+      "Thần Vực"
+    ],
+    "descriptionVi": "Thiếu niên Lâm Minh mang tư chất bình thường, nhờ hấp thu linh hồn thần thánh trong Ma Phương mà lĩnh ngộ võ đạo tối thượng và mở Cửu Tinh Đạo Cung.",
+    "targetVocabulary": [
+      {
+        "word": "Magic Cube",
+        "ipa": "/ˈmædʒɪk kjuːb/",
+        "meaningVi": "Ma Phương thần thánh"
+      },
+      {
+        "word": "Body Metamorphosis",
+        "ipa": "/ˈbɒdi ˌmetəˈmɔːfəsɪs/",
+        "meaningVi": "Dịch Cân Tẩy Tủy"
+      },
+      {
+        "word": "Inscriptions",
+        "ipa": "/ɪnˈskrɪpʃnz/",
+        "meaningVi": "Minh văn thuật"
+      }
+    ],
+    "paragraphs": [
+      {
+        "id": 1,
+        "textEn": "Lin Ming was born with ordinary talent, yet possessed a heart of martial arts as pure and solid as diamond.",
+        "textVi": "Lâm Minh sinh ra với thiên tư bình thường, nhưng lại sở hữu một tấm lòng võ đạo kiên định và thuần khiết như kim cương.",
+        "sentences": [
+          {
+            "id": 1,
+            "textEn": "Lin Ming was born with ordinary talent, yet possessed a heart of martial arts as pure and solid as diamond.",
+            "textVi": "Lâm Minh sinh ra với thiên tư bình thường, nhưng lại sở hữu một tấm lòng võ đạo kiên định và thuần khiết như kim cương."
+          },
+          {
+            "id": 2,
+            "textEn": "When his blood unlocked the primordial Magic Cube, the memories of fallen Divine Realm supreme elders flooded into his soul.",
+            "textVi": "Khi máu hắn kích hoạt Ma Phương hồng hoang, ký ức của các cường giả Thần Vực ngã xuống lập tức ùa vào linh hồn hắn."
+          }
+        ]
+      }
+    ],
+    "comprehensionQuiz": [
+      {
+        "id": "q1",
+        "question": "What artifact changed Lin Ming’s destiny?",
+        "options": [
+          "The Magic Cube",
+          "A Dragon Jade",
+          "A Phoenix Ring",
+          "A Heavenly Cauldron"
+        ],
+        "correctIndex": 0,
+        "explanation": "The Magic Cube unlocked the soul memories of Divine Realm supreme masters."
+      }
+    ]
+  },
+  {
+    "id": "story-tech-linux",
+    "slug": "story-of-linux",
+    "titleEn": "The Penguin Revolution: How Linus Torvalds Created Linux",
+    "titleVi": "Cuộc Cách Mạng Chim Cánh Cụt: Linus Torvalds Đã Tạo Ra Linux Như Thế Nào",
+    "author": "VocabMaster Tech Stories",
+    "rating": 4.9,
+    "readsCount": "1.4M",
+    "coverImage": "https://images.unsplash.com/photo-1629654297299-c8506221ca97?w=800&auto=format&fit=crop&q=80",
+    "category": "tech",
+    "level": "B1 - Trung cấp",
+    "estimatedMinutes": 5,
+    "wordCount": 360,
+    "tags": [
+      "Linux",
+      "Linus Torvalds",
+      "Open Source",
+      "Công Nghệ"
+    ],
+    "descriptionVi": "Câu chuyện chàng sinh viên 21 tuổi người Phần Lan đã viết nên hạt nhân hệ điều hành làm thay đổi toàn bộ thế giới công nghệ.",
+    "targetVocabulary": [
+      {
+        "word": "Operating System",
+        "ipa": "/ˈɒpəreɪtɪŋ ˈsɪstəm/",
+        "meaningVi": "Hệ điều hành"
+      },
+      {
+        "word": "Open Source",
+        "ipa": "/ˌəʊpən ˈsɔːs/",
+        "meaningVi": "Mã nguồn mở"
+      },
+      {
+        "word": "Kernel",
+        "ipa": "/ˈkɜːnl/",
+        "meaningVi": "Nhân hệ điều hành"
+      }
+    ],
+    "paragraphs": [
+      {
+        "id": 1,
+        "textEn": "In 1991, a 21-year-old computer science student at the University of Helsinki named Linus Torvalds created a free operating system kernel for his 386 PC.",
+        "textVi": "Năm 1991, sinh viên 21 tuổi Linus Torvalds tại Đại học Helsinki đã viết nên nhân hệ điều hành miễn phí cho chiếc máy tính 386 của mình.",
+        "sentences": [
+          {
+            "id": 1,
+            "textEn": "In 1991, a 21-year-old computer science student at the University of Helsinki named Linus Torvalds created a free operating system kernel for his 386 PC.",
+            "textVi": "Năm 1991, sinh viên 21 tuổi Linus Torvalds tại Đại học Helsinki đã viết nên nhân hệ điều hành miễn phí cho chiếc máy tính 386 của mình."
+          },
+          {
+            "id": 2,
+            "textEn": "Today, Linux powers over ninety percent of the world's cloud servers and billions of Android devices.",
+            "textVi": "Ngày nay, Linux vận hành hơn 90% máy chủ đám mây thế giới và hàng tỷ thiết bị Android."
+          }
+        ]
+      }
+    ],
+    "comprehensionQuiz": [
+      {
+        "id": "q1",
+        "question": "Who created the Linux kernel in 1991?",
+        "options": [
+          "Linus Torvalds",
+          "Steve Jobs",
+          "Bill Gates",
+          "Dennis Ritchie"
+        ],
+        "correctIndex": 0,
+        "explanation": "Linus Torvalds created the Linux kernel in 1991."
+      }
+    ]
+  },
+  {
+    "id": "story-fable-cried-wolf",
+    "slug": "the-boy-who-cried-wolf",
+    "titleEn": "Aesop’s Fables: The Boy Who Cried Wolf",
+    "titleVi": "Truyện Ngụ Ngôn Aesop: Cậu Bé Chăn Cừu Và Con Sói",
+    "author": "Aesop",
+    "rating": 4.7,
+    "readsCount": "980K",
+    "coverImage": "https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=800&auto=format&fit=crop&q=80",
+    "category": "fables",
+    "level": "A2 - Cơ bản",
+    "estimatedMinutes": 3,
+    "wordCount": 220,
+    "tags": [
+      "Aesop",
+      "Ngụ Ngôn",
+      "Bài Học Cuộc Sống"
+    ],
+    "descriptionVi": "Bài học kinh điển về sự trung thực và lòng tin: Kẻ hay nói dối sẽ không ai tin kể cả khi nói thật.",
+    "targetVocabulary": [
+      {
+        "word": "Shepherd",
+        "ipa": "/ˈʃepəd/",
+        "meaningVi": "Người chăn cừu"
+      },
+      {
+        "word": "Villagers",
+        "ipa": "/ˈvɪlɪdʒəz/",
+        "meaningVi": "Dân làng"
+      }
+    ],
+    "paragraphs": [
+      {
+        "id": 1,
+        "textEn": "There once was a shepherd boy who was bored as he sat on the hillside watching the village sheep.",
+        "textVi": "Ngày xưa có một cậu bé chăn cừu cảm thấy buồn chán khi ngồi trên sườn đồi trông nom đàn cừu của làng.",
+        "sentences": [
+          {
+            "id": 1,
+            "textEn": "There once was a shepherd boy who was bored as he sat on the hillside watching the village sheep.",
+            "textVi": "Ngày xưa có một cậu bé chăn cừu cảm thấy buồn chán khi ngồi trên sườn đồi trông nom đàn cừu của làng."
+          },
+          {
+            "id": 2,
+            "textEn": "The moral of the story is that nobody believes a liar, even when he tells the truth.",
+            "textVi": "Bài học của câu chuyện là không ai tin kẻ nói dối, ngay cả khi hắn nói sự thật."
+          }
+        ]
+      }
+    ],
+    "comprehensionQuiz": [
+      {
+        "id": "q1",
+        "question": "What is the moral of the story?",
+        "options": [
+          "Nobody believes a liar even when he tells the truth",
+          "Wolves love sheep",
+          "Always run fast",
+          "Never herd sheep on hills"
+        ],
+        "correctIndex": 0,
+        "explanation": "Nobody believes a liar, even when he tells the truth."
       }
     ]
   }

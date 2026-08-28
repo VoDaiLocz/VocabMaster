@@ -1,5 +1,5 @@
 // ============================================
-// Bilingual Story Types
+// Bilingual Story & Novel Types
 // ============================================
 
 export interface StorySentence {
@@ -32,12 +32,15 @@ export interface BilingualStory {
   titleEn: string
   titleVi: string
   author: string
+  rating: number // e.g. 4.9
+  readsCount: string // e.g. '1.2M'
   coverImage: string
   category: StoryCategory
   level: 'A1 - Sơ cấp' | 'A2 - Cơ bản' | 'B1 - Trung cấp' | 'B2 - Khá' | 'C1 - Nâng cao'
   estimatedMinutes: number
   wordCount: number
   descriptionVi: string
+  tags: string[]
   targetVocabulary: { word: string; ipa: string; meaningVi: string }[]
   paragraphs: StoryParagraph[]
   comprehensionQuiz?: StoryQuizQuestion[]
