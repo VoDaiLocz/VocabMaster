@@ -11,6 +11,7 @@ import { Modal } from '@/components/common/Modal'
 import { useDeckStore } from '@/store/deckStore'
 import { useLearningStore } from '@/store/learningStore'
 import { speakWord } from '@/utils/quiz'
+import { getWordImageUrl } from '@/services/imageService'
 import { WORD_STATUS } from '@/constants'
 import type { WordWithProgress, Deck } from '@/types'
 
@@ -252,21 +253,28 @@ const WordItem = memo(function WordItem({ word, onDelete }: WordItemProps) {
 
   const status = (word.status as keyof typeof statusConfig) || 'new'
   const config = statusConfig[status]
+  const imageUrl = getWordImageUrl(word.term, '3d', word.image_url)
 
   return (
-    <div className='bg-white dark:bg-gray-800 rounded-xl p-4 flex items-center gap-4 group'>
+    <div className='bg-white dark:bg-gray-800 rounded-xl p-4 flex items-center gap-4 group hover:shadow-md transition-shadow'>
+      <div className='w-12 h-12 rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-700 shrink-0 shadow-inner'>
+        <img src={imageUrl} alt={word.term} className='w-full h-full object-cover' />
+      </div>
       <button
         onClick={handleSpeak}
-        className='p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg'
+        className='p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg shrink-0'
+        title='Phát âm'
       >
-        <Volume2 size={18} className='text-gray-400' />
+        <Volume2 size={18} className='text-primary-500' />
       </button>
       <div className='flex-1 min-w-0'>
         <div className='flex items-center gap-2'>
-          <span className='font-semibold'>{word.term}</span>
-          {word.phonetic && <span className='text-sm text-gray-400'>{word.phonetic}</span>}
+          <span className='font-semibold text-gray-900 dark:text-white'>{word.term}</span>
+          {word.phonetic && (
+            <span className='text-sm text-gray-400 font-mono'>{word.phonetic}</span>
+          )}
         </div>
-        <p className='text-gray-500 truncate'>{word.definition}</p>
+        <p className='text-gray-500 dark:text-gray-400 text-sm truncate'>{word.definition}</p>
       </div>
       <div className={`px-2 py-1 rounded text-xs font-medium ${config.bg} ${config.text}`}>
         {config.label}
