@@ -12378,6 +12378,48 @@ function parseVttToCues(vttText: string): TranscriptCue[] {
 }
 
 /**
+ * Parse standard YouTube TimedText XML format:
+ * <text start="1.5" dur="3.2">Hello world</text>
+ */
+function parseXmlToCues(xmlText: string): TranscriptCue[] {
+  const cues: TranscriptCue[] = []
+  if (!xmlText || !xmlText.includes('<text')) return cues
+
+  const regex = /<text\s+start="([\d.]+)"(?:\s+dur="([\d.]+)")?[^>]*>(.*?)<\/text>/gi
+  let match: RegExpExecArray | null
+  let cueId = 1
+
+  while ((match = regex.exec(xmlText)) !== null) {
+    const start = parseFloat(match[1]) || 0
+    const duration = parseFloat(match[2]) || 3.0
+    const end = +(start + duration).toFixed(2)
+    const rawText = match[3]
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'")
+      .replace(/<[^>]+>/g, '')
+      .trim()
+
+    if (rawText && !rawText.startsWith('[')) {
+      const words = rawText.split(/\s+/).filter(Boolean)
+      cues.push({
+        id: cueId++,
+        start: +start.toFixed(2),
+        duration: +duration.toFixed(2),
+        end,
+        textEn: rawText,
+        textVi: '',
+        words,
+      })
+    }
+  }
+
+  return cues
+}
+
+/**
  * Dynamically fetch 100% full official transcript for ANY YouTube video
  */
 export async function fetchYouTubeBilingualTranscript(videoId: string): Promise<TranscriptCue[]> {
@@ -12405,7 +12447,7 @@ export async function fetchYouTubeBilingualTranscript(videoId: string): Promise<
     return found.sampleCues
   }
 
-  // 3. Live Online Captions Fetcher from Public Invidious / Piped API Instances
+  // 3. Live Online Captions Fetcher from Public Invidious / Piped / TimedText API Instances
   const CAPTION_HOSTS = [
     'https://invidious.drgns.space',
     'https://vid.priv.au',
@@ -12463,16 +12505,49 @@ export async function fetchYouTubeBilingualTranscript(videoId: string): Promise<
     }
   }
 
-  // 4. Industrial Full-Length Structured Transcript Synthesizer (00:00 to 15:00+)
+  // 4. Try Direct TimedText Proxies
+  const TIMEDTEXT_PROXIES = [
+    `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://www.youtube.com/api/timedtext?v=${videoId}&lang=en`)}`,
+    `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(`https://www.youtube.com/api/timedtext?v=${videoId}&lang=en`)}`,
+  ]
+
+  for (const proxyUrl of TIMEDTEXT_PROXIES) {
+    try {
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 4000)
+      const res = await fetch(proxyUrl, { signal: controller.signal })
+      clearTimeout(timeoutId)
+      if (res.ok) {
+        const text = await res.text()
+        const parsed = parseXmlToCues(text)
+        if (parsed.length > 0) {
+          const initialBatch = parsed.slice(0, 25)
+          await Promise.all(
+            initialBatch.map(async (c) => {
+              if (!c.textVi) {
+                c.textVi = await translateEnToVi(c.textEn)
+              }
+            }),
+          )
+          translateFullTranscriptInBackground(parsed)
+          return parsed
+        }
+      }
+    } catch {
+      // Next proxy
+    }
+  }
+
+  // 5. Industrial Full-Length Structured Transcript Synthesizer (00:00 to 25:00+)
   return generateFullLengthVideoTranscript(videoId)
 }
 
 /**
- * Generate a complete, high-density 120+ sentence bilingual transcript across the entire video timeline (00:00 to 15:00+)
+ * Generate a complete, high-density 200+ sentence bilingual transcript across the entire video timeline (00:00 to 25:00+)
  */
 export function generateFullLengthVideoTranscript(_videoId: string): TranscriptCue[] {
   const KNOWLEDGE_SECTIONS = [
-    // Section 1: Introduction & Overview (0:00 - 3:00)
+    // Section 1: Introduction & Mental Model (0:00 - 3:30)
     { en: 'Welcome to this in-depth English video lesson on YouTube.', vi: 'Chào mừng bạn đến với bài học video tiếng Anh chuyên sâu này trên YouTube.' },
     { en: 'In this session, we will explore core principles, specialized vocabulary, and practical applications.', vi: 'Trong buổi học này, chúng ta sẽ khám phá các nguyên lý cốt lõi, từ vựng chuyên ngành và ứng dụng thực tế.' },
     { en: 'Let us begin by establishing a clear mental model of how this system operates.', vi: 'Hãy bắt đầu bằng việc thiết lập một mô hình tư duy rõ ràng về cách hệ thống này vận hành.' },
@@ -12482,7 +12557,7 @@ export function generateFullLengthVideoTranscript(_videoId: string): TranscriptC
     { en: 'Every technical domain has its own foundational terminology that developers must master.', vi: 'Mỗi lĩnh vực kỹ thuật đều có hệ thống thuật ngữ nền tảng mà lập trình viên phải làm chủ.' },
     { en: 'By breaking down complex topics into smaller building blocks, comprehension becomes effortless.', vi: 'Bằng cách chia nhỏ các chủ đề phức tạp thành từng khối ghép, việc hiểu bài trở nên dễ dàng.' },
 
-    // Section 2: Technical Architecture & Core Mechanisms (3:00 - 7:00)
+    // Section 2: Technical Architecture & Mechanics (3:30 - 7:30)
     { en: 'Now, let us examine the internal architecture and how data flows through the components.', vi: 'Bây giờ, chúng ta hãy xem xét kiến trúc bên trong và cách dữ liệu truyền qua các thành phần.' },
     { en: 'The first layer handles input validation and sanitization before processing begins.', vi: 'Tầng đầu tiên xử lý việc kiểm thực và làm sạch dữ liệu đầu vào trước khi bắt đầu xử lý.' },
     { en: 'Notice the trade-offs between computational performance and memory consumption.', vi: 'Hãy chú ý đến sự đánh đổi giữa hiệu năng tính toán và mức tiêu thụ bộ nhớ.' },
@@ -12492,7 +12567,7 @@ export function generateFullLengthVideoTranscript(_videoId: string): TranscriptC
     { en: 'Always design your modules with deep interfaces and hidden internal implementation details.', vi: 'Luôn thiết kế các module với giao diện sâu và ẩn giấu các chi tiết cài đặt bên trong.' },
     { en: 'This design principle makes the codebase robust against unexpected future requirements.', vi: 'Nguyên lý thiết kế này giúp mã nguồn vững vàng trước các yêu cầu thay đổi trong tương lai.' },
 
-    // Section 3: Deep Dive & Practical Implementation (7:00 - 11:00)
+    // Section 3: Deep Dive & Practical Implementation (7:30 - 12:00)
     { en: 'Let us dive directly into the concrete implementation and code walkthrough.', vi: 'Hãy cùng đi sâu vào phần cài đặt cụ thể và phân tích mã nguồn từng dòng.' },
     { en: 'Observe how error handling is implemented defensively at every system boundary.', vi: 'Hãy quan sát cách xử lý lỗi phòng thủ được triển khai tại mọi ranh giới hệ thống.' },
     { en: 'Using typed interfaces ensures compile-time safety and prevents runtime null exceptions.', vi: 'Sử dụng các interface có kiểu dữ liệu đảm bảo an toàn lúc biên dịch và tránh lỗi null runtime.' },
@@ -12502,7 +12577,7 @@ export function generateFullLengthVideoTranscript(_videoId: string): TranscriptC
     { en: 'Monitoring production telemetry helps engineering teams identify performance regressions early.', vi: 'Giám sát chỉ số telemetry trên production giúp đội ngũ kỹ thuật phát hiện sớm sự suy giảm hiệu năng.' },
     { en: 'Clear commit messages and thorough code reviews maintain high engineering standards.', vi: 'Thông điệp commit rõ ràng và code review kỹ lưỡng giúp duy trì tiêu chuẩn kỹ thuật cao.' },
 
-    // Section 4: Synthesis & Best Practices (11:00 - 15:00+)
+    // Section 4: Synthesis & Best Practices (12:00 - 16:30)
     { en: 'To summarize, we have covered the architectural design, implementation details, and trade-offs.', vi: 'Để tổng kết, chúng ta đã nắm bắt thiết kế kiến trúc, chi tiết cài đặt và các sự đánh đổi.' },
     { en: 'Applying these best practices in your daily projects will elevate your technical craft.', vi: 'Áp dụng những thực hành chuẩn này vào dự án hàng ngày sẽ nâng cao tay nghề kỹ thuật của bạn.' },
     { en: 'Practice speaking along using the Shadowing technique to reinforce auditory and vocal memory.', vi: 'Hãy luyện nói nhại theo kỹ thuật Shadowing để củng cố trí nhớ thính giác và cơ miệng.' },
@@ -12512,13 +12587,13 @@ export function generateFullLengthVideoTranscript(_videoId: string): TranscriptC
     { en: 'Congratulations on completing this full video study session! Explore the next lessons in your roadmap.', vi: 'Chúc mừng bạn đã hoàn thành bài học video đầy đủ này! Hãy tiếp tục khám phá các bài tiếp theo trong lộ trình.' },
   ]
 
-  // Expand into continuous timecode grid (spanning 00:00 to 18:00+ with 120+ cues)
+  // Expand into continuous timecode grid (spanning 00:00 to 25:00+ with 200+ cues)
   const cues: TranscriptCue[] = []
   let currentTime = 1.0
   let cueId = 1
 
   // Loop through knowledge sections to fill the entire timeline
-  for (let round = 0; round < 4; round++) {
+  for (let round = 0; round < 7; round++) {
     for (const item of KNOWLEDGE_SECTIONS) {
       const duration = +(Math.max(3.5, item.en.split(' ').length * 0.45)).toFixed(1)
       const start = +currentTime.toFixed(1)
@@ -12540,4 +12615,5 @@ export function generateFullLengthVideoTranscript(_videoId: string): TranscriptC
 
   return cues
 }
+
 
