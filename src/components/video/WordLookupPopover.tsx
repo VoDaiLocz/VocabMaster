@@ -8,6 +8,8 @@ import { Volume2, Plus, Check, X, Bookmark, Sparkles } from 'lucide-react'
 import { WordLookupResult } from '@/services/dictionaryService'
 import { useDeckStore } from '@/store/deckStore'
 
+import { speakWord } from '@/utils/quiz'
+
 interface WordLookupPopoverProps {
   wordData: WordLookupResult | null
   onClose: () => void
@@ -29,16 +31,7 @@ export const WordLookupPopover: React.FC<WordLookupPopoverProps> = ({
   if (!wordData) return null
 
   const handlePlayAudio = () => {
-    if ('speechSynthesis' in window) {
-      window.speechSynthesis.cancel()
-      const utterance = new SpeechSynthesisUtterance(wordData.term)
-      utterance.lang = 'en-US'
-      utterance.rate = 0.9
-      window.speechSynthesis.speak(utterance)
-    } else if (wordData.audioUrl) {
-      const audio = new Audio(wordData.audioUrl)
-      audio.play().catch(() => {})
-    }
+    speakWord(wordData.term)
   }
 
   const handleSaveToDeck = async () => {
