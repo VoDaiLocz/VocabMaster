@@ -19,6 +19,8 @@ import {
   ImportData,
   VideoLearning,
   SentenceMaster,
+  StoryLibrary,
+  StoryReader,
 } from '@/pages'
 
 export default function App() {
@@ -45,6 +47,8 @@ export default function App() {
               <Route path='/' element={<Home />} />
               <Route path='/learn' element={<Learn />} />
               <Route path='/sentence-master' element={<SentenceMaster />} />
+              <Route path='/stories' element={<StoryLibrary />} />
+              <Route path='/story/:id' element={<StoryReader />} />
               <Route path='/video-learning' element={<VideoLearning />} />
               <Route path='/video' element={<VideoLearning />} />
               <Route path='/quiz' element={<Quiz />} />
