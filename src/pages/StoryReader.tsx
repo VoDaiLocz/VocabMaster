@@ -1,5 +1,5 @@
 // ============================================
-// Interactive Multi-Chapter Bilingual Story Reader
+// Interactive Multi-Chapter Bilingual Story Reader (With Chapter Navigator)
 // ============================================
 
 import React, { useState } from 'react'
@@ -26,6 +26,10 @@ import {
   ChevronLeft,
   ChevronRight,
   BookOpen,
+  List,
+  Search,
+  X,
+  Layers,
 } from 'lucide-react'
 
 type ReaderTheme = 'light' | 'sepia' | 'dark'
@@ -40,6 +44,9 @@ export const StoryReader: React.FC = () => {
 
   // Chapter Navigation State
   const [activeChapterIndex, setActiveChapterIndex] = useState<number>(0)
+  const [isChapterDrawerOpen, setIsChapterDrawerOpen] = useState<boolean>(false)
+  const [chapterSearchQuery, setChapterSearchQuery] = useState<string>('')
+
   const currentChapter: StoryChapter = story.chapters[activeChapterIndex] || story.chapters[0]
 
   // Reader Settings
@@ -102,25 +109,36 @@ export const StoryReader: React.FC = () => {
     setQuizSubmitted(true)
   }
 
+  const selectChapter = (idx: number) => {
+    setActiveChapterIndex(idx)
+    setIsChapterDrawerOpen(false)
+    setRevealedParagraphs({})
+    setQuizAnswers({})
+    setQuizSubmitted(false)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
   const handleNextChapter = () => {
     if (activeChapterIndex < story.chapters.length - 1) {
-      setActiveChapterIndex((prev) => prev + 1)
-      setRevealedParagraphs({})
-      setQuizAnswers({})
-      setQuizSubmitted(false)
-      window.scrollTo({ top: 0, behavior: 'smooth' })
+      selectChapter(activeChapterIndex + 1)
     }
   }
 
   const handlePrevChapter = () => {
     if (activeChapterIndex > 0) {
-      setActiveChapterIndex((prev) => prev - 1)
-      setRevealedParagraphs({})
-      setQuizAnswers({})
-      setQuizSubmitted(false)
-      window.scrollTo({ top: 0, behavior: 'smooth' })
+      selectChapter(activeChapterIndex - 1)
     }
   }
+
+  const filteredChapters = story.chapters.filter((ch) => {
+    const q = chapterSearchQuery.toLowerCase()
+    return (
+      ch.chapterNumber.toString().includes(q) ||
+      ch.titleEn.toLowerCase().includes(q) ||
+      ch.titleVi.toLowerCase().includes(q) ||
+      ch.descriptionVi.toLowerCase().includes(q)
+    )
+  })
 
   return (
     <div
@@ -141,13 +159,25 @@ export const StoryReader: React.FC = () => {
         }
       >
         <div className='max-w-4xl mx-auto flex items-center justify-between gap-2'>
-          <button
-            onClick={() => navigate('/stories')}
-            className='flex items-center gap-1.5 text-xs sm:text-sm font-bold opacity-80 hover:opacity-100 transition-opacity'
-          >
-            <ArrowLeft size={18} />
-            <span className='hidden sm:inline'>Thư viện</span>
-          </button>
+          <div className='flex items-center gap-2'>
+            <button
+              onClick={() => navigate('/stories')}
+              className='flex items-center gap-1.5 text-xs sm:text-sm font-bold opacity-80 hover:opacity-100 transition-opacity'
+            >
+              <ArrowLeft size={18} />
+              <span className='hidden sm:inline'>Thư viện</span>
+            </button>
+
+            {/* Chapter Drawer Trigger Button */}
+            <button
+              onClick={() => setIsChapterDrawerOpen(true)}
+              className='flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-black/5 dark:bg-white/10 text-xs font-bold hover:bg-emerald-600 hover:text-white transition-all'
+              title='Mở danh sách toàn bộ chương'
+            >
+              <List size={14} />
+              <span>Chương {currentChapter.chapterNumber}</span>
+            </button>
+          </div>
 
           {/* 2 Explicit Reading Modes */}
           <div className='flex items-center gap-1 bg-black/5 dark:bg-white/5 p-1 rounded-xl'>
@@ -239,30 +269,14 @@ export const StoryReader: React.FC = () => {
 
       {/* Main Reading Container */}
       <div className='max-w-3xl mx-auto px-4 sm:px-6 pt-6 space-y-6'>
-        {/* Chapter Selection Bar */}
-        <div className='p-3 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-between gap-2 overflow-x-auto scrollbar-none'>
-          <div className='flex items-center gap-2'>
-            <span className='text-xs font-bold opacity-70 whitespace-nowrap'>📖 Chương:</span>
-            {story.chapters.map((ch, idx) => (
-              <button
-                key={ch.id}
-                onClick={() => {
-                  setActiveChapterIndex(idx)
-                  setRevealedParagraphs({})
-                  setQuizAnswers({})
-                  setQuizSubmitted(false)
-                }}
-                className={
-                  'px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all ' +
-                  (activeChapterIndex === idx
-                    ? 'bg-emerald-600 text-white shadow-md scale-105'
-                    : 'bg-white/60 dark:bg-black/40 opacity-70 hover:opacity-100')
-                }
-              >
-                Chương {ch.chapterNumber}
-              </button>
-            ))}
-          </div>
+        {/* Novel Info Banner */}
+        <div className='flex items-center justify-between p-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-800 dark:text-emerald-300 font-semibold'>
+          <span className='flex items-center gap-1.5'>
+            <Layers size={14} /> {story.titleVi}
+          </span>
+          <span className='font-mono opacity-80'>
+            Chương {currentChapter.chapterNumber} / {story.chapters.length} (Đang cập nhật)
+          </span>
         </div>
 
         {/* Book & Chapter Header */}
@@ -406,9 +420,12 @@ export const StoryReader: React.FC = () => {
             <ChevronLeft size={16} /> Chương trước
           </button>
 
-          <span className='text-xs font-bold opacity-60'>
-            Chương {currentChapter.chapterNumber} / {story.chapters.length}
-          </span>
+          <button
+            onClick={() => setIsChapterDrawerOpen(true)}
+            className='px-4 py-2 rounded-xl bg-black/5 dark:bg-white/5 text-xs font-bold flex items-center gap-1.5'
+          >
+            <List size={14} /> Mục lục ({story.chapters.length} chap)
+          </button>
 
           <button
             onClick={handleNextChapter}
@@ -518,6 +535,89 @@ export const StoryReader: React.FC = () => {
           </div>
         )}
       </div>
+
+      {/* Chapter Navigator Drawer Modal */}
+      {isChapterDrawerOpen && (
+        <div className='fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex justify-end animate-in fade-in duration-200'>
+          <div className='w-full max-w-md bg-white dark:bg-dark-card h-full shadow-2xl flex flex-col'>
+            {/* Drawer Header */}
+            <div className='p-4 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between'>
+              <div className='flex items-center gap-2'>
+                <List className='text-emerald-600' size={20} />
+                <h3 className='font-bold font-display text-base text-gray-900 dark:text-white'>
+                  Mục Lục Chương ({story.chapters.length} chap)
+                </h3>
+              </div>
+              <button
+                onClick={() => setIsChapterDrawerOpen(false)}
+                className='p-1.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-400'
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            {/* Chapter Search Box */}
+            <div className='p-3 border-b border-gray-100 dark:border-gray-800'>
+              <div className='relative'>
+                <Search
+                  size={15}
+                  className='absolute left-3 top-1/2 -translate-y-1/2 text-gray-400'
+                />
+                <input
+                  type='text'
+                  value={chapterSearchQuery}
+                  onChange={(e) => setChapterSearchQuery(e.target.value)}
+                  placeholder='Tìm kiếm chương (VD: 1, Phương Hạc Linh...)'
+                  className='w-full pl-9 pr-3 py-2 rounded-xl bg-gray-100 dark:bg-gray-800 text-xs outline-none border border-transparent focus:border-emerald-500'
+                />
+              </div>
+            </div>
+
+            {/* Chapters List */}
+            <div className='flex-1 overflow-y-auto p-3 space-y-2'>
+              {filteredChapters.map((ch) => {
+                const actualIdx = story.chapters.findIndex((c) => c.id === ch.id)
+                const isSelected = activeChapterIndex === actualIdx
+
+                return (
+                  <button
+                    key={ch.id}
+                    onClick={() => selectChapter(actualIdx)}
+                    className={
+                      'w-full p-3 rounded-2xl text-left border transition-all flex flex-col gap-1 ' +
+                      (isSelected
+                        ? 'bg-emerald-600 text-white border-emerald-600 shadow-md'
+                        : 'bg-gray-50 dark:bg-gray-800/40 border-gray-100 dark:border-gray-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/30')
+                    }
+                  >
+                    <div className='flex items-center justify-between text-xs font-bold'>
+                      <span>
+                        Chương {ch.chapterNumber}: {ch.titleVi}
+                      </span>
+                      <span
+                        className={
+                          'text-[10px] font-mono ' +
+                          (isSelected ? 'text-emerald-100' : 'opacity-60')
+                        }
+                      >
+                        {ch.wordCount} từ
+                      </span>
+                    </div>
+                    <p
+                      className={
+                        'text-[11px] line-clamp-1 ' +
+                        (isSelected ? 'text-emerald-100' : 'text-gray-500 dark:text-gray-400')
+                      }
+                    >
+                      {ch.descriptionVi}
+                    </p>
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Word Lookup Popover */}
       {selectedWordData && (

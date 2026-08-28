@@ -27,6 +27,7 @@ export interface StoryQuizQuestion {
 export interface StoryChapter {
   id: number
   chapterNumber: number
+  volume?: string
   titleEn: string
   titleVi: string
   estimatedMinutes: number
