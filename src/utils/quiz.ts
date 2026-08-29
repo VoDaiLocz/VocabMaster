@@ -143,21 +143,31 @@ export function speakWord(text: string, rate: number = 0.95): void {
   stopAllAudio()
   const thisToken = currentSpeechToken
 
-  // Stream Audio Fallback (Youdao + Google TTS)
+  // Stream Audio Fallback (Google TTS primary, Youdao secondary)
   const playStreamAudio = () => {
     if (currentSpeechToken !== thisToken) return
     try {
       const encoded = encodeURIComponent(cleanText.slice(0, 300))
-      const audioUrl = 'https://dict.youdao.com/dictvoice?audio=' + encoded + '&type=2'
-      const audio = new Audio(audioUrl)
+      const isSentence = cleanText.trim().includes(' ')
+
+      // Google TTS is much more reliable for full sentences
+      const googleUrl =
+        'https://translate.google.com/translate_tts?ie=UTF-8&tl=en&client=tw-ob&q=' + encoded
+      const youdaoUrl = 'https://dict.youdao.com/dictvoice?audio=' + encoded + '&type=2'
+
+      const primaryUrl = isSentence ? googleUrl : youdaoUrl
+      const secondaryUrl = isSentence ? youdaoUrl : googleUrl
+
+      const audio = new Audio(primaryUrl)
       audio.playbackRate = Math.max(0.7, Math.min(1.5, rate))
       activeAudioElement = audio
 
       audio.play().catch(() => {
         if (currentSpeechToken !== thisToken) return
-        const fallbackUrl =
-          'https://translate.google.com/translate_tts?ie=UTF-8&tl=en&client=tw-ob&q=' + encoded
-        const fallbackAudio = new Audio(fallbackUrl)
+        // Fallback inside catch might be blocked by mobile browsers due to lack of direct user gesture,
+        // but we still attempt it in case it's a network error rather than a gesture block.
+        const fallbackAudio = new Audio(secondaryUrl)
+        fallbackAudio.playbackRate = Math.max(0.7, Math.min(1.5, rate))
         activeAudioElement = fallbackAudio
         fallbackAudio.play().catch(() => {})
       })

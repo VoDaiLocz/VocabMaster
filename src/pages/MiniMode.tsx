@@ -6,6 +6,7 @@ import { useEffect, useCallback, memo } from 'react'
 import { X, Volume2, RotateCcw } from 'lucide-react'
 import { useLearningStore } from '@/store/learningStore'
 import { speakWord } from '@/utils/quiz'
+import { getWordImageUrl, getWordSvgFallback } from '@/services/imageService'
 import type { Quality } from '@/types'
 
 // ============================================
@@ -180,28 +181,48 @@ const CardContent = memo(function CardContent({ word, isFlipped, onFlip }: CardC
     [word.term],
   )
 
+  const imageUrl = getWordImageUrl(word.term, '3d', (word as any).image_url)
+
   return (
     <div
-      className='flex-1 flex flex-col items-center justify-center p-4 cursor-pointer'
+      className='flex-1 flex flex-col items-center justify-center p-4 cursor-pointer relative overflow-hidden'
       onClick={() => !isFlipped && onFlip()}
     >
-      <h2 className='text-2xl font-bold text-center mb-1'>{word.term}</h2>
-      {word.phonetic && <p className='text-gray-500 text-sm mb-2'>{word.phonetic}</p>}
-      <button
-        onClick={handleSpeak}
-        className='p-2 bg-primary-100 dark:bg-primary-900/30 rounded-full mb-3'
-      >
-        <Volume2 className='text-primary-500' size={18} />
-      </button>
-
-      {isFlipped ? (
-        <div className='text-center border-t pt-3 w-full'>
-          <p className='text-gray-700 dark:text-gray-200 mb-1'>{word.definition}</p>
-          {word.example && <p className='text-gray-500 text-xs italic'>"{word.example}"</p>}
+      {!isFlipped && (
+        <div className='absolute inset-x-0 top-0 h-32 opacity-20 pointer-events-none'>
+          <img
+            src={imageUrl}
+            alt={word.term}
+            onError={(e) => {
+              e.currentTarget.src = getWordSvgFallback(word.term)
+            }}
+            className='w-full h-full object-cover blur-sm'
+          />
         </div>
-      ) : (
-        <p className='text-gray-400 text-xs'>Nhấn để xem nghĩa</p>
       )}
+      <div className='z-10 flex flex-col items-center'>
+        <h2 className='text-2xl font-bold text-center mb-1'>{word.term}</h2>
+        {word.phonetic && <p className='text-gray-500 text-sm mb-2'>{word.phonetic}</p>}
+        <button
+          onClick={handleSpeak}
+          className='p-2 bg-primary-100 dark:bg-primary-900/30 rounded-full mb-3 shadow-sm hover:scale-105 transition-transform'
+        >
+          <Volume2 className='text-primary-500' size={18} />
+        </button>
+
+        {isFlipped ? (
+          <div className='text-center border-t border-gray-100 dark:border-gray-800 pt-3 w-full animate-in fade-in'>
+            <p className='text-gray-700 dark:text-gray-200 font-medium mb-1'>{word.definition}</p>
+            {word.example && (
+              <p className='text-gray-500 text-xs italic bg-gray-50 dark:bg-gray-800/40 p-2 rounded'>
+                "{word.example}"
+              </p>
+            )}
+          </div>
+        ) : (
+          <p className='text-gray-400 text-xs mt-2'>Nhấn để xem nghĩa</p>
+        )}
+      </div>
     </div>
   )
 })
