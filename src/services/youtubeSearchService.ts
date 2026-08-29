@@ -54,7 +54,7 @@ function formatDuration(seconds: number): string {
 
 async function promiseAny<T>(promises: Promise<T>[]): Promise<T> {
   return new Promise((resolve, reject) => {
-    let errors: any[] = []
+    const errors: any[] = []
     let pending = promises.length
     if (pending === 0) return reject(new Error('No promises'))
     promises.forEach((p) =>
@@ -140,7 +140,8 @@ export async function searchYouTubeDirectly(query: string): Promise<YouTubeSearc
       channel: 'Google Cloud Tech',
       thumbnailUrl: 'https://img.youtube.com/vi/2ePf9rue1Ao/hqdefault.jpg',
       durationFormatted: '09:20',
-      description: 'Tổng quan chi tiết về Generative AI, Transformer và các mô hình ngôn ngữ lớn (LLM) từ Google Cloud.',
+      description:
+        'Tổng quan chi tiết về Generative AI, Transformer và các mô hình ngôn ngữ lớn (LLM) từ Google Cloud.',
       tags: ['AI', 'LLM', 'Google Cloud', 'Machine Learning', 'Artificial Intelligence', 'al'],
     },
     {
@@ -158,7 +159,8 @@ export async function searchYouTubeDirectly(query: string): Promise<YouTubeSearc
       channel: '3Blue1Brown',
       thumbnailUrl: 'https://img.youtube.com/vi/aircAruvnKk/hqdefault.jpg',
       durationFormatted: '19:12',
-      description: 'Giải thích trực quan và sinh động nhất về cách mạng nơ-ron nhân tạo và Deep Learning hoạt động.',
+      description:
+        'Giải thích trực quan và sinh động nhất về cách mạng nơ-ron nhân tạo và Deep Learning hoạt động.',
       tags: ['AI', 'Deep Learning', 'Neural Networks', 'Math', '3Blue1Brown', 'al'],
     },
     {
@@ -176,7 +178,8 @@ export async function searchYouTubeDirectly(query: string): Promise<YouTubeSearc
       channel: 'TechLead',
       thumbnailUrl: 'https://img.youtube.com/vi/RGOj5yH7evk/hqdefault.jpg',
       durationFormatted: '12:15',
-      description: 'Cách quản lý nhánh Git, tạo Pull Request và phối hợp hiệu quả trong nhóm dự án.',
+      description:
+        'Cách quản lý nhánh Git, tạo Pull Request và phối hợp hiệu quả trong nhóm dự án.',
       tags: ['Git', 'Branching', 'Version Control', 'DevOps', 'GitHub'],
     },
     {
@@ -221,7 +224,8 @@ export async function searchYouTubeDirectly(query: string): Promise<YouTubeSearc
       channel: 'TED Talks',
       thumbnailUrl: 'https://img.youtube.com/vi/qp0HIF3SfI4/hqdefault.jpg',
       durationFormatted: '18:04',
-      description: 'Mô hình Vòng tròn Vàng (The Golden Circle): Khám phá lý do tại sao các nhà lãnh đạo truyền cảm hứng.',
+      description:
+        'Mô hình Vòng tròn Vàng (The Golden Circle): Khám phá lý do tại sao các nhà lãnh đạo truyền cảm hứng.',
       tags: ['TED', 'Leadership', 'Simon Sinek', 'Inspiration'],
     },
     {
@@ -248,7 +252,8 @@ export async function searchYouTubeDirectly(query: string): Promise<YouTubeSearc
       channel: 'Sony Pictures',
       thumbnailUrl: 'https://img.youtube.com/vi/m8N2x4V6q7Y/hqdefault.jpg',
       durationFormatted: '04:12',
-      description: 'Đoạn hội thoại kinh điển: Đừng bao giờ để ai nói rằng con không thể làm được điều gì đó.',
+      description:
+        'Đoạn hội thoại kinh điển: Đừng bao giờ để ai nói rằng con không thể làm được điều gì đó.',
       tags: ['Movies', 'Inspiration', 'Family', 'English'],
     },
   ]

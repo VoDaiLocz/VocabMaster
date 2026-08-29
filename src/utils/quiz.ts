@@ -147,26 +147,20 @@ export function speakWord(text: string, rate: number = 0.95): void {
   const playStreamAudio = () => {
     if (currentSpeechToken !== thisToken) return
     try {
-      const encoded = encodeURIComponent(cleanText.slice(0, 300))
-      const isSentence = cleanText.trim().includes(' ')
+      const encoded = encodeURIComponent(cleanText.slice(0, 200))
 
-      // Google TTS is much more reliable for full sentences
+      // Google TTS is much more reliable and NEVER repeats words (unlike Youdao)
       const googleUrl =
         'https://translate.google.com/translate_tts?ie=UTF-8&tl=en&client=tw-ob&q=' + encoded
       const youdaoUrl = 'https://dict.youdao.com/dictvoice?audio=' + encoded + '&type=2'
 
-      const primaryUrl = isSentence ? googleUrl : youdaoUrl
-      const secondaryUrl = isSentence ? youdaoUrl : googleUrl
-
-      const audio = new Audio(primaryUrl)
+      const audio = new Audio(googleUrl)
       audio.playbackRate = Math.max(0.7, Math.min(1.5, rate))
       activeAudioElement = audio
 
       audio.play().catch(() => {
         if (currentSpeechToken !== thisToken) return
-        // Fallback inside catch might be blocked by mobile browsers due to lack of direct user gesture,
-        // but we still attempt it in case it's a network error rather than a gesture block.
-        const fallbackAudio = new Audio(secondaryUrl)
+        const fallbackAudio = new Audio(youdaoUrl)
         fallbackAudio.playbackRate = Math.max(0.7, Math.min(1.5, rate))
         activeAudioElement = fallbackAudio
         fallbackAudio.play().catch(() => {})
@@ -174,22 +168,6 @@ export function speakWord(text: string, rate: number = 0.95): void {
     } catch (err) {
       console.warn('[TTS] Audio Stream error:', err)
     }
-  }
-
-  // 2. Direct Instant Stream for Android, iOS, Linux, and Electron (100% native audio stability)
-  const isDirectAudioPlatform =
-    typeof window !== 'undefined' &&
-    (!!(window as unknown as { electronAPI?: unknown }).electronAPI ||
-      !!(window as unknown as { Capacitor?: unknown }).Capacitor ||
-      navigator.userAgent.includes('Android') ||
-      navigator.userAgent.includes('iPhone') ||
-      navigator.userAgent.includes('iPad') ||
-      navigator.userAgent.includes('Electron') ||
-      navigator.platform.includes('Linux'))
-
-  if (isDirectAudioPlatform) {
-    playStreamAudio()
-    return
   }
 
   // 3. Check native Web SpeechSynthesis with proper synchronization on standard Web

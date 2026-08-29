@@ -89,8 +89,7 @@ export const VideoExplorerModal: React.FC<VideoExplorerModalProps> = ({
   const filteredVideos = useMemo(() => {
     return ALL_CURATED_LEARNING_VIDEOS.filter((item) => {
       const { info } = item
-      const matchesCategory =
-        activeCategory === 'all' || info.category === activeCategory
+      const matchesCategory = activeCategory === 'all' || info.category === activeCategory
 
       const q = searchQuery.toLowerCase().trim()
       if (!q) return matchesCategory
@@ -343,7 +342,10 @@ export const VideoExplorerModal: React.FC<VideoExplorerModalProps> = ({
 
                 <div className='flex items-center gap-2'>
                   <div className='relative flex-1'>
-                    <Link2 size={15} className='absolute left-3 top-1/2 -translate-y-1/2 text-gray-400' />
+                    <Link2
+                      size={15}
+                      className='absolute left-3 top-1/2 -translate-y-1/2 text-gray-400'
+                    />
                     <input
                       type='text'
                       value={customUrl}
@@ -382,7 +384,9 @@ export const VideoExplorerModal: React.FC<VideoExplorerModalProps> = ({
               {isSearchingYt ? (
                 <div className='text-center py-12 space-y-2'>
                   <Sparkles size={28} className='animate-spin mx-auto text-red-500' />
-                  <p className='text-xs font-bold text-gray-500'>Đang tìm kiếm trực tiếp trên YouTube...</p>
+                  <p className='text-xs font-bold text-gray-500'>
+                    Đang tìm kiếm trực tiếp trên YouTube...
+                  </p>
                 </div>
               ) : ytResults.length === 0 ? (
                 <div className='text-center py-12 space-y-2'>
@@ -533,7 +537,9 @@ export const VideoExplorerModal: React.FC<VideoExplorerModalProps> = ({
                     >
                       {/* Flow Header Banner */}
                       <div
-                        onClick={() => setExpandedFlowId((prev) => (prev === flow.id ? '' : flow.id))}
+                        onClick={() =>
+                          setExpandedFlowId((prev) => (prev === flow.id ? '' : flow.id))
+                        }
                         className='p-4 sm:p-5 flex items-start justify-between gap-3 cursor-pointer select-none group'
                       >
                         <div className='flex items-start gap-3.5 min-w-0'>

@@ -51,11 +51,7 @@ export const VideoLearning: React.FC = () => {
   }, [fetchDecks])
 
   // Load Video Transcript with explicit percentage steps
-  const handleLoadVideo = async (
-    videoId: string,
-    info?: VideoInfo,
-    flowCtx?: FlowContext,
-  ) => {
+  const handleLoadVideo = async (videoId: string, info?: VideoInfo, flowCtx?: FlowContext) => {
     if (flowCtx) {
       setActiveFlow(flowCtx)
     }
