@@ -197,8 +197,10 @@ const FlashCard = memo(function FlashCard({ word, isFlipped, onFlip }: FlashCard
       >
         <div className='w-full h-40 mb-3 rounded-2xl overflow-hidden bg-gray-100 dark:bg-gray-800 shadow-inner'>
           <img
+            key={imageUrl}
             src={imageUrl}
             alt={word.term}
+            loading='lazy'
             onError={(e) => {
               e.currentTarget.src = getWordSvgFallback(word.term)
             }}

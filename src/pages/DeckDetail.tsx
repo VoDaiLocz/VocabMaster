@@ -259,8 +259,10 @@ const WordItem = memo(function WordItem({ word, onDelete }: WordItemProps) {
     <div className='bg-white dark:bg-gray-800 rounded-xl p-4 flex items-center gap-4 group hover:shadow-md transition-shadow'>
       <div className='w-12 h-12 rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-700 shrink-0 shadow-inner'>
         <img
+          key={imageUrl}
           src={imageUrl}
           alt={word.term}
+          loading='lazy'
           onError={(e) => {
             e.currentTarget.src = getWordSvgFallback(word.term)
           }}

@@ -239,7 +239,7 @@ export async function lookupWord(
         }
       }
     }
-  } catch (err) {
+  } catch {
     // Graceful offline fallback
   }
 

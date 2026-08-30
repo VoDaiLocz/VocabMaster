@@ -181,7 +181,11 @@ const CardContent = memo(function CardContent({ word, isFlipped, onFlip }: CardC
     [word.term],
   )
 
-  const imageUrl = getWordImageUrl(word.term, '3d', (word as any).image_url)
+  const imageUrl = getWordImageUrl(
+    word.term,
+    '3d',
+    (word as { image_url?: string | null }).image_url,
+  )
 
   return (
     <div
@@ -191,8 +195,10 @@ const CardContent = memo(function CardContent({ word, isFlipped, onFlip }: CardC
       {!isFlipped && (
         <div className='absolute inset-x-0 top-0 h-32 opacity-20 pointer-events-none'>
           <img
+            key={imageUrl}
             src={imageUrl}
             alt={word.term}
+            loading='lazy'
             onError={(e) => {
               e.currentTarget.src = getWordSvgFallback(word.term)
             }}

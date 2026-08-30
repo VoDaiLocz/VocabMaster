@@ -137,7 +137,9 @@ export const SentenceTilesBuilder: React.FC<SentenceTilesBuilderProps> = ({
       return
     }
     if (!selectedIndices.includes(index)) {
-      speakWord(shuffledTiles[index])
+      const rawWord = shuffledTiles[index]
+      const cleanWord = rawWord ? rawWord.replace(/[.,?!'"]/g, '').trim() : ''
+      speakWord(cleanWord || rawWord)
       setSelectedIndices((prev) => [...prev, index])
       setStatus('idle')
       setErrorFeedback(null)
@@ -157,7 +159,9 @@ export const SentenceTilesBuilder: React.FC<SentenceTilesBuilderProps> = ({
     }
     const tileIdx = selectedIndices[selectedIndexPos]
     if (tileIdx !== undefined) {
-      speakWord(shuffledTiles[tileIdx])
+      const rawWord = shuffledTiles[tileIdx]
+      const cleanWord = rawWord ? rawWord.replace(/[.,?!'"]/g, '').trim() : ''
+      speakWord(cleanWord || rawWord)
     }
     setSelectedIndices((prev) => prev.filter((_, idx) => idx !== selectedIndexPos))
     setStatus('idle')
@@ -172,10 +176,16 @@ export const SentenceTilesBuilder: React.FC<SentenceTilesBuilderProps> = ({
   }
 
   // Speak the user's currently constructed sentence in the answer box
-  const playConstructedAudio = () => {
-    const constructedSentence = selectedIndices.map((idx) => shuffledTiles[idx]).join(' ')
+  const playConstructedAudio = (e?: React.MouseEvent) => {
+    if (e) {
+      e.stopPropagation()
+    }
+    const rawTokens = selectedIndices.map((idx) => shuffledTiles[idx])
+    const constructedSentence = rawTokens.join(' ').replace(/\s+/g, ' ').trim()
     if (constructedSentence) {
+      setIsPlayingAudio(true)
       speakWord(constructedSentence, 1.0)
+      setTimeout(() => setIsPlayingAudio(false), 2000)
     }
   }
 
@@ -444,11 +454,13 @@ export const SentenceTilesBuilder: React.FC<SentenceTilesBuilderProps> = ({
 
             {/* Quick listen button for the currently constructed sentence */}
             <button
+              type='button'
               onClick={playConstructedAudio}
-              className='ml-auto p-1.5 rounded-lg bg-primary-100 dark:bg-primary-900/60 text-primary-700 dark:text-primary-300 hover:bg-primary-200 transition-colors flex items-center gap-1 text-[11px] font-semibold'
+              className='ml-auto p-1.5 rounded-lg bg-primary-100 dark:bg-primary-900/60 text-primary-700 dark:text-primary-300 hover:bg-primary-200 transition-colors flex items-center gap-1 text-[11px] font-semibold active:scale-95 shadow-2xs'
               title='Nghe câu bạn vừa ghép'
+              aria-label='Nghe câu vừa ghép'
             >
-              <Volume2 size={13} />
+              <Volume2 size={13} className={isPlayingAudio ? 'animate-bounce' : ''} />
               <span className='hidden sm:inline'>Nghe thử</span>
             </button>
           </>

@@ -106,15 +106,23 @@ export function checkTypingAnswer(input: string, target: string): TypingResult {
 // Global active audio and speech token to prevent echo / double-playing
 let activeAudioElement: HTMLAudioElement | null = null
 let currentSpeechToken = 0
+let speechFallbackTimer: ReturnType<typeof setTimeout> | null = null
 
 /**
- * Cancel any ongoing speech synthesis or audio playback
+ * Cancel any ongoing speech synthesis or audio playback immediately
  */
 export function stopAllAudio(): void {
   currentSpeechToken++
+  if (speechFallbackTimer) {
+    clearTimeout(speechFallbackTimer)
+    speechFallbackTimer = null
+  }
   if (activeAudioElement) {
     try {
       activeAudioElement.pause()
+      activeAudioElement.currentTime = 0
+      activeAudioElement.onended = null
+      activeAudioElement.onerror = null
       activeAudioElement.src = ''
       activeAudioElement = null
     } catch {
@@ -143,34 +151,70 @@ export function speakWord(text: string, rate: number = 0.95): void {
   stopAllAudio()
   const thisToken = currentSpeechToken
 
-  // Stream Audio Fallback (Google TTS primary, Youdao secondary)
+  // Stream Audio Fallback (Google TTS primary, secondary endpoints for full sentences/words)
   const playStreamAudio = () => {
     if (currentSpeechToken !== thisToken) return
-    try {
-      const encoded = encodeURIComponent(cleanText.slice(0, 200))
+    // Ensure any stuck SpeechSynthesis is cancelled so it won't speak later
+    if ('speechSynthesis' in window && window.speechSynthesis) {
+      try {
+        window.speechSynthesis.cancel()
+      } catch {
+        // ignore
+      }
+    }
 
-      // Google TTS is much more reliable and NEVER repeats words (unlike Youdao)
+    try {
+      const encoded = encodeURIComponent(cleanText.slice(0, 300))
+      // Primary: Google Translate TTS API (gtx client)
       const googleUrl =
+        'https://translate.googleapis.com/translate_tts?ie=UTF-8&tl=en&client=gtx&q=' + encoded
+      // Fallback 1: Google Translate alternative client
+      const googleAltUrl =
         'https://translate.google.com/translate_tts?ie=UTF-8&tl=en&client=tw-ob&q=' + encoded
-      const youdaoUrl = 'https://dict.youdao.com/dictvoice?audio=' + encoded + '&type=2'
+      // Fallback 2: Youdao dictvoice (great for words)
+      const youdaoUrl = 'https://dict.youdao.com/dictvoice?audio=' + encoded + '&type=1'
 
       const audio = new Audio(googleUrl)
       audio.playbackRate = Math.max(0.7, Math.min(1.5, rate))
       activeAudioElement = audio
 
+      audio.onended = () => {
+        if (activeAudioElement === audio) {
+          activeAudioElement = null
+        }
+      }
+
       audio.play().catch(() => {
         if (currentSpeechToken !== thisToken) return
-        const fallbackAudio = new Audio(youdaoUrl)
+        const fallbackAudio = new Audio(googleAltUrl)
         fallbackAudio.playbackRate = Math.max(0.7, Math.min(1.5, rate))
         activeAudioElement = fallbackAudio
-        fallbackAudio.play().catch(() => {})
+
+        fallbackAudio.onended = () => {
+          if (activeAudioElement === fallbackAudio) {
+            activeAudioElement = null
+          }
+        }
+
+        fallbackAudio.play().catch(() => {
+          if (currentSpeechToken !== thisToken) return
+          const ydAudio = new Audio(youdaoUrl)
+          ydAudio.playbackRate = Math.max(0.7, Math.min(1.5, rate))
+          activeAudioElement = ydAudio
+          ydAudio.onended = () => {
+            if (activeAudioElement === ydAudio) {
+              activeAudioElement = null
+            }
+          }
+          ydAudio.play().catch(() => {})
+        })
       })
     } catch (err) {
       console.warn('[TTS] Audio Stream error:', err)
     }
   }
 
-  // 3. Check native Web SpeechSynthesis with proper synchronization on standard Web
+  // 2. Check native Web SpeechSynthesis with strict mutex & single-engine exclusivity
   if ('speechSynthesis' in window && window.speechSynthesis) {
     try {
       const voices = window.speechSynthesis.getVoices()
@@ -193,31 +237,54 @@ export function speakWord(text: string, rate: number = 0.95): void {
       if (preferredVoice) utterance.voice = preferredVoice
 
       let hasStarted = false
+
       utterance.onstart = () => {
         if (currentSpeechToken !== thisToken) {
           try {
             window.speechSynthesis.cancel()
           } catch {
-            // ignore cancellation error
+            // ignore
           }
           return
         }
         hasStarted = true
+        // SpeechSynthesis successfully started -> cancel any pending stream fallback timer!
+        if (speechFallbackTimer) {
+          clearTimeout(speechFallbackTimer)
+          speechFallbackTimer = null
+        }
       }
 
       utterance.onerror = () => {
         if (currentSpeechToken !== thisToken) return
         if (!hasStarted) {
+          if (speechFallbackTimer) {
+            clearTimeout(speechFallbackTimer)
+            speechFallbackTimer = null
+          }
           playStreamAudio()
         }
       }
 
-      // Fallback timeout only for standard web
-      setTimeout(() => {
-        if (currentSpeechToken === thisToken && !hasStarted && !window.speechSynthesis.speaking) {
+      utterance.onend = () => {
+        if (speechFallbackTimer) {
+          clearTimeout(speechFallbackTimer)
+          speechFallbackTimer = null
+        }
+      }
+
+      // Fallback timer: if SpeechSynthesis fails to start within 350ms (common on Linux/Electron without speechd),
+      // cancel SpeechSynthesis and switch to clean stream audio.
+      speechFallbackTimer = setTimeout(() => {
+        if (currentSpeechToken === thisToken && !hasStarted) {
+          try {
+            window.speechSynthesis.cancel()
+          } catch {
+            // ignore
+          }
           playStreamAudio()
         }
-      }, 500)
+      }, 350)
 
       window.speechSynthesis.speak(utterance)
       return

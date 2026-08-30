@@ -38,7 +38,7 @@ export interface StoryChapter {
   comprehensionQuiz?: StoryQuizQuestion[]
 }
 
-export type StoryCategory = 'xianxia' | 'tech' | 'fables' | 'life'
+export type StoryCategory = 'xianxia' | 'tech' | 'detective' | 'fables' | 'life'
 
 export interface BilingualStory {
   id: string
@@ -54,4 +54,22 @@ export interface BilingualStory {
   descriptionVi: string
   tags: string[]
   chapters: StoryChapter[]
+}
+
+export interface StoryBookmark {
+  id: string
+  chapterId: number
+  chapterNumber: number
+  paragraphId: number
+  textEn: string
+  textVi: string
+  createdAt: number
+}
+
+export interface StoryProgress {
+  storyId: string
+  lastReadChapterIndex: number
+  completedChapterIds: number[]
+  lastReadAt: number
+  bookmarks?: StoryBookmark[]
 }

@@ -48,8 +48,10 @@ export const FlipCard = memo(function FlipCard({ word, isFlipped, onFlip }: Flip
           {showImage && (
             <div className='relative w-full h-44 mb-3 rounded-2xl overflow-hidden bg-gray-100 dark:bg-gray-700/50 shadow-inner group'>
               <img
+                key={imageUrl}
                 src={imageUrl}
                 alt={word.term}
+                loading='lazy'
                 onLoad={() => setImgLoaded(true)}
                 onError={(e) => {
                   e.currentTarget.src = getWordSvgFallback(word.term)
