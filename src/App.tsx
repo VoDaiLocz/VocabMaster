@@ -66,6 +66,7 @@ export default function App() {
                   <Route path='/learn' element={<Learn />} />
                   <Route path='/sentence-master' element={<SentenceMaster />} />
                   <Route path='/stories' element={<StoryLibrary />} />
+                  <Route path='/stories/:id' element={<StoryReader />} />
                   <Route path='/story/:id' element={<StoryReader />} />
                   <Route path='/video-learning' element={<VideoLearning />} />
                   <Route path='/video' element={<VideoLearning />} />

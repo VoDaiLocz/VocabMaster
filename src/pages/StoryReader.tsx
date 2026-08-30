@@ -146,9 +146,8 @@ export const StoryReader: React.FC = () => {
   const [currentAudioSentenceIndex, setCurrentAudioSentenceIndex] = useState<number>(-1)
   const isAudioPlayingRef = useRef<boolean>(false)
 
-  // Flattened sentences for audio flow
   const flattenedSentences = useMemo(() => {
-    return activeParagraphs.flatMap((p) => p.sentences)
+    return activeParagraphs.flatMap((p) => p.sentences || [])
   }, [activeParagraphs])
 
   // Word lookup popup state
