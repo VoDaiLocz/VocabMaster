@@ -62,18 +62,34 @@ type FontFamily = 'font-serif' | 'font-sans' | 'font-mono'
 export const StoryReader: React.FC = () => {
   const { id } = useParams<{ id: string }>()
 
-  const story: BilingualStory = useMemo(() => {
+  const story: BilingualStory | undefined = useMemo(() => {
     const custom = getCustomStories()
     const all = [...custom, ...BILINGUAL_STORIES_DATA]
-    return all.find((s) => s.id === id) || BILINGUAL_STORIES_DATA[0]
+    return all.find((s) => s.id === id) || all[0] || BILINGUAL_STORIES_DATA[0]
   }, [id])
 
+  const chapters = useMemo(() => {
+    return story?.chapters && Array.isArray(story.chapters) ? story.chapters : []
+  }, [story])
+
   // Chapter Navigation & Progress State
-  const initialProgress = useMemo(() => getStoryProgress(story.id), [story.id])
+  const initialProgress = useMemo(() => {
+    if (!story?.id) {
+      return {
+        storyId: '',
+        lastReadChapterIndex: 0,
+        completedChapterIds: [],
+        bookmarks: [],
+        lastReadAt: 0,
+      }
+    }
+    return getStoryProgress(story.id)
+  }, [story])
   const [activeChapterIndex, setActiveChapterIndex] = useState<number>(() => {
     if (
       initialProgress.lastReadChapterIndex >= 0 &&
-      initialProgress.lastReadChapterIndex < story.chapters.length
+      chapters.length > 0 &&
+      initialProgress.lastReadChapterIndex < chapters.length
     ) {
       return initialProgress.lastReadChapterIndex
     }
@@ -93,7 +109,22 @@ export const StoryReader: React.FC = () => {
   // Scroll Progress Percentage State (0 - 100%)
   const [scrollPercent, setScrollPercent] = useState<number>(0)
 
-  const currentChapter: StoryChapter = story.chapters[activeChapterIndex] || story.chapters[0]
+  const currentChapter: StoryChapter = useMemo(() => {
+    if (chapters.length > 0) {
+      return chapters[activeChapterIndex] || chapters[0]
+    }
+    return {
+      id: 1,
+      chapterNumber: 1,
+      titleEn: 'Chapter 1',
+      titleVi: 'Chương 1',
+      estimatedMinutes: 10,
+      wordCount: 100,
+      descriptionVi: '',
+      targetVocabulary: [],
+      paragraphs: [],
+    }
+  }, [chapters, activeChapterIndex])
 
   // Reader Customization Settings (Persisted in localStorage)
   const [theme, setTheme] = useState<ReaderTheme>(() => {
@@ -373,7 +404,7 @@ export const StoryReader: React.FC = () => {
   }
 
   const handleNextChapter = () => {
-    if (activeChapterIndex < story.chapters.length - 1) {
+    if (activeChapterIndex < chapters.length - 1) {
       selectChapter(activeChapterIndex + 1)
     }
   }
@@ -397,9 +428,9 @@ export const StoryReader: React.FC = () => {
   const filteredChapters = useMemo(() => {
     const q = chapterSearchQuery.toLowerCase().trim()
     if (!q) {
-      return story.chapters.slice(0, 100)
+      return chapters.slice(0, 100)
     }
-    return story.chapters
+    return chapters
       .filter((ch) => {
         return (
           ch.chapterNumber.toString().includes(q) ||
@@ -409,7 +440,7 @@ export const StoryReader: React.FC = () => {
         )
       })
       .slice(0, 100)
-  }, [story.chapters, chapterSearchQuery])
+  }, [chapters, chapterSearchQuery])
 
   // Theme styling configurations
   const themeClasses = {
@@ -435,6 +466,7 @@ export const StoryReader: React.FC = () => {
 
   const isCurrentChapterCompleted = completedChapterIds.includes(currentChapter.id)
   const progressPercent = useMemo(() => {
+    if (!story) return 0
     return calculateStoryProgressPercent(story, {
       storyId: story.id,
       lastReadChapterIndex: activeChapterIndex,
@@ -447,6 +479,22 @@ export const StoryReader: React.FC = () => {
   const actualWordCount = useMemo(() => {
     return activeParagraphs.reduce((sum, p) => sum + p.textEn.split(/\s+/).length, 0)
   }, [activeParagraphs])
+
+  if (!story || chapters.length === 0) {
+    return (
+      <div className='min-h-[500px] flex flex-col items-center justify-center p-8 text-center space-y-4'>
+        <BookOpen size={48} className='text-emerald-500 animate-pulse' />
+        <h2 className='text-xl font-bold'>Đang chuẩn bị bộ truyện...</h2>
+        <p className='text-sm text-gray-500'>Vui lòng đợi giây lát hoặc quay lại thư viện.</p>
+        <Link
+          to='/stories'
+          className='px-4 py-2 bg-emerald-600 text-white rounded-xl font-bold text-sm hover:bg-emerald-500'
+        >
+          Quay lại Thư Viện Truyện
+        </Link>
+      </div>
+    )
+  }
 
   return (
     <div
@@ -482,7 +530,7 @@ export const StoryReader: React.FC = () => {
             >
               <List size={14} />
               <span>
-                Chương {currentChapter.chapterNumber}/{story.chapters.length}
+                Chương {currentChapter.chapterNumber}/{chapters.length}
               </span>
             </button>
           </div>
@@ -837,7 +885,7 @@ export const StoryReader: React.FC = () => {
               onClick={() => setIsChapterDrawerOpen(true)}
               className='px-3.5 py-2 rounded-2xl bg-black/5 dark:bg-white/5 text-xs font-bold flex items-center gap-1.5 hover:bg-black/10'
             >
-              <List size={14} /> Mục lục ({story.chapters.length} chương)
+              <List size={14} /> Mục lục ({chapters.length} chương)
             </button>
           </div>
 
@@ -856,9 +904,9 @@ export const StoryReader: React.FC = () => {
 
             <button
               onClick={handleNextChapter}
-              disabled={activeChapterIndex === story.chapters.length - 1}
+              disabled={activeChapterIndex === chapters.length - 1}
               className={`flex items-center gap-2 px-5 py-3 rounded-2xl font-bold text-xs sm:text-sm transition-all ${
-                activeChapterIndex === story.chapters.length - 1
+                activeChapterIndex === chapters.length - 1
                   ? 'opacity-40 cursor-not-allowed bg-black/5 dark:bg-white/5'
                   : 'bg-emerald-600 text-white shadow-lg shadow-emerald-500/25 hover:bg-emerald-500'
               }`}
@@ -1047,7 +1095,7 @@ export const StoryReader: React.FC = () => {
               <div className='flex items-center gap-2'>
                 <List className='text-emerald-600' size={20} />
                 <h3 className='font-bold font-display text-base'>
-                  Mục Lục ({story.chapters.length} chương)
+                  Mục Lục ({chapters.length} chương)
                 </h3>
               </div>
               <button
@@ -1079,13 +1127,13 @@ export const StoryReader: React.FC = () => {
                 <input
                   type='number'
                   min={1}
-                  max={story.chapters.length}
-                  placeholder={`Nhảy nhanh tới chương (1 - ${story.chapters.length})...`}
+                  max={chapters.length}
+                  placeholder={`Nhảy nhanh tới chương (1 - ${chapters.length})...`}
                   className='flex-1 px-3 py-1.5 rounded-xl bg-black/5 dark:bg-white/5 text-xs outline-none border border-transparent focus:border-emerald-500 font-mono'
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') {
                       const val = parseInt((e.target as HTMLInputElement).value, 10)
-                      if (val >= 1 && val <= story.chapters.length) {
+                      if (val >= 1 && val <= chapters.length) {
                         selectChapter(val - 1)
                       }
                     }
@@ -1097,7 +1145,7 @@ export const StoryReader: React.FC = () => {
             {/* Chapters List */}
             <div className='flex-1 overflow-y-auto p-3 space-y-2'>
               {filteredChapters.map((ch) => {
-                const actualIdx = story.chapters.findIndex((c) => c.id === ch.id)
+                const actualIdx = chapters.findIndex((c) => c.id === ch.id)
                 const isSelected = activeChapterIndex === actualIdx
                 const isCompleted = completedChapterIds.includes(ch.id)
 
@@ -1169,7 +1217,7 @@ export const StoryReader: React.FC = () => {
                   <div
                     key={bm.id}
                     onClick={() => {
-                      const chIdx = story.chapters.findIndex((c) => c.id === bm.chapterId)
+                      const chIdx = chapters.findIndex((c) => c.id === bm.chapterId)
                       if (chIdx >= 0) {
                         selectChapter(chIdx)
                         setIsBookmarksModalOpen(false)
