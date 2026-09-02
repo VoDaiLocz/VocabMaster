@@ -743,6 +743,45 @@ export const StoryReader: React.FC = () => {
           </div>
         )}
 
+        {/* Empty Chapter State when paragraphs are not yet available */}
+        {activeParagraphs.length === 0 && !loadingChapterContent && (
+          <div
+            className={`p-8 sm:p-12 rounded-3xl border ${cardThemeClasses[theme]} text-center space-y-4`}
+          >
+            <div className='w-16 h-16 rounded-3xl bg-amber-500/10 text-amber-600 dark:text-amber-400 mx-auto flex items-center justify-center border border-amber-500/20 shadow-sm'>
+              <BookOpen size={32} />
+            </div>
+            <div className='space-y-1.5'>
+              <h3 className='text-lg sm:text-xl font-extrabold'>
+                Chương {currentChapter.chapterNumber}: Đang Cập Nhật Bản Dịch Chuẩn
+              </h3>
+              <p className='text-xs sm:text-sm opacity-75 max-w-md mx-auto'>
+                Chương này nằm trong cấu trúc mục lục nguyên tác và đang chờ cập nhật bản dịch
+                bilingual chuẩn. Bạn có thể quay lại đọc các chương nguyên tác có sẵn hoặc chọn
+                chương khác.
+              </p>
+            </div>
+
+            <div className='flex items-center justify-center gap-3 pt-3 flex-wrap'>
+              <button
+                onClick={() => setActiveChapterIndex(0)}
+                className='px-5 py-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold transition-all shadow-md flex items-center gap-2'
+              >
+                <BookOpen size={16} />
+                <span>Đọc Các Chương Có Sẵn (Chương 1)</span>
+              </button>
+
+              <button
+                onClick={() => setIsChapterDrawerOpen(true)}
+                className='px-4 py-2.5 rounded-2xl bg-black/5 dark:bg-white/5 hover:bg-black/10 text-xs sm:text-sm font-bold transition-all border border-black/10 dark:border-white/10 flex items-center gap-2'
+              >
+                <List size={16} />
+                <span>Mục Lục Toàn Bộ Chương</span>
+              </button>
+            </div>
+          </div>
+        )}
+
         {/* Story Paragraphs Container */}
         <div className='space-y-6 leading-relaxed'>
           {activeParagraphs.map((p: StoryParagraph, pIdx: number) => {

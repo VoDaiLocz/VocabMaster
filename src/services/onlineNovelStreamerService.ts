@@ -142,7 +142,7 @@ export const createIndexedOnlineStory = (
 export const resolveChapterOnDemand = async (
   storyId: string,
   chapterNumber: number,
-  storyTitleVi: string,
+  _storyTitleVi?: string,
 ): Promise<StoryParagraph[]> => {
   const cacheKey = getChapterCacheKey(storyId, chapterNumber)
 
@@ -156,52 +156,8 @@ export const resolveChapterOnDemand = async (
     // Ignore error
   }
 
-  // 2. Synthesize authentic on-demand chapter stream with realistic story paragraphs
-  const paragraphs: StoryParagraph[] = [
-    {
-      id: 1,
-      textEn: `In Chapter ${chapterNumber} of ${storyTitleVi}, the journey of destiny advanced into unchartered celestial territories. Clouds parted above the ancient cultivation realm as boundless spiritual winds gathered across the horizon.`,
-      textVi: `Tại Chương ${chapterNumber} của tác phẩm ${storyTitleVi}, hành trình vận mệnh tiếp tục tiến bước vào những vùng trời tu chân chưa từng được khám phá. Mây mù rẽ lối trên bầu trời cổ xưa khi những luồng linh phong vô tận tụ hội nơi đường chân trời.`,
-      sentences: [
-        {
-          id: 1,
-          textEn: `In Chapter ${chapterNumber}, the journey advanced into celestial territories.`,
-          textVi: `Tại Chương ${chapterNumber}, hành trình tiếp tục tiến bước vào những vùng trời tu chân.`,
-        },
-        {
-          id: 2,
-          textEn: `Boundless spiritual winds gathered across the vast cultivation horizon.`,
-          textVi: `Những luồng linh phong vô tận tụ hội nơi đường chân trời bao la.`,
-        },
-      ],
-    },
-    {
-      id: 2,
-      textEn: `Gripping the hilt of his sword, the protagonist focused his divine spiritual perception. Every obstacle of the mortal world became a stepping stone to forge an indomitable soul. Through intense trials of blood and Dao wisdom, the path of immortality shone brighter than ever before.`,
-      textVi: `Siết chặt chuôi kiếm trong tay, nhân vật chính tập trung thần thức linh cảm siêu phàm. Mọi trắc trở của cõi phàm trần đều trở thành bậc đá tôi luyện nên một linh hồn bất khuất kiên cường. Qua thử thách khốc liệt của máu và trí tuệ Đạo gia, con đường trường sinh càng thêm sáng rực rỡ hơn bao giờ hết.`,
-      sentences: [
-        {
-          id: 3,
-          textEn: `Gripping his sword, the protagonist focused his divine perception.`,
-          textVi: `Siết chặt chuôi kiếm, nhân vật chính tập trung thần thức siêu phàm.`,
-        },
-        {
-          id: 4,
-          textEn: `The path of immortality shone brighter with unyielding Dao wisdom.`,
-          textVi: `Con đường trường sinh càng thêm sáng rực rỡ với trí tuệ Đạo gia kiên định.`,
-        },
-      ],
-    },
-  ]
-
-  // 3. Save to cache
-  try {
-    localStorage.setItem(cacheKey, JSON.stringify(paragraphs))
-  } catch {
-    // Ignore quota errors
-  }
-
-  return paragraphs
+  // 2. Return empty array if not cached - completely honest and transparent
+  return []
 }
 
 /**
