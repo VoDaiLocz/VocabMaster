@@ -8,96 +8,406 @@ import { StoryChapter } from '@/types/story'
 
 export const XICH_TAM_CHAPTERS: StoryChapter[] = [
   // ==========================================
-  // CHƯƠNG 1: Đạo Huân Bảng Thượng Đệ Nhất Nhân
+  // CHƯƠNG 1: Tiên Nhân Thần Bí
   // ==========================================
   {
     id: 1,
     chapterNumber: 1,
     volume: 'Quyển 1: Thiếu Niên Chấp Kiếm & Phong Lâm Biến Khởi',
-    titleEn: 'Chapter 1: The First on the Dao Merit Board',
-    titleVi: 'Chương 1: Đạo Huân Bảng Thượng Đệ Nhất Nhân',
-    estimatedMinutes: 18,
-    wordCount: 2250,
+    titleEn: 'Chapter 1: The Mysterious Immortal',
+    titleVi: 'Chương 1: Tiên Nhân Thần Bí',
+    estimatedMinutes: 15,
+    wordCount: 1173,
     descriptionVi:
-      'Tại Đạo Viện Phong Lâm Thành của Trang Quốc, thiếu niên Khương Vọng đứng đầu Đạo Huân Bảng, dốc sức gom góp điểm công huân để đổi Khai Mạch Đan bước vào con đường tu tiên, đồng thời một lòng chăm sóc cô muội muội nhỏ Khương An An.',
+      'Thiên kiêu Tả Quang Liệt độc phá Hàm Cốc Quan trong đại chiến Tần Sở, bị đại trận Cửu Sát Huyền Âm mai phục rơi xuống như sao băng tại đạo quán hoang phế ngoài thành Phong Lâm của Trang Quốc.',
     targetVocabulary: [
-      { word: 'Dao Academy', ipa: '/daʊ əˈkædəmi/', meaningVi: 'Đạo Viện tu chân' },
-      { word: 'Dao Merit Board', ipa: '/daʊ ˈmerɪt bɔːd/', meaningVi: 'Bảng xếp hạng Đạo Huân' },
-      { word: 'Opening-Meridian Pill', ipa: '/ˈəʊpnɪŋ məˈrɪdiən pɪl/', meaningVi: 'Khai Mạch Đan' },
-      { word: 'Crimson Heart', ipa: '/ˈkrɪmzn hɑːt/', meaningVi: 'Tấm lòng son / Xích Tâm' },
-      { word: 'Candied Haws', ipa: '/ˈkændid hɔːz/', meaningVi: 'Kẹo hồ lô ngọt' },
+      { word: 'Mysterious Immortal', ipa: '/mɪˈstɪəriəs ɪˈmɔːtl/', meaningVi: 'Tiên nhân thần bí' },
+      { word: 'Flaming Meteor', ipa: '/ˈfleɪmɪŋ ˈmiːtiə/', meaningVi: 'Sao băng rực lửa' },
+      {
+        word: 'Nine Fiends Mysterious Yin',
+        ipa: '/naɪn fiːndz mɪˈstɪəriəs jɪn/',
+        meaningVi: 'Cửu Sát Huyền Âm',
+      },
+      {
+        word: 'Primordial Essence',
+        ipa: '/praɪˈmɔːdiəl ˈesns/',
+        meaningVi: 'Thiên địa nguyên khí',
+      },
+      { word: 'Abandoned Temple', ipa: '/əˈbændənd ˈtempl/', meaningVi: 'Đạo quán hoang phế' },
+      {
+        word: 'Divine Consciousness',
+        ipa: '/dɪˈvaɪn ˈkɒnʃəsnəs/',
+        meaningVi: 'Linh thức cảm ứng',
+      },
     ],
     paragraphs: [
       {
         id: 1,
         textEn:
-          "In the frontier territory of Zhuang State, Fenglin City Dao Academy stood quiet beneath the early autumn sun. On the giant jade stele in the central courtyard, Jiang Wang's name ranked firmly at the very top of the Dao Merit Board. To earn enough merit points for an Opening-Meridian Pill, the young outer disciple had completed dozens of perilous tasks across treacherous valleys and beast-infested mountain ridges.",
+          'The sun hung high in the sky, shedding light and warmth impartially across the mortal realm. It made no distinction between young and old, noble and lowly, beloved and neglected.',
         textVi:
-          'Tại vùng biên cương của Trang Quốc, Đạo Viện Phong Lâm Thành trầm mặc dưới ánh nắng đầu thu. Trên tấm bia ngọc khổng lồ ở giữa sân, cái tên Khương Vọng vững vàng chiếm giữ vị trí đầu bảng của Đạo Huân Bảng. Để gom đủ điểm công huân đổi lấy một viên Khai Mạch Đan, người thiếu niên đệ tử ngoại môn ấy đã hoàn thành hàng chục nhiệm vụ hiểm nghèo nơi thung lũng cheo leo và núi rừng đầy yêu thú hoành hành.',
+          'Mặt trời treo cao trên không trung, đưa ánh sáng và sức nóng công bằng xuống nhân gian. Không phân già trẻ, không phân quý tiện, yêu thích hay vô tình.',
         sentences: [
           {
             id: 1,
-            textEn: 'In Zhuang State, Fenglin City Dao Academy stood quiet beneath the autumn sun.',
-            textVi: 'Tại Trang Quốc, Đạo Viện Phong Lâm Thành trầm mặc dưới ánh nắng mùa thu.',
+            textEn:
+              'The sun hung high in the sky, shedding light and warmth impartially across the mortal realm.',
+            textVi:
+              'Mặt trời treo cao trên không trung, đưa ánh sáng và sức nóng công bằng xuống nhân gian.',
           },
           {
             id: 2,
-            textEn: "Jiang Wang's name ranked firmly at the top of the Dao Merit Board.",
-            textVi: 'Cái tên Khương Vọng vững vàng chiếm giữ vị trí đứng đầu Đạo Huân Bảng.',
-          },
-          {
-            id: 3,
             textEn:
-              'To earn an Opening-Meridian Pill, he had completed dozens of perilous missions.',
-            textVi:
-              'Để đổi lấy viên Khai Mạch Đan, hắn đã liều mình hoàn thành hàng chục nhiệm vụ hiểm nghèo.',
+              'It made no distinction between young and old, noble and lowly, beloved and neglected.',
+            textVi: 'Không phân già trẻ, không phân quý tiện, yêu thích hay vô tình.',
           },
         ],
       },
       {
         id: 2,
         textEn:
-          'Following the sudden demise of his father and the bankruptcy of their family pharmacy, eighteen-year-old Jiang Wang shouldered heavy financial debts while caring for his five-year-old sister, Jiang An\'an. Returning home with a string of bright red candied haws, he watched his sister nibble the sweet glaze with joyful laughter. Jiang Wang gently ruffled her hair and whispered softly: "Brother is being an elder brother for the very first time, but I will shelter you from every storm."',
+          'Young deer sought water beside the murmuring stream, and birds spread their wings as they flew swiftly through the lush forest.',
+        textVi: 'Hươu non tìm nước bên dòng suối, chim sải cánh bay xuyên qua rừng.',
+        sentences: [
+          {
+            id: 3,
+            textEn: 'Young deer sought water beside the stream, and birds flew through the forest.',
+            textVi: 'Hươu non tìm nước bên dòng suối, chim sải cánh bay xuyên qua rừng.',
+          },
+        ],
+      },
+      {
+        id: 3,
+        textEn:
+          'Far away on the horizon, a flash of deep crimson light flickered, sweeping close in the blink of an eye. The trailing fire stretched out like a burning line drawn across the sky by the brush of a deity, tearing the heavens apart.',
         textVi:
-          'Sau khi phụ thân đột ngột qua đời và hiệu thuốc gia đình phá sản, chàng trai mười tám tuổi Khương Vọng một vai gánh vác món nợ nặng nề, vừa tận tụy nuôi nấng cô muội muội năm tuổi Khương An An. Trở về căn nhà đơn sơ với xâu kẹo hồ lô đỏ thắm trên tay, hắn ngắm nhìn muội muội vui sướng cắn từng viên kẹo ngọt giòn. Khương Vọng dịu dàng xoa đầu cô bé, khẽ nói: "Ca ca cũng là lần đầu tiên làm ca ca, nhưng nhất định sẽ che mưa chắn gió cho muội suốt đời."',
+          'Ở phía xa nơi chân trời có một tia sáng đỏ đậm lóe lên, chỉ trong chớp mắt đã lướt đến gần. Chiếc đuôi lửa kéo dài như một đường hỏa tuyến vắt ngang vừa được thần nhân vung bút, xé toạc bầu trời.',
         sentences: [
           {
             id: 4,
             textEn:
-              'Eighteen-year-old Jiang Wang shouldered heavy family debts while raising his five-year-old sister.',
+              'Far away on the horizon, a flash of deep crimson light flickered, sweeping close in the blink of an eye.',
             textVi:
-              'Chàng trai mười tám tuổi Khương Vọng gánh vác nợ nần gia đình và nuôi nấng cô muội muội năm tuổi.',
+              'Ở phía xa nơi chân trời có một tia sáng đỏ đậm lóe lên, chỉ trong chớp mắt đã lướt đến gần.',
           },
           {
             id: 5,
             textEn:
-              "He returned home with sweet candied haws to bring a bright smile to Jiang An'an.",
+              'The trailing fire stretched out like a burning line drawn by a deity, tearing the heavens apart.',
             textVi:
-              'Hắn trở về nhà với xâu kẹo hồ lô ngọt ngào mang lại nụ cười rạng rỡ cho Khương An An.',
+              'Chiếc đuôi lửa kéo dài như một đường hỏa tuyến vắt ngang vừa được thần nhân vung bút, xé toạc bầu trời.',
           },
+        ],
+      },
+      {
+        id: 4,
+        textEn:
+          'Thousands of miles of rivers and mountains across Zhuang State were almost entirely seared by this scorching flaming streak.',
+        textVi: 'Mấy ngàn dặm núi sông của Trang quốc gần như đều bị hỏa tuyến này đốt qua.',
+        sentences: [
           {
             id: 6,
             textEn:
-              '"Brother is being an elder brother for the first time, but I will shelter you from every storm," he promised.',
+              'Thousands of miles of rivers and mountains across Zhuang State were seared by this flaming line.',
+            textVi: 'Mấy ngàn dặm núi sông của Trang quốc gần như đều bị hỏa tuyến này đốt qua.',
+          },
+        ],
+      },
+      {
+        id: 5,
+        textEn:
+          'Suddenly, a streak of black light surged into the sky, blocking its path. The world abruptly turned bitterly cold as primordial essence surged fiercely, and rays of light flashed simultaneously from all four cardinal directions.',
+        textVi:
+          'Đột nhiên, có một luồng sáng đen xông lên không trung, cản nó lại. Giữa thiên địa bỗng chốc trở nên lạnh lẽo, nguyên khí mãnh liệt, ở bốn phía Đông, Tây, Nam Bắc đột nhiên có ánh sáng cùng lóe lên.',
+        sentences: [
+          {
+            id: 7,
+            textEn: 'Suddenly, a streak of black light surged into the sky, blocking its path.',
+            textVi: 'Đột nhiên, có một luồng sáng đen xông lên không trung, cản nó lại.',
+          },
+          {
+            id: 8,
+            textEn:
+              'The world turned bitterly cold as primordial essence surged from all four cardinal directions.',
             textVi:
-              '"Ca ca là lần đầu tiên làm ca ca, nhưng nhất định sẽ che mưa chắn gió cho muội," hắn tự hứa.',
+              'Giữa thiên địa bỗng chốc trở nên lạnh lẽo, nguyên khí mãnh liệt, ở bốn phía Đông, Tây, Nam, Bắc ánh sáng cùng lóe lên.',
+          },
+        ],
+      },
+      {
+        id: 6,
+        textEn:
+          'The entire northeastern expanse of the Zhuang State sky was engulfed in ominous dark clouds, transforming the clear blue sky into a bleak, desolate gray.',
+        textVi:
+          'Cả một vùng trời phía Đông Bắc của Trang quốc bị mây đen bao phủ. Bầu trời trong xanh chuyển thành xám xịt.',
+        sentences: [
+          {
+            id: 9,
+            textEn: 'The northeastern expanse of Zhuang State was engulfed in ominous dark clouds.',
+            textVi: 'Cả một vùng trời phía Đông Bắc của Trang quốc bị mây đen bao phủ.',
+          },
+          {
+            id: 10,
+            textEn: 'The clear blue sky transformed into a bleak, desolate gray.',
+            textVi: 'Bầu trời trong xanh chuyển thành xám xịt.',
+          },
+        ],
+      },
+      {
+        id: 7,
+        textEn:
+          'A thunderous roar suddenly detonated in the air: “Nine Fiends Mysterious Yin!” The crimson point of light tangled with the fiendish clouds for merely a moment before plummeting straight down. It fell faster and faster, growing larger and larger, until at last it produced a deafening rumble like a falling meteor!',
+        textVi:
+          'Một tiếng vang đột nhiên nổ tung trên không trung: “Cửu Sát Huyền Âm!” Điểm sáng kia chỉ dây dưa với sát vân một lát rồi đột nhiên rơi thẳng xuống. Điểm sáng càng rơi càng nhanh, càng nhìn càng lớn, đến cuối cùng... Nó phát ra tiếng ầm ầm như sao băng rơi!',
+        sentences: [
+          {
+            id: 11,
+            textEn:
+              'A thunderous roar suddenly detonated in the air: “Nine Fiends Mysterious Yin!”',
+            textVi: 'Một tiếng vang đột nhiên nổ tung trên không trung: “Cửu Sát Huyền Âm!”',
+          },
+          {
+            id: 12,
+            textEn:
+              'The crimson light tangled with the fiendish clouds before plummeting straight down.',
+            textVi: 'Điểm sáng kia chỉ dây dưa với sát vân một lát rồi đột nhiên rơi thẳng xuống.',
+          },
+          {
+            id: 13,
+            textEn:
+              'It fell faster and faster, producing a deafening rumble like a falling meteor!',
+            textVi:
+              'Điểm sáng càng rơi càng nhanh, đến cuối cùng phát ra tiếng ầm ầm như sao băng rơi!',
+          },
+        ],
+      },
+      {
+        id: 8,
+        textEn:
+          'The outskirts of Fenglin City were desolate and barren, with neither houses nor inhabitants, save for a small, dilapidated Taoist temple that had long been abandoned nearby. “Boom!” The fireball crashed into the earth, carving out a deep crater, yet held in check by some unseen force so that the tremor did not spread.',
+        textVi:
+          'Vùng ngoại ô thành Phong Lâm vốn vô cùng hoang vu, chẳng có nhà cửa cũng chẳng có người ở, gần đó chỉ có một đạo quán nhỏ bé cũ kỹ đã bỏ hoang từ lâu. “Ầm!” Quả cầu lửa kia rơi xuống đất, tạo thành một cái hố sâu nhưng giống như đang bị nguồn sức mạnh nào đó kiềm chế, địa chấn không lan rộng.',
+        sentences: [
+          {
+            id: 14,
+            textEn:
+              'The outskirts of Fenglin City were barren, with only an ancient abandoned Taoist temple.',
+            textVi:
+              'Vùng ngoại ô thành Phong Lâm vốn vô cùng hoang vu, gần đó chỉ có một đạo quán cũ kỹ bỏ hoang.',
+          },
+          {
+            id: 15,
+            textEn:
+              'The fireball crashed into the earth, carving out a deep crater without spreading seismic tremors.',
+            textVi: 'Quả cầu lửa rơi xuống đất tạo thành hố sâu nhưng địa chấn không lan rộng.',
+          },
+        ],
+      },
+      {
+        id: 9,
+        textEn:
+          'As the dust cleared, the figure of a man in vivid crimson robes was revealed. He possessed handsome, sword-sharp eyebrows, and his fiery red robe was embroidered with intricate yet refined patterns that accentuated his extraordinary air. However, his hair was disheveled and his robes were torn, lending him a somewhat battered appearance.',
+        textVi:
+          'Sau khi bụi mù tán đi liền để lộ thân hình một nam tử mặc y phục đỏ rực. Chỉ thấy người này mày kiếm tuấn lãng, bộ y phục đỏ rực trên người điểm hoa văn phức tạp nhưng trang nhã, càng làm nổi bật vẻ bất phàm của hắn. Có điều, lúc này, tóc mai hắn rối tung, áo bào cũng có vết rách nên trông có vẻ hơi chật vật.',
+        sentences: [
+          {
+            id: 16,
+            textEn: 'As the dust cleared, the figure of a man in vivid crimson robes was revealed.',
+            textVi: 'Sau khi bụi mù tán đi liền để lộ thân hình một nam tử mặc y phục đỏ rực.',
+          },
+          {
+            id: 17,
+            textEn:
+              'He possessed handsome sword-sharp eyebrows and intricate robes, though disheveled and torn.',
+            textVi:
+              'Người này mày kiếm tuấn lãng, áo bào đỏ rực tinh xảo nhưng tóc mai rối tung và áo rách chật vật.',
+          },
+        ],
+      },
+      {
+        id: 10,
+        textEn:
+          '“To think that I, Zuo Guanglie, would one day meet my end in such a remote valley...” The crimson-robed man glanced around, his voice tinged with disappointment: “What is this place called?”',
+        textVi:
+          '“Chẳng ngờ Tả Quang Liệt ta cũng có lúc phải chết ở nơi thâm sơn cùng cốc này...” Nam tử mặc diễm bào hơi đảo mắt nhìn quanh bốn phía, ngữ khí nhuốm chút thất vọng: “Nơi này tên là gì?”',
+        sentences: [
+          {
+            id: 18,
+            textEn:
+              '“To think that I, Zuo Guanglie, would one day meet my end in such a remote valley...” he murmured.',
+            textVi:
+              '“Chẳng ngờ Tả Quang Liệt ta cũng có lúc phải chết ở nơi thâm sơn cùng cốc này...” hắn lẩm bẩm.',
+          },
+          {
+            id: 19,
+            textEn: 'The crimson-robed man glanced around and asked: “What is this place called?”',
+            textVi: 'Nam tử mặc diễm bào đảo mắt nhìn quanh và hỏi: “Nơi này tên là gì?”',
+          },
+        ],
+      },
+      {
+        id: 11,
+        textEn:
+          'Day had abruptly turned to night, and the falling meteor had terrified the beggars sheltering in the ruined temple. Kowtowing frantically at the entrance, they only nervously replied: “Im... immortal master, this is the outskirts of Fenglin City. As for this temple... we... we do not know its name either.”',
+        textVi:
+          'Ngày đột nhiên chuyển thành đêm, lại có sao băng rơi xuống khiến mấy tên ăn mày sống nhờ trong đạo quán rách nát sợ hãi vô cùng, liên tục dập đầu trước cửa đạo quán, giờ thấy có người lên tiếng hỏi mới thấp thỏm trả lời: “Tiên... tiên nhân lão gia, đây là ngoại ô thành Phong Lâm, đạo quán này... ta... chúng ta cũng không biết tên.”',
+        sentences: [
+          {
+            id: 20,
+            textEn:
+              'Terrified by the celestial upheaval, beggars in the ruined temple kowtowed frantically.',
+            textVi:
+              'Kinh hãi trước dị tượng đất trời, đám ăn mày trong đạo quán rách nát liên tục dập đầu.',
+          },
+          {
+            id: 21,
+            textEn:
+              '“Immortal master, this is the outskirts of Fenglin City,” they replied in trembling fear.',
+            textVi:
+              '“Tiên nhân lão gia, đây là ngoại ô thành Phong Lâm,” bọn họ thấp thỏm run rẩy đáp.',
+          },
+        ],
+      },
+      {
+        id: 12,
+        textEn:
+          'The fingers of the crimson-robed man twitched slightly, harboring the thought of slaying these beggars. It was an era of chaotic warfare where kingdoms clashed incessantly. In recent years, no conflict matched the scale of the ongoing Qin-Chu war. Nearly a hundred thousand cultivators engaged in battle, and at the heart of the battlefield—the Hagu Plains—not a single blade of grass remained, while the earth had caved in for a hundred miles.',
+        textVi:
+          'Ngón tay của nam tử mặc diễm bào khẽ nhúc nhích, định tiêu diệt mấy tên ăn mày này. Hiện giờ đang là thời loạn lạc, các nước không ngừng chinh chiến. Nhưng mấy năm gần đây, chẳng có trận chiến nào có quy mô và tạo nên chấn động lớn như cuộc chiến Tần Sở lần này. Cả hai bên có gần mười vạn tu giả tham chiến, trung tâm của chiến trường - bình nguyên Hà Cốc chẳng còn một gốc cây ngọn cỏ, đất sụt trăm dặm.',
+        sentences: [
+          {
+            id: 22,
+            textEn: 'Zuo Guanglie twitched his fingers, contemplating executing these beggars.',
+            textVi: 'Ngón tay Tả Quang Liệt khẽ nhúc nhích, định tiêu diệt mấy tên ăn mày này.',
+          },
+          {
+            id: 23,
+            textEn:
+              'In the great Qin-Chu war, nearly a hundred thousand cultivators fought until the earth caved in for a hundred miles.',
+            textVi:
+              'Trong cuộc chiến Tần Sở, gần mười vạn tu giả tham chiến khiến đất sụt lở trăm dặm không còn ngọn cỏ.',
+          },
+        ],
+      },
+      {
+        id: 13,
+        textEn:
+          'As the peerless prodigy of the defeated side who had single-handedly breached Hangu Pass and nearly overturned the tide of war, he held no resentment at being hunted down. However, these beggars were citizens of Zhuang State—a state that had secretly aided the tyrannical Qin Empire by hosting ambushes within its borders. Yet he suddenly turned his palm, extinguishing the spark of flame: “Zuo Guanglie, is this your magnanimity? Venting wrath upon pitiful beggars?”',
+        textVi:
+          'Mà thân là thiên kiêu của phe thất bại, còn đơn độc đánh xuyên qua Hàm Cốc quan, suýt nữa đã nghịch chuyển chiến cuộc nên dù có bị truy sát cùng trời cuối đất hắn cũng không oán thán. Có điều, những tên khất cái này, cũng là khất cái của Trang quốc. Trang quốc lại dám âm thầm hiệp trợ cho Tần quốc bạo ngược... Nhưng hắn lại đột nhiên lật tay, dập tắt đốm lửa: “Tả Quang Liệt à, đây chính là sự độ lượng của ngươi sao? Giận lây sang những tên ăn mày đáng thương này?”',
+        sentences: [
+          {
+            id: 24,
+            textEn:
+              'Having single-handedly breached Hangu Pass, Zuo Guanglie held no resentment at being hunted.',
+            textVi:
+              'Từng đơn độc đánh xuyên Hàm Cốc Quan, Tả Quang Liệt bị truy sát cùng trời cuối đất cũng không oán thán.',
+          },
+          {
+            id: 25,
+            textEn:
+              'Extinguishing the flame in his hand, he refused to vent anger upon pitiful beggars.',
+            textVi:
+              'Lật tay dập tắt đốm lửa, hắn không nỡ giận lây sang những tên ăn mày đáng thương.',
+          },
+        ],
+      },
+      {
+        id: 14,
+        textEn:
+          'Zuo Guanglie sighed softly: “You may go.” Hands clasped behind his back, he turned toward the ink-black sky where his true enemies lurked like wolves stalking a mighty beast. Granted amnesty, the beggars scrambled away in sheer terror. However, noticing a sick beggar left lying on the altar table, Zuo Guanglie frowned: “Are you not going to bring your companion with you?”',
+        textVi:
+          'Tả Quang Liệt thở dài: “Các ngươi đi đi.” Hắn chắp tay quay đầu, đưa mắt nhìn về phía bầu trời đen như mực nơi kẻ thù đang rình rập như đàn sói. Đám ăn mày vội vã bỏ chạy, nhưng thấy một tên ăn mày ốm yếu vẫn thoi thóp trên bàn thờ, Tả Quang Liệt khẽ nhíu mày: “Không mang đồng bạn của các ngươi đi sao?”',
+        sentences: [
+          {
+            id: 26,
+            textEn:
+              '“You may go,” Zuo Guanglie sighed, looking toward the dark sky where real enemies lurked.',
+            textVi:
+              '“Các ngươi đi đi,” Tả Quang Liệt thở dài, đưa mắt nhìn lên bầu trời tăm tối nơi kẻ thù đang ẩn nấp.',
+          },
+          {
+            id: 27,
+            textEn:
+              'Seeing a sick beggar left behind on the altar, he asked: “Will you not bring your companion?”',
+            textVi:
+              'Thấy một người ốm yếu bị bỏ lại trên bàn thờ, hắn hỏi: “Không mang đồng bạn của các ngươi đi sao?”',
+          },
+        ],
+      },
+      {
+        id: 15,
+        textEn:
+          'To Zuo Guanglie, the word “companion” was priceless. Had his comrades not shielded him and shed their blood to hold the rear, how could he have escaped that apocalyptic slaughterhouse? Even facing death today as his life flickered out like an exhausted lamp, he would never forget those who helped him advance.',
+        textVi:
+          'Đối với Tả Quang Liệt, hai chữ “đồng bạn” quá đỗi trân quý. Nếu không có đồng bạn liều mình bảo vệ và dùng máu đoạn hậu, sao hắn có thể thoát khỏi Tu La tràng ngập trời kia? Dù cho hôm nay phải bỏ mạng khi dầu hết đèn tắt, hắn vĩnh viễn không quên những người đã giúp mình tiến bước.',
+        sentences: [
+          {
+            id: 28,
+            textEn:
+              'To Zuo Guanglie, the bond of companions who bled for him was beyond all price.',
+            textVi: 'Đối với Tả Quang Liệt, tình nghĩa của những đồng bạn đổ máu vì hắn là vô giá.',
+          },
+          {
+            id: 29,
+            textEn:
+              'Even facing death, he would never forget the comrades who paved his path forward.',
+            textVi:
+              'Dù đối diện cái chết, hắn sẽ không bao giờ quên những người đồng đội đã mở đường cho mình.',
+          },
+        ],
+      },
+      {
+        id: 16,
+        textEn:
+          'Unable to disobey the mysterious immortal, the beggars rushed back to carry their ailing friend. In their desperate struggle for survival, these emaciated beggars ran with every ounce of strength. Yet in the eyes of the shadowy cultivators watching from above, they were merely stubborn ants—moving far too slowly across the stage of impending doom.',
+        textVi:
+          'Không dám cự tuyệt lời tiên nhân thần bí, đám ăn mày chạy trở lại khiêng người bạn ốm yếu. Trong cuộc đấu tranh giành sự sống, những tên ăn mày gầy gò liều mạng chạy bằng toàn bộ sức lực. Nhưng trong mắt những kẻ săn đuổi đang rình rập trên cao, họ chẳng khác nào đàn kiến ương ngạnh—chạy quá đỗi chậm chạp giữa đại họa sắp giáng xuống.',
+        sentences: [
+          {
+            id: 30,
+            textEn:
+              'The beggars hurried back to rescue their ailing companion at the immortal’s bidding.',
+            textVi: 'Đám ăn mày vội chạy lại cứu người đồng bạn ốm yếu theo lời dặn của tiên nhân.',
+          },
+          {
+            id: 31,
+            textEn:
+              'Yet in the eyes of the predators lurking above, they were merely ants moving far too slowly.',
+            textVi:
+              'Nhưng trong mắt những kẻ săn mồi ẩn nấp trên cao, bọn họ chỉ là đàn kiến chạy quá đỗi chậm chạp.',
           },
         ],
       },
     ],
     comprehensionQuiz: [
       {
-        id: 'q1-1',
-        question: 'Why did Jiang Wang strive relentlessly to top the Dao Merit Board?',
+        id: 'xt-q1-1',
+        question:
+          'Ai là vị thiên kiêu rơi xuống như quả cầu lửa tại ngoại ô thành Phong Lâm trong Chương 1?',
         options: [
-          'To obtain an Opening-Meridian Pill and step onto the path of cultivation (Đổi Khai Mạch Đan để tu tiên)',
-          'To win a fortune of gold coins',
-          'To become the City Lord of Fenglin',
-          'To escape from the Dao Academy',
+          'Tả Quang Liệt (Thiên kiêu nước Sở đơn độc phá Hàm Cốc Quan)',
+          'Khương Vọng',
+          'Đổng A',
+          'Triệu Huyền Thái',
         ],
         correctIndex: 0,
         explanation:
-          'Jiang Wang accumulated Dao Merit to exchange for the scarce Opening-Meridian Pill to awaken his Dao meridians.',
+          'Tả Quang Liệt là thiên kiêu của Sở quốc, sau khi đơn độc đánh xuyên Hàm Cốc quan đã bị trận pháp Cửu Sát Huyền Âm mai phục và rơi xuống ngoài thành Phong Lâm.',
+      },
+      {
+        id: 'xt-q1-2',
+        question:
+          'Tại sao Tả Quang Liệt yêu cầu đám ăn mày phải quay lại đạo quán trước khi trốn chạy?',
+        options: [
+          'Để mang người đồng bạn ốm yếu đang nằm trên bàn thờ cùng đi (Vì đối với hắn, hai chữ "đồng bạn" là vô giá)',
+          'Để cướp tiền của đám ăn mày',
+          'Để bắt họ chỉ đường đến Phong Lâm Thành',
+          'Để bảo họ dập lửa',
+        ],
+        correctIndex: 0,
+        explanation:
+          'Tả Quang Liệt thấu hiểu sâu sắc giá trị của tình nghĩa đồng đội đã liều chết bảo vệ hắn trong chiến trường, nên không muốn thấy một người bạn ốm yếu bị bỏ mặc chờ chết.',
       },
     ],
   },
