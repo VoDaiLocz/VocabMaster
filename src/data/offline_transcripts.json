@@ -1,0 +1,98 @@
+{
+  "fu4p96ca5H4": [
+    {
+      "id": 1,
+      "start": 0,
+      "end": 4,
+      "duration": 4,
+      "textEn": "Have you ever wondered how big tech companies handle millions of requests?",
+      "textVi": "Bạn có bao giờ tự hỏi các công ty công nghệ lớn xử lý hàng triệu truy cập như thế nào không?",
+      "words": ["Have", "you", "ever", "wondered", "how", "big", "tech", "companies", "handle", "millions", "of", "requests?"]
+    },
+    {
+      "id": 2,
+      "start": 4,
+      "end": 9,
+      "duration": 5,
+      "textEn": "The secret weapon is called Rate Limiting.",
+      "textVi": "Vũ khí bí mật đó được gọi là Rate Limiting (Giới hạn tỷ lệ).",
+      "words": ["The", "secret", "weapon", "is", "called", "Rate", "Limiting."]
+    },
+    {
+      "id": 3,
+      "start": 9,
+      "end": 14,
+      "duration": 5,
+      "textEn": "Rate limiting protects your APIs from being overwhelmed by too much traffic.",
+      "textVi": "Giới hạn tỷ lệ bảo vệ các API của bạn khỏi bị quá tải bởi lưu lượng truy cập quá lớn.",
+      "words": ["Rate", "limiting", "protects", "your", "APIs", "from", "being", "overwhelmed", "by", "too", "much", "traffic."]
+    },
+    {
+      "id": 4,
+      "start": 14,
+      "end": 20,
+      "duration": 6,
+      "textEn": "There are several common algorithms like Token Bucket, Leaking Bucket, and Fixed Window.",
+      "textVi": "Có một vài thuật toán phổ biến như Token Bucket, Leaking Bucket, và Fixed Window.",
+      "words": ["There", "are", "several", "common", "algorithms", "like", "Token", "Bucket,", "Leaking", "Bucket,", "and", "Fixed", "Window."]
+    }
+  ],
+  "3c-iBn73dVU": [
+    {
+      "id": 1,
+      "start": 0,
+      "end": 5,
+      "duration": 5,
+      "textEn": "Welcome to the Docker Crash Course for absolute beginners.",
+      "textVi": "Chào mừng đến với Khóa học Docker cấp tốc dành cho người mới bắt đầu.",
+      "words": ["Welcome", "to", "the", "Docker", "Crash", "Course", "for", "absolute", "beginners."]
+    },
+    {
+      "id": 2,
+      "start": 5,
+      "end": 10,
+      "duration": 5,
+      "textEn": "Docker is a platform designed to help developers build, share, and run modern applications.",
+      "textVi": "Docker là một nền tảng được thiết kế để giúp lập trình viên xây dựng, chia sẻ và chạy các ứng dụng hiện đại.",
+      "words": ["Docker", "is", "a", "platform", "designed", "to", "help", "developers", "build,", "share,", "and", "run", "modern", "applications."]
+    },
+    {
+      "id": 3,
+      "start": 10,
+      "end": 15,
+      "duration": 5,
+      "textEn": "Instead of saying 'it works on my machine', Docker ensures it works everywhere.",
+      "textVi": "Thay vì nói 'nó chạy được trên máy tôi', Docker đảm bảo nó chạy được ở mọi nơi.",
+      "words": ["Instead", "of", "saying", "'it", "works", "on", "my", "machine',", "Docker", "ensures", "it", "works", "everywhere."]
+    }
+  ],
+  "Tn6-PIqc4UM": [
+    {
+      "id": 1,
+      "start": 0,
+      "end": 3,
+      "duration": 3,
+      "textEn": "React is a JavaScript library for building user interfaces.",
+      "textVi": "React là một thư viện JavaScript dùng để xây dựng giao diện người dùng.",
+      "words": ["React", "is", "a", "JavaScript", "library", "for", "building", "user", "interfaces."]
+    },
+    {
+      "id": 2,
+      "start": 3,
+      "end": 7,
+      "duration": 4,
+      "textEn": "It lets you compose complex UIs from small and isolated pieces of code called components.",
+      "textVi": "Nó cho phép bạn lắp ráp các giao diện phức tạp từ những mẩu code nhỏ và độc lập gọi là component.",
+      "words": ["It", "lets", "you", "compose", "complex", "UIs", "from", "small", "and", "isolated", "pieces", "of", "code", "called", "components."]
+    },
+    {
+      "id": 3,
+      "start": 7,
+      "end": 11,
+      "duration": 4,
+      "textEn": "Instead of imperatively manipulating the DOM, you write declarative code.",
+      "textVi": "Thay vì thao tác DOM một cách bắt buộc (imperative), bạn viết code theo kiểu khai báo (declarative).",
+      "words": ["Instead", "of", "imperatively", "manipulating", "the", "DOM,", "you", "write", "declarative", "code."]
+    }
+  ]
+}

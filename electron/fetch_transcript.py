@@ -1,83 +1,58 @@
 import sys
 import json
-import urllib.parse
-import urllib.request
 from youtube_transcript_api import YouTubeTranscriptApi
 
-def translate_batch(texts):
-    if not texts:
-        return []
-    # Join with newlines for efficient batch translation
-    joined = "\n___\n".join(texts)
-    try:
-        url = f"https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=vi&dt=t&q={urllib.parse.quote(joined)}"
-        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-        with urllib.request.urlopen(req, timeout=8) as resp:
-            data = json.loads(resp.read().decode("utf-8"))
-            translated_joined = "".join([part[0] for part in data[0] if part[0]])
-            results = [t.strip() for t in translated_joined.split("___")]
-            if len(results) == len(texts):
-                return results
-    except Exception:
-        pass
-    return texts
-
 def get_transcript(video_id):
-    api = YouTubeTranscriptApi()
-    
-    # Try fetching transcript
-    raw_cues = None
     try:
-        raw_cues = api.fetch(video_id)
-    except Exception as e:
-        # Try listing transcripts to find available language
+        api = YouTubeTranscriptApi()
+        tlist = api.list(video_id)
+        
+        # Try to find english first, if not, get the first available one
         try:
-            transcript_list = api.list(video_id)
-            for t in transcript_list:
-                try:
-                    raw_cues = t.fetch()
-                    break
-                except:
-                    continue
-        except Exception:
-            pass
+            source_t = tlist.find_transcript(['en', 'en-US', 'en-GB'])
+        except:
+            # Fallback to the first available transcript
+            source_t = list(tlist)[0]
 
-    if not raw_cues:
+        en_cues = source_t.fetch()
+        
+        # Translate to Vietnamese
+        try:
+            vi_t = source_t.translate('vi')
+            vi_cues = vi_t.fetch()
+        except:
+            vi_cues = en_cues # Fallback if translation fails
+
+        cues_list = []
+        # Zip them together
+        for idx in range(len(en_cues)):
+            en_cue = en_cues[idx]
+            vi_cue = vi_cues[idx] if idx < len(vi_cues) else en_cue
+
+            text_en = en_cue['text'].replace("\n", " ").strip()
+            if not text_en:
+                continue
+
+            start = round(float(en_cue['start']), 2)
+            duration = round(float(en_cue['duration']), 2)
+            end = round(start + duration, 2)
+            words = [w for w in text_en.split() if w]
+            
+            cues_list.append({
+                "id": idx + 1,
+                "start": start,
+                "duration": duration,
+                "end": end,
+                "textEn": text_en,
+                "textVi": vi_cue['text'].replace("\n", " ").strip(),
+                "words": words
+            })
+
+        print(json.dumps(cues_list, ensure_ascii=False))
+
+    except Exception as e:
+        print("Error:", str(e), file=sys.stderr)
         print(json.dumps([]))
-        return
-
-    # Process cues
-    cues_list = []
-    en_texts = []
-    for idx, cue in enumerate(raw_cues):
-        text_en = cue.text.replace("\n", " ").strip()
-        if not text_en:
-            continue
-        start = round(float(cue.start), 2)
-        duration = round(float(cue.duration), 2)
-        end = round(start + duration, 2)
-        words = [w for w in text_en.split() if w]
-        cues_list.append({
-            "id": idx + 1,
-            "start": start,
-            "duration": duration,
-            "end": end,
-            "textEn": text_en,
-            "textVi": text_en, # placeholder
-            "words": words
-        })
-        en_texts.append(text_en)
-
-    # Batch translate in chunks of 25 to avoid URL length limit
-    chunk_size = 25
-    for i in range(0, len(cues_list), chunk_size):
-        chunk_texts = en_texts[i:i+chunk_size]
-        translated = translate_batch(chunk_texts)
-        for j, vi_text in enumerate(translated):
-            if i + j < len(cues_list):
-                cues_list[i + j]["textVi"] = vi_text
-
-    print(json.dumps(cues_list, ensure_ascii=False))
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:

@@ -9077,13 +9077,7 @@ export async function fetchYouTubeBilingualTranscript(videoId: string): Promise<
     }
   }
 
-  // 2. Check Curated & Flow Library (Instant 0ms, 100% accurate)
-  const found = ALL_CURATED_LEARNING_VIDEOS.find((v) => v.info.videoId === videoId)
-  if (found && found.sampleCues && found.sampleCues.length > 0) {
-    return found.sampleCues
-  }
-
-  // 3. Live Online Captions Fetcher from Public Invidious / Piped / TimedText API Instances
+  // 2. Live Online Captions Fetcher from Public Invidious / Piped / TimedText API Instances
   const CAPTION_HOSTS = [
     'https://invidious.drgns.space',
     'https://vid.priv.au',
@@ -9176,173 +9170,83 @@ export async function fetchYouTubeBilingualTranscript(videoId: string): Promise<
     }
   }
 
-  // 5. Industrial Full-Length Structured Transcript Synthesizer (00:00 to 25:00+)
-  return generateFullLengthVideoTranscript(videoId)
+  // 5. Honest fallback: Try bundled curated data as absolute last resort
+  const found = ALL_CURATED_LEARNING_VIDEOS.find((v) => v.info.videoId === videoId)
+  if (found && found.sampleCues && found.sampleCues.length > 0) {
+    return found.sampleCues
+  }
+
+  // 6. Offline Big Database Fallback
+  try {
+    const offlineDb = await import('../data/offline_transcripts.json')
+    if (offlineDb.default && offlineDb.default[videoId]) {
+      return offlineDb.default[videoId]
+    }
+  } catch (e) {
+    // Offline DB chưa được build hoặc không có
+  }
+
+  // 7. Absolute empty state
+  return []
 }
 
 /**
- * Generate a complete, high-density 200+ sentence bilingual transcript across the entire video timeline (00:00 to 25:00+)
+ * Universal Subtitle Parser: Parses both SRT and VTT formats into TranscriptCue[]
  */
-export function generateFullLengthVideoTranscript(_videoId: string): TranscriptCue[] {
-  const KNOWLEDGE_SECTIONS = [
-    // Section 1: Introduction & Mental Model (0:00 - 3:30)
-    {
-      en: 'Welcome to this in-depth English video lesson on YouTube.',
-      vi: 'Chào mừng bạn đến với bài học video tiếng Anh chuyên sâu này trên YouTube.',
-    },
-    {
-      en: 'In this session, we will explore core principles, specialized vocabulary, and practical applications.',
-      vi: 'Trong buổi học này, chúng ta sẽ khám phá các nguyên lý cốt lõi, từ vựng chuyên ngành và ứng dụng thực tế.',
-    },
-    {
-      en: 'Let us begin by establishing a clear mental model of how this system operates.',
-      vi: 'Hãy bắt đầu bằng việc thiết lập một mô hình tư duy rõ ràng về cách hệ thống này vận hành.',
-    },
-    {
-      en: 'Pay close attention to the speaker’s natural pronunciation and intonation patterns.',
-      vi: 'Hãy chú ý kỹ đến cách phát âm và ngữ điệu tự nhiên của người nói.',
-    },
-    {
-      en: 'You can tap on any English word in the transcript below to instantly view its definition and phonetic transcription.',
-      vi: 'Bạn có thể chạm vào bất kỳ từ tiếng Anh nào trong phụ đề bên dưới để xem ngay định nghĩa và phiên âm.',
-    },
-    {
-      en: 'Notice how the introduction sets up the primary problem that needs to be solved.',
-      vi: 'Hãy để ý cách phần mở đầu nêu bật vấn đề chính cần được giải quyết.',
-    },
-    {
-      en: 'Every technical domain has its own foundational terminology that developers must master.',
-      vi: 'Mỗi lĩnh vực kỹ thuật đều có hệ thống thuật ngữ nền tảng mà lập trình viên phải làm chủ.',
-    },
-    {
-      en: 'By breaking down complex topics into smaller building blocks, comprehension becomes effortless.',
-      vi: 'Bằng cách chia nhỏ các chủ đề phức tạp thành từng khối ghép, việc hiểu bài trở nên dễ dàng.',
-    },
-
-    // Section 2: Technical Architecture & Mechanics (3:30 - 7:30)
-    {
-      en: 'Now, let us examine the internal architecture and how data flows through the components.',
-      vi: 'Bây giờ, chúng ta hãy xem xét kiến trúc bên trong và cách dữ liệu truyền qua các thành phần.',
-    },
-    {
-      en: 'The first layer handles input validation and sanitization before processing begins.',
-      vi: 'Tầng đầu tiên xử lý việc kiểm thực và làm sạch dữ liệu đầu vào trước khi bắt đầu xử lý.',
-    },
-    {
-      en: 'Notice the trade-offs between computational performance and memory consumption.',
-      vi: 'Hãy chú ý đến sự đánh đổi giữa hiệu năng tính toán và mức tiêu thụ bộ nhớ.',
-    },
-    {
-      en: 'In modern distributed systems, asynchronous processing allows services to remain non-blocking.',
-      vi: 'Trong các hệ thống phân tán hiện đại, xử lý bất đồng bộ cho phép các dịch vụ không bị nghẽn (non-blocking).',
-    },
-    {
-      en: 'Message queues decouple producer services from consumer workers to prevent cascading failures.',
-      vi: 'Hàng đợi tin nhắn tách rời dịch vụ sản xuất và dịch vụ tiêu thụ để ngăn chặn lỗi dây chuyền.',
-    },
-    {
-      en: 'Caching frequently accessed database records drastically reduces latency for end users.',
-      vi: 'Lưu bộ nhớ đệm cho các bản ghi cơ sở dữ liệu thường dùng giúp giảm mạnh độ trễ cho người dùng.',
-    },
-    {
-      en: 'Always design your modules with deep interfaces and hidden internal implementation details.',
-      vi: 'Luôn thiết kế các module với giao diện sâu và ẩn giấu các chi tiết cài đặt bên trong.',
-    },
-    {
-      en: 'This design principle makes the codebase robust against unexpected future requirements.',
-      vi: 'Nguyên lý thiết kế này giúp mã nguồn vững vàng trước các yêu cầu thay đổi trong tương lai.',
-    },
-
-    // Section 3: Deep Dive & Practical Implementation (7:30 - 12:00)
-    {
-      en: 'Let us dive directly into the concrete implementation and code walkthrough.',
-      vi: 'Hãy cùng đi sâu vào phần cài đặt cụ thể và phân tích mã nguồn từng dòng.',
-    },
-    {
-      en: 'Observe how error handling is implemented defensively at every system boundary.',
-      vi: 'Hãy quan sát cách xử lý lỗi phòng thủ được triển khai tại mọi ranh giới hệ thống.',
-    },
-    {
-      en: 'Using typed interfaces ensures compile-time safety and prevents runtime null exceptions.',
-      vi: 'Sử dụng các interface có kiểu dữ liệu đảm bảo an toàn lúc biên dịch và tránh lỗi null runtime.',
-    },
-    {
-      en: 'Automated unit tests provide continuous verification that the logic functions as expected.',
-      vi: 'Các bài kiểm thử tự động unit test cung cấp sự xác thực liên tục rằng logic hoạt động đúng kỳ vọng.',
-    },
-    {
-      en: 'Refactoring redundant code improves readability and lowers long-term maintenance overhead.',
-      vi: 'Tái cấu trúc mã thừa giúp tăng khả năng đọc hiểu và giảm chi phí bảo trì dài hạn.',
-    },
-    {
-      en: 'Notice how the algorithm optimizes time complexity from quadratic to logarithmic order.',
-      vi: 'Hãy để ý cách thuật toán tối ưu hóa độ phức tạp thời gian từ bậc hai xuống hàm logarit.',
-    },
-    {
-      en: 'Monitoring production telemetry helps engineering teams identify performance regressions early.',
-      vi: 'Giám sát chỉ số telemetry trên production giúp đội ngũ kỹ thuật phát hiện sớm sự suy giảm hiệu năng.',
-    },
-    {
-      en: 'Clear commit messages and thorough code reviews maintain high engineering standards.',
-      vi: 'Thông điệp commit rõ ràng và code review kỹ lưỡng giúp duy trì tiêu chuẩn kỹ thuật cao.',
-    },
-
-    // Section 4: Synthesis & Best Practices (12:00 - 16:30)
-    {
-      en: 'To summarize, we have covered the architectural design, implementation details, and trade-offs.',
-      vi: 'Để tổng kết, chúng ta đã nắm bắt thiết kế kiến trúc, chi tiết cài đặt và các sự đánh đổi.',
-    },
-    {
-      en: 'Applying these best practices in your daily projects will elevate your technical craft.',
-      vi: 'Áp dụng những thực hành chuẩn này vào dự án hàng ngày sẽ nâng cao tay nghề kỹ thuật của bạn.',
-    },
-    {
-      en: 'Practice speaking along using the Shadowing technique to reinforce auditory and vocal memory.',
-      vi: 'Hãy luyện nói nhại theo kỹ thuật Shadowing để củng cố trí nhớ thính giác và cơ miệng.',
-    },
-    {
-      en: 'You can toggle the Auto-pause button above to repeat each sentence after the speaker.',
-      vi: 'Bạn có thể bật nút Auto-pause ở trên để luyện lặp lại từng câu sau người nói.',
-    },
-    {
-      en: 'Add key vocabulary terms to your spaced repetition Flashcard deck for long-term retention.',
-      vi: 'Thêm các từ vựng then chốt vào bộ Flashcard lặp lại ngắt quãng để ghi nhớ bền lâu.',
-    },
-    {
-      en: 'Consistent deliberate practice every day is the proven path to professional English mastery.',
-      vi: 'Luyện tập có chủ đích đều đặn mỗi ngày là con đường đã được chứng minh để làm chủ tiếng Anh chuyên nghiệp.',
-    },
-    {
-      en: 'Congratulations on completing this full video study session! Explore the next lessons in your roadmap.',
-      vi: 'Chúc mừng bạn đã hoàn thành bài học video đầy đủ này! Hãy tiếp tục khám phá các bài tiếp theo trong lộ trình.',
-    },
-  ]
-
-  // Expand into continuous timecode grid (spanning 00:00 to 25:00+ with 200+ cues)
+export function parseSrtOrVttToCues(content: string): TranscriptCue[] {
+  if (!content) return []
+  const lines = content.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n')
   const cues: TranscriptCue[] = []
-  let currentTime = 1.0
   let cueId = 1
 
-  // Loop through knowledge sections to fill the entire timeline
-  for (let round = 0; round < 7; round++) {
-    for (const item of KNOWLEDGE_SECTIONS) {
-      const duration = +Math.max(3.5, item.en.split(' ').length * 0.45).toFixed(1)
-      const start = +currentTime.toFixed(1)
-      const end = +(start + duration).toFixed(1)
-      currentTime = end + 0.8
+  const timeRegex = /(?:(\d{2,}):)?(\d{2}):(\d{2})[,.](\d{3})\s*-->\s*(?:(\d{2,}):)?(\d{2}):(\d{2})[,.](\d{3})/
 
-      const words = item.en.split(/\s+/).filter(Boolean)
-      cues.push({
-        id: cueId++,
-        start,
-        duration,
-        end,
-        textEn: item.en,
-        textVi: item.vi,
-        words,
-      })
+  const parseTime = (h: string | undefined, m: string, s: string, ms: string) => {
+    const hours = h ? parseInt(h, 10) : 0
+    const mins = parseInt(m, 10)
+    const secs = parseInt(s, 10)
+    const millis = parseInt(ms, 10)
+    return hours * 3600 + mins * 60 + secs + millis / 1000
+  }
+
+  let i = 0
+  while (i < lines.length) {
+    const line = lines[i].trim()
+    const match = line.match(timeRegex)
+
+    if (match) {
+      const start = parseTime(match[1], match[2], match[3], match[4])
+      const end = parseTime(match[5], match[6], match[7], match[8])
+      const duration = Math.max(0.5, +(end - start).toFixed(2))
+
+      i++
+      const textLines: string[] = []
+      while (i < lines.length && lines[i].trim() !== '') {
+        // Strip HTML tags like <font>, <b>, <i>, <v ...>
+        const cleanLine = lines[i].replace(/<[^>]*>/g, '').trim()
+        if (cleanLine) {
+          textLines.push(cleanLine)
+        }
+        i++
+      }
+
+      const textEn = textLines.join(' ')
+      if (textEn) {
+        cues.push({
+          id: cueId++,
+          start: +start.toFixed(2),
+          duration,
+          end: +end.toFixed(2),
+          textEn,
+          textVi: '',
+          words: textEn.split(/\s+/).filter(Boolean),
+        })
+      }
+    } else {
+      i++
     }
   }
 
   return cues
 }
+

@@ -112,12 +112,12 @@ export const VideoExplorerModal: React.FC<VideoExplorerModalProps> = ({
     return IT_AI_LEARNING_FLOWS.filter((flow) => {
       return (
         flow.title.toLowerCase().includes(q) ||
-        flow.subtitle.toLowerCase().includes(q) ||
+        flow.subtitle?.toLowerCase().includes(q) ||
         flow.description.toLowerCase().includes(q) ||
         flow.videos.some(
           (v) =>
             v.info.title.toLowerCase().includes(q) ||
-            v.info.tags?.some((t) => t.toLowerCase().includes(q)),
+            v.info.tags?.some((t: string) => t.toLowerCase().includes(q)),
         )
       )
     })

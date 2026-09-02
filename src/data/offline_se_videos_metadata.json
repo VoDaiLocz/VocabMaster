@@ -1,0 +1,142 @@
+[
+  {
+    "videoId": "fu4p96ca5H4",
+    "title": "System Design: Rate Limiting",
+    "channel": "ByteByteGo",
+    "description": "Tìm hiểu cách thiết kế hệ thống giới hạn truy cập (Rate Limiting) trong các hệ thống phân tán lớn.",
+    "tags": ["System Design", "Backend", "Architecture"]
+  },
+  {
+    "videoId": "3c-iBn73dVU",
+    "title": "Docker Crash Course for Absolute Beginners",
+    "channel": "TechWorld with Nana",
+    "description": "Khóa học nhanh về Docker, containerization và cách triển khai ứng dụng cho người mới bắt đầu.",
+    "tags": ["DevOps", "Docker", "Containers"]
+  },
+  {
+    "videoId": "Tn6-PIqc4UM",
+    "title": "React in 100 Seconds",
+    "channel": "Fireship",
+    "description": "Tổng quan siêu tốc về thư viện UI phổ biến nhất thế giới: React.js.",
+    "tags": ["Frontend", "React", "JavaScript"]
+  },
+  {
+    "videoId": "5C_HPTJg5ek",
+    "title": "Rust in 100 Seconds",
+    "channel": "Fireship",
+    "description": "Ngôn ngữ lập trình Rust, an toàn bộ nhớ và hiệu năng cao được giải thích trong 100 giây.",
+    "tags": ["Rust", "Systems Programming"]
+  },
+  {
+    "videoId": "zsjvFFKOm3c",
+    "title": "SQL Explained in 100 Seconds",
+    "channel": "Fireship",
+    "description": "Cơ sở dữ liệu quan hệ và ngôn ngữ truy vấn SQL.",
+    "tags": ["Database", "SQL", "Backend"]
+  },
+  {
+    "videoId": "Gjnup-PuquQ",
+    "title": "Docker in 100 Seconds",
+    "channel": "Fireship",
+    "description": "Khái niệm cốt lõi của Docker và Containers.",
+    "tags": ["DevOps", "Docker"]
+  },
+  {
+    "videoId": "hwP7WQkmECE",
+    "title": "Git in 100 Seconds",
+    "channel": "Fireship",
+    "description": "Hệ thống quản lý phiên bản Git và cách hoạt động của nó.",
+    "tags": ["Git", "Version Control", "Tools"]
+  },
+  {
+    "videoId": "eIQh02xuVw4",
+    "title": "GraphQL in 100 Seconds",
+    "channel": "Fireship",
+    "description": "Ngôn ngữ truy vấn dữ liệu thay thế REST API mạnh mẽ.",
+    "tags": ["API", "GraphQL", "Backend"]
+  },
+  {
+    "videoId": "zQnBQ4tB3ZA",
+    "title": "TypeScript in 100 Seconds",
+    "channel": "Fireship",
+    "description": "TypeScript - JavaScript siêu tập với hệ thống kiểu tĩnh.",
+    "tags": ["TypeScript", "JavaScript", "Frontend"]
+  },
+  {
+    "videoId": "PziYfluKjFc",
+    "title": "Kubernetes in 100 Seconds",
+    "channel": "Fireship",
+    "description": "Hệ thống điều phối Container mạnh mẽ nhất thế giới - K8s.",
+    "tags": ["DevOps", "Kubernetes", "Cloud"]
+  },
+  {
+    "videoId": "-mN3VyJuCjM",
+    "title": "REST API Concepts and Examples",
+    "channel": "Fireship",
+    "description": "Thiết kế RESTful API tiêu chuẩn cho các ứng dụng web.",
+    "tags": ["API", "REST", "Backend"]
+  },
+  {
+    "videoId": "CpbTejMWGvU",
+    "title": "Microservices in 100 Seconds",
+    "channel": "Fireship",
+    "description": "Kiến trúc vi dịch vụ so với kiến trúc nguyên khối (Monolith).",
+    "tags": ["Architecture", "Microservices", "Backend"]
+  },
+  {
+    "videoId": "Ch5VhJzaoaI",
+    "title": "Kafka in 100 Seconds",
+    "channel": "Fireship",
+    "description": "Hệ thống truyền tải sự kiện phân tán Apache Kafka.",
+    "tags": ["Data", "Kafka", "Backend"]
+  },
+  {
+    "videoId": "G1rOthIU-uo",
+    "title": "Redis in 100 Seconds",
+    "channel": "Fireship",
+    "description": "Cơ sở dữ liệu In-memory siêu tốc Redis dùng làm Cache.",
+    "tags": ["Database", "Redis", "Cache"]
+  },
+  {
+    "videoId": "JKxlsvZXG7c",
+    "title": "Nginx in 100 Seconds",
+    "channel": "Fireship",
+    "description": "Web server và Reverse Proxy Nginx.",
+    "tags": ["DevOps", "Nginx", "Server"]
+  },
+  {
+    "videoId": "rrB13utjYV4",
+    "title": "Linux in 100 Seconds",
+    "channel": "Fireship",
+    "description": "Hệ điều hành mã nguồn mở mạnh mẽ nhất thống trị máy chủ.",
+    "tags": ["Linux", "OS", "DevOps"]
+  },
+  {
+    "videoId": "pWbOclCGrmA",
+    "title": "Clean Code - Uncle Bob",
+    "channel": "Unity Coin",
+    "description": "Robert C. Martin giải thích về nghệ thuật viết mã sạch (Clean Code).",
+    "tags": ["Clean Code", "Engineering Practices"]
+  },
+  {
+    "videoId": "bkb1xQ4l8t8",
+    "title": "OAuth 2.0 and OpenID Connect",
+    "channel": "OktaDev",
+    "description": "Giải thích chi tiết về luồng xác thực OAuth 2.0 và OIDC.",
+    "tags": ["Security", "Authentication", "Backend"]
+  },
+  {
+    "videoId": "yosg9Bzi_v8",
+    "title": "What is a Message Queue?",
+    "channel": "ByteByteGo",
+    "description": "Tìm hiểu về Hàng đợi thông điệp (Message Queue) trong kiến trúc phân tán.",
+    "tags": ["System Design", "Backend"]
+  },
+  {
+    "videoId": "v4m-K-XwA1A",
+    "title": "What is WebRTC?",
+    "channel": "Hussein Nasser",
+    "description": "Giao thức truyền thông thời gian thực WebRTC trên trình duyệt.",
+    "tags": ["Networking", "WebRTC", "Frontend"]
+  }
+]

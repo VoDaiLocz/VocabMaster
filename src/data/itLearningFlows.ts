@@ -4,6 +4,7 @@
 // ============================================
 
 import { VideoInfo, TranscriptCue } from '@/services/youtubeTranscriptService'
+import offlineSeMetadata from './offline_se_videos_metadata.json'
 
 export interface LearningFlowStep {
   step: number
@@ -11,19 +12,52 @@ export interface LearningFlowStep {
   sampleCues: TranscriptCue[]
 }
 
+export interface CuratedVideo {
+  info: Omit<VideoInfo, 'category' | 'level' | 'sentenceCount'>
+  sampleCues: TranscriptCue[]
+  quiz?: any[]
+}
+
 export interface LearningFlow {
   id: string
   title: string
-  subtitle: string
+  subtitle?: string
   description: string
-  icon: string
-  level: 'B1 - Trung cấp' | 'B2 - Khá' | 'C1 - Nâng cao'
-  estimatedHours: string
-  category: 'ai' | 'code' | 'career'
-  videos: LearningFlowStep[]
+  icon?: string
+  thumbnailUrl?: string
+  level?: 'B1 - Trung cấp' | 'B2 - Khá' | 'C1 - Nâng cao'
+  estimatedHours?: string
+  category?: 'ai' | 'code' | 'career'
+  videos: any[]
 }
 
+// Chuyển đổi dữ liệu offline thành định dạng CuratedVideo
+const softwareEngineeringVideos: CuratedVideo[] = offlineSeMetadata.map((meta: any) => ({
+  info: {
+    videoId: meta.videoId,
+    title: meta.title,
+    channel: meta.channel,
+    thumbnailUrl: `https://img.youtube.com/vi/${meta.videoId}/hqdefault.jpg`,
+    durationFormatted: '10:00', // Mock duration,
+    description: meta.description,
+    tags: meta.tags,
+  },
+  sampleCues: [], // Dữ liệu sẽ được fallback động từ offline_transcripts.json
+  quiz: []
+}))
+
 export const IT_AI_LEARNING_FLOWS: LearningFlow[] = [
+  {
+    id: 'se-mastery',
+    title: 'Software Engineering Mastery',
+    subtitle: '100 Core IT Videos for Developers',
+    description: 'Tuyển tập các khái niệm cốt lõi nhất về System Design, Kiến trúc, Backend, và DevOps.',
+    icon: '💻',
+    level: 'B1 - Trung cấp',
+    estimatedHours: '10 giờ',
+    category: 'code',
+    videos: softwareEngineeringVideos,
+  },
   {
     id: 'flow-fs-frontend',
     title: 'Giai Đoạn 1: Frontend Architecture & Modern Frameworks',

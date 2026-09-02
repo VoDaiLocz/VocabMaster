@@ -35,7 +35,7 @@ export const VideoLearning: React.FC = () => {
   const [currentVideoInfo, setCurrentVideoInfo] = useState<VideoInfo | null>(
     ALL_CURATED_LEARNING_VIDEOS[0].info,
   )
-  const [cues, setCues] = useState<TranscriptCue[]>(ALL_CURATED_LEARNING_VIDEOS[0].sampleCues)
+  const [cues, setCues] = useState<TranscriptCue[]>([])
   const [loading, setLoading] = useState(false)
   const [loadProgress, setLoadProgress] = useState(0)
   const [loadStatus, setLoadStatus] = useState('Đang kết nối...')
@@ -106,6 +106,14 @@ export const VideoLearning: React.FC = () => {
       setLoadProgress(0)
     }
   }
+
+  // Initial load default video transcript
+  useEffect(() => {
+    if (cues.length === 0 && !loading && currentVideoId) {
+      handleLoadVideo(currentVideoId, currentVideoInfo || undefined)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   // Navigation callbacks
   const handlePrevSentence = useCallback(() => {

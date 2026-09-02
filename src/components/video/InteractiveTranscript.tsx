@@ -1,5 +1,8 @@
 import React, { useEffect, useRef, useState, useMemo, memo } from 'react'
-import { TranscriptCue, translateEnToVi } from '@/services/youtubeTranscriptService'
+import {
+  TranscriptCue,
+  translateEnToVi,
+} from '@/services/youtubeTranscriptService'
 import { BookmarkPlus, Search, Volume2, Play } from 'lucide-react'
 import { speakWord } from '@/utils/quiz'
 
@@ -9,6 +12,8 @@ interface InteractiveTranscriptProps {
   onSeek: (seconds: number) => void
   onWordClick: (word: string, contextSentence: string) => void
   onAddNote: (cue: TranscriptCue) => void
+  onLoadCustomCues?: (newCues: TranscriptCue[]) => void
+  onOpenExplorer?: () => void
 }
 
 type SubtitleMode = 'both' | 'en-only' | 'hover-vi'
@@ -45,6 +50,22 @@ const CueItem = memo<CueItemProps>(
       }
     }, [cue.textVi, isActive, cue.textEn, viTranslation])
 
+    const handleSpeakBilingual = () => {
+      window.speechSynthesis.cancel() // Hủy giọng đang đọc nếu có
+      
+      // Đọc tiếng Anh
+      const enUtterance = new SpeechSynthesisUtterance(cue.textEn)
+      enUtterance.lang = 'en-US'
+      window.speechSynthesis.speak(enUtterance)
+      
+      // Đọc tiếng Việt
+      if (viTranslation) {
+        const viUtterance = new SpeechSynthesisUtterance(viTranslation)
+        viUtterance.lang = 'vi-VN'
+        window.speechSynthesis.speak(viUtterance)
+      }
+    }
+
     return (
       <div
         id={`cue-item-${cue.id}`}
@@ -71,12 +92,12 @@ const CueItem = memo<CueItemProps>(
 
             {isActive && (
               <button
-                onClick={() => speakWord(cue.textEn)}
+                onClick={handleSpeakBilingual}
                 className='flex items-center gap-1 px-2 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 text-[11px] font-bold hover:bg-primary-200 transition-colors'
-                title='Phát âm câu này'
+                title='Phát âm câu này (EN ➔ VI)'
               >
                 <Volume2 size={12} />
-                <span>Đọc</span>
+                <span>Đọc song ngữ</span>
               </button>
             )}
           </div>
