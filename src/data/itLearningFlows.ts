@@ -64,34 +64,72 @@ function getVideosByIds(ids: string[]): CuratedVideo[] {
 // BỘ DANH MỤC VIDEO PHÂN CẤP THEO NẤC THANG TỪ INTERN ĐẾN STAFF+
 // =======================================================================
 
-// Cấp 1: Intern (Thực tập sinh - Nền tảng nhập môn & Thuật toán)
+// Cấp 1: Intern (Thực tập sinh - Nền tảng nhập môn & Thuật toán - Đủ 30 Video Chuẩn Quốc Tế)
 const INTERN_IDS = [
   'iG9CE55wbtY', // Sir Ken Robinson TED (19:24, 427 câu) - Do schools kill creativity? (Tư duy sáng tạo & Giáo dục)
   'KLlXCFG5TnA', // Big-O Notation & Algorithm Complexity (NeetCode - 11:27, 195 câu song ngữ)
-  'rrB13utjYV4', // Linux in 100s
-  'I4EWvMFj37g', // Bash in 100s
-  'hwP7WQkmECE', // Git in 100s
+  'UF8uR6Z6KLc', // Steve Jobs Stanford 2005 (15:04, 244 câu) - Stay Hungry Stay Foolish
+  '8aGhZQkoFbQ', // Event Loop & Call Stack Internals (Philip Roberts JSConf - 26:48, 336 câu)
+  'rrB13utjYV4', // Linux in 100s (24 câu)
+  'I4EWvMFj37g', // Bash Shell in 100s (23 câu)
+  'hwP7WQkmECE', // Git Version Control in 100s (20 câu)
   '-txKSRn0qeA', // Vim in 100s (98 câu)
-  'c4OyfL5o7DU', // Neovim in 100s
-  'ok-plXXHlWw', // HTML in 100s
-  'OEV8gMkCHXQ', // CSS in 100s
-  'DHjqpvDnNGE', // JavaScript in 100s
-  'x7X9w_GIm1s', // Python in 100s
+  'c4OyfL5o7DU', // Neovim in 100s (20 câu)
+  'ok-plXXHlWw', // HTML in 100s (21 câu)
+  'OEV8gMkCHXQ', // CSS in 100s (19 câu)
+  'DHjqpvDnNGE', // JavaScript in 100s (23 câu)
+  'x7X9w_GIm1s', // Python in 100s (19 câu)
+  'MNeX4EGtR5Y', // C++ in 100s (24 câu)
+  '446E-r0rXHI', // Go in 100s (20 câu)
+  '5C_HPTJg5ek', // Rust in 100s (21 câu)
+  'l9AzO1FMgM8', // Java in 100s (20 câu)
+  'cbB3QEwWMlA', // WebAssembly (WASM) in 100s (20 câu)
+  'mr15Xzb1Ook', // Tailwind CSS in 100s (19 câu)
+  'UVR9lhUGAyU', // DNS in 100s (20 câu)
+  'zsjvFFKOm3c', // SQL in 100s (20 câu)
+  'n2Fluyr3lbc', // PostgreSQL in 100s (23 câu)
+  '-MTSQjw5DrM', // RESTful APIs in 100s (96 câu)
+  'ENrzD9HAZK4', // Node.js Ultimate Beginner Guide (159 câu)
+  'zQnBQ4tB3ZA', // TypeScript in 100s (22 câu)
+  'Tn6-PIqc4UM', // React in 100s (20 câu)
+  'Gjnup-PuquQ', // Docker in 100s (20 câu)
+  'JKxlsvZXG7c', // Nginx in 100s (20 câu)
+  'scEDHsr3APg', // DevOps CI/CD in 100s (18 câu)
+  'ZV5yTm4pT8g', // OAuth 2.0 Explained (28 câu)
 ]
 
-// Cấp 2: Fresher (Mới ra trường / Lập trình viên Web & Runtime sâu)
+// Cấp 2: Fresher (Mới ra trường / Lập trình viên Web & Runtime sâu - Đủ 30 Video Chuẩn Quốc Tế)
 const FRESHER_IDS = [
-  '8aGhZQkoFbQ', // What the heck is the event loop anyway? (Philip Roberts JSConf - 26:48, 336 câu song ngữ)
-  'ENrzD9HAZK4', // Node.js Ultimate Guide (Fireship - 11:32, 159 câu)
-  'Sklc_fQBmcs', // Next.js in 100s (12:15, 103 câu)
-  '-MTSQjw5DrM', // RESTful APIs in 100s (96 câu)
-  'zQnBQ4tB3ZA', // TypeScript in 100s
-  'mr15Xzb1Ook', // Tailwind CSS in 100s
-  'Tn6-PIqc4UM', // React in 100s
-  'zsjvFFKOm3c', // SQL in 100s
-  'n2Fluyr3lbc', // PostgreSQL in 100s
-  '-bt_y4Loofg', // MongoDB in 100s
-  'zBZgdTb-dns', // Supabase in 100s
+  'KjY94sAKLlw', // TypeScript for Senior Engineers (Matt Pocock - 18:45, 1859 câu)
+  'X48VuDVv0do', // Kubernetes Architecture & Ingress (TechWorld with Nana - 58:40, 1392 câu)
+  'w7ejDZ8SWv8', // React 19 & Server Components Walkthrough (Jack Herrington - 13:10, 886 câu)
+  'qSJAvd5Mgio', // Design TinyURL URL Shortener (ByteByteGo - 12:35, 712 câu)
+  'pg19Z8LL06w', // Docker Crash Course for Absolute Beginners (TechWorld with Nana - 45:30, 444 câu)
+  '8aGhZQkoFbQ', // What the heck is the event loop anyway? (Philip Roberts - 26:48, 336 câu)
+  'ENrzD9HAZK4', // Node.js Ultimate Guide: Libuv & Async (Fireship - 11:32, 159 câu)
+  '-qNSXK7s7_w', // Database Indexing Explained with PostgreSQL (Hussein Nasser - 24:18, 138 câu)
+  'YXkOdWBwqaA', // Rate Limiter System Design: Token Bucket (ByteByteGo - 10:20, 111 câu)
+  'Sklc_fQBmcs', // Next.js Architecture in 100s (Fireship - 12:15, 103 câu)
+  '-MTSQjw5DrM', // RESTful APIs Best Practices in 100s (Fireship - 96 câu)
+  'SqcXvc3ZmRU', // Microservices vs Monolith Architecture (Hussein Nasser - 16:45, 79 câu)
+  'tzq4asJegKY', // Elasticsearch & Lucene Search Engines (Fireship - 09:40, 76 câu)
+  'UF9Iqmg94tk', // Consistent Hashing Algorithms (ByteByteGo - 08:12, 51 câu)
+  'M4TufsFlv_o', // Bun JavaScript Runtime in 100s (Fireship - 37 câu)
+  'ZV5yTm4pT8g', // OAuth 2.0 & OpenID Connect Deep Dive (ByteByteGo - 28 câu)
+  'ZzI9JE0i6Lc', // AWS Cloud Infrastructure in 100s (Fireship - 25 câu)
+  'NQ3fZtyXji0', // RabbitMQ Message Queues in 100s (Fireship - 23 câu)
+  'zBZgdTb-dns', // Supabase Realtime PostgreSQL in 100s (Fireship - 22 câu)
+  'uvb00oaa3k8', // Kafka Distributed Streaming in 100s (Fireship - 21 câu)
+  'G1rOthIU-uo', // Redis In-Memory Caching in 100s (Fireship - 21 câu)
+  'eIQh02xuVw4', // GraphQL Query Language in 100s (Fireship - 20 câu)
+  'F0G9lZ7gecE', // Deno Secure Runtime in 100s (Fireship - 20 câu)
+  'nhBVL41-_Cw', // Vue.js 3 in 100s (Fireship - 19 câu)
+  'rv3Yq-B8qp4', // Svelte Frontend in 100s (Fireship - 20 câu)
+  '-bt_y4Loofg', // MongoDB NoSQL in 100s (Fireship - 20 câu)
+  'PziYflu8cB8', // Kubernetes in 100s (Fireship - 20 câu)
+  'tomUWcQ0P3k', // Terraform IaC in 100s (Fireship - 20 câu)
+  'xT8oP0wy-A0', // Kotlin Multiplatform in 100s (Fireship - 20 câu)
+  'nAchMctX4YA', // Swift Native Architecture in 100s (Fireship - 20 câu)
 ]
 
 // Cấp 3: Junior (Kỹ sư độc lập / Clean Code & Đa ngôn ngữ sâu)
@@ -168,15 +206,15 @@ export const IT_AI_LEARNING_FLOWS: LearningFlow[] = [
     id: 'se-level-1-intern',
     phaseNumber: 1,
     levelRank: 'Intern',
-    title: 'Cấp Độ 1: Intern Engineer (Thực Tập Sinh Nhập Môn & Thuật Toán)',
+    title: 'Cấp Độ 1: Intern Engineer (Thực Tập Sinh Nhập Môn - 30 Video)',
     subtitle:
-      'Tư Duy Sáng Tạo (Ken Robinson TED 19m), Big-O (NeetCode 11m), Linux, Bash, Git DAG, Vim, HTML/CSS, JS & Python',
+      'Tư Duy Sáng Tạo (Ken Robinson 427 câu), Big-O (NeetCode 195 câu), Steve Jobs (244 câu), Event Loop, Linux, Git & 30 Bài',
     description:
-      'Bước khởi đầu bắt buộc cho mọi sinh viên và thực tập sinh: Giải phóng tư duy sáng tạo (Sir Ken Robinson TED 427 câu), làm chủ độ phức tạp thuật toán Big-O (NeetCode 195 câu), hệ điều hành Linux, dòng lệnh Bash, Git DAG và Vim.',
+      'Giáo trình 30 video thực chiến chuẩn mực FAANG: Giải phóng tư duy sáng tạo (Sir Ken Robinson TED 427 câu), làm chủ độ phức tạp thuật toán Big-O (NeetCode 195 câu), Steve Jobs Stanford (244 câu), Event Loop (336 câu), hệ điều hành Linux, dòng lệnh Bash, Git DAG, Vim, C++, Go, Rust, WebAssembly, HTML/CSS/JS, SQL và REST API.',
     icon: '🌱',
-    badge: '🌱 Intern Level',
+    badge: '🌱 Intern Level (30 Video)',
     level: 'A2 - Cơ bản',
-    estimatedHours: '4 giờ',
+    estimatedHours: '8.5 giờ',
     category: 'code',
     videos: getVideosByIds(INTERN_IDS),
   },
@@ -184,15 +222,15 @@ export const IT_AI_LEARNING_FLOWS: LearningFlow[] = [
     id: 'se-level-2-fresher',
     phaseNumber: 2,
     levelRank: 'Fresher',
-    title: 'Cấp Độ 2: Fresher Engineer (Lập Trình Viên Dự Án Web & Runtime)',
+    title: 'Cấp Độ 2: Fresher Engineer (Hệ Thống Web & Sản Xuất - 30 Video)',
     subtitle:
-      'Event Loop (Philip Roberts 27m), Node.js (Fireship 12m), Next.js, RESTful API, React, TypeScript, SQL, Postgres & Mongo',
+      'TypeScript Nâng Cao (Matt Pocock 1.859 câu), Kubernetes (Nana 1.392 câu), React 19 RSC (Jack 886 câu), TinyURL (712 câu) & 30 Bài',
     description:
-      'Dành cho kỹ sư bắt tay xây dựng ứng dụng thực tế: Mổ xẻ cơ chế bất đồng bộ Event Loop & Call Stack cùng Philip Roberts (336 câu song ngữ), kiến trúc backend Node.js (159 câu), Next.js, RESTful API chuẩn mực và quản lý cơ sở dữ liệu quan hệ PostgreSQL & NoSQL MongoDB.',
+      'Giáo trình 30 video chuyên sâu cấp sản xuất: TypeScript Nâng Cao (Matt Pocock 1.859 câu), Kiến Trúc Kubernetes (Nana 1.392 câu), React 19 RSC (Jack Herrington 886 câu), TinyURL System Design (ByteByteGo 712 câu), Docker Crash Course (Nana 444 câu), Event Loop (336 câu), Node.js (159 câu), Chỉ mục Database PostgreSQL (138 câu), Rate Limiter (111 câu), Microservices, Next.js, Redis, Kafka và Bảo mật OAuth.',
     icon: '🌿',
-    badge: '🌿 Fresher Level',
+    badge: '🌿 Fresher Level (30 Video)',
     level: 'B1 - Trung cấp',
-    estimatedHours: '4.5 giờ',
+    estimatedHours: '12 giờ',
     category: 'code',
     videos: getVideosByIds(FRESHER_IDS),
   },
