@@ -16,6 +16,7 @@ import {
   Zap,
   Sparkles,
   Youtube,
+  Kanban,
 } from 'lucide-react'
 import { Button } from '@/components/common/Button'
 import { useDeckStore } from '@/store/deckStore'
@@ -227,10 +228,10 @@ const TodayProgressCard = memo(function TodayProgressCard({
 const StudyModesSection = memo(function StudyModesSection() {
   const modes = [
     {
-      to: '/stories',
-      icon: BookOpen,
-      label: 'Đọc truyện',
-      desc: 'Tiên hiệp & Tiểu thuyết',
+      to: '/tech-board',
+      icon: Kanban,
+      label: 'Bảng học tập Tech',
+      desc: 'Lộ trình Kỹ sư Phần mềm',
       color: 'emerald',
     },
     { to: '/learn', icon: Sparkles, label: 'Flashcard', desc: 'Lật thẻ học từ', color: 'blue' },

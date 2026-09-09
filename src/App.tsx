@@ -20,12 +20,6 @@ import { ImportData } from '@/pages/ImportData'
 const VideoLearning = React.lazy(() =>
   import('@/pages/VideoLearning').then((m) => ({ default: m.VideoLearning })),
 )
-const StoryLibrary = React.lazy(() =>
-  import('@/pages/StoryLibrary').then((m) => ({ default: m.StoryLibrary })),
-)
-const StoryReader = React.lazy(() =>
-  import('@/pages/StoryReader').then((m) => ({ default: m.StoryReader })),
-)
 const SentenceMaster = React.lazy(() =>
   import('@/pages/SentenceMaster').then((m) => ({ default: m.SentenceMaster })),
 )
@@ -68,9 +62,6 @@ export default function App() {
                   <Route path='/' element={<Home />} />
                   <Route path='/learn' element={<Learn />} />
                   <Route path='/sentence-master' element={<SentenceMaster />} />
-                  <Route path='/stories' element={<StoryLibrary />} />
-                  <Route path='/stories/:id' element={<StoryReader />} />
-                  <Route path='/story/:id' element={<StoryReader />} />
                   <Route path='/video-learning' element={<VideoLearning />} />
                   <Route path='/video' element={<VideoLearning />} />
                   <Route path='/tech-board' element={<TechBoardPage />} />

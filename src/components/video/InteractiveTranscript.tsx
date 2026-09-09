@@ -44,7 +44,7 @@ const CueItem = memo<CueItemProps>(
           }
         })
       }
-    }, [cue.textVi, isActive, cue.textEn, viTranslation])
+    }, [cue, isActive, viTranslation])
 
     const [isSpeaking, setIsSpeaking] = useState(false)
 
@@ -99,7 +99,9 @@ const CueItem = memo<CueItemProps>(
     return (
       <div
         id={`cue-item-${cue.id}`}
-        className={`transition-all duration-200 rounded-2xl p-3 sm:p-3.5 border ${
+        data-cue-id={cue.id}
+        onClick={() => onSeek(cue.start)}
+        className={`cursor-pointer transition-all duration-200 rounded-2xl p-3 sm:p-3.5 border ${
           isActive
             ? 'bg-gradient-to-r from-primary-50/90 to-indigo-50/60 dark:from-primary-950/70 dark:to-indigo-950/40 border-l-4 border-l-primary-500 border-primary-300 dark:border-primary-700 shadow-md ring-1 ring-primary-500/20'
             : 'bg-white dark:bg-dark-card border-gray-100 dark:border-gray-800/60 border-l-4 border-l-transparent hover:bg-gray-50/80 dark:hover:bg-gray-800/40 opacity-75 hover:opacity-100'
@@ -109,7 +111,10 @@ const CueItem = memo<CueItemProps>(
         <div className='flex items-center justify-between mb-1.5'>
           <div className='flex items-center gap-1.5'>
             <button
-              onClick={() => onSeek(cue.start)}
+              onClick={(e) => {
+                e.stopPropagation()
+                onSeek(cue.start)
+              }}
               className={`px-2 py-0.5 rounded-md font-mono text-[11px] sm:text-xs font-bold flex items-center gap-1 transition-all ${
                 isActive
                   ? 'bg-primary-600 text-white shadow-sm shadow-primary-500/30'
@@ -121,7 +126,10 @@ const CueItem = memo<CueItemProps>(
             </button>
 
             <button
-              onClick={handleSpeakBilingual}
+              onClick={(e) => {
+                e.stopPropagation()
+                handleSpeakBilingual()
+              }}
               className={`flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-bold transition-all ${
                 isSpeaking
                   ? 'bg-amber-500 text-white animate-pulse shadow-sm shadow-amber-500/30'
@@ -138,7 +146,10 @@ const CueItem = memo<CueItemProps>(
 
           <div className='flex items-center gap-1'>
             <button
-              onClick={() => onAddNote(cue)}
+              onClick={(e) => {
+                e.stopPropagation()
+                onAddNote(cue)
+              }}
               className='p-1 rounded-lg text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors'
               title='Ghi chú câu này'
             >
@@ -158,7 +169,10 @@ const CueItem = memo<CueItemProps>(
           {cue.words.map((word, wIdx) => (
             <span
               key={wIdx}
-              onClick={() => onWordClick(word, cue.textEn)}
+              onClick={(e) => {
+                e.stopPropagation()
+                onWordClick(word, cue.textEn)
+              }}
               className={`inline cursor-pointer rounded-sm px-0.5 transition-colors ${
                 isActive
                   ? 'hover:bg-primary-200 dark:hover:bg-primary-800/80 hover:text-primary-800 dark:hover:text-primary-200 underline decoration-primary-400 decoration-1 underline-offset-2'
@@ -230,8 +244,9 @@ export const InteractiveTranscript: React.FC<InteractiveTranscriptProps> = ({
     prevActiveIdRef.current = activeCueId
 
     const container = containerRef.current
-    const el = document.getElementById(`cue-item-${activeCueId}`)
-    if (container && el) {
+    if (!container) return
+    const el = container.querySelector(`[data-cue-id="${activeCueId}"]`) as HTMLElement | null
+    if (el) {
       const containerRect = container.getBoundingClientRect()
       const elRect = el.getBoundingClientRect()
       const relativeTop = elRect.top - containerRect.top + container.scrollTop

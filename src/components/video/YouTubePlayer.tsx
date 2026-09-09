@@ -2,7 +2,7 @@
 // Ultra-Resilient YouTube Player (Unified Embed Player)
 // ============================================
 
-import React, { useEffect, useRef, useState, useCallback } from 'react'
+import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react'
 import {
   Play,
   Pause,
@@ -23,6 +23,8 @@ interface YouTubePlayerProps {
   autoPause: boolean
   onToggleAutoPause: () => void
   seekToTime?: number | null
+  onSeekComplete?: () => void
+  currentCueEnd?: number
 }
 
 declare global {
@@ -61,6 +63,8 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
   autoPause,
   onToggleAutoPause,
   seekToTime,
+  onSeekComplete,
+  currentCueEnd,
 }) => {
   const iframeRef = useRef<HTMLIFrameElement | null>(null)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -68,6 +72,30 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
   const [isPlaying, setIsPlaying] = useState(false)
   const [playbackRate, setPlaybackRate] = useState(1.0)
   const [isApiReady, setIsApiReady] = useState(false)
+
+  // High-precision time tracking anchors (Defense-in-depth)
+  const lastAuthoritativeTimeRef = useRef<number>(0)
+  const lastTimeEpochRef = useRef<number>(0)
+  const isPlayingRef = useRef<boolean>(false)
+  const playbackRateRef = useRef<number>(1.0)
+  const lastAutoPausedCueEndRef = useRef<number | null>(null)
+
+  // Keep refs in sync with current state
+  useEffect(() => {
+    isPlayingRef.current = isPlaying
+  }, [isPlaying])
+
+  useEffect(() => {
+    playbackRateRef.current = playbackRate
+  }, [playbackRate])
+
+  // Reset player tracking state whenever videoId changes
+  useEffect(() => {
+    lastAuthoritativeTimeRef.current = 0
+    lastTimeEpochRef.current = Date.now()
+    lastAutoPausedCueEndRef.current = null
+    setIsPlaying(false)
+  }, [videoId])
 
   // Helper to send command directly via postMessage to iframe
   const postIframeCommand = useCallback((func: string, args: unknown[] = []) => {
@@ -87,6 +115,31 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
     }
   }, [])
 
+  // Send proper YouTube listening ping to register event listeners
+  const sendListeningPing = useCallback(() => {
+    if (iframeRef.current?.contentWindow) {
+      try {
+        // Standard YouTube HTML5 postMessage handshake
+        iframeRef.current.contentWindow.postMessage(
+          JSON.stringify({ event: 'listening', id: 1, channel: 'widget' }),
+          '*',
+        )
+        // Command variant
+        iframeRef.current.contentWindow.postMessage(
+          JSON.stringify({ event: 'command', func: 'listening' }),
+          '*',
+        )
+        // Subscribe to state changes
+        iframeRef.current.contentWindow.postMessage(
+          JSON.stringify({ event: 'command', func: 'addEventListener', args: ['onStateChange'] }),
+          '*',
+        )
+      } catch {
+        // Cross-origin safe
+      }
+    }
+  }, [])
+
   // 1. Listen to postMessage from YouTube iframe
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
@@ -95,41 +148,63 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
       try {
         let data = event.data
         if (typeof data === 'string') {
+          if (!data.startsWith('{') && !data.startsWith('[')) return
           data = JSON.parse(data)
         }
 
-        if (data.event === 'infoDelivery' && data.info) {
-          if (typeof data.info.currentTime === 'number') {
-            onTimeUpdate(data.info.currentTime)
-          }
-          if (typeof data.info.playerState === 'number') {
-            setIsPlaying(data.info.playerState === 1)
-          }
-          if (typeof data.info.playbackRate === 'number') {
-            setPlaybackRate(data.info.playbackRate)
-          }
-        }
+        if (typeof data !== 'object' || data === null) return
 
+        // 1a. Handle onReady
         if (data.event === 'onReady') {
           setIsApiReady(true)
-          postIframeCommand('listening')
+          sendListeningPing()
         }
 
+        // 1b. Handle infoDelivery or initialDelivery
+        if ((data.event === 'infoDelivery' || data.event === 'initialDelivery') && data.info) {
+          const info = data.info
+          if (typeof info.currentTime === 'number' && !isNaN(info.currentTime)) {
+            lastAuthoritativeTimeRef.current = info.currentTime
+            lastTimeEpochRef.current = Date.now()
+            onTimeUpdate(info.currentTime)
+          }
+
+          if (typeof info.playerState === 'number') {
+            if (info.playerState === 1) {
+              setIsPlaying(true)
+            } else if (info.playerState === 2 || info.playerState === 0) {
+              setIsPlaying(false)
+            }
+          }
+
+          if (typeof info.playbackRate === 'number' && !isNaN(info.playbackRate)) {
+            setPlaybackRate(info.playbackRate)
+          }
+        }
+
+        // 1c. Handle direct onStateChange events
         if (data.event === 'onStateChange') {
-          if (data.info === 1) {
+          const state =
+            typeof data.info === 'number'
+              ? data.info
+              : typeof data.data === 'number'
+                ? data.data
+                : data.info?.playerState
+          if (state === 1) {
             setIsPlaying(true)
-          } else if (data.info === 2 || data.info === 0) {
+            lastTimeEpochRef.current = Date.now()
+          } else if (state === 2 || state === 0) {
             setIsPlaying(false)
           }
         }
       } catch {
-        // Not a JSON message from YT
+        // Safely ignore non-JSON messages from other sources
       }
     }
 
     window.addEventListener('message', handleMessage)
     return () => window.removeEventListener('message', handleMessage)
-  }, [onTimeUpdate, postIframeCommand])
+  }, [onTimeUpdate, sendListeningPing])
 
   // 2. Load YouTube IFrame API script
   useEffect(() => {
@@ -182,11 +257,12 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
         events: {
           onReady: () => {
             setIsApiReady(true)
-            postIframeCommand('listening')
+            sendListeningPing()
           },
           onStateChange: (event: { data: number }) => {
             if (event.data === 1) {
               setIsPlaying(true)
+              lastTimeEpochRef.current = Date.now()
             } else if (event.data === 2 || event.data === 0) {
               setIsPlaying(false)
             }
@@ -207,32 +283,81 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
       }
       ytPlayerRef.current = null
     }
-  }, [isApiReady, videoId, postIframeCommand])
+  }, [isApiReady, videoId, sendListeningPing])
 
-  // 4. Time Polling loop
+  // 4. Time Polling & High-Precision Fallback Ticker
   useEffect(() => {
     const interval = setInterval(() => {
+      let gotAuthoritative = false
+
+      // 4a. Try reading from YT.Player instance if accessible
       if (ytPlayerRef.current && typeof ytPlayerRef.current.getCurrentTime === 'function') {
         try {
           const currentTime = ytPlayerRef.current.getCurrentTime()
           if (typeof currentTime === 'number' && !isNaN(currentTime)) {
+            lastAuthoritativeTimeRef.current = currentTime
+            lastTimeEpochRef.current = Date.now()
             onTimeUpdate(currentTime)
+            gotAuthoritative = true
           }
           if (typeof ytPlayerRef.current.getPlayerState === 'function') {
             const state = ytPlayerRef.current.getPlayerState()
-            setIsPlaying(state === 1)
+            if (state === 1 && !isPlayingRef.current) {
+              setIsPlaying(true)
+            } else if ((state === 2 || state === 0) && isPlayingRef.current) {
+              setIsPlaying(false)
+            }
           }
         } catch {
-          // Player initializing
+          // Cross-origin restriction
         }
-      } else {
-        // Ping iframe to deliver info
-        postIframeCommand('listening')
+      }
+
+      // 4b. Periodically ping iframe to keep event stream active
+      sendListeningPing()
+
+      // 4c. High-Precision Interpolation Fallback:
+      // When playing, if no authoritative tick in > 200ms, project time smoothly
+      if (isPlayingRef.current) {
+        const now = Date.now()
+        const elapsedSec = (now - lastTimeEpochRef.current) / 1000
+
+        let currentActiveTime = lastAuthoritativeTimeRef.current
+        if (!gotAuthoritative && elapsedSec > 0.2) {
+          currentActiveTime = Math.max(
+            0,
+            lastAuthoritativeTimeRef.current + elapsedSec * playbackRateRef.current,
+          )
+          onTimeUpdate(currentActiveTime)
+        } else if (gotAuthoritative) {
+          currentActiveTime = lastAuthoritativeTimeRef.current
+        }
+
+        // 4d. Auto-Pause check when current sentence ends
+        if (
+          autoPause &&
+          currentCueEnd &&
+          currentCueEnd > 0 &&
+          lastAutoPausedCueEndRef.current !== currentCueEnd &&
+          currentActiveTime >= currentCueEnd - 0.15
+        ) {
+          lastAutoPausedCueEndRef.current = currentCueEnd
+          if (ytPlayerRef.current?.pauseVideo) {
+            try {
+              ytPlayerRef.current.pauseVideo()
+            } catch {
+              postIframeCommand('pauseVideo')
+            }
+          } else {
+            postIframeCommand('pauseVideo')
+          }
+          setIsPlaying(false)
+        }
       }
     }, 150)
 
     return () => clearInterval(interval)
-  }, [onTimeUpdate, postIframeCommand])
+  }, [onTimeUpdate, sendListeningPing, autoPause, currentCueEnd, postIframeCommand])
 
   // 5. Seek To Time Handler
   useEffect(() => {
@@ -250,25 +375,40 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
         postIframeCommand('playVideo')
       }
       setIsPlaying(true)
+      lastAuthoritativeTimeRef.current = seekToTime
+      lastTimeEpochRef.current = Date.now()
+      lastAutoPausedCueEndRef.current = null
+      onTimeUpdate(seekToTime)
+      onSeekComplete?.()
     }
-  }, [seekToTime, postIframeCommand])
+  }, [seekToTime, postIframeCommand, onTimeUpdate, onSeekComplete])
 
   // 6. Play / Pause Toggle
   const togglePlay = useCallback(() => {
     if (isPlaying) {
       if (ytPlayerRef.current?.pauseVideo) {
-        ytPlayerRef.current.pauseVideo()
+        try {
+          ytPlayerRef.current.pauseVideo()
+        } catch {
+          postIframeCommand('pauseVideo')
+        }
       } else {
         postIframeCommand('pauseVideo')
       }
       setIsPlaying(false)
     } else {
       if (ytPlayerRef.current?.playVideo) {
-        ytPlayerRef.current.playVideo()
+        try {
+          ytPlayerRef.current.playVideo()
+        } catch {
+          postIframeCommand('playVideo')
+        }
       } else {
         postIframeCommand('playVideo')
       }
       setIsPlaying(true)
+      lastTimeEpochRef.current = Date.now()
+      lastAutoPausedCueEndRef.current = null
     }
   }, [isPlaying, postIframeCommand])
 
@@ -311,7 +451,17 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [togglePlay, onPrevSentence, onNextSentence, onRepeatSentence])
 
-  const embedUrl = `https://www.youtube.com/embed/${videoId}?enablejsapi=1&playsinline=1&rel=0&autoplay=0&iv_load_policy=3&fs=0&cc_load_policy=1&cc_lang_pref=en`
+  const originParam = useMemo(() => {
+    if (typeof window !== 'undefined' && window.location.origin) {
+      const orig = window.location.origin
+      if (orig.startsWith('http://') || orig.startsWith('https://')) {
+        return `&origin=${encodeURIComponent(orig)}`
+      }
+    }
+    return ''
+  }, [])
+
+  const embedUrl = `https://www.youtube.com/embed/${videoId}?enablejsapi=1&playsinline=1&rel=0&autoplay=0&iv_load_policy=3&fs=0&cc_load_policy=1&cc_lang_pref=en${originParam}&widget_referrer=${encodeURIComponent(typeof window !== 'undefined' ? window.location.href : '')}`
 
   return (
     <div className='flex flex-col shrink-0 rounded-2xl overflow-hidden bg-black shadow-xl border border-gray-800 transition-all'>
@@ -326,6 +476,11 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
           allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
           referrerPolicy='strict-origin-when-cross-origin'
           allowFullScreen={false}
+          onLoad={() => {
+            sendListeningPing()
+            setTimeout(sendListeningPing, 400)
+            setTimeout(sendListeningPing, 1200)
+          }}
         />
       </div>
 

@@ -8921,7 +8921,7 @@ export async function translateEnToVi(text: string): Promise<string> {
     if (res.ok) {
       const data = await res.json()
       if (Array.isArray(data) && Array.isArray(data[0])) {
-        return data[0].map((item: any) => item[0]).join('')
+        return (data[0] as Array<[string]>).map((item) => item[0]).join('')
       }
     }
   } catch {
@@ -9068,7 +9068,7 @@ export async function fetchYouTubeBilingualTranscript(videoId: string): Promise<
         return cues
       }
     }
-  } catch (e) {
+  } catch {
     // Continue to fallback
   }
 
@@ -9118,8 +9118,10 @@ export async function fetchYouTubeBilingualTranscript(videoId: string): Promise<
         if (Array.isArray(captionList?.captions) && captionList.captions.length > 0) {
           // Find English caption track
           const enTrack =
-            captionList.captions.find(
-              (c: any) =>
+            (
+              captionList.captions as Array<{ languageCode?: string; label?: string; url?: string }>
+            ).find(
+              (c) =>
                 c.languageCode?.startsWith('en') ||
                 c.label?.toLowerCase().includes('english') ||
                 c.label?.toLowerCase().includes('auto'),
@@ -9197,10 +9199,10 @@ export async function fetchYouTubeBilingualTranscript(videoId: string): Promise<
   // 6. Offline Big Database Fallback
   try {
     const offlineDb = await import('../data/offline_transcripts.json')
-    if (offlineDb.default && (offlineDb.default as any)[videoId]) {
-      return (offlineDb.default as any)[videoId]
+    if (offlineDb.default && (offlineDb.default as Record<string, TranscriptCue[]>)[videoId]) {
+      return (offlineDb.default as Record<string, TranscriptCue[]>)[videoId]
     }
-  } catch (e) {
+  } catch {
     // Offline DB chưa được build hoặc không có
   }
 

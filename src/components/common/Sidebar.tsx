@@ -6,7 +6,6 @@ import { memo, useCallback } from 'react'
 import { NavLink } from 'react-router-dom'
 import {
   Home,
-  BookOpen,
   FolderOpen,
   BarChart3,
   Settings,
@@ -35,7 +34,6 @@ interface NavItem {
 
 const NAV_ITEMS: NavItem[] = [
   { to: '/', icon: Home, label: 'Tổng quan' },
-  { to: '/stories', icon: BookOpen, label: 'Đọc truyện song ngữ' },
   { to: '/learn', icon: Sparkles, label: 'Flashcard' },
   { to: '/sentence-master', icon: Sparkles, label: 'Đặt câu phản xạ' },
   { to: '/video-learning', icon: Youtube, label: 'Video song ngữ' },

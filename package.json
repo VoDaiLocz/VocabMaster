@@ -1,7 +1,7 @@
 {
   "name": "vocabmaster",
   "private": true,
-  "version": "1.4.8",
+  "version": "1.5.0",
   "description": "English Vocabulary Learning App",
   "author": "VocabMaster <vocabmaster@example.com>",
   "main": "dist-electron/main.js",
@@ -10,7 +10,7 @@
     "build": "tsc && vite build",
     "build:offline-db": "python3 scripts/build_offline_db.py",
     "build:win": "tsc && vite build && electron-builder --win",
-    "build:linux": "electron-builder --linux AppImage",
+    "build:linux": "tsc && vite build && electron-builder --linux AppImage deb",
     "build:android": "tsc && vite build && npx cap sync android && cd android && ./gradlew assembleDebug",
     "preview": "vite preview",
     "electron:dev": "concurrently \"vite\" \"electron .\"",

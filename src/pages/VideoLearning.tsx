@@ -79,7 +79,7 @@ export const VideoLearning: React.FC = () => {
     setLoadStatus('Đang kết nối tới YouTube...')
     setCurrentVideoId(videoId)
     setCurrentTime(0)
-    setSeekToTime(0)
+    setSeekToTime(null)
 
     const foundCurated = ALL_CURATED_LEARNING_VIDEOS.find((v) => v.info.videoId === videoId)
     if (info) {
@@ -133,29 +133,40 @@ export const VideoLearning: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paramVideoId])
 
+  // Robust Cue Index Finder for sentence navigation
+  const getCurrentCueIndex = useCallback(() => {
+    if (cues.length === 0) return -1
+    const exactIndex = cues.findIndex((c) => currentTime >= c.start && currentTime <= c.end + 0.25)
+    if (exactIndex !== -1) return exactIndex
+    for (let i = cues.length - 1; i >= 0; i--) {
+      if (currentTime >= cues[i].start) return i
+    }
+    return 0
+  }, [cues, currentTime])
+
   // Navigation callbacks
   const handlePrevSentence = useCallback(() => {
-    const currentIndex = cues.findIndex((c) => currentTime >= c.start && currentTime <= c.end)
+    const currentIndex = getCurrentCueIndex()
     if (currentIndex > 0) {
       setSeekToTime(cues[currentIndex - 1].start)
     } else if (cues[0]) {
       setSeekToTime(cues[0].start)
     }
-  }, [cues, currentTime])
+  }, [cues, getCurrentCueIndex])
 
   const handleNextSentence = useCallback(() => {
-    const currentIndex = cues.findIndex((c) => currentTime >= c.start && currentTime <= c.end)
+    const currentIndex = getCurrentCueIndex()
     if (currentIndex >= 0 && currentIndex < cues.length - 1) {
       setSeekToTime(cues[currentIndex + 1].start)
     }
-  }, [cues, currentTime])
+  }, [cues, getCurrentCueIndex])
 
   const handleRepeatSentence = useCallback(() => {
-    const currentCue = cues.find((c) => currentTime >= c.start && currentTime <= c.end)
-    if (currentCue) {
-      setSeekToTime(currentCue.start)
+    const currentIndex = getCurrentCueIndex()
+    if (currentIndex >= 0 && cues[currentIndex]) {
+      setSeekToTime(cues[currentIndex].start)
     }
-  }, [cues, currentTime])
+  }, [cues, getCurrentCueIndex])
 
   // Word Click Handler
   const handleWordClick = async (rawWord: string, contextSentence: string) => {
@@ -305,6 +316,8 @@ export const VideoLearning: React.FC = () => {
                 autoPause={autoPause}
                 onToggleAutoPause={() => setAutoPause((p) => !p)}
                 seekToTime={seekToTime}
+                onSeekComplete={() => setSeekToTime(null)}
+                currentCueEnd={currentCue?.end}
               />
 
               {/* Desktop Vocab & Notes Drawer */}

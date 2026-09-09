@@ -599,8 +599,10 @@ export const VideoExplorerModal: React.FC<VideoExplorerModalProps> = ({
 
                           <div className='grid grid-cols-1 md:grid-cols-3 gap-3'>
                             {flow.videos.map((vItem, vIdx) => {
-                              const stepNum = (vItem as any).step || vIdx + 1
+                              const stepNum = (vItem as { step?: number }).step || vIdx + 1
                               const isSelected = currentVideoId === vItem.info.videoId
+                              const sentenceCount = (vItem.info as { sentenceCount?: number })
+                                .sentenceCount
 
                               return (
                                 <div
@@ -660,10 +662,10 @@ export const VideoExplorerModal: React.FC<VideoExplorerModalProps> = ({
                                   <div className='pt-2 border-t border-gray-100 dark:border-gray-700/60 flex items-center justify-between'>
                                     <span className='text-[10px] text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1'>
                                       <CheckCircle2 size={11} />
-                                      {(vItem.info as any).sentenceCount
-                                        ? (vItem.info as any).sentenceCount >= 100
-                                          ? `Chuyên sâu • ${(vItem.info as any).sentenceCount} câu`
-                                          : `Tóm tắt • ${(vItem.info as any).sentenceCount} câu`
+                                      {sentenceCount
+                                        ? sentenceCount >= 100
+                                          ? `Chuyên sâu • ${sentenceCount} câu`
+                                          : `Tóm tắt • ${sentenceCount} câu`
                                         : '100% Song ngữ'}
                                     </span>
 
