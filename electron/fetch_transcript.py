@@ -23,18 +23,34 @@ def get_transcript(video_id):
         except:
             vi_cues = en_cues # Fallback if translation fails
 
+        def get_attr(cue, attr, default=''):
+            if hasattr(cue, attr):
+                return getattr(cue, attr)
+            if isinstance(cue, dict):
+                return cue.get(attr, default)
+            return default
+
         cues_list = []
         # Zip them together
         for idx in range(len(en_cues)):
             en_cue = en_cues[idx]
             vi_cue = vi_cues[idx] if idx < len(vi_cues) else en_cue
 
-            text_en = en_cue['text'].replace("\n", " ").strip()
+            raw_en = get_attr(en_cue, 'text', '')
+            raw_vi = get_attr(vi_cue, 'text', '')
+
+            text_en = str(raw_en).replace("\n", " ").strip()
             if not text_en:
                 continue
 
-            start = round(float(en_cue['start']), 2)
-            duration = round(float(en_cue['duration']), 2)
+            try:
+                start = round(float(get_attr(en_cue, 'start', 0)), 2)
+            except:
+                start = 0.0
+            try:
+                duration = round(float(get_attr(en_cue, 'duration', 0)), 2)
+            except:
+                duration = 2.0
             end = round(start + duration, 2)
             words = [w for w in text_en.split() if w]
             
@@ -44,7 +60,7 @@ def get_transcript(video_id):
                 "duration": duration,
                 "end": end,
                 "textEn": text_en,
-                "textVi": vi_cue['text'].replace("\n", " ").strip(),
+                "textVi": str(raw_vi).replace("\n", " ").strip(),
                 "words": words
             })
 

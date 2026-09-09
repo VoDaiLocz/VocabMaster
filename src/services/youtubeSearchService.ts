@@ -192,10 +192,10 @@ export async function searchYouTubeDirectly(query: string): Promise<YouTubeSearc
       tags: ['System Design', 'Architecture', 'ByteByteGo', 'Backend', 'Cloud'],
     },
     {
-      videoId: 'wXwH8G7q3jM',
-      title: 'Software Developer Job Interview - Tell Me About a Project',
+      videoId: '1mHjMNZZvFo',
+      title: '08 Common Job Interview Questions and Answers - How to Pass',
       channel: 'CareerVidz',
-      thumbnailUrl: 'https://img.youtube.com/vi/wXwH8G7q3jM/hqdefault.jpg',
+      thumbnailUrl: 'https://img.youtube.com/vi/1mHjMNZZvFo/hqdefault.jpg',
       durationFormatted: '11:42',
       description: 'Hướng dẫn trả lời câu hỏi phỏng vấn dự án lập trình theo phương pháp STAR.',
       tags: ['Interview', 'Career', 'STAR Method', 'Tech Interview', 'Work'],

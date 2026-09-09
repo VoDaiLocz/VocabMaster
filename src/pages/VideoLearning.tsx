@@ -15,11 +15,12 @@ import {
   YouTubePlayer,
   InteractiveTranscript,
   WordLookupPopover,
-  VideoNotesDrawer,
+  VideoVocabDrawer,
   VideoExplorerModal,
   VideoNote,
 } from '@/components/video'
-import { Youtube, Sparkles, Compass } from 'lucide-react'
+import { TechLearningBoard } from '@/components/tech-learning/TechLearningBoard'
+import { Youtube, Sparkles, Compass, Kanban, BookOpen, X } from 'lucide-react'
 import { useDeckStore } from '@/store/deckStore'
 
 interface FlowContext {
@@ -32,7 +33,12 @@ export const VideoLearning: React.FC = () => {
   const { fetchDecks } = useDeckStore()
   const [searchParams] = useSearchParams()
   const paramVideoId = searchParams.get('v') || searchParams.get('videoId')
+  const paramTime = searchParams.get('t') || searchParams.get('time')
   const [showSearchModal, setShowSearchModal] = useState(false)
+  const [showTechBoardModal, setShowTechBoardModal] = useState(false)
+  const [mobileTab, setMobileTab] = useState<'transcript' | 'vocab'>('transcript')
+  const [prefillWord, setPrefillWord] = useState<string | undefined>(undefined)
+  const [prefillSentence, setPrefillSentence] = useState<string | undefined>(undefined)
   const [activeFlow, setActiveFlow] = useState<FlowContext | null>(null)
   const [currentVideoId, setCurrentVideoId] = useState<string | null>(paramVideoId || 'UF8uR6Z6KLc')
   const [currentVideoInfo, setCurrentVideoInfo] = useState<VideoInfo | null>(
@@ -52,6 +58,16 @@ export const VideoLearning: React.FC = () => {
   useEffect(() => {
     fetchDecks()
   }, [fetchDecks])
+
+  // Seek when query param t / time is provided
+  useEffect(() => {
+    if (paramTime) {
+      const parsed = parseFloat(paramTime)
+      if (!isNaN(parsed)) {
+        setSeekToTime(parsed)
+      }
+    }
+  }, [paramTime])
 
   // Load Video Transcript with explicit percentage steps
   const handleLoadVideo = async (videoId: string, info?: VideoInfo, flowCtx?: FlowContext) => {
@@ -181,15 +197,28 @@ export const VideoLearning: React.FC = () => {
           </div>
         </div>
 
-        {/* Change Video & Recommendations Pill */}
-        <button
-          onClick={() => setShowSearchModal(true)}
-          className='flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-primary-50 dark:bg-primary-950/50 text-primary-600 dark:text-primary-400 border border-primary-200 dark:border-primary-800/60 text-xs font-bold hover:bg-primary-100 transition-all shrink-0 active:scale-95 shadow-sm'
-        >
-          <Compass size={14} />
-          <span className='hidden sm:inline'>Khám Phá & Lộ Trình</span>
-          <span className='sm:hidden'>Lộ trình / Đổi</span>
-        </button>
+        <div className='flex items-center gap-2 shrink-0'>
+          {/* Tech Learning Board (Trello-Style) Button */}
+          <button
+            onClick={() => setShowTechBoardModal(true)}
+            className='flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-500/10 to-orange-500/10 dark:from-amber-950/40 dark:to-orange-950/40 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800/60 text-xs font-bold hover:bg-amber-100/80 dark:hover:bg-amber-900/40 transition-all active:scale-95 shadow-xs'
+            title='Bảng ghi chú kiến thức công nghệ chuẩn kỹ sư (Kanban Trello)'
+          >
+            <Kanban size={14} />
+            <span className='hidden sm:inline'>Bảng học tập Tech</span>
+            <span className='sm:hidden'>Tech Board</span>
+          </button>
+
+          {/* Change Video & Recommendations Pill */}
+          <button
+            onClick={() => setShowSearchModal(true)}
+            className='flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-primary-50 dark:bg-primary-950/50 text-primary-600 dark:text-primary-400 border border-primary-200 dark:border-primary-800/60 text-xs font-bold hover:bg-primary-100 transition-all shrink-0 active:scale-95 shadow-sm'
+          >
+            <Compass size={14} />
+            <span className='hidden sm:inline'>Khám Phá & Lộ Trình</span>
+            <span className='sm:hidden'>Lộ trình / Đổi</span>
+          </button>
+        </div>
       </div>
 
       {/* Active Flow Roadmap Banner */}
@@ -238,48 +267,111 @@ export const VideoLearning: React.FC = () => {
           </div>
         </div>
       ) : currentVideoId ? (
-        <div className='flex-1 min-h-0 flex flex-col lg:grid lg:grid-cols-12 gap-2 sm:gap-4 items-stretch lg:items-start overflow-hidden lg:overflow-visible'>
-          {/* Video Player (Pinned at top on mobile, 7 cols on desktop) */}
-          <div className='shrink-0 w-full lg:col-span-7 space-y-3'>
-            <YouTubePlayer
-              videoId={currentVideoId}
-              onTimeUpdate={setCurrentTime}
-              onPrevSentence={handlePrevSentence}
-              onNextSentence={handleNextSentence}
-              onRepeatSentence={handleRepeatSentence}
-              autoPause={autoPause}
-              onToggleAutoPause={() => setAutoPause((p) => !p)}
-              seekToTime={seekToTime}
-            />
-
-            {/* Desktop Notes Drawer (Hidden on Mobile) */}
-            <div className='hidden lg:block h-72'>
-              <VideoNotesDrawer
-                notes={notes}
-                currentTime={currentTime}
-                currentQuote={currentCue?.textEn}
-                onAddNote={handleAddNote}
-                onDeleteNote={handleDeleteNote}
-                onSeek={(time) => setSeekToTime(time)}
-              />
-            </div>
+        <div className='flex-1 min-h-0 flex flex-col space-y-2 lg:space-y-0'>
+          {/* Mobile Switcher Tab (Hidden on Desktop) */}
+          <div className='flex lg:hidden items-center justify-center p-1 rounded-xl bg-gray-100 dark:bg-gray-800 shrink-0'>
+            <button
+              onClick={() => setMobileTab('transcript')}
+              className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all ${
+                mobileTab === 'transcript'
+                  ? 'bg-white dark:bg-dark-card text-primary-600 dark:text-primary-400 shadow-xs'
+                  : 'text-gray-500 dark:text-gray-400'
+              }`}
+            >
+              Phụ đề song ngữ ({cues.length})
+            </button>
+            <button
+              onClick={() => setMobileTab('vocab')}
+              className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all flex items-center justify-center gap-1 ${
+                mobileTab === 'vocab'
+                  ? 'bg-white dark:bg-dark-card text-primary-600 dark:text-primary-400 shadow-xs'
+                  : 'text-gray-500 dark:text-gray-400'
+              }`}
+            >
+              <BookOpen size={13} />
+              Sổ từ vựng & Ghi chú
+            </button>
           </div>
 
-          {/* Transcript Stream (Fills exactly remaining viewport space on mobile, 5 cols on desktop) */}
-          <div className='flex-1 min-h-0 w-full lg:col-span-5 lg:h-[620px] overflow-hidden'>
-            <InteractiveTranscript
-              cues={cues}
-              currentTime={currentTime}
-              onSeek={(time) => setSeekToTime(time)}
-              onWordClick={handleWordClick}
-              onAddNote={(cue) => {
-                handleAddNote({
-                  timestamp: Math.round(cue.start),
-                  quote: cue.textEn,
-                  userNote: cue.textVi,
-                })
-              }}
-            />
+          <div className='flex-1 min-h-0 flex flex-col lg:grid lg:grid-cols-12 gap-2 sm:gap-4 items-stretch lg:items-start overflow-hidden lg:overflow-visible'>
+            {/* Video Player (Pinned at top on mobile, 7 cols on desktop) */}
+            <div className='shrink-0 w-full lg:col-span-7 space-y-3'>
+              <YouTubePlayer
+                videoId={currentVideoId}
+                onTimeUpdate={setCurrentTime}
+                onPrevSentence={handlePrevSentence}
+                onNextSentence={handleNextSentence}
+                onRepeatSentence={handleRepeatSentence}
+                autoPause={autoPause}
+                onToggleAutoPause={() => setAutoPause((p) => !p)}
+                seekToTime={seekToTime}
+              />
+
+              {/* Desktop Vocab & Notes Drawer */}
+              <div className='hidden lg:block min-h-[380px]'>
+                <VideoVocabDrawer
+                  notes={notes}
+                  currentTime={currentTime}
+                  currentQuote={currentCue?.textEn}
+                  onAddNote={handleAddNote}
+                  onDeleteNote={handleDeleteNote}
+                  onSeek={(time) => setSeekToTime(time)}
+                  prefillWord={prefillWord}
+                  prefillSentence={prefillSentence || currentCue?.textEn}
+                />
+              </div>
+            </div>
+
+            {/* Desktop Transcript Stream (5 cols on desktop) */}
+            <div className='hidden lg:block w-full lg:col-span-5 lg:h-[680px] overflow-hidden'>
+              <InteractiveTranscript
+                cues={cues}
+                currentTime={currentTime}
+                onSeek={(time) => setSeekToTime(time)}
+                onWordClick={handleWordClick}
+                onAddNote={(cue) => {
+                  handleAddNote({
+                    timestamp: Math.round(cue.start),
+                    quote: cue.textEn,
+                    userNote: cue.textVi,
+                  })
+                }}
+              />
+            </div>
+
+            {/* Mobile View: Switch between Transcript and Vocab Drawer */}
+            <div className='flex-1 min-h-0 lg:hidden overflow-hidden flex flex-col'>
+              {mobileTab === 'transcript' ? (
+                <div className='flex-1 min-h-0 overflow-hidden'>
+                  <InteractiveTranscript
+                    cues={cues}
+                    currentTime={currentTime}
+                    onSeek={(time) => setSeekToTime(time)}
+                    onWordClick={handleWordClick}
+                    onAddNote={(cue) => {
+                      handleAddNote({
+                        timestamp: Math.round(cue.start),
+                        quote: cue.textEn,
+                        userNote: cue.textVi,
+                      })
+                    }}
+                  />
+                </div>
+              ) : (
+                <div className='flex-1 min-h-0 overflow-y-auto pb-4'>
+                  <VideoVocabDrawer
+                    notes={notes}
+                    currentTime={currentTime}
+                    currentQuote={currentCue?.textEn}
+                    onAddNote={handleAddNote}
+                    onDeleteNote={handleDeleteNote}
+                    onSeek={(time) => setSeekToTime(time)}
+                    prefillWord={prefillWord}
+                    prefillSentence={prefillSentence || currentCue?.textEn}
+                  />
+                </div>
+              )}
+            </div>
           </div>
         </div>
       ) : null}
@@ -295,7 +387,63 @@ export const VideoLearning: React.FC = () => {
 
       {/* Word Lookup Modal */}
       {activeWordLookup && (
-        <WordLookupPopover wordData={activeWordLookup} onClose={() => setActiveWordLookup(null)} />
+        <WordLookupPopover
+          wordData={activeWordLookup}
+          onClose={() => setActiveWordLookup(null)}
+          onOpenInDrawer={(wd) => {
+            setPrefillWord(wd.term)
+            setPrefillSentence(wd.example)
+            setMobileTab('vocab')
+          }}
+        />
+      )}
+
+      {/* Tech Learning Board Modal (Trello Kanban) */}
+      {showTechBoardModal && (
+        <div className='fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-md animate-fadeIn'>
+          <div className='w-full max-w-6xl h-[92vh] bg-gray-50 dark:bg-dark-bg rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-800 flex flex-col overflow-hidden'>
+            <div className='p-3 sm:p-4 bg-white dark:bg-dark-card border-b border-gray-200 dark:border-gray-800 flex items-center justify-between shrink-0'>
+              <div className='flex items-center gap-2'>
+                <div className='p-1.5 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400'>
+                  <Kanban size={18} />
+                </div>
+                <div>
+                  <h2 className='font-display font-bold text-sm sm:text-base text-gray-900 dark:text-white'>
+                    Bảng Ghi Chú & Học Tập Công Nghệ (Kanban Trello)
+                  </h2>
+                  <p className='text-[10px] sm:text-xs text-gray-500 dark:text-gray-400'>
+                    Hệ thống Mental Models, Trade-offs & Thuật ngữ kỹ thuật
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => setShowTechBoardModal(false)}
+                className='p-1.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 transition-colors'
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            <div className='flex-1 overflow-y-auto p-2 sm:p-4'>
+              <TechLearningBoard
+                currentVideoId={currentVideoId || undefined}
+                currentVideoTitle={currentVideoInfo?.title}
+                currentTime={currentTime}
+                onNavigateToVideo={(vId, timestamp) => {
+                  setShowTechBoardModal(false)
+                  if (vId === currentVideoId) {
+                    if (timestamp !== undefined) setSeekToTime(timestamp)
+                  } else {
+                    handleLoadVideo(vId)
+                    if (timestamp !== undefined) {
+                      setTimeout(() => setSeekToTime(timestamp), 600)
+                    }
+                  }
+                }}
+              />
+            </div>
+          </div>
+        </div>
       )}
     </div>
   )

@@ -60,14 +60,16 @@ export const VideoExplorerModal: React.FC<VideoExplorerModalProps> = ({
   onSelectVideo,
   onClose,
 }) => {
-  const [tabMode, setTabMode] = useState<TabMode>('yt_direct')
+  const [tabMode, setTabMode] = useState<TabMode>('flows')
   const [activeCategory, setActiveCategory] = useState<CategoryType>('all')
   const [searchQuery, setSearchQuery] = useState('')
   const [ytResults, setYtResults] = useState<YouTubeSearchResult[]>([])
   const [isSearchingYt, setIsSearchingYt] = useState(false)
   const [customUrl, setCustomUrl] = useState('')
   const [urlError, setUrlError] = useState('')
-  const [expandedFlowId, setExpandedFlowId] = useState<string>(IT_AI_LEARNING_FLOWS[0].id)
+  const [expandedFlowId, setExpandedFlowId] = useState<string>(
+    IT_AI_LEARNING_FLOWS[1]?.id || IT_AI_LEARNING_FLOWS[0].id,
+  )
 
   // Trigger live YouTube search
   const handleSearchYouTube = async (query: string) => {
@@ -208,7 +210,7 @@ export const VideoExplorerModal: React.FC<VideoExplorerModalProps> = ({
               }`}
             >
               <GraduationCap size={14} />
-              <span>🗺️ Lộ Trình IT & AI ({IT_AI_LEARNING_FLOWS.length})</span>
+              <span>🗺️ Lộ Trình SE Chuẩn Quốc Tế ({IT_AI_LEARNING_FLOWS.length} Giai Đoạn)</span>
             </button>
 
             <button
@@ -549,6 +551,11 @@ export const VideoExplorerModal: React.FC<VideoExplorerModalProps> = ({
 
                           <div className='space-y-1 min-w-0'>
                             <div className='flex items-center gap-2 flex-wrap'>
+                              {flow.badge && (
+                                <span className='px-2.5 py-0.5 rounded-full text-[10px] font-black bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-xs'>
+                                  {flow.badge}
+                                </span>
+                              )}
                               <span className='px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-primary-50 dark:bg-primary-950/50 text-primary-600 dark:text-primary-400 border border-primary-200/60 dark:border-primary-800/60'>
                                 {flow.level}
                               </span>
@@ -557,7 +564,7 @@ export const VideoExplorerModal: React.FC<VideoExplorerModalProps> = ({
                                 {flow.estimatedHours}
                               </span>
                               <span className='px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400'>
-                                {totalSteps} Bài học liên kết
+                                {totalSteps} Bài học chuẩn quốc tế
                               </span>
                             </div>
 
@@ -587,11 +594,12 @@ export const VideoExplorerModal: React.FC<VideoExplorerModalProps> = ({
                         <div className='px-4 sm:px-5 pb-5 pt-2 border-t border-gray-100 dark:border-gray-800/80 space-y-3'>
                           <div className='text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-1.5'>
                             <Sparkles size={13} className='text-primary-500' />
-                            Các bước bài học trong lộ trình
+                            Các bước bài học trong lộ trình (100% Song Ngữ Kỹ Thuật Đầy Đủ)
                           </div>
 
                           <div className='grid grid-cols-1 md:grid-cols-3 gap-3'>
-                            {flow.videos.map((vItem) => {
+                            {flow.videos.map((vItem, vIdx) => {
+                              const stepNum = (vItem as any).step || vIdx + 1
                               const isSelected = currentVideoId === vItem.info.videoId
 
                               return (
@@ -601,7 +609,7 @@ export const VideoExplorerModal: React.FC<VideoExplorerModalProps> = ({
                                   onClick={() => {
                                     onSelectVideo(vItem.info.videoId, vItem.info, {
                                       flowTitle: flow.title,
-                                      step: vItem.step,
+                                      step: stepNum,
                                       totalSteps,
                                     })
                                     onClose()
@@ -615,7 +623,7 @@ export const VideoExplorerModal: React.FC<VideoExplorerModalProps> = ({
                                   {/* Step Badge & Duration */}
                                   <div className='flex items-center justify-between'>
                                     <span className='px-2 py-0.5 rounded-lg text-[10px] font-black bg-gradient-to-r from-primary-600 to-indigo-600 text-white shadow-xs'>
-                                      Bước {vItem.step}
+                                      Bài {stepNum}
                                     </span>
                                     <span className='text-[10px] font-mono font-bold text-gray-500 dark:text-gray-400 flex items-center gap-0.5'>
                                       <Clock size={10} />
@@ -650,8 +658,11 @@ export const VideoExplorerModal: React.FC<VideoExplorerModalProps> = ({
 
                                   {/* Action CTA */}
                                   <div className='pt-2 border-t border-gray-100 dark:border-gray-700/60 flex items-center justify-between'>
-                                    <span className='text-[10px] text-blue-600 dark:text-blue-400 font-bold'>
-                                      {vItem.info.sentenceCount} câu song ngữ
+                                    <span className='text-[10px] text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1'>
+                                      <CheckCircle2 size={11} />
+                                      {(vItem.info as any).sentenceCount
+                                        ? `${(vItem.info as any).sentenceCount} câu`
+                                        : '100% Song ngữ'}
                                     </span>
 
                                     <span

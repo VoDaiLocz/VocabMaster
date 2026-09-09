@@ -382,18 +382,19 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
           {/* Speed Pills */}
           <div className='flex items-center bg-gray-900/90 border border-gray-800/90 rounded-xl p-0.5 shadow-inner'>
             <Gauge size={13} className='text-gray-400 ml-1.5 mr-1 hidden sm:inline' />
-            {[0.75, 1.0, 1.25].map((speed) => (
+            {[0.25, 0.5, 0.75, 1.0, 1.25].map((speed) => (
               <button
                 key={speed}
                 onClick={() => handleRateChange(speed)}
+                title={`Tốc độ phát ${speed}x`}
                 className={
-                  'px-1.5 sm:px-2 py-1 rounded-lg text-[11px] sm:text-xs font-semibold transition-all ' +
+                  'px-1.5 sm:px-2 py-1 rounded-lg text-[10px] sm:text-xs font-semibold transition-all ' +
                   (playbackRate === speed
                     ? 'bg-primary-600 text-white shadow-sm'
                     : 'text-gray-400 hover:text-gray-200')
                 }
               >
-                {speed}x
+                {speed === 1.0 ? '1x' : `${speed}x`}
               </button>
             ))}
           </div>

@@ -31,6 +31,9 @@ const SentenceMaster = React.lazy(() =>
 )
 const Quiz = React.lazy(() => import('@/pages/Quiz').then((m) => ({ default: m.Quiz })))
 const Typing = React.lazy(() => import('@/pages/Typing').then((m) => ({ default: m.Typing })))
+const TechBoardPage = React.lazy(() =>
+  import('@/pages/TechBoardPage').then((m) => ({ default: m.TechBoardPage })),
+)
 
 const LoadingSpinner = () => (
   <div className='flex-1 flex items-center justify-center min-h-[400px]'>
@@ -70,6 +73,8 @@ export default function App() {
                   <Route path='/story/:id' element={<StoryReader />} />
                   <Route path='/video-learning' element={<VideoLearning />} />
                   <Route path='/video' element={<VideoLearning />} />
+                  <Route path='/tech-board' element={<TechBoardPage />} />
+                  <Route path='/learning-board' element={<TechBoardPage />} />
                   <Route path='/quiz' element={<Quiz />} />
                   <Route path='/typing' element={<Typing />} />
                   <Route path='/decks' element={<Decks />} />

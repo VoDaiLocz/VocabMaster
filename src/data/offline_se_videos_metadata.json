@@ -528,5 +528,45 @@
     "sentenceCount": 23,
     "description": "Ngôn ngữ kịch bản dòng lệnh Unix chuẩn Bourne Again SHell điều khiển hệ điều hành.",
     "tags": ["Bash", "Shell", "CLI", "Linux"]
+  },
+  {
+    "videoId": "UF8uR6Z6KLc",
+    "title": "Steve Jobs 2005 Stanford Commencement Address",
+    "channel": "Stanford University",
+    "category": "Career & Leadership",
+    "durationFormatted": "15:04",
+    "sentenceCount": 244,
+    "description": "Bài diễn thuyết kinh điển tại Stanford về kết nối các dấu mốc cuộc đời, tìm kiếm đam mê và sống trọn vẹn.",
+    "tags": ["Leadership", "Steve Jobs", "Stanford", "Career", "English"]
+  },
+  {
+    "videoId": "iG9CE55wbtY",
+    "title": "How to Learn Any Language & Tech in 6 Months | Chris Lonsdale | TEDx",
+    "channel": "TEDx Talks",
+    "category": "Learning & Mindset",
+    "durationFormatted": "18:26",
+    "sentenceCount": 427,
+    "description": "5 nguyên tắc cốt lõi và 7 hành động thực chiến để tiếp thu ngôn ngữ và công nghệ mới chỉ trong 6 tháng.",
+    "tags": ["TEDx", "Learning", "Language", "Mindset", "Growth"]
+  },
+  {
+    "videoId": "8aGhZQkoFbQ",
+    "title": "What the heck is the event loop anyway? | Philip Roberts | JSConf EU",
+    "channel": "JSConf",
+    "category": "tech",
+    "durationFormatted": "26:48",
+    "sentenceCount": 336,
+    "description": "Bài thuyết trình kinh điển nổi tiếng nhất lịch sử JavaScript: mổ xẻ Call Stack, Web APIs, Task Queue và cơ chế Event Loop.",
+    "tags": ["Event Loop", "JavaScript", "Concurrency", "Call Stack", "Async"]
+  },
+  {
+    "videoId": "KLlXCFG5TnA",
+    "title": "Big-O Notation - For Coding Interviews & Algorithm Analysis",
+    "channel": "NeetCode",
+    "category": "code",
+    "durationFormatted": "11:27",
+    "sentenceCount": 195,
+    "description": "Trực quan hóa độ phức tạp thời gian và không gian: O(1), O(log N), O(N), O(N^2) áp dụng trong phỏng vấn kỹ thuật.",
+    "tags": ["Big-O", "Data Structures", "Algorithms", "Complexity", "Interviews"]
   }
 ]

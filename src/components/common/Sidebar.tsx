@@ -19,6 +19,7 @@ import {
   LucideIcon,
   Youtube,
   Sparkles,
+  Kanban,
 } from 'lucide-react'
 import { APP_INFO } from '@/constants'
 
@@ -38,6 +39,7 @@ const NAV_ITEMS: NavItem[] = [
   { to: '/learn', icon: Sparkles, label: 'Flashcard' },
   { to: '/sentence-master', icon: Sparkles, label: 'Đặt câu phản xạ' },
   { to: '/video-learning', icon: Youtube, label: 'Video song ngữ' },
+  { to: '/tech-board', icon: Kanban, label: 'Bảng học tập Tech' },
   { to: '/quiz', icon: HelpCircle, label: 'Quiz' },
   { to: '/typing', icon: Keyboard, label: 'Luyện gõ' },
   { to: '/decks', icon: FolderOpen, label: 'Bộ từ vựng' },

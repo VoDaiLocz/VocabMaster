@@ -4,7 +4,7 @@
 
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Volume2, Plus, Check, X, Bookmark, Sparkles } from 'lucide-react'
+import { Volume2, Plus, Check, X, Bookmark, Sparkles, BookOpen } from 'lucide-react'
 import { WordLookupResult } from '@/services/dictionaryService'
 import { useDeckStore } from '@/store/deckStore'
 
@@ -14,12 +14,14 @@ interface WordLookupPopoverProps {
   wordData: WordLookupResult | null
   onClose: () => void
   onSaved?: () => void
+  onOpenInDrawer?: (wordData: WordLookupResult) => void
 }
 
 export const WordLookupPopover: React.FC<WordLookupPopoverProps> = ({
   wordData,
   onClose,
   onSaved,
+  onOpenInDrawer,
 }) => {
   const { decks, createWord, createDeck } = useDeckStore()
   const [selectedDeckId, setSelectedDeckId] = useState<number | null>(
@@ -197,6 +199,20 @@ export const WordLookupPopover: React.FC<WordLookupPopoverProps> = ({
                 )}
               </button>
             </div>
+
+            {/* Manual Edit in Sổ từ vựng */}
+            {onOpenInDrawer && (
+              <button
+                onClick={() => {
+                  onOpenInDrawer(wordData)
+                  onClose()
+                }}
+                className='w-full mt-2.5 py-2 px-3 rounded-xl border border-primary-200 dark:border-primary-800/70 bg-primary-50/60 dark:bg-primary-950/40 text-primary-600 dark:text-primary-400 hover:bg-primary-100 dark:hover:bg-primary-900/50 text-xs font-semibold flex items-center justify-center gap-1.5 transition-all active:scale-[0.98]'
+              >
+                <BookOpen size={14} />
+                <span>Mở trong Sổ từ vựng để gõ tay / bổ sung thêm</span>
+              </button>
+            )}
           </div>
         </motion.div>
       </div>
