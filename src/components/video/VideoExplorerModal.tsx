@@ -661,7 +661,9 @@ export const VideoExplorerModal: React.FC<VideoExplorerModalProps> = ({
                                     <span className='text-[10px] text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1'>
                                       <CheckCircle2 size={11} />
                                       {(vItem.info as any).sentenceCount
-                                        ? `${(vItem.info as any).sentenceCount} câu`
+                                        ? (vItem.info as any).sentenceCount >= 100
+                                          ? `Chuyên sâu • ${(vItem.info as any).sentenceCount} câu`
+                                          : `Tóm tắt • ${(vItem.info as any).sentenceCount} câu`
                                         : '100% Song ngữ'}
                                     </span>
 

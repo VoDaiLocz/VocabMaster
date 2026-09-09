@@ -3571,16 +3571,16 @@ export const CURATED_LEARNING_VIDEOS: { info: VideoInfo; sampleCues: TranscriptC
   {
     info: {
       videoId: 'iG9CE55wbtY',
-      title: 'How to Learn Any Language in 6 Months | Chris Lonsdale | TEDx',
-      channel: 'TEDx Talks',
+      title: 'Do schools kill creativity? | Sir Ken Robinson | TED',
+      channel: 'TED',
       thumbnailUrl: 'https://img.youtube.com/vi/iG9CE55wbtY/hqdefault.jpg',
-      durationFormatted: '18:26',
+      durationFormatted: '19:24',
       category: 'speeches',
       level: 'B2 - Khá',
-      sentenceCount: 312,
+      sentenceCount: 427,
       description:
-        'Khám phá 5 nguyên tắc cốt lõi và 7 hành động thực tế giúp bạn làm chủ bất kỳ ngôn ngữ nào chỉ trong 6 tháng.',
-      tags: ['TEDx', 'Học ngoại ngữ', 'Phương pháp học', 'Động lực'],
+        'Bài diễn thuyết kinh điển được xem nhiều nhất lịch sử TED về sự sáng tạo, đổi mới giáo dục và giải phóng tiềm năng con người.',
+      tags: ['TED', 'Creativity', 'Education', 'Sir Ken Robinson', 'Mindset'],
     },
     sampleCues: [
       {

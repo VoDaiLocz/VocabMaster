@@ -48,7 +48,8 @@ offlineSeMetadata.forEach((meta: any) => {
       durationFormatted: meta.durationFormatted || '02:30',
       description: meta.description,
       tags: meta.tags,
-    },
+      sentenceCount: meta.sentenceCount,
+    } as any,
     sampleCues: [], // Tự động nạp 100% full transcript từ offline_transcripts.json
     quiz: [],
   })
@@ -65,7 +66,7 @@ function getVideosByIds(ids: string[]): CuratedVideo[] {
 
 // Cấp 1: Intern (Thực tập sinh - Nền tảng nhập môn & Thuật toán)
 const INTERN_IDS = [
-  'iG9CE55wbtY', // Chris Lonsdale TEDx (18:26, 427 câu) - Làm chủ ngôn ngữ & kỹ thuật trong 6 tháng
+  'iG9CE55wbtY', // Sir Ken Robinson TED (19:24, 427 câu) - Do schools kill creativity? (Tư duy sáng tạo & Giáo dục)
   'KLlXCFG5TnA', // Big-O Notation & Algorithm Complexity (NeetCode - 11:27, 195 câu song ngữ)
   'rrB13utjYV4', // Linux in 100s
   'I4EWvMFj37g', // Bash in 100s
@@ -139,7 +140,7 @@ const SENIOR_IDS = [
 // Cấp 6: Staff+ / Lead (Lãnh đạo kỹ thuật & Bản lĩnh kỹ sư quốc tế)
 const STAFF_LEAD_IDS = [
   'UF8uR6Z6KLc', // Steve Jobs Stanford 2005 (15:04, 244 câu song ngữ)
-  'iG9CE55wbtY', // Chris Lonsdale TEDx: Làm Chủ Ngôn Ngữ & Kỹ Năng trong 6 Tháng (18:26, 427 câu)
+  'iG9CE55wbtY', // Sir Ken Robinson TED: Do schools kill creativity? (19:24, 427 câu)
   'SqcXvc3ZmRU', // Kiến Trúc Cấp Hệ Thống & Đánh Đổi Chiến Lược (Hussein Nasser - 16:45)
   'YXkOdWBwqaA', // Thiết Kế Chịu Tải & Chống Sập Hệ Thống Lớn (ByteByteGo - 10:20)
   'X48VuDVv0do', // Quy Chuẩn Hạ Tầng Doanh Nghiệp (TechWorld with Nana - 58:40)
@@ -169,9 +170,9 @@ export const IT_AI_LEARNING_FLOWS: LearningFlow[] = [
     levelRank: 'Intern',
     title: 'Cấp Độ 1: Intern Engineer (Thực Tập Sinh Nhập Môn & Thuật Toán)',
     subtitle:
-      'Học Nhanh 6 Tháng (Chris Lonsdale 18m), Big-O (NeetCode 11m), Linux, Bash, Git DAG, Vim, HTML/CSS, JS & Python',
+      'Tư Duy Sáng Tạo (Ken Robinson TED 19m), Big-O (NeetCode 11m), Linux, Bash, Git DAG, Vim, HTML/CSS, JS & Python',
     description:
-      'Bước khởi đầu bắt buộc cho mọi sinh viên và thực tập sinh: Phương pháp bứt phá công nghệ trong 6 tháng (Chris Lonsdale TEDx 427 câu), làm chủ độ phức tạp thuật toán Big-O (NeetCode 195 câu), hệ điều hành Linux, dòng lệnh Bash, Git DAG và Vim.',
+      'Bước khởi đầu bắt buộc cho mọi sinh viên và thực tập sinh: Giải phóng tư duy sáng tạo (Sir Ken Robinson TED 427 câu), làm chủ độ phức tạp thuật toán Big-O (NeetCode 195 câu), hệ điều hành Linux, dòng lệnh Bash, Git DAG và Vim.',
     icon: '🌱',
     badge: '🌱 Intern Level',
     level: 'A2 - Cơ bản',
@@ -249,9 +250,9 @@ export const IT_AI_LEARNING_FLOWS: LearningFlow[] = [
     levelRank: 'Staff+',
     title: 'Cấp Độ 6: Staff+ Engineer & Tech Lead (Lãnh Đạo Kỹ Thuật)',
     subtitle:
-      'Steve Jobs Stanford (15m), Chris Lonsdale TEDx (18m), Kiến Trúc Tổ Chức, Hệ Thống Lớn & Đa Nền Tảng Di Động',
+      'Steve Jobs Stanford (15m), Sir Ken Robinson TED (19m), Kiến Trúc Tổ Chức, Hệ Thống Lớn & Đa Nền Tảng Di Động',
     description:
-      'Rèn luyện bản lĩnh lãnh đạo kỹ thuật và định hình chiến lược công nghệ dài hạn: Diễn thuyết kinh điển Steve Jobs tại Stanford (244 câu song ngữ), nghệ thuật học tập thần tốc của Chris Lonsdale (427 câu), chiến lược kiến trúc chịu tải cấp tổ chức và làm chủ hệ sinh thái di động (Kotlin, Swift, Flutter).',
+      'Rèn luyện bản lĩnh lãnh đạo kỹ thuật và định hình chiến lược công nghệ dài hạn: Diễn thuyết kinh điển Steve Jobs tại Stanford (244 câu song ngữ), tư duy sáng tạo khai phóng của Sir Ken Robinson (427 câu), chiến lược kiến trúc chịu tải cấp tổ chức và làm chủ hệ sinh thái di động (Kotlin, Swift, Flutter).',
     icon: '👑',
     badge: '👑 Staff+ Level',
     level: 'C1 - Nâng cao',
