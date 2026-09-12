@@ -139,6 +139,11 @@ export interface ElectronAPI {
   setReminder: (time: string, enabled: boolean) => Promise<void>
   // YouTube Transcript
   fetchYouTubeTranscript?: (videoId: string) => Promise<unknown[]>
+  // TTS Audio
+  fetchTTSAudio?: (
+    text: string,
+    lang: string,
+  ) => Promise<{ success: boolean; audioData?: string; error?: string }>
 }
 
 declare global {

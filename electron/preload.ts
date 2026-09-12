@@ -52,4 +52,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
   // Dynamic YouTube Transcript Extractor
   fetchYouTubeTranscript: (videoId: string) =>
     ipcRenderer.invoke('fetch-youtube-transcript', videoId),
+
+  // TTS Audio Proxy
+  fetchTTSAudio: (text: string, lang: string) =>
+    ipcRenderer.invoke('fetch-tts-audio', { text, lang }),
 })

@@ -4,6 +4,7 @@
 
 import { create } from 'zustand'
 import type { Deck, WordWithProgress } from '@/types'
+import { seedAllEssentialDecks } from '@/services/deckSeeder'
 
 // ============================================
 // Types
@@ -54,6 +55,7 @@ interface DeckActions {
   getExistingTerms: (deckId: number) => Promise<Set<string>>
   selectDeck: (deckId: number | null) => void
   deleteWord: (wordId: number, deckId: number) => Promise<void>
+  seedEssentialDecks: () => Promise<number>
 }
 
 type DeckStore = DeckState & DeckActions
@@ -286,6 +288,20 @@ export const useDeckStore = create<DeckStore>((set, get) => ({
       await Promise.all([get().fetchWords(deckId), get().fetchDecks()])
     } catch (e) {
       console.error('deleteWord error:', e)
+    }
+  },
+
+  seedEssentialDecks: async () => {
+    try {
+      set({ loading: true })
+      const result = await seedAllEssentialDecks()
+      await get().fetchDecks()
+      set({ loading: false })
+      return result.totalWords
+    } catch (e) {
+      console.error('seedEssentialDecks error:', e)
+      set({ loading: false })
+      return 0
     }
   },
 }))

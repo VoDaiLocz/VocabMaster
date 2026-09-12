@@ -2,9 +2,9 @@
 // Word Lookup Popover & Flashcard Creator
 // ============================================
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Volume2, Plus, Check, X, Bookmark, Sparkles, BookOpen } from 'lucide-react'
+import { Volume2, Plus, Check, X, Bookmark, Sparkles, BookOpen, Edit3 } from 'lucide-react'
 import { WordLookupResult } from '@/services/dictionaryService'
 import { useDeckStore } from '@/store/deckStore'
 
@@ -29,6 +29,15 @@ export const WordLookupPopover: React.FC<WordLookupPopoverProps> = ({
   )
   const [isSaving, setIsSaving] = useState(false)
   const [savedSuccess, setSavedSuccess] = useState(false)
+  const [customDefinition, setCustomDefinition] = useState(wordData?.definition || '')
+  const [isEditingDef, setIsEditingDef] = useState(false)
+
+  useEffect(() => {
+    if (wordData) {
+      setCustomDefinition(wordData.definition)
+      setIsEditingDef(false)
+    }
+  }, [wordData])
 
   if (!wordData) return null
 
@@ -56,7 +65,7 @@ export const WordLookupPopover: React.FC<WordLookupPopoverProps> = ({
       await createWord({
         deck_id: targetDeckId as number,
         term: wordData.term,
-        definition: wordData.definition,
+        definition: customDefinition.trim() || wordData.definition,
         example: wordData.example,
         phonetic: wordData.phonetic,
       })
@@ -124,12 +133,41 @@ export const WordLookupPopover: React.FC<WordLookupPopoverProps> = ({
 
           {/* Vietnamese Definition */}
           <div className='mb-4 p-3.5 rounded-xl bg-gray-50 dark:bg-gray-800/60 border border-gray-100 dark:border-gray-800'>
-            <div className='text-xs font-semibold text-primary-600 dark:text-primary-400 uppercase tracking-wider mb-1 flex items-center gap-1'>
-              <Sparkles size={13} /> Nghĩa tiếng Việt
+            <div className='flex items-center justify-between mb-1.5'>
+              <div className='text-xs font-semibold text-primary-600 dark:text-primary-400 uppercase tracking-wider flex items-center gap-1'>
+                <Sparkles size={13} /> Nghĩa tiếng Việt
+              </div>
+              <button
+                type='button'
+                onClick={() => setIsEditingDef((prev) => !prev)}
+                className='text-[11px] text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 flex items-center gap-1 transition-colors'
+                title='Bấm để sửa nghĩa theo ý bạn'
+              >
+                <Edit3 size={12} />
+                <span>{isEditingDef ? 'Xong' : 'Sửa nghĩa'}</span>
+              </button>
             </div>
-            <p className='text-base font-semibold text-gray-900 dark:text-white leading-relaxed'>
-              {wordData.definition}
-            </p>
+            {isEditingDef ? (
+              <input
+                type='text'
+                value={customDefinition}
+                onChange={(e) => setCustomDefinition(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') setIsEditingDef(false)
+                }}
+                className='w-full px-2.5 py-1.5 text-sm font-semibold rounded-lg border border-primary-300 dark:border-primary-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500'
+                placeholder='Nhập nghĩa tiếng Việt...'
+                autoFocus
+              />
+            ) : (
+              <p
+                onClick={() => setIsEditingDef(true)}
+                className='text-base font-semibold text-gray-900 dark:text-white leading-relaxed cursor-pointer hover:text-primary-600 dark:hover:text-primary-400 transition-colors'
+                title='Bấm vào để chỉnh sửa nhanh nghĩa này'
+              >
+                {customDefinition || wordData.definition}
+              </p>
+            )}
           </div>
 
           {/* Example in Context */}

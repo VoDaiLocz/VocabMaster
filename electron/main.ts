@@ -16,10 +16,14 @@ import {
 import path from 'path'
 import fs from 'fs'
 import http from 'http'
+import https from 'https'
 import { AddressInfo } from 'net'
 import { execFile } from 'child_process'
 import { initDatabase, setupDatabaseIPC } from './database/connection'
 import { log, logError, initLogger } from './logger'
+
+// Allow auto audio playback without requiring user document interaction
+app.commandLine.appendSwitch('autoplay-policy', 'no-user-gesture-required')
 
 // ============================================
 // Global State
@@ -57,10 +61,21 @@ function startLocalServer(): Promise<number> {
       '.ico': 'image/x-icon',
       '.wasm': 'application/wasm',
       '.woff2': 'font/woff2',
+      '.mp3': 'audio/mpeg',
+      '.wav': 'audio/wav',
+      '.ogg': 'audio/ogg',
+      '.m4a': 'audio/mp4',
     }
 
     const server = http.createServer((req, res) => {
-      let reqPath = req.url?.split('?')[0] || '/'
+      let rawUrl = req.url?.split('?')[0] || '/'
+      let reqPath: string
+      try {
+        reqPath = decodeURIComponent(rawUrl)
+      } catch {
+        reqPath = rawUrl
+      }
+
       if (reqPath === '/' || !reqPath.includes('.')) {
         reqPath = '/index.html'
       }
@@ -69,21 +84,49 @@ function startLocalServer(): Promise<number> {
       const ext = path.extname(filePath).toLowerCase()
       const contentType = mimeTypes[ext] || 'application/octet-stream'
 
-      fs.readFile(filePath, (err, content) => {
-        if (err) {
-          // SPA fallback to index.html
-          fs.readFile(path.join(distPath, 'index.html'), (e, htmlContent) => {
-            if (e) {
-              res.writeHead(500)
-              res.end('Error loading index.html')
-            } else {
-              res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' })
-              res.end(htmlContent)
-            }
+      fs.stat(filePath, (err, stats) => {
+        if (err || !stats.isFile()) {
+          // SPA fallback to index.html for page navigation
+          if (ext === '.html' || !ext) {
+            fs.readFile(path.join(distPath, 'index.html'), (e, htmlContent) => {
+              if (e) {
+                res.writeHead(500)
+                res.end('Error loading index.html')
+              } else {
+                res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' })
+                res.end(htmlContent)
+              }
+            })
+          } else {
+            res.writeHead(404)
+            res.end(`File not found: ${reqPath}`)
+          }
+          return
+        }
+
+        // Support HTTP Range headers for smooth audio playback and seeking
+        const range = req.headers.range
+        if (range && (ext === '.mp3' || ext === '.wav' || ext === '.ogg' || ext === '.m4a')) {
+          const parts = range.replace(/bytes=/, '').split('-')
+          const start = parseInt(parts[0], 10)
+          const end = parts[1] ? parseInt(parts[1], 10) : stats.size - 1
+          const chunksize = end - start + 1
+
+          const fileStream = fs.createReadStream(filePath, { start, end })
+          res.writeHead(206, {
+            'Content-Range': `bytes ${start}-${end}/${stats.size}`,
+            'Accept-Ranges': 'bytes',
+            'Content-Length': chunksize,
+            'Content-Type': contentType,
           })
+          fileStream.pipe(res)
         } else {
-          res.writeHead(200, { 'Content-Type': contentType })
-          res.end(content)
+          res.writeHead(200, {
+            'Content-Length': stats.size,
+            'Content-Type': contentType,
+            'Accept-Ranges': 'bytes',
+          })
+          fs.createReadStream(filePath).pipe(res)
         }
       })
     })
@@ -279,6 +322,67 @@ function setupIPC(): void {
     })
   })
 
+  // TTS Audio Proxy to bypass Google Translate Referer check and CORS
+  ipcMain.handle('fetch-tts-audio', async (_event, { text, lang }: { text: string; lang: string }) => {
+    return new Promise((resolve) => {
+      try {
+        if (!text || !text.trim()) {
+          resolve({ success: false, error: 'Empty text' })
+          return
+        }
+
+        const cleanText = text.trim().slice(0, 350)
+        const targetLang = lang || 'vi'
+        const url = `https://translate.google.com/translate_tts?ie=UTF-8&tl=${encodeURIComponent(
+          targetLang,
+        )}&client=tw-ob&q=${encodeURIComponent(cleanText)}`
+
+        const options = {
+          headers: {
+            'User-Agent':
+              'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+            'Referer': 'https://translate.google.com/',
+          },
+          timeout: 10000,
+        }
+
+        const req = https.get(url, options, (res) => {
+          if (res.statusCode !== 200) {
+            logError(`Google TTS returned HTTP ${res.statusCode}`)
+            resolve({ success: false, error: `HTTP ${res.statusCode}` })
+            return
+          }
+
+          const chunks: Buffer[] = []
+          res.on('data', (chunk) => chunks.push(Buffer.from(chunk)))
+          res.on('end', () => {
+            const buffer = Buffer.concat(chunks)
+            if (buffer.length === 0) {
+              resolve({ success: false, error: 'Empty audio buffer' })
+              return
+            }
+            const base64Audio = buffer.toString('base64')
+            const audioData = `data:audio/mpeg;base64,${base64Audio}`
+            resolve({ success: true, audioData })
+          })
+        })
+
+        req.on('error', (err) => {
+          logError('fetch-tts-audio network error: ' + err.message)
+          resolve({ success: false, error: err.message })
+        })
+
+        req.on('timeout', () => {
+          req.destroy()
+          resolve({ success: false, error: 'TTS request timeout' })
+        })
+      } catch (err: any) {
+        logError('fetch-tts-audio exception: ' + (err?.message || String(err)))
+        resolve({ success: false, error: err?.message || 'Unknown error' })
+      }
+    })
+  })
+
   // Window controls
   ipcMain.handle('window:minimize', () => mainWindow?.minimize())
   ipcMain.handle('window:maximize', () => {
@@ -359,6 +463,17 @@ app.whenReady().then(async () => {
         delete responseHeaders['content-security-policy']
         delete responseHeaders['Content-Security-Policy']
         callback({ cancel: false, responseHeaders })
+      },
+    )
+
+    // Ensure requests to Google Translate TTS have correct Referer and User-Agent headers
+    session.defaultSession.webRequest.onBeforeSendHeaders(
+      { urls: ['*://translate.google.com/*'] },
+      (details, callback) => {
+        const requestHeaders = { ...details.requestHeaders }
+        requestHeaders['Referer'] = 'https://translate.google.com/'
+        requestHeaders['User-Agent'] = CHROME_USER_AGENT
+        callback({ cancel: false, requestHeaders })
       },
     )
 

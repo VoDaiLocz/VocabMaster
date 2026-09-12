@@ -4,7 +4,7 @@
 
 import { useEffect, useState, memo, useCallback } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Plus, Search, Play, Trash2 } from 'lucide-react'
+import { Plus, Search, Play, Trash2, Sparkles, Loader2, Database } from 'lucide-react'
 import { Button } from '@/components/common/Button'
 import { Input } from '@/components/common/Input'
 import { Modal } from '@/components/common/Modal'
@@ -36,12 +36,13 @@ const INITIAL_FORM: NewDeckForm = {
 // ============================================
 
 export function Decks() {
-  const { decks, loading, fetchDecks, createDeck, deleteDeck } = useDeckStore()
+  const { decks, loading, fetchDecks, createDeck, deleteDeck, seedEssentialDecks } = useDeckStore()
   const { fetchTodayWords } = useLearningStore()
   const navigate = useNavigate()
 
   const [search, setSearch] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isSeeding, setIsSeeding] = useState(false)
   const [newDeck, setNewDeck] = useState<NewDeckForm>(INITIAL_FORM)
 
   useEffect(() => {
@@ -82,15 +83,50 @@ export function Decks() {
     setNewDeck((prev) => ({ ...prev, ...updates }))
   }, [])
 
+  const handleSeed = useCallback(async () => {
+    setIsSeeding(true)
+    try {
+      await seedEssentialDecks()
+      await fetchDecks()
+    } finally {
+      setIsSeeding(false)
+    }
+  }, [seedEssentialDecks, fetchDecks])
+
   return (
     <div className='p-4 sm:p-6 md:p-8 space-y-6'>
       {/* Header */}
-      <div className='flex items-center justify-between mb-6'>
-        <h1 className='text-2xl font-bold'>Bộ từ của tôi</h1>
-        <Button onClick={() => setIsModalOpen(true)}>
-          <Plus size={18} className='mr-2' />
-          Tạo mới
-        </Button>
+      <div className='flex flex-wrap items-center justify-between gap-4 mb-6'>
+        <div>
+          <h1 className='text-2xl font-bold'>Bộ từ của tôi</h1>
+          <p className='text-sm text-gray-500 dark:text-gray-400'>
+            {decks.length} bộ từ trong cơ sở dữ liệu SQLite
+          </p>
+        </div>
+        <div className='flex items-center gap-3'>
+          <Button
+            variant='secondary'
+            onClick={handleSeed}
+            disabled={isSeeding}
+            className='border-primary-500/30 text-primary-600 dark:text-primary-400'
+          >
+            {isSeeding ? (
+              <>
+                <Loader2 size={18} className='mr-2 animate-spin' />
+                Đang nạp dữ liệu...
+              </>
+            ) : (
+              <>
+                <Sparkles size={18} className='mr-2 text-amber-500' />
+                Nạp bộ từ chuẩn SQLite
+              </>
+            )}
+          </Button>
+          <Button onClick={() => setIsModalOpen(true)}>
+            <Plus size={18} className='mr-2' />
+            Tạo mới
+          </Button>
+        </div>
       </div>
 
       {/* Search */}
@@ -100,7 +136,12 @@ export function Decks() {
       {loading ? (
         <LoadingState />
       ) : filteredDecks.length === 0 ? (
-        <EmptyState hasSearch={!!search} onCreateClick={() => setIsModalOpen(true)} />
+        <EmptyState
+          hasSearch={!!search}
+          onCreateClick={() => setIsModalOpen(true)}
+          onSeedClick={handleSeed}
+          isSeeding={isSeeding}
+        />
       ) : (
         <DeckGrid decks={filteredDecks} onStudy={handleStudy} onDelete={handleDelete} />
       )}
@@ -148,21 +189,48 @@ const LoadingState = memo(function LoadingState() {
 interface EmptyStateProps {
   hasSearch: boolean
   onCreateClick: () => void
+  onSeedClick: () => void
+  isSeeding: boolean
 }
 
-const EmptyState = memo(function EmptyState({ hasSearch, onCreateClick }: EmptyStateProps) {
+const EmptyState = memo(function EmptyState({
+  hasSearch,
+  onCreateClick,
+  onSeedClick,
+  isSeeding,
+}: EmptyStateProps) {
   return (
-    <div className='text-center py-12'>
-      <p className='text-gray-500 mb-4'>{hasSearch ? 'Không tìm thấy' : 'Chưa có bộ từ nào'}</p>
+    <div className='text-center py-12 max-w-xl mx-auto'>
+      <div className='w-16 h-16 rounded-2xl bg-primary-100 dark:bg-primary-900/30 flex items-center justify-center mx-auto mb-4 text-primary-600 dark:text-primary-400'>
+        <Database size={32} />
+      </div>
+      <h3 className='text-lg font-bold text-gray-900 dark:text-white mb-2'>
+        {hasSearch ? 'Không tìm thấy bộ từ nào' : 'Cơ sở dữ liệu chưa có bộ từ nào'}
+      </h3>
+      <p className='text-gray-500 dark:text-gray-400 text-sm mb-6'>
+        {hasSearch
+          ? 'Hãy thử tìm kiếm với từ khóa khác'
+          : 'Nạp ngay 5 bộ từ vựng chuẩn (4000 Essential Words, 600 TOEIC, Oxford 3000, Target 750+, Idioms & Collocations) vào SQLite để học Flashcard, Quiz và Typing ngay!'}
+      </p>
       {!hasSearch && (
-        <div className='flex gap-4 justify-center'>
-          <Button onClick={onCreateClick}>
-            <Plus size={18} className='mr-2' />
-            Tạo mới
+        <div className='flex flex-wrap gap-3 justify-center'>
+          <Button onClick={onSeedClick} disabled={isSeeding} className='bg-gradient-to-r from-primary-600 to-indigo-600 text-white shadow-lg shadow-primary-500/20'>
+            {isSeeding ? (
+              <>
+                <Loader2 size={18} className='mr-2 animate-spin' />
+                Đang nạp vào SQLite...
+              </>
+            ) : (
+              <>
+                <Sparkles size={18} className='mr-2 text-amber-300' />
+                ⚡ Nạp ngay 5 bộ từ chuẩn vào SQLite
+              </>
+            )}
           </Button>
-          <Link to='/library'>
-            <Button variant='secondary'>📚 Kho Từ Vựng</Button>
-          </Link>
+          <Button variant='secondary' onClick={onCreateClick}>
+            <Plus size={18} className='mr-2' />
+            Tạo bộ từ thủ công
+          </Button>
         </div>
       )}
     </div>

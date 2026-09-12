@@ -19,6 +19,10 @@ import {
   Youtube,
   Sparkles,
   Kanban,
+  GraduationCap,
+  Layers,
+  BookMarked,
+  Award
 } from 'lucide-react'
 import { APP_INFO } from '@/constants'
 
@@ -34,9 +38,14 @@ interface NavItem {
 
 const NAV_ITEMS: NavItem[] = [
   { to: '/', icon: Home, label: 'Tổng quan' },
-  { to: '/learn', icon: Sparkles, label: 'Flashcard' },
+  { to: '/toeic-7parts', icon: Layers, label: 'Luyện Đề 7 Part' },
+  { to: '/toeic-grammar', icon: BookMarked, label: 'Ngữ Pháp (21 Chuyên Đề)' },
+  { to: '/toeic-tactics', icon: Award, label: '60 Kỹ Xảo & Bẫy Đề' },
+  { to: '/toeic-vocab', icon: Sparkles, label: 'Từ Vựng 7 Part' },
+  { to: '/learn', icon: Sparkles, label: 'Flashcard Chung' },
   { to: '/sentence-master', icon: Sparkles, label: 'Đặt câu phản xạ' },
   { to: '/video-learning', icon: Youtube, label: 'Video song ngữ' },
+  { to: '/grammar-master', icon: GraduationCap, label: 'Ngữ pháp 30 ngày' },
   { to: '/tech-board', icon: Kanban, label: 'Bảng học tập Tech' },
   { to: '/quiz', icon: HelpCircle, label: 'Quiz' },
   { to: '/typing', icon: Keyboard, label: 'Luyện gõ' },
@@ -72,7 +81,7 @@ export const Sidebar = memo(function Sidebar() {
       </div>
 
       {/* Navigation */}
-      <nav className='flex-1 px-4 py-2 space-y-1.5'>
+      <nav className='flex-1 px-4 py-2 space-y-1.5 overflow-y-auto scrollbar-none'>
         {NAV_ITEMS.map((item) => (
           <NavItem key={item.to} {...item} />
         ))}
@@ -102,7 +111,7 @@ const NavItem = memo(function NavItem({ to, icon: Icon, label }: NavItem) {
     <NavLink
       to={to}
       className={({ isActive }) =>
-        `relative flex items-center gap-3 px-4 py-3.5 rounded-xl transition-all duration-300 group ${
+        `relative flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 group ${
           isActive
             ? 'bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400 font-semibold shadow-sm'
             : 'text-gray-600 dark:text-gray-400 hover:bg-white/50 dark:hover:bg-white/5 hover:text-primary-600 dark:hover:text-primary-300'
@@ -112,12 +121,12 @@ const NavItem = memo(function NavItem({ to, icon: Icon, label }: NavItem) {
       {({ isActive }) => (
         <>
           <Icon
-            size={22}
+            size={20}
             className={`transition-transform duration-300 group-hover:scale-110 ${
               isActive ? 'stroke-[2.5px]' : 'stroke-[1.5px]'
             }`}
           />
-          <span className='text-[15px]'>{label}</span>
+          <span className='text-[14px] truncate'>{label}</span>
           {isActive && (
             <div className='absolute right-3 w-1.5 h-1.5 rounded-full bg-primary-500 shadow-[0_0_8px_rgba(99,102,241,0.6)]' />
           )}
@@ -131,9 +140,9 @@ const TipCard = memo(function TipCard() {
   return (
     <div className='p-4 m-4 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 text-white shadow-lg shadow-primary-500/25 relative overflow-hidden group'>
       <div className='relative z-10'>
-        <h3 className='font-bold text-sm mb-1'>Mẹo học tập</h3>
+        <h3 className='font-bold text-sm mb-1'>Luyện thi TOEIC</h3>
         <p className='text-xs text-primary-100 leading-relaxed'>
-          Ôn tập mỗi ngày 15 phút để duy trì Streak!
+          Luyện đề 7 Part kết hợp sổ tay 60 kỹ xảo né bẫy đề thi!
         </p>
       </div>
       <div className='absolute -right-4 -bottom-4 w-20 h-20 bg-white/10 rounded-full blur-xl group-hover:scale-150 transition-transform duration-700' />

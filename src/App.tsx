@@ -28,6 +28,23 @@ const Typing = React.lazy(() => import('@/pages/Typing').then((m) => ({ default:
 const TechBoardPage = React.lazy(() =>
   import('@/pages/TechBoardPage').then((m) => ({ default: m.TechBoardPage })),
 )
+const GrammarMaster = React.lazy(() =>
+  import('@/pages/GrammarMaster').then((m) => ({ default: m.GrammarMaster })),
+)
+
+// TOEIC Study4 Modules
+const Toeic7PartsArena = React.lazy(() =>
+  import('@/pages/Toeic7PartsArena').then((m) => ({ default: m.Toeic7PartsArena })),
+)
+const ToeicGrammarHandbook = React.lazy(() =>
+  import('@/pages/ToeicGrammarHandbook').then((m) => ({ default: m.ToeicGrammarHandbook })),
+)
+const ToeicTacticsMaster = React.lazy(() =>
+  import('@/pages/ToeicTacticsMaster').then((m) => ({ default: m.ToeicTacticsMaster })),
+)
+const ToeicVocabArena = React.lazy(() =>
+  import('@/pages/ToeicVocabArena').then((m) => ({ default: m.ToeicVocabArena })),
+)
 
 const LoadingSpinner = () => (
   <div className='flex-1 flex items-center justify-center min-h-[400px]'>
@@ -64,6 +81,18 @@ export default function App() {
                   <Route path='/sentence-master' element={<SentenceMaster />} />
                   <Route path='/video-learning' element={<VideoLearning />} />
                   <Route path='/video' element={<VideoLearning />} />
+                  <Route path='/grammar-master' element={<GrammarMaster />} />
+                  <Route path='/grammar' element={<GrammarMaster />} />
+
+                  {/* TOEIC Ecosystem Study4 */}
+                  <Route path='/toeic-7parts' element={<Toeic7PartsArena />} />
+                  <Route path='/toeic-reading' element={<Toeic7PartsArena />} />
+                  <Route path='/toeic-practice' element={<Toeic7PartsArena />} />
+                  <Route path='/toeic' element={<Toeic7PartsArena />} />
+                  <Route path='/toeic-grammar' element={<ToeicGrammarHandbook />} />
+                  <Route path='/toeic-tactics' element={<ToeicTacticsMaster />} />
+                  <Route path='/toeic-vocab' element={<ToeicVocabArena />} />
+
                   <Route path='/tech-board' element={<TechBoardPage />} />
                   <Route path='/learning-board' element={<TechBoardPage />} />
                   <Route path='/quiz' element={<Quiz />} />

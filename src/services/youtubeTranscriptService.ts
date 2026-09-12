@@ -8935,8 +8935,13 @@ export async function translateEnToVi(text: string): Promise<string> {
  */
 export async function translateFullTranscriptInBackground(cues: TranscriptCue[]): Promise<void> {
   const CHUNK_SIZE = 12
+  const isUntranslated = (cue: TranscriptCue) => {
+    if (!cue.textVi) return true
+    return cue.textVi.trim().toLowerCase() === cue.textEn.trim().toLowerCase()
+  }
+
   const missingIndices = cues
-    .map((cue, idx) => (!cue.textVi ? idx : -1))
+    .map((cue, idx) => (isUntranslated(cue) ? idx : -1))
     .filter((idx) => idx !== -1)
 
   for (let i = 0; i < missingIndices.length; i += CHUNK_SIZE) {
@@ -8944,8 +8949,11 @@ export async function translateFullTranscriptInBackground(cues: TranscriptCue[])
     await Promise.all(
       chunk.map(async (cueIdx) => {
         const cue = cues[cueIdx]
-        if (cue && !cue.textVi) {
-          cue.textVi = await translateEnToVi(cue.textEn)
+        if (cue && isUntranslated(cue)) {
+          const trans = await translateEnToVi(cue.textEn)
+          if (trans && trans.trim().toLowerCase() !== cue.textEn.trim().toLowerCase()) {
+            cue.textVi = trans.trim()
+          }
         }
       }),
     )

@@ -1,15 +1,23 @@
 import React, { useEffect, useRef, useState, useMemo, memo } from 'react'
 import { TranscriptCue, translateEnToVi } from '@/services/youtubeTranscriptService'
-import { BookmarkPlus, Search, Volume2, Play } from 'lucide-react'
+import { BookmarkPlus, Search, Volume2, Play, Languages } from 'lucide-react'
+import {
+  speakLanguage,
+  speakBilingualAudio,
+  stopBilingualAudio,
+} from '@/services/bilingualAudioService'
 
 interface InteractiveTranscriptProps {
   cues: TranscriptCue[]
   currentTime: number
   onSeek: (seconds: number) => void
-  onWordClick: (word: string, contextSentence: string) => void
+  onWordClick: (word: string, contextSentence: string, contextVi?: string) => void
   onAddNote: (cue: TranscriptCue) => void
   onLoadCustomCues?: (newCues: TranscriptCue[]) => void
   onOpenExplorer?: () => void
+  interleavedMode?: boolean
+  onToggleInterleavedMode?: () => void
+  isInterleavedSpeaking?: boolean
 }
 
 type SubtitleMode = 'both' | 'en-only' | 'hover-vi'
@@ -25,20 +33,26 @@ interface CueItemProps {
   isActive: boolean
   subMode: SubtitleMode
   onSeek: (seconds: number) => void
-  onWordClick: (word: string, contextSentence: string) => void
+  onWordClick: (word: string, contextSentence: string, contextVi?: string) => void
   onAddNote: (cue: TranscriptCue) => void
 }
 
 const CueItem = memo<CueItemProps>(
   ({ cue, isActive, subMode, onSeek, onWordClick, onAddNote }) => {
-    const [viTranslation, setViTranslation] = useState(cue.textVi || '')
+    const isSameAsEn = (val?: string) =>
+      !val || val.trim().toLowerCase() === cue.textEn.trim().toLowerCase()
+
+    const initialVi = !isSameAsEn(cue.textVi) ? cue.textVi : ''
+    const [viTranslation, setViTranslation] = useState(initialVi)
+    const [speakingMode, setSpeakingMode] = useState<'idle' | 'en' | 'vi' | 'bilingual'>('idle')
+    const [bilingualPhase, setBilingualPhase] = useState<'idle' | 'en' | 'vi'>('idle')
 
     useEffect(() => {
-      if (cue.textVi) {
+      if (!isSameAsEn(cue.textVi)) {
         setViTranslation(cue.textVi)
       } else if (isActive && !viTranslation) {
         translateEnToVi(cue.textEn).then((translated) => {
-          if (translated) {
+          if (translated && !isSameAsEn(translated)) {
             cue.textVi = translated
             setViTranslation(translated)
           }
@@ -46,54 +60,56 @@ const CueItem = memo<CueItemProps>(
       }
     }, [cue, isActive, viTranslation])
 
-    const [isSpeaking, setIsSpeaking] = useState(false)
-
+    // Cleanup audio khi unmount hoặc đổi cue
     useEffect(() => {
       return () => {
-        if (isSpeaking && typeof window !== 'undefined' && 'speechSynthesis' in window) {
-          window.speechSynthesis.cancel()
+        if (speakingMode !== 'idle') {
+          stopBilingualAudio()
         }
       }
-    }, [isSpeaking])
+    }, [speakingMode])
 
-    const handleSpeakBilingual = () => {
-      if (typeof window === 'undefined' || !('speechSynthesis' in window)) return
+    const handleSpeakEn = async () => {
+      if (speakingMode === 'en') {
+        stopBilingualAudio()
+        setSpeakingMode('idle')
+        return
+      }
+      setSpeakingMode('en')
+      await speakLanguage(cue.textEn, 'en')
+      setSpeakingMode('idle')
+    }
 
-      if (isSpeaking) {
-        window.speechSynthesis.cancel()
-        setIsSpeaking(false)
+    const handleSpeakVi = async () => {
+      const targetVi = viTranslation || cue.textVi
+      if (!targetVi) return
+
+      if (speakingMode === 'vi') {
+        stopBilingualAudio()
+        setSpeakingMode('idle')
+        return
+      }
+      setSpeakingMode('vi')
+      await speakLanguage(targetVi, 'vi')
+      setSpeakingMode('idle')
+    }
+
+    const handleSpeakBilingual = async () => {
+      const targetVi = viTranslation || cue.textVi
+
+      if (speakingMode === 'bilingual') {
+        stopBilingualAudio()
+        setSpeakingMode('idle')
+        setBilingualPhase('idle')
         return
       }
 
-      window.speechSynthesis.cancel() // Hủy giọng đang đọc nếu có
-      setIsSpeaking(true)
-
-      const targetVi = viTranslation || cue.textVi
-
-      // 1. Đọc tiếng Anh trước
-      const enUtterance = new SpeechSynthesisUtterance(cue.textEn)
-      enUtterance.lang = 'en-US'
-      enUtterance.rate = 0.95
-
-      enUtterance.onend = () => {
-        // 2. Tiếng Anh kết thúc -> Tự động đọc tiếng Việt tiếp theo
-        if (targetVi && typeof window !== 'undefined' && 'speechSynthesis' in window) {
-          const viUtterance = new SpeechSynthesisUtterance(targetVi)
-          viUtterance.lang = 'vi-VN'
-          viUtterance.rate = 0.95
-          viUtterance.onend = () => setIsSpeaking(false)
-          viUtterance.onerror = () => setIsSpeaking(false)
-          window.speechSynthesis.speak(viUtterance)
-        } else {
-          setIsSpeaking(false)
-        }
-      }
-
-      enUtterance.onerror = () => {
-        setIsSpeaking(false)
-      }
-
-      window.speechSynthesis.speak(enUtterance)
+      setSpeakingMode('bilingual')
+      await speakBilingualAudio(cue.textEn, targetVi || '', (phase) => {
+        setBilingualPhase(phase)
+      })
+      setSpeakingMode('idle')
+      setBilingualPhase('idle')
     }
 
     return (
@@ -107,9 +123,9 @@ const CueItem = memo<CueItemProps>(
             : 'bg-white dark:bg-dark-card border-gray-100 dark:border-gray-800/60 border-l-4 border-l-transparent hover:bg-gray-50/80 dark:hover:bg-gray-800/40 opacity-75 hover:opacity-100'
         }`}
       >
-        {/* Header: Timestamp, Audio Pronunciation, and Add Note */}
-        <div className='flex items-center justify-between mb-1.5'>
-          <div className='flex items-center gap-1.5'>
+        {/* Header: Timestamp, Audio Controls (EN, VI, Song ngữ), and Add Note */}
+        <div className='flex items-center justify-between mb-1.5 gap-1.5 flex-wrap'>
+          <div className='flex items-center gap-1.5 flex-wrap'>
             <button
               onClick={(e) => {
                 e.stopPropagation()
@@ -125,22 +141,63 @@ const CueItem = memo<CueItemProps>(
               <span>{formatTimestamp(cue.start)}</span>
             </button>
 
+            {/* Nút phát âm Tiếng Anh */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                handleSpeakEn()
+              }}
+              className={`flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] sm:text-[11px] font-bold transition-all ${
+                speakingMode === 'en'
+                  ? 'bg-blue-600 text-white shadow-sm shadow-blue-500/30 animate-pulse'
+                  : 'bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900/60'
+              }`}
+              title={speakingMode === 'en' ? 'Dừng đọc EN' : 'Phát âm tiếng Anh'}
+            >
+              <Volume2 size={11} className={speakingMode === 'en' ? 'animate-bounce' : ''} />
+              <span>EN</span>
+            </button>
+
+            {/* Nút phát âm Tiếng Việt */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                handleSpeakVi()
+              }}
+              className={`flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] sm:text-[11px] font-bold transition-all ${
+                speakingMode === 'vi'
+                  ? 'bg-emerald-600 text-white shadow-sm shadow-emerald-500/30 animate-pulse'
+                  : 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/60'
+              }`}
+              title={speakingMode === 'vi' ? 'Dừng đọc VI' : 'Đọc bản dịch tiếng Việt'}
+            >
+              <Volume2 size={11} className={speakingMode === 'vi' ? 'animate-bounce' : ''} />
+              <span>VI</span>
+            </button>
+
+            {/* Nút phát âm Song Ngữ (EN -> nghỉ 350ms -> VI) */}
             <button
               onClick={(e) => {
                 e.stopPropagation()
                 handleSpeakBilingual()
               }}
-              className={`flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-bold transition-all ${
-                isSpeaking
+              className={`flex items-center gap-1 px-2 py-0.5 rounded text-[10px] sm:text-[11px] font-bold transition-all ${
+                speakingMode === 'bilingual'
                   ? 'bg-amber-500 text-white animate-pulse shadow-sm shadow-amber-500/30'
                   : isActive
-                    ? 'bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300 hover:bg-primary-200 dark:hover:bg-primary-800/60'
-                    : 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-300 hover:bg-primary-50 dark:hover:bg-primary-900/30'
+                    ? 'bg-purple-100 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 hover:bg-purple-200 dark:hover:bg-purple-900/50'
+                    : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-300 hover:bg-purple-50 dark:hover:bg-purple-900/30'
               }`}
-              title={isSpeaking ? 'Dừng đọc' : 'Phát âm câu này (EN ➔ VI)'}
+              title={speakingMode === 'bilingual' ? 'Dừng đọc song ngữ' : 'Đọc câu này song ngữ (EN ➔ VI)'}
             >
-              <Volume2 size={12} className={isSpeaking ? 'animate-bounce' : ''} />
-              <span>{isSpeaking ? 'Đang đọc...' : isActive ? 'Đọc song ngữ' : 'Nghe'}</span>
+              <Languages size={11} />
+              <span>
+                {speakingMode === 'bilingual'
+                  ? bilingualPhase === 'en'
+                    ? 'Đọc EN...'
+                    : 'Đọc VI...'
+                  : 'Song ngữ'}
+              </span>
             </button>
           </div>
 
@@ -171,7 +228,7 @@ const CueItem = memo<CueItemProps>(
               key={wIdx}
               onClick={(e) => {
                 e.stopPropagation()
-                onWordClick(word, cue.textEn)
+                onWordClick(word, cue.textEn, cue.textVi)
               }}
               className={`inline cursor-pointer rounded-sm px-0.5 transition-colors ${
                 isActive
@@ -194,7 +251,9 @@ const CueItem = memo<CueItemProps>(
                 : 'font-normal text-gray-500 dark:text-gray-400'
             } ${subMode === 'hover-vi' ? 'opacity-0 hover:opacity-100' : 'opacity-100'}`}
           >
-            {viTranslation || cue.textVi || (isActive ? 'Đang dịch tiếng Việt...' : '')}
+            {(!isSameAsEn(viTranslation) && viTranslation) ||
+              (!isSameAsEn(cue.textVi) && cue.textVi) ||
+              (isActive ? 'Đang dịch tiếng Việt...' : '')}
           </p>
         )}
       </div>
@@ -217,46 +276,84 @@ export const InteractiveTranscript: React.FC<InteractiveTranscriptProps> = ({
   onSeek,
   onWordClick,
   onAddNote,
+  interleavedMode,
+  onToggleInterleavedMode,
+  isInterleavedSpeaking,
 }) => {
   const [subMode, setSubMode] = useState<SubtitleMode>('both')
   const [searchQuery, setSearchQuery] = useState('')
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const containerRef = useRef<HTMLDivElement | null>(null)
-  const prevActiveIdRef = useRef<number | null>(null)
+  const currentActiveIdRef = useRef<number | null>(null)
+  const lastScrolledIdRef = useRef<number | null>(null)
 
-  // Find currently active cue
+  // Find currently active cue with boundary hysteresis to eliminate flickering between cues
   const activeCueId = useMemo(() => {
     if (cues.length === 0) return null
-    const exact = cues.find((c) => currentTime >= c.start && currentTime <= c.end + 0.25)
-    if (exact) return exact.id
-    // Fallback to latest passed cue
+
+    // 1. Hysteresis: If currently active cue is still valid within a 0.2s margin, stay on it!
+    if (currentActiveIdRef.current !== null) {
+      const currentCue = cues.find((c) => c.id === currentActiveIdRef.current)
+      if (
+        currentCue &&
+        currentTime >= currentCue.start - 0.05 &&
+        currentTime <= currentCue.end + 0.2
+      ) {
+        return currentCue.id
+      }
+    }
+
+    // 2. Exact match within start and end
+    const exact = cues.find((c) => currentTime >= c.start && currentTime <= c.end)
+    if (exact) {
+      currentActiveIdRef.current = exact.id
+      return exact.id
+    }
+
+    // 3. Fallback to latest passed cue
     for (let i = cues.length - 1; i >= 0; i--) {
       if (currentTime >= cues[i].start) {
+        currentActiveIdRef.current = cues[i].id
         return cues[i].id
       }
     }
-    return cues[0]?.id ?? null
+
+    const firstId = cues[0]?.id ?? null
+    currentActiveIdRef.current = firstId
+    return firstId
   }, [cues, currentTime])
 
-  // Smooth scroll ONLY inside this container (never scroll parent page / window)
+  // Smart Viewport Containment Scroll: ONLY scroll if the active cue is outside comfortable padding
+  // This completely eliminates scroll-thrashing and jitter ("lúc giật lúc ko")
   useEffect(() => {
-    if (!activeCueId || activeCueId === prevActiveIdRef.current) return
-    prevActiveIdRef.current = activeCueId
+    if (!activeCueId || activeCueId === lastScrolledIdRef.current) return
 
     const container = containerRef.current
     if (!container) return
     const el = container.querySelector(`[data-cue-id="${activeCueId}"]`) as HTMLElement | null
-    if (el) {
-      const containerRect = container.getBoundingClientRect()
-      const elRect = el.getBoundingClientRect()
-      const relativeTop = elRect.top - containerRect.top + container.scrollTop
-      const targetScrollTop = relativeTop - container.clientHeight / 2 + el.offsetHeight / 2
+    if (!el) return
 
-      container.scrollTo({
-        top: Math.max(0, targetScrollTop),
-        behavior: 'smooth',
-      })
+    const containerRect = container.getBoundingClientRect()
+    const elRect = el.getBoundingClientRect()
+
+    // Margin: If item is comfortably visible (between top + 45px and bottom - 45px), DO NOT scroll!
+    const isComfortablyVisible =
+      elRect.top >= containerRect.top + 45 &&
+      elRect.bottom <= containerRect.bottom - 45
+
+    if (isComfortablyVisible) {
+      lastScrolledIdRef.current = activeCueId
+      return
     }
+
+    lastScrolledIdRef.current = activeCueId
+    const relativeTop = elRect.top - containerRect.top + container.scrollTop
+    const targetScrollTop = relativeTop - container.clientHeight / 2 + el.offsetHeight / 2
+
+    container.scrollTo({
+      top: Math.max(0, targetScrollTop),
+      behavior: 'smooth',
+    })
   }, [activeCueId])
 
   // Filter cues by search query
@@ -305,6 +402,27 @@ export const InteractiveTranscript: React.FC<InteractiveTranscriptProps> = ({
             Ẩn VI
           </button>
         </div>
+
+        {/* Interleaved Voiceover Toggle Button */}
+        {onToggleInterleavedMode && (
+          <button
+            onClick={onToggleInterleavedMode}
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-xl text-[11px] font-bold transition-all active:scale-95 shadow-xs border ${
+              interleavedMode
+                ? 'bg-purple-600 border-purple-400 text-white shadow-purple-500/30 ring-1 ring-purple-400/40'
+                : 'bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300 border-purple-200 dark:border-purple-800/60 hover:bg-purple-100 dark:hover:bg-purple-900/50'
+            }`}
+            title='Chế độ Thuyết minh xen kẽ: Video phát tiếng Anh gốc ➔ Tự dừng ➔ Đọc tiếng Việt ➔ Tự phát tiếp câu sau'
+          >
+            <Languages size={12} className={isInterleavedSpeaking ? 'animate-bounce text-amber-300' : ''} />
+            <span className='hidden sm:inline'>
+              {isInterleavedSpeaking ? 'Đang đọc TV...' : interleavedMode ? 'Thuyết minh: BẬT' : 'Thuyết minh xen kẽ'}
+            </span>
+            <span className='sm:hidden'>
+              {interleavedMode ? 'TM: BẬT' : 'TM xen kẽ'}
+            </span>
+          </button>
+        )}
 
         {/* Right side: Search button toggle & Counter */}
         <div className='flex items-center gap-1.5'>

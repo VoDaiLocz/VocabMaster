@@ -2,14 +2,16 @@
 // Video Learning Page (YouTube Bilingual)
 // ============================================
 
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import {
   fetchYouTubeBilingualTranscript,
   TranscriptCue,
   ALL_CURATED_LEARNING_VIDEOS,
   VideoInfo,
+  translateEnToVi,
 } from '@/services/youtubeTranscriptService'
+import { speakLanguage, stopBilingualAudio } from '@/services/bilingualAudioService'
 import { lookupWord, WordLookupResult } from '@/services/dictionaryService'
 import {
   YouTubePlayer,
@@ -20,7 +22,7 @@ import {
   VideoNote,
 } from '@/components/video'
 import { TechLearningBoard } from '@/components/tech-learning/TechLearningBoard'
-import { Youtube, Sparkles, Compass, Kanban, BookOpen, X } from 'lucide-react'
+import { Youtube, Sparkles, Compass, Kanban, BookOpen, X, Languages } from 'lucide-react'
 import { useDeckStore } from '@/store/deckStore'
 
 interface FlowContext {
@@ -51,8 +53,33 @@ export const VideoLearning: React.FC = () => {
   const [currentTime, setCurrentTime] = useState(0)
   const [seekToTime, setSeekToTime] = useState<number | null>(null)
   const [autoPause, setAutoPause] = useState(false)
+  const [interleavedMode, setInterleavedMode] = useState(false)
+  const [isInterleavedSpeaking, setIsInterleavedSpeaking] = useState(false)
+  const [speakingCueTextVi, setSpeakingCueTextVi] = useState('')
+  const [resumePlaybackTrigger, setResumePlaybackTrigger] = useState(0)
   const [activeWordLookup, setActiveWordLookup] = useState<WordLookupResult | null>(null)
   const [notes, setNotes] = useState<VideoNote[]>([])
+
+  const lastVoicedCueIdRef = useRef<number | null>(null)
+  const isVoiceoverActiveRef = useRef(false)
+  const safetyTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+
+  const cancelInterleavedSpeech = useCallback(() => {
+    if (safetyTimeoutRef.current) {
+      clearTimeout(safetyTimeoutRef.current)
+      safetyTimeoutRef.current = null
+    }
+    isVoiceoverActiveRef.current = false
+    setIsInterleavedSpeaking(false)
+    setSpeakingCueTextVi('')
+    stopBilingualAudio()
+  }, [])
+
+  useEffect(() => {
+    return () => {
+      cancelInterleavedSpeech()
+    }
+  }, [cancelInterleavedSpeech])
 
   // Ensure decks are loaded
   useEffect(() => {
@@ -71,6 +98,9 @@ export const VideoLearning: React.FC = () => {
 
   // Load Video Transcript with explicit percentage steps
   const handleLoadVideo = async (videoId: string, info?: VideoInfo, flowCtx?: FlowContext) => {
+    cancelInterleavedSpeech()
+    lastVoicedCueIdRef.current = null
+
     if (flowCtx) {
       setActiveFlow(flowCtx)
     }
@@ -146,31 +176,112 @@ export const VideoLearning: React.FC = () => {
 
   // Navigation callbacks
   const handlePrevSentence = useCallback(() => {
+    cancelInterleavedSpeech()
     const currentIndex = getCurrentCueIndex()
     if (currentIndex > 0) {
       setSeekToTime(cues[currentIndex - 1].start)
     } else if (cues[0]) {
       setSeekToTime(cues[0].start)
     }
-  }, [cues, getCurrentCueIndex])
+  }, [cues, getCurrentCueIndex, cancelInterleavedSpeech])
 
   const handleNextSentence = useCallback(() => {
+    cancelInterleavedSpeech()
     const currentIndex = getCurrentCueIndex()
     if (currentIndex >= 0 && currentIndex < cues.length - 1) {
       setSeekToTime(cues[currentIndex + 1].start)
     }
-  }, [cues, getCurrentCueIndex])
+  }, [cues, getCurrentCueIndex, cancelInterleavedSpeech])
 
   const handleRepeatSentence = useCallback(() => {
+    cancelInterleavedSpeech()
     const currentIndex = getCurrentCueIndex()
     if (currentIndex >= 0 && cues[currentIndex]) {
       setSeekToTime(cues[currentIndex].start)
     }
-  }, [cues, getCurrentCueIndex])
+  }, [cues, getCurrentCueIndex, cancelInterleavedSpeech])
+
+  // Interleaved Voiceover Handler (English from video ➔ Pause ➔ Speak Vietnamese ➔ Resume)
+  const handleCueEndReached = useCallback(
+    async (cueEnd: number) => {
+      if (!interleavedMode || isVoiceoverActiveRef.current) return
+
+      // Find the cue that ended in video
+      const completedCue = cues.find((c) => Math.abs(c.end - cueEnd) < 0.35)
+      if (!completedCue) return
+      if (lastVoicedCueIdRef.current === completedCue.id) return
+
+      lastVoicedCueIdRef.current = completedCue.id
+      isVoiceoverActiveRef.current = true
+      setIsInterleavedSpeaking(true)
+
+      const isUntranslated = (val?: string) =>
+        !val || val.trim().toLowerCase() === completedCue.textEn.trim().toLowerCase()
+
+      let targetVi = !isUntranslated(completedCue.textVi) ? completedCue.textVi : ''
+      if (!targetVi) {
+        try {
+          const res = await translateEnToVi(completedCue.textEn)
+          if (res && !isUntranslated(res)) {
+            targetVi = res
+            completedCue.textVi = res
+          }
+        } catch {
+          // ignore
+        }
+      }
+
+      // If translation couldn't be obtained, skip speaking instead of speaking English with Vietnamese accent
+      if (!targetVi) {
+        isVoiceoverActiveRef.current = false
+        setIsInterleavedSpeaking(false)
+        setSpeakingCueTextVi('')
+        setResumePlaybackTrigger((v) => v + 1)
+        return
+      }
+
+      const textToSpeak = targetVi
+      setSpeakingCueTextVi(textToSpeak)
+
+      // Fail-safe safety timeout: guarantee video NEVER freezes even if TTS stalls
+      const maxTimeout = Math.min(16000, Math.max(5000, (textToSpeak || '').length * 220))
+      safetyTimeoutRef.current = setTimeout(() => {
+        if (isVoiceoverActiveRef.current) {
+          stopBilingualAudio()
+          isVoiceoverActiveRef.current = false
+          setIsInterleavedSpeaking(false)
+          setSpeakingCueTextVi('')
+          setResumePlaybackTrigger((v) => v + 1)
+        }
+      }, maxTimeout)
+
+      try {
+        if (targetVi) {
+          await speakLanguage(targetVi, 'vi')
+        }
+      } catch (err) {
+        console.warn('Interleaved speakLanguage error:', err)
+      } finally {
+        if (safetyTimeoutRef.current) {
+          clearTimeout(safetyTimeoutRef.current)
+          safetyTimeoutRef.current = null
+        }
+        if (isVoiceoverActiveRef.current) {
+          // Comfortable 250ms cadence pause before resuming video
+          await new Promise((r) => setTimeout(r, 250))
+          isVoiceoverActiveRef.current = false
+          setIsInterleavedSpeaking(false)
+          setSpeakingCueTextVi('')
+          setResumePlaybackTrigger((v) => v + 1)
+        }
+      }
+    },
+    [interleavedMode, cues],
+  )
 
   // Word Click Handler
-  const handleWordClick = async (rawWord: string, contextSentence: string) => {
-    const result = await lookupWord(rawWord, contextSentence)
+  const handleWordClick = async (rawWord: string, contextSentence: string, contextVi?: string) => {
+    const result = await lookupWord(rawWord, contextSentence, contextVi)
     setActiveWordLookup(result)
   }
 
@@ -209,6 +320,29 @@ export const VideoLearning: React.FC = () => {
         </div>
 
         <div className='flex items-center gap-2 shrink-0'>
+          {/* Quick Toggle Interleaved Voiceover Button */}
+          <button
+            onClick={() => {
+              cancelInterleavedSpeech()
+              if (!interleavedMode && autoPause) setAutoPause(false)
+              setInterleavedMode((m) => !m)
+            }}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-bold transition-all active:scale-95 shadow-sm ${
+              interleavedMode
+                ? 'bg-purple-600 border-purple-500 text-white shadow-purple-500/30 ring-2 ring-purple-400/40'
+                : 'bg-purple-50 dark:bg-purple-950/50 text-purple-700 dark:text-purple-300 border-purple-200 dark:border-purple-800/60 hover:bg-purple-100'
+            }`}
+            title='Chế độ Thuyết minh xen kẽ: Video phát tiếng Anh gốc ➔ Tự dừng ➔ Tự đọc tiếng Việt ➔ Tự phát tiếp câu sau'
+          >
+            <Languages size={14} className={isInterleavedSpeaking ? 'animate-bounce text-amber-300' : ''} />
+            <span className='hidden sm:inline'>
+              {isInterleavedSpeaking ? 'Đang đọc TV...' : interleavedMode ? 'Thuyết minh: BẬT' : 'Thuyết minh xen kẽ'}
+            </span>
+            <span className='sm:hidden'>
+              {interleavedMode ? 'TM: BẬT' : 'Thuyết minh'}
+            </span>
+          </button>
+
           {/* Tech Learning Board (Trello-Style) Button */}
           <button
             onClick={() => setShowTechBoardModal(true)}
@@ -314,10 +448,24 @@ export const VideoLearning: React.FC = () => {
                 onNextSentence={handleNextSentence}
                 onRepeatSentence={handleRepeatSentence}
                 autoPause={autoPause}
-                onToggleAutoPause={() => setAutoPause((p) => !p)}
+                onToggleAutoPause={() => {
+                  if (!autoPause && interleavedMode) setInterleavedMode(false)
+                  setAutoPause((p) => !p)
+                }}
+                interleavedMode={interleavedMode}
+                onToggleInterleavedMode={() => {
+                  cancelInterleavedSpeech()
+                  if (!interleavedMode && autoPause) setAutoPause(false)
+                  setInterleavedMode((m) => !m)
+                }}
+                isInterleavedSpeaking={isInterleavedSpeaking}
+                speakingCueTextVi={speakingCueTextVi}
                 seekToTime={seekToTime}
                 onSeekComplete={() => setSeekToTime(null)}
                 currentCueEnd={currentCue?.end}
+                onCueEndReached={handleCueEndReached}
+                resumePlaybackTrigger={resumePlaybackTrigger}
+                onUserAction={cancelInterleavedSpeech}
               />
 
               {/* Desktop Vocab & Notes Drawer */}
@@ -349,6 +497,13 @@ export const VideoLearning: React.FC = () => {
                     userNote: cue.textVi,
                   })
                 }}
+                interleavedMode={interleavedMode}
+                onToggleInterleavedMode={() => {
+                  cancelInterleavedSpeech()
+                  if (!interleavedMode && autoPause) setAutoPause(false)
+                  setInterleavedMode((m) => !m)
+                }}
+                isInterleavedSpeaking={isInterleavedSpeaking}
               />
             </div>
 
@@ -368,6 +523,13 @@ export const VideoLearning: React.FC = () => {
                         userNote: cue.textVi,
                       })
                     }}
+                    interleavedMode={interleavedMode}
+                    onToggleInterleavedMode={() => {
+                      cancelInterleavedSpeech()
+                      if (!interleavedMode && autoPause) setAutoPause(false)
+                      setInterleavedMode((m) => !m)
+                    }}
+                    isInterleavedSpeaking={isInterleavedSpeaking}
                   />
                 </div>
               ) : (

@@ -12,6 +12,7 @@ import {
   Gauge,
   Sparkles,
   ExternalLink,
+  Languages,
 } from 'lucide-react'
 
 interface YouTubePlayerProps {
@@ -22,9 +23,16 @@ interface YouTubePlayerProps {
   onRepeatSentence: () => void
   autoPause: boolean
   onToggleAutoPause: () => void
+  interleavedMode?: boolean
+  onToggleInterleavedMode?: () => void
+  isInterleavedSpeaking?: boolean
+  speakingCueTextVi?: string
   seekToTime?: number | null
   onSeekComplete?: () => void
   currentCueEnd?: number
+  onCueEndReached?: (cueEnd: number) => void
+  resumePlaybackTrigger?: number
+  onUserAction?: () => void
 }
 
 declare global {
@@ -62,9 +70,16 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
   onRepeatSentence,
   autoPause,
   onToggleAutoPause,
+  interleavedMode = false,
+  onToggleInterleavedMode,
+  isInterleavedSpeaking = false,
+  speakingCueTextVi = '',
   seekToTime,
   onSeekComplete,
   currentCueEnd,
+  onCueEndReached,
+  resumePlaybackTrigger,
+  onUserAction,
 }) => {
   const iframeRef = useRef<HTMLIFrameElement | null>(null)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -75,6 +90,8 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
 
   // High-precision time tracking anchors (Defense-in-depth)
   const lastAuthoritativeTimeRef = useRef<number>(0)
+  const lastDispatchedTimeRef = useRef<number>(0)
+  const lastSeekEpochRef = useRef<number>(0)
   const lastTimeEpochRef = useRef<number>(0)
   const isPlayingRef = useRef<boolean>(false)
   const playbackRateRef = useRef<number>(1.0)
@@ -92,10 +109,39 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
   // Reset player tracking state whenever videoId changes
   useEffect(() => {
     lastAuthoritativeTimeRef.current = 0
+    lastDispatchedTimeRef.current = 0
+    lastSeekEpochRef.current = 0
     lastTimeEpochRef.current = Date.now()
     lastAutoPausedCueEndRef.current = null
     setIsPlaying(false)
   }, [videoId])
+
+  // Monotonic smoothed time dispatcher: eliminates micro-jitter & backward frame stutter
+  const dispatchTimeUpdate = useCallback(
+    (newTime: number) => {
+      if (typeof newTime !== 'number' || isNaN(newTime) || newTime < 0) return
+
+      const now = Date.now()
+      // If user recently explicitly sought (within 800ms), immediately accept target
+      if (now - lastSeekEpochRef.current < 800) {
+        lastDispatchedTimeRef.current = newTime
+        onTimeUpdate(newTime)
+        return
+      }
+
+      // During active playback, ignore small backward fluctuations (< 0.7s) caused by delayed postMessage frames
+      if (isPlayingRef.current) {
+        const diff = newTime - lastDispatchedTimeRef.current
+        if (diff < 0 && diff > -0.7) {
+          return // Drop jittery frame
+        }
+      }
+
+      lastDispatchedTimeRef.current = newTime
+      onTimeUpdate(newTime)
+    },
+    [onTimeUpdate],
+  )
 
   // Helper to send command directly via postMessage to iframe
   const postIframeCommand = useCallback((func: string, args: unknown[] = []) => {
@@ -166,7 +212,7 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
           if (typeof info.currentTime === 'number' && !isNaN(info.currentTime)) {
             lastAuthoritativeTimeRef.current = info.currentTime
             lastTimeEpochRef.current = Date.now()
-            onTimeUpdate(info.currentTime)
+            dispatchTimeUpdate(info.currentTime)
           }
 
           if (typeof info.playerState === 'number') {
@@ -204,7 +250,7 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
 
     window.addEventListener('message', handleMessage)
     return () => window.removeEventListener('message', handleMessage)
-  }, [onTimeUpdate, sendListeningPing])
+  }, [dispatchTimeUpdate, sendListeningPing])
 
   // 2. Load YouTube IFrame API script
   useEffect(() => {
@@ -297,7 +343,7 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
           if (typeof currentTime === 'number' && !isNaN(currentTime)) {
             lastAuthoritativeTimeRef.current = currentTime
             lastTimeEpochRef.current = Date.now()
-            onTimeUpdate(currentTime)
+            dispatchTimeUpdate(currentTime)
             gotAuthoritative = true
           }
           if (typeof ytPlayerRef.current.getPlayerState === 'function') {
@@ -328,14 +374,14 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
             0,
             lastAuthoritativeTimeRef.current + elapsedSec * playbackRateRef.current,
           )
-          onTimeUpdate(currentActiveTime)
+          dispatchTimeUpdate(currentActiveTime)
         } else if (gotAuthoritative) {
           currentActiveTime = lastAuthoritativeTimeRef.current
         }
 
-        // 4d. Auto-Pause check when current sentence ends
+        // 4d. Auto-Pause or Interleaved check when current sentence ends
         if (
-          autoPause &&
+          (autoPause || interleavedMode) &&
           currentCueEnd &&
           currentCueEnd > 0 &&
           lastAutoPausedCueEndRef.current !== currentCueEnd &&
@@ -352,16 +398,61 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
             postIframeCommand('pauseVideo')
           }
           setIsPlaying(false)
+          onCueEndReached?.(currentCueEnd)
         }
       }
     }, 150)
 
     return () => clearInterval(interval)
-  }, [onTimeUpdate, sendListeningPing, autoPause, currentCueEnd, postIframeCommand])
+  }, [
+    dispatchTimeUpdate,
+    sendListeningPing,
+    autoPause,
+    interleavedMode,
+    currentCueEnd,
+    postIframeCommand,
+    onCueEndReached,
+  ])
+
+  // Helper methods for play/pause
+  const doPlay = useCallback(() => {
+    if (ytPlayerRef.current?.playVideo) {
+      try {
+        ytPlayerRef.current.playVideo()
+      } catch {
+        postIframeCommand('playVideo')
+      }
+    } else {
+      postIframeCommand('playVideo')
+    }
+    setIsPlaying(true)
+    lastTimeEpochRef.current = Date.now()
+  }, [postIframeCommand])
+
+  const doPause = useCallback(() => {
+    if (ytPlayerRef.current?.pauseVideo) {
+      try {
+        ytPlayerRef.current.pauseVideo()
+      } catch {
+        postIframeCommand('pauseVideo')
+      }
+    } else {
+      postIframeCommand('pauseVideo')
+    }
+    setIsPlaying(false)
+  }, [postIframeCommand])
+
+  // Resume trigger from parent (when Vietnamese TTS finishes)
+  useEffect(() => {
+    if (resumePlaybackTrigger && resumePlaybackTrigger > 0) {
+      doPlay()
+    }
+  }, [resumePlaybackTrigger, doPlay])
 
   // 5. Seek To Time Handler
   useEffect(() => {
     if (seekToTime !== null && seekToTime !== undefined && seekToTime >= 0) {
+      onUserAction?.()
       if (ytPlayerRef.current?.seekTo) {
         try {
           ytPlayerRef.current.seekTo(seekToTime, true)
@@ -376,41 +467,24 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
       }
       setIsPlaying(true)
       lastAuthoritativeTimeRef.current = seekToTime
+      lastDispatchedTimeRef.current = seekToTime
+      lastSeekEpochRef.current = Date.now()
       lastTimeEpochRef.current = Date.now()
       lastAutoPausedCueEndRef.current = null
-      onTimeUpdate(seekToTime)
+      dispatchTimeUpdate(seekToTime)
       onSeekComplete?.()
     }
-  }, [seekToTime, postIframeCommand, onTimeUpdate, onSeekComplete])
+  }, [seekToTime, postIframeCommand, dispatchTimeUpdate, onSeekComplete, onUserAction])
 
   // 6. Play / Pause Toggle
   const togglePlay = useCallback(() => {
+    onUserAction?.()
     if (isPlaying) {
-      if (ytPlayerRef.current?.pauseVideo) {
-        try {
-          ytPlayerRef.current.pauseVideo()
-        } catch {
-          postIframeCommand('pauseVideo')
-        }
-      } else {
-        postIframeCommand('pauseVideo')
-      }
-      setIsPlaying(false)
+      doPause()
     } else {
-      if (ytPlayerRef.current?.playVideo) {
-        try {
-          ytPlayerRef.current.playVideo()
-        } catch {
-          postIframeCommand('playVideo')
-        }
-      } else {
-        postIframeCommand('playVideo')
-      }
-      setIsPlaying(true)
-      lastTimeEpochRef.current = Date.now()
-      lastAutoPausedCueEndRef.current = null
+      doPlay()
     }
-  }, [isPlaying, postIframeCommand])
+  }, [isPlaying, doPause, doPlay, onUserAction])
 
   // 7. Change Speed Handler
   const handleRateChange = (rate: number) => {
@@ -482,6 +556,23 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
             setTimeout(sendListeningPing, 1200)
           }}
         />
+
+        {/* Interleaved Voiceover Active Floating HUD Banner */}
+        {isInterleavedSpeaking && (
+          <div className='absolute bottom-3 left-3 right-3 sm:left-4 sm:right-auto bg-purple-950/95 backdrop-blur-md border border-purple-500/60 text-purple-100 px-3.5 py-2 rounded-2xl shadow-2xl flex items-center gap-2.5 text-xs animate-fadeIn z-20 max-w-md pointer-events-none'>
+            <span className='relative flex h-3 w-3 shrink-0'>
+              <span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75'></span>
+              <span className='relative inline-flex rounded-full h-3 w-3 bg-purple-500'></span>
+            </span>
+            <div className='min-w-0'>
+              <div className='font-bold text-white flex items-center gap-1.5'>
+                <span>🎙️ Thuyết minh tiếng Việt</span>
+                <span className='text-[10px] px-1.5 py-0.2 rounded bg-purple-500/30 text-purple-200 font-mono'>Xen kẽ</span>
+              </div>
+              <p className='truncate text-[11px] text-purple-300 mt-0.5'>{speakingCueTextVi}</p>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Mobile-First Learning Control Toolbar (Single row, never wraps) */}
@@ -569,6 +660,28 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
             <span className='hidden sm:inline'>Auto-pause</span>
             <span className='sm:hidden'>Auto</span>
           </button>
+
+          {/* Interleaved Bilingual Voiceover Toggle */}
+          {onToggleInterleavedMode && (
+            <button
+              onClick={onToggleInterleavedMode}
+              className={
+                'px-2.5 sm:px-3 py-1.5 rounded-xl border text-xs font-bold flex items-center gap-1.5 transition-all active:scale-95 shadow-md ' +
+                (interleavedMode
+                  ? 'bg-purple-600 border-purple-400 text-white shadow-purple-500/30 ring-2 ring-purple-500/40'
+                  : 'bg-gray-900/90 border-gray-700 text-purple-300 hover:text-purple-100 hover:bg-gray-800')
+              }
+              title='Chế độ Thuyết minh xen kẽ: Video phát tiếng Anh gốc ➔ Tự dừng ➔ Đọc tiếng Việt ➔ Tự phát tiếp câu sau'
+            >
+              <Languages size={14} className={isInterleavedSpeaking ? 'text-amber-300 animate-bounce' : 'text-purple-300'} />
+              <span className='hidden sm:inline'>
+                {isInterleavedSpeaking ? 'Đang đọc TV...' : interleavedMode ? 'Thuyết minh: BẬT' : 'Thuyết minh xen kẽ'}
+              </span>
+              <span className='sm:hidden'>
+                {isInterleavedSpeaking ? 'Đang đọc...' : interleavedMode ? 'TM: BẬT' : 'Thuyết minh'}
+              </span>
+            </button>
+          )}
 
           {/* External YouTube Link */}
           <a
