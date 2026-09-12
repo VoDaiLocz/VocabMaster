@@ -82,24 +82,127 @@ export const ToeicPassageViewer: React.FC<ToeicPassageViewerProps> = ({
       }
     }
 
-    lines.forEach((line, idx) => {
+    let lineIdx = 0
+    while (lineIdx < lines.length) {
+      const line = lines[lineIdx]
       const trimmed = line.trim()
       if (!trimmed) {
         flushEmailHeaders()
-        return
+        lineIdx++
+        continue
       }
 
       // Skip document title headers if already processed
-      if (trimmed.startsWith('=== DOCUMENT')) return
+      if (trimmed.startsWith('=== DOCUMENT')) {
+        lineIdx++
+        continue
+      }
 
       // Email header pattern (From:, To:, Date:, Subject:)
       const emailHeaderMatch = trimmed.match(/^(From|To|Date|Subject|Sent|Cc|Re)\s*:\s*(.*)$/i)
       if (emailHeaderMatch) {
         emailHeaders.push({ key: emailHeaderMatch[1], val: emailHeaderMatch[2] })
-        return
+        lineIdx++
+        continue
       }
 
       flushEmailHeaders()
+
+      // Markdown table pattern: | Col 1 | Col 2 |
+      if (trimmed.startsWith('|')) {
+        const tableLines: string[] = []
+        while (lineIdx < lines.length && lines[lineIdx].trim().startsWith('|')) {
+          tableLines.push(lines[lineIdx].trim())
+          lineIdx++
+        }
+
+        if (tableLines.length >= 2) {
+          const parseRow = (r: string) =>
+            r
+              .split('|')
+              .slice(1, -1)
+              .map((c) => c.trim())
+
+          const headers = parseRow(tableLines[0])
+          const isSeparator = tableLines[1].replace(/[\s:\-|]/g, '').length === 0
+          const bodyRows = (isSeparator ? tableLines.slice(2) : tableLines.slice(1)).map(parseRow)
+
+          elements.push(
+            <div
+              key={`tbl-${lineIdx}`}
+              className='my-4 overflow-x-auto rounded-xl border border-gray-200/90 dark:border-gray-800 shadow-xs bg-white dark:bg-gray-900/40'
+            >
+              <table className='w-full text-xs sm:text-sm border-collapse font-sans text-left'>
+                <thead>
+                  <tr className='bg-gray-100/90 dark:bg-gray-800/90 text-gray-900 dark:text-gray-100 font-bold border-b border-gray-200 dark:border-gray-700'>
+                    {headers.map((h, hIdx) => (
+                      <th
+                        key={hIdx}
+                        className='py-2.5 px-3.5 border-r border-gray-200/70 dark:border-gray-700/70 last:border-r-0'
+                      >
+                        {renderInlineMarkdown(h)}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className='divide-y divide-gray-100 dark:divide-gray-800/60'>
+                  {bodyRows.map((row, rIdx) => (
+                    <tr
+                      key={rIdx}
+                      className='hover:bg-indigo-50/30 dark:hover:bg-indigo-950/20 transition-colors'
+                    >
+                      {row.map((cell, cIdx) => (
+                        <td
+                          key={cIdx}
+                          className='py-2 px-3.5 border-r border-gray-100 dark:border-gray-800/60 last:border-r-0 text-gray-800 dark:text-gray-200'
+                        >
+                          {renderInlineMarkdown(cell)}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>,
+          )
+          continue
+        }
+      }
+
+      // Browser Mockup Bar: 🌐 **http://...** or 🌐 **www...**
+      if (trimmed.startsWith('🌐')) {
+        const webMatch = trimmed.match(
+          /^🌐\s*(?:\*\*)?(https?:\/\/[^\s*|]+|www\.[^\s*|]+)(?:\*\*)?(?:\s*\|\s*(.*))?/i,
+        )
+        if (webMatch) {
+          const [, url, pageTitle] = webMatch
+          elements.push(
+            <div
+              key={`browser-${lineIdx}`}
+              className='my-3 rounded-xl border border-gray-200 dark:border-gray-700/70 bg-gray-50/60 dark:bg-gray-900/60 overflow-hidden shadow-xs font-sans'
+            >
+              <div className='flex items-center gap-2 px-3 py-2 bg-gray-200/60 dark:bg-gray-800/80 border-b border-gray-200 dark:border-gray-700/60 text-xs'>
+                <div className='flex items-center gap-1.5 mr-2'>
+                  <span className='w-2.5 h-2.5 rounded-full bg-red-400/80 inline-block' />
+                  <span className='w-2.5 h-2.5 rounded-full bg-amber-400/80 inline-block' />
+                  <span className='w-2.5 h-2.5 rounded-full bg-emerald-400/80 inline-block' />
+                </div>
+                <div className='flex-1 max-w-md bg-white dark:bg-gray-950 px-3 py-1 rounded-md text-[11px] font-mono text-gray-600 dark:text-gray-300 border border-gray-200/80 dark:border-gray-800 flex items-center gap-1.5 truncate'>
+                  <span className='text-emerald-500 font-bold'>🔒</span>
+                  <span className='text-sky-600 dark:text-sky-400'>{url}</span>
+                </div>
+              </div>
+              {pageTitle && (
+                <div className='px-4 py-2.5 font-bold text-gray-900 dark:text-white text-sm sm:text-base border-b border-gray-100 dark:border-gray-800/60 bg-white/60 dark:bg-gray-900/30'>
+                  {renderInlineMarkdown(pageTitle.trim())}
+                </div>
+              )}
+            </div>,
+          )
+          lineIdx++
+          continue
+        }
+      }
 
       // Chat message bubble: 💬 **Speaker** (Time):\nMessage
       if (trimmed.startsWith('💬')) {
@@ -107,7 +210,7 @@ export const ToeicPassageViewer: React.FC<ToeicPassageViewerProps> = ({
         if (chatMatch) {
           const [, speaker, time, inlineMsg] = chatMatch
           elements.push(
-            <div key={`chat-${idx}`} className='mb-3 flex items-start gap-2.5'>
+            <div key={`chat-${lineIdx}`} className='mb-3 flex items-start gap-2.5'>
               <div className='w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900/60 text-emerald-700 dark:text-emerald-300 flex items-center justify-center font-bold text-xs shrink-0 border border-emerald-300 dark:border-emerald-700'>
                 {speaker.slice(0, 2).toUpperCase()}
               </div>
@@ -122,7 +225,8 @@ export const ToeicPassageViewer: React.FC<ToeicPassageViewerProps> = ({
               </div>
             </div>,
           )
-          return
+          lineIdx++
+          continue
         }
       }
 
@@ -130,71 +234,71 @@ export const ToeicPassageViewer: React.FC<ToeicPassageViewerProps> = ({
       if (trimmed.startsWith('### ')) {
         elements.push(
           <h3
-            key={`h3-${idx}`}
+            key={`h3-${lineIdx}`}
             className='text-base sm:text-lg font-bold text-gray-900 dark:text-white mt-3 mb-2 font-sans tracking-tight'
           >
             {trimmed.replace('### ', '')}
           </h3>,
         )
-        return
+        lineIdx++
+        continue
       }
 
       // Bullet points (• ...)
       if (trimmed.startsWith('• ') || trimmed.startsWith('- ')) {
         elements.push(
           <div
-            key={`bullet-${idx}`}
+            key={`bullet-${lineIdx}`}
             className='flex items-start gap-2 py-0.5 text-gray-800 dark:text-gray-200'
           >
             <span className='text-indigo-500 font-bold'>•</span>
             <span className='flex-1'>{renderInlineMarkdown(trimmed.slice(2))}</span>
           </div>,
         )
-        return
+        lineIdx++
+        continue
       }
 
-      // Special highlight lines: 📅 Showtime / 📞 Phone / ✉️ Email / 🌐 Web
-      if (
-        trimmed.startsWith('📅') ||
-        trimmed.startsWith('📞') ||
-        trimmed.startsWith('✉️') ||
-        trimmed.startsWith('🌐')
-      ) {
+      // Special highlight lines: 📅 Showtime / 📞 Phone / ✉️ Email
+      if (trimmed.startsWith('📅') || trimmed.startsWith('📞') || trimmed.startsWith('✉️')) {
         elements.push(
           <div
-            key={`info-${idx}`}
+            key={`info-${lineIdx}`}
             className='my-2 px-3 py-1.5 bg-gray-100 dark:bg-gray-800/70 rounded-xl text-xs sm:text-sm font-semibold text-gray-800 dark:text-gray-200 inline-block mr-2'
           >
             {renderInlineMarkdown(trimmed)}
           </div>,
         )
-        return
+        lineIdx++
+        continue
       }
 
       // Theater / Announcement presentation tag
       if (trimmed.startsWith('🎭')) {
         elements.push(
           <div
-            key={`theater-${idx}`}
+            key={`theater-${lineIdx}`}
             className='text-xs sm:text-sm font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400 mb-1'
           >
             {renderInlineMarkdown(trimmed)}
           </div>,
         )
-        return
+        lineIdx++
+        continue
       }
 
       // Dear ... salutation
       if (trimmed.startsWith('Dear ')) {
         elements.push(
           <div
-            key={`salutation-${idx}`}
+            key={`salutation-${lineIdx}`}
             className='font-bold text-gray-900 dark:text-white my-2.5 font-sans'
           >
             {trimmed}
           </div>,
         )
-        return
+        lineIdx++
+        continue
       }
 
       // Closing salutation (Sincerely, Warmest Regards, etc.)
@@ -203,22 +307,24 @@ export const ToeicPassageViewer: React.FC<ToeicPassageViewerProps> = ({
       ) {
         elements.push(
           <div
-            key={`close-${idx}`}
+            key={`close-${lineIdx}`}
             className='mt-4 font-semibold text-gray-800 dark:text-gray-200 italic'
           >
             {trimmed}
           </div>,
         )
-        return
+        lineIdx++
+        continue
       }
 
       // Regular paragraph
       elements.push(
-        <p key={`p-${idx}`} className='mb-3 text-gray-800 dark:text-gray-200 text-justify'>
+        <p key={`p-${lineIdx}`} className='mb-3 text-gray-800 dark:text-gray-200 text-justify'>
           {renderInlineMarkdown(trimmed)}
         </p>,
       )
-    })
+      lineIdx++
+    }
 
     flushEmailHeaders()
     return elements

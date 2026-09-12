@@ -102,3 +102,7 @@ android/build/
 scratch/
 test-results/
 *.png
+
+# Python cache
+__pycache__/
+*.pyc
