@@ -567,7 +567,9 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
             <div className='min-w-0'>
               <div className='font-bold text-white flex items-center gap-1.5'>
                 <span>🎙️ Thuyết minh tiếng Việt</span>
-                <span className='text-[10px] px-1.5 py-0.2 rounded bg-purple-500/30 text-purple-200 font-mono'>Xen kẽ</span>
+                <span className='text-[10px] px-1.5 py-0.2 rounded bg-purple-500/30 text-purple-200 font-mono'>
+                  Xen kẽ
+                </span>
               </div>
               <p className='truncate text-[11px] text-purple-300 mt-0.5'>{speakingCueTextVi}</p>
             </div>
@@ -673,12 +675,25 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
               }
               title='Chế độ Thuyết minh xen kẽ: Video phát tiếng Anh gốc ➔ Tự dừng ➔ Đọc tiếng Việt ➔ Tự phát tiếp câu sau'
             >
-              <Languages size={14} className={isInterleavedSpeaking ? 'text-amber-300 animate-bounce' : 'text-purple-300'} />
+              <Languages
+                size={14}
+                className={
+                  isInterleavedSpeaking ? 'text-amber-300 animate-bounce' : 'text-purple-300'
+                }
+              />
               <span className='hidden sm:inline'>
-                {isInterleavedSpeaking ? 'Đang đọc TV...' : interleavedMode ? 'Thuyết minh: BẬT' : 'Thuyết minh xen kẽ'}
+                {isInterleavedSpeaking
+                  ? 'Đang đọc TV...'
+                  : interleavedMode
+                    ? 'Thuyết minh: BẬT'
+                    : 'Thuyết minh xen kẽ'}
               </span>
               <span className='sm:hidden'>
-                {isInterleavedSpeaking ? 'Đang đọc...' : interleavedMode ? 'TM: BẬT' : 'Thuyết minh'}
+                {isInterleavedSpeaking
+                  ? 'Đang đọc...'
+                  : interleavedMode
+                    ? 'TM: BẬT'
+                    : 'Thuyết minh'}
               </span>
             </button>
           )}

@@ -214,7 +214,11 @@ const EmptyState = memo(function EmptyState({
       </p>
       {!hasSearch && (
         <div className='flex flex-wrap gap-3 justify-center'>
-          <Button onClick={onSeedClick} disabled={isSeeding} className='bg-gradient-to-r from-primary-600 to-indigo-600 text-white shadow-lg shadow-primary-500/20'>
+          <Button
+            onClick={onSeedClick}
+            disabled={isSeeding}
+            className='bg-gradient-to-r from-primary-600 to-indigo-600 text-white shadow-lg shadow-primary-500/20'
+          >
             {isSeeding ? (
               <>
                 <Loader2 size={18} className='mr-2 animate-spin' />
@@ -222,8 +226,8 @@ const EmptyState = memo(function EmptyState({
               </>
             ) : (
               <>
-                <Sparkles size={18} className='mr-2 text-amber-300' />
-                ⚡ Nạp ngay 5 bộ từ chuẩn vào SQLite
+                <Sparkles size={18} className='mr-2 text-amber-300' />⚡ Nạp ngay 5 bộ từ chuẩn vào
+                SQLite
               </>
             )}
           </Button>

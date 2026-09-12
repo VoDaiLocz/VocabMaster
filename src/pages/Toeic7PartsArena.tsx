@@ -34,7 +34,7 @@ import {
   Search,
   Zap,
   Check,
-  FolderOpen
+  FolderOpen,
 } from 'lucide-react'
 import { Button } from '@/components/common/Button'
 import qBankRaw from '@/data/toeic_7parts_comprehensive_bank.json'
@@ -101,18 +101,56 @@ const ALL_SERIES: ExamSeries[] = examSeriesRaw as ExamSeries[]
 const ALL_TOEIC_DOCS: ToeicDocItem[] = toeicDocsRaw as ToeicDocItem[]
 
 const PART_CONFIG = [
-  { part: 1, name: 'Part 1: Mô tả ảnh', count: '12 câu', desc: 'Photographs - Nhìn ảnh chọn câu miêu tả đúng nhất (Audio MP3)' },
-  { part: 2, name: 'Part 2: Hỏi & Đáp', count: '47 câu', desc: 'Question-Response - Nghe câu hỏi và chọn phản hồi (Audio MP3)' },
-  { part: 3, name: 'Part 3: Hội thoại', count: '60 câu', desc: 'Conversations - Nghe đối thoại nhiều người & biểu đồ (Audio MP3)' },
-  { part: 4, name: 'Part 4: Độc thoại', count: '42 câu', desc: 'Short Talks - Nghe bài nói, thông báo, tin nhắn thoại (Audio MP3)' },
-  { part: 5, name: 'Part 5: Hoàn thành câu', count: '1.285 câu', desc: 'Incomplete Sentences - 17 chuyên đề ngữ pháp & từ vựng' },
-  { part: 6, name: 'Part 6: Điền đoạn văn', count: '80 câu', desc: 'Text Completion - Đọc hiểu văn bản & điền từ vào chỗ trống' },
-  { part: 7, name: 'Part 7: Đọc hiểu', count: '270 câu', desc: 'Reading Comprehension - Đọc hiểu đoạn đơn, đoạn kép, đoạn ba' },
+  {
+    part: 1,
+    name: 'Part 1: Mô tả ảnh',
+    count: '12 câu',
+    desc: 'Photographs - Nhìn ảnh chọn câu miêu tả đúng nhất (Audio MP3)',
+  },
+  {
+    part: 2,
+    name: 'Part 2: Hỏi & Đáp',
+    count: '47 câu',
+    desc: 'Question-Response - Nghe câu hỏi và chọn phản hồi (Audio MP3)',
+  },
+  {
+    part: 3,
+    name: 'Part 3: Hội thoại',
+    count: '60 câu',
+    desc: 'Conversations - Nghe đối thoại nhiều người & biểu đồ (Audio MP3)',
+  },
+  {
+    part: 4,
+    name: 'Part 4: Độc thoại',
+    count: '42 câu',
+    desc: 'Short Talks - Nghe bài nói, thông báo, tin nhắn thoại (Audio MP3)',
+  },
+  {
+    part: 5,
+    name: 'Part 5: Hoàn thành câu',
+    count: '1.285 câu',
+    desc: 'Incomplete Sentences - 17 chuyên đề ngữ pháp & từ vựng',
+  },
+  {
+    part: 6,
+    name: 'Part 6: Điền đoạn văn',
+    count: '80 câu',
+    desc: 'Text Completion - Đọc hiểu văn bản & điền từ vào chỗ trống',
+  },
+  {
+    part: 7,
+    name: 'Part 7: Đọc hiểu',
+    count: '270 câu',
+    desc: 'Reading Comprehension - Đọc hiểu đoạn đơn, đoạn kép, đoạn ba',
+  },
 ]
 
 // Hàm tạo danh sách câu hỏi đề thi mô phỏng chuẩn ETS
 function generateExamQuestions(seriesId: string, mode: 'full' | 'mini'): UnifiedToeicQuestion[] {
-  const seriesIndex = Math.max(0, ALL_SERIES.findIndex((s) => s.id === seriesId))
+  const seriesIndex = Math.max(
+    0,
+    ALL_SERIES.findIndex((s) => s.id === seriesId),
+  )
   const offset = seriesIndex * 7
 
   const getPartQuestions = (partNum: number, count: number) => {
@@ -154,7 +192,9 @@ export function Toeic7PartsArena() {
   const navigate = useNavigate()
 
   // Tab View điều hướng chính
-  const [activeView, setActiveView] = useState<'series' | 'practice' | 'exam' | 'results' | 'mistakes' | 'resources'>('series')
+  const [activeView, setActiveView] = useState<
+    'series' | 'practice' | 'exam' | 'results' | 'mistakes' | 'resources'
+  >('series')
 
   // --- STATE: KHO ĐỀ ETS ---
   const [selectedYearFilter, setSelectedYearFilter] = useState<string>('all')
@@ -164,7 +204,9 @@ export function Toeic7PartsArena() {
   const [docSearchTerm, setDocSearchTerm] = useState<string>('')
 
   // --- STATE: THI THỬ MÔ PHỎNG ---
-  const [currentExamSeries, setCurrentExamSeries] = useState<ExamSeries>(ALL_SERIES[1] || ALL_SERIES[0])
+  const [currentExamSeries, setCurrentExamSeries] = useState<ExamSeries>(
+    ALL_SERIES[1] || ALL_SERIES[0],
+  )
   const [examMode, setExamMode] = useState<'full' | 'mini'>('full')
   const [examQuestions, setExamQuestions] = useState<UnifiedToeicQuestion[]>([])
   const [examCurrentIndex, setExamCurrentIndex] = useState<number>(0)
@@ -174,7 +216,9 @@ export function Toeic7PartsArena() {
   const [isExamRunning, setIsExamRunning] = useState<boolean>(false)
   const [showSubmitModal, setShowSubmitModal] = useState<boolean>(false)
   const [examResult, setExamResult] = useState<ToeicScoreResult | null>(null)
-  const [examPaletteFilter, setExamPaletteFilter] = useState<'all' | 'unanswered' | 'flagged'>('all')
+  const [examPaletteFilter, setExamPaletteFilter] = useState<'all' | 'unanswered' | 'flagged'>(
+    'all',
+  )
 
   // --- STATE: LUYỆN TẬP TỪNG PART ---
   const paramPart = searchParams.get('part')
@@ -197,7 +241,9 @@ export function Toeic7PartsArena() {
   const [practiceFlagged, setPracticeFlagged] = useState<Set<number>>(new Set())
   const [practiceShowExplanation, setPracticeShowExplanation] = useState<boolean>(false)
   const [practiceShowTranscript, setPracticeShowTranscript] = useState<boolean>(false)
-  const [practicePaletteFilter, setPracticePaletteFilter] = useState<'all' | 'unanswered' | 'flagged'>('all')
+  const [practicePaletteFilter, setPracticePaletteFilter] = useState<
+    'all' | 'unanswered' | 'flagged'
+  >('all')
 
   // --- STATE: SỔ TAY CÂU HỎI SAI ---
   const [savedMistakes, setSavedMistakes] = useState<Set<string>>(() => {
@@ -276,22 +322,22 @@ export function Toeic7PartsArena() {
         selectedYearFilter === 'all'
           ? true
           : selectedYearFilter === '2025'
-          ? s.year === 2025
-          : selectedYearFilter === '2024'
-          ? s.year === 2024
-          : selectedYearFilter === '2023'
-          ? s.year === 2023
-          : selectedYearFilter === '2022'
-          ? s.year === 2022
-          : selectedYearFilter === '2021'
-          ? s.year === 2021
-          : selectedYearFilter === '2020'
-          ? s.year === 2020
-          : selectedYearFilter === '2019'
-          ? s.year === 2019
-          : selectedYearFilter === 'sparta'
-          ? s.id.includes('sparta')
-          : true
+            ? s.year === 2025
+            : selectedYearFilter === '2024'
+              ? s.year === 2024
+              : selectedYearFilter === '2023'
+                ? s.year === 2023
+                : selectedYearFilter === '2022'
+                  ? s.year === 2022
+                  : selectedYearFilter === '2021'
+                    ? s.year === 2021
+                    : selectedYearFilter === '2020'
+                      ? s.year === 2020
+                      : selectedYearFilter === '2019'
+                        ? s.year === 2019
+                        : selectedYearFilter === 'sparta'
+                          ? s.id.includes('sparta')
+                          : true
 
       const matchSearch =
         seriesSearchTerm === '' ||
@@ -310,6 +356,18 @@ export function Toeic7PartsArena() {
       return d.title.toLowerCase().includes(docSearchTerm.toLowerCase())
     })
   }, [docSearchTerm])
+
+  // Nộp bài thi và tính điểm ETS
+  const handleFinishExam = () => {
+    setIsExamRunning(false)
+    setShowSubmitModal(false)
+    const scoreResult = calculateToeicScore(
+      examAnswers,
+      examQuestions.map((q) => ({ id: q.id, part: q.part, correctAnswer: q.correctAnswer })),
+    )
+    setExamResult(scoreResult)
+    setActiveView('results')
+  }
 
   // Countdown timer cho phòng thi
   useEffect(() => {
@@ -356,13 +414,19 @@ export function Toeic7PartsArena() {
       audioRef.current.pause()
       setIsPlaying(false)
     } else {
-      audioRef.current.play().then(() => setIsPlaying(true)).catch(() => setIsPlaying(false))
+      audioRef.current
+        .play()
+        .then(() => setIsPlaying(true))
+        .catch(() => setIsPlaying(false))
     }
   }
 
   const handleSeekAudio = (delta: number) => {
     if (!audioRef.current) return
-    audioRef.current.currentTime = Math.max(0, Math.min(audioDuration, audioRef.current.currentTime + delta))
+    audioRef.current.currentTime = Math.max(
+      0,
+      Math.min(audioDuration, audioRef.current.currentTime + delta),
+    )
   }
 
   const handleChangePlaybackRate = (rate: number) => {
@@ -385,18 +449,6 @@ export function Toeic7PartsArena() {
     setIsExamRunning(true)
     setShowSubmitModal(false)
     setActiveView('exam')
-  }
-
-  // Nộp bài thi và tính điểm ETS
-  const handleFinishExam = () => {
-    setIsExamRunning(false)
-    setShowSubmitModal(false)
-    const scoreResult = calculateToeicScore(
-      examAnswers,
-      examQuestions.map((q) => ({ id: q.id, part: q.part, correctAnswer: q.correctAnswer }))
-    )
-    setExamResult(scoreResult)
-    setActiveView('results')
   }
 
   // Toggle gắn cờ trong lúc thi
@@ -446,7 +498,7 @@ export function Toeic7PartsArena() {
   // Questions in mistakes notebook
   const mistakeQuestions = useMemo(() => {
     return ALL_QUESTIONS.filter((q) => savedMistakes.has(q.id)).filter((q) =>
-      mistakeFilterPart === 'all' ? true : q.part === mistakeFilterPart
+      mistakeFilterPart === 'all' ? true : q.part === mistakeFilterPart,
     )
   }, [savedMistakes, mistakeFilterPart])
 
@@ -470,7 +522,10 @@ export function Toeic7PartsArena() {
             Đấu Trường Luyện Đề TOEIC 7 Part
           </h1>
           <p className='text-blue-100 text-sm sm:text-base leading-relaxed'>
-            Luyện thi toàn diện <strong className='text-white font-bold underline'>1.796 câu hỏi thực tế</strong>, 9 bộ đề ETS từ 2017 đến 2026, mô phỏng phòng thi 120 phút, tính điểm barem chuẩn IIG/ETS và kho 141 tài liệu Google Drive gốc.
+            Luyện thi toàn diện{' '}
+            <strong className='text-white font-bold underline'>1.796 câu hỏi thực tế</strong>, 9 bộ
+            đề ETS từ 2017 đến 2026, mô phỏng phòng thi 120 phút, tính điểm barem chuẩn IIG/ETS và
+            kho 141 tài liệu Google Drive gốc.
           </p>
         </div>
         <div className='absolute -right-8 -bottom-10 opacity-15 pointer-events-none'>
@@ -491,7 +546,9 @@ export function Toeic7PartsArena() {
           >
             <BookOpen size={16} />
             <span>Kho Đề ETS 2017 - 2026</span>
-            <span className='px-1.5 py-0.5 rounded-md text-[10px] font-semibold bg-white/20 text-white'>9 Bộ Đề</span>
+            <span className='px-1.5 py-0.5 rounded-md text-[10px] font-semibold bg-white/20 text-white'>
+              9 Bộ Đề
+            </span>
           </button>
 
           <button
@@ -504,7 +561,9 @@ export function Toeic7PartsArena() {
           >
             <Sparkles size={16} />
             <span>Luyện Thi Từng Part (1 - 7)</span>
-            <span className='px-1.5 py-0.5 rounded-md text-[10px] font-semibold bg-white/20 text-white'>1.796 Câu</span>
+            <span className='px-1.5 py-0.5 rounded-md text-[10px] font-semibold bg-white/20 text-white'>
+              1.796 Câu
+            </span>
           </button>
 
           {isExamRunning && (
@@ -620,7 +679,9 @@ export function Toeic7PartsArena() {
               >
                 <div>
                   <div className='flex items-center justify-between gap-2 mb-3'>
-                    <span className={`px-2.5 py-1 rounded-lg text-[11px] font-bold text-white ${series.badgeColor}`}>
+                    <span
+                      className={`px-2.5 py-1 rounded-lg text-[11px] font-bold text-white ${series.badgeColor}`}
+                    >
                       {series.badge}
                     </span>
                     <div className='flex items-center text-amber-400 text-xs gap-0.5'>
@@ -631,23 +692,34 @@ export function Toeic7PartsArena() {
                   <h3 className='font-bold text-gray-900 dark:text-white text-base leading-snug mb-1'>
                     {series.title}
                   </h3>
-                  <p className='text-xs text-indigo-600 dark:text-indigo-400 font-medium mb-3'>{series.subtitle}</p>
+                  <p className='text-xs text-indigo-600 dark:text-indigo-400 font-medium mb-3'>
+                    {series.subtitle}
+                  </p>
                   <p className='text-xs text-gray-600 dark:text-gray-300 leading-relaxed mb-4'>
                     {series.description}
                   </p>
 
                   <div className='bg-gray-50 dark:bg-gray-900/60 rounded-xl p-3 mb-4 space-y-1.5'>
                     <div className='text-[11px] font-semibold text-gray-500 dark:text-gray-400'>
-                      Độ khó & Mục tiêu: <span className='text-gray-800 dark:text-gray-200 font-bold'>{series.difficulty}</span>
+                      Độ khó & Mục tiêu:{' '}
+                      <span className='text-gray-800 dark:text-gray-200 font-bold'>
+                        {series.difficulty}
+                      </span>
                     </div>
                     <div className='text-[11px] font-semibold text-gray-500 dark:text-gray-400'>
-                      Quy mô: <span className='text-gray-800 dark:text-gray-200 font-bold'>{series.totalTests} Đề Full Test</span>
+                      Quy mô:{' '}
+                      <span className='text-gray-800 dark:text-gray-200 font-bold'>
+                        {series.totalTests} Đề Full Test
+                      </span>
                     </div>
                   </div>
 
                   <div className='space-y-1 mb-5'>
                     {series.highlights.map((h, i) => (
-                      <div key={i} className='flex items-center gap-1.5 text-xs text-gray-600 dark:text-gray-300'>
+                      <div
+                        key={i}
+                        className='flex items-center gap-1.5 text-xs text-gray-600 dark:text-gray-300'
+                      >
                         <Check size={12} className='text-emerald-500 shrink-0' />
                         <span>{h}</span>
                       </div>
@@ -709,10 +781,12 @@ export function Toeic7PartsArena() {
           <div className='bg-white dark:bg-gray-800/80 rounded-2xl p-5 border border-gray-200 dark:border-gray-700/60 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4'>
             <div>
               <h2 className='text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2'>
-                <FolderOpen size={20} className='text-indigo-600' /> Kho Giáo Trình & Tài Liệu Gốc ({ALL_TOEIC_DOCS.length} Sách & Bộ Đề)
+                <FolderOpen size={20} className='text-indigo-600' /> Kho Giáo Trình & Tài Liệu Gốc (
+                {ALL_TOEIC_DOCS.length} Sách & Bộ Đề)
               </h2>
               <p className='text-xs text-gray-500 dark:text-gray-400 mt-0.5'>
-                Tổng hợp trọn vẹn toàn bộ các sách, tài liệu tự học, khoá luyện thi TOEIC từ file Google Sheet trích xuất gốc.
+                Tổng hợp trọn vẹn toàn bộ các sách, tài liệu tự học, khoá luyện thi TOEIC từ file
+                Google Sheet trích xuất gốc.
               </p>
             </div>
 
@@ -778,7 +852,11 @@ export function Toeic7PartsArena() {
                 </h2>
               </div>
               <div className='text-xs text-gray-500 dark:text-gray-400 mt-0.5'>
-                Đã làm: <strong className='text-indigo-600 dark:text-indigo-400'>{Object.keys(examAnswers).length}</strong> / {examQuestions.length} câu
+                Đã làm:{' '}
+                <strong className='text-indigo-600 dark:text-indigo-400'>
+                  {Object.keys(examAnswers).length}
+                </strong>{' '}
+                / {examQuestions.length} câu
               </div>
             </div>
 
@@ -789,8 +867,8 @@ export function Toeic7PartsArena() {
                   examTimeRemaining <= 300
                     ? 'bg-rose-50 dark:bg-rose-950/50 text-rose-600 border-rose-300 dark:border-rose-800 animate-pulse'
                     : examTimeRemaining <= 900
-                    ? 'bg-amber-50 dark:bg-amber-950/50 text-amber-600 border-amber-300 dark:border-amber-800'
-                    : 'bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 border-indigo-200 dark:border-indigo-800'
+                      ? 'bg-amber-50 dark:bg-amber-950/50 text-amber-600 border-amber-300 dark:border-amber-800'
+                      : 'bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 border-indigo-200 dark:border-indigo-800'
                 }`}
               >
                 <Clock size={18} />
@@ -851,14 +929,19 @@ export function Toeic7PartsArena() {
                             onClick={togglePlayAudio}
                             className='w-12 h-12 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white flex items-center justify-center shadow-md shadow-indigo-600/30 transition-transform active:scale-95'
                           >
-                            {isPlaying ? <Pause size={20} /> : <Play size={20} className='ml-0.5' />}
+                            {isPlaying ? (
+                              <Pause size={20} />
+                            ) : (
+                              <Play size={20} className='ml-0.5' />
+                            )}
                           </button>
                           <div>
                             <div className='text-xs font-bold text-gray-800 dark:text-gray-200'>
                               Audio Đề Thi Chuẩn Part {q.part}
                             </div>
                             <div className='text-[11px] text-gray-500 font-mono'>
-                              {formatTime(Math.floor(audioCurrentTime))} / {formatTime(Math.floor(audioDuration))}
+                              {formatTime(Math.floor(audioCurrentTime))} /{' '}
+                              {formatTime(Math.floor(audioDuration))}
                             </div>
                           </div>
                         </div>
@@ -957,7 +1040,11 @@ export function Toeic7PartsArena() {
                       <Button
                         variant='primary'
                         disabled={examCurrentIndex === examQuestions.length - 1}
-                        onClick={() => setExamCurrentIndex((prev) => Math.min(examQuestions.length - 1, prev + 1))}
+                        onClick={() =>
+                          setExamCurrentIndex((prev) =>
+                            Math.min(examQuestions.length - 1, prev + 1),
+                          )
+                        }
                         className='text-xs py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white min-h-[40px]'
                       >
                         Câu Kế Tiếp <ChevronRight size={16} className='ml-1' />
@@ -1015,11 +1102,16 @@ export function Toeic7PartsArena() {
                     if (isAnswered) {
                       btnClass += 'bg-indigo-600 text-white border-indigo-700'
                     } else {
-                      btnClass += 'bg-gray-100 dark:bg-gray-750 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700'
+                      btnClass +=
+                        'bg-gray-100 dark:bg-gray-750 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700'
                     }
 
                     return (
-                      <button key={q.id} onClick={() => setExamCurrentIndex(idx)} className={btnClass}>
+                      <button
+                        key={q.id}
+                        onClick={() => setExamCurrentIndex(idx)}
+                        className={btnClass}
+                      >
                         <span>{idx + 1}</span>
                         {isFlagged && (
                           <div className='absolute -top-1 -right-1 w-2.5 h-2.5 bg-amber-400 rounded-full ring-2 ring-white dark:ring-gray-800' />
@@ -1038,22 +1130,33 @@ export function Toeic7PartsArena() {
               <div className='bg-white dark:bg-gray-800 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border border-gray-200 dark:border-gray-700'>
                 <div className='flex items-center gap-3 text-amber-500 mb-4'>
                   <AlertTriangle size={28} />
-                  <h3 className='text-lg font-extrabold text-gray-900 dark:text-white'>Xác Nhận Nộp Bài Thi</h3>
+                  <h3 className='text-lg font-extrabold text-gray-900 dark:text-white'>
+                    Xác Nhận Nộp Bài Thi
+                  </h3>
                 </div>
 
                 <p className='text-sm text-gray-600 dark:text-gray-300 mb-4 leading-relaxed'>
-                  Bạn đã trả lời <strong className='text-indigo-600 dark:text-indigo-400 font-bold'>{Object.keys(examAnswers).length}</strong> trên tổng số{' '}
-                  <strong className='font-bold'>{examQuestions.length}</strong> câu hỏi.
+                  Bạn đã trả lời{' '}
+                  <strong className='text-indigo-600 dark:text-indigo-400 font-bold'>
+                    {Object.keys(examAnswers).length}
+                  </strong>{' '}
+                  trên tổng số <strong className='font-bold'>{examQuestions.length}</strong> câu
+                  hỏi.
                 </p>
 
                 {examQuestions.length - Object.keys(examAnswers).length > 0 && (
                   <div className='p-3 bg-amber-50 dark:bg-amber-950/40 rounded-xl border border-amber-200 dark:border-amber-800/50 text-xs text-amber-700 dark:text-amber-300 mb-6'>
-                    ⚠️ Bạn vẫn còn {examQuestions.length - Object.keys(examAnswers).length} câu chưa trả lời. Bạn có chắc chắn muốn nộp bài để tính điểm không?
+                    ⚠️ Bạn vẫn còn {examQuestions.length - Object.keys(examAnswers).length} câu chưa
+                    trả lời. Bạn có chắc chắn muốn nộp bài để tính điểm không?
                   </div>
                 )}
 
                 <div className='flex items-center justify-end gap-3'>
-                  <Button variant='outline' onClick={() => setShowSubmitModal(false)} className='text-xs py-2 px-4 min-h-[40px]'>
+                  <Button
+                    variant='outline'
+                    onClick={() => setShowSubmitModal(false)}
+                    className='text-xs py-2 px-4 min-h-[40px]'
+                  >
                     Tiếp Tục Làm Bài
                   </Button>
                   <Button
@@ -1084,11 +1187,13 @@ export function Toeic7PartsArena() {
                 </div>
                 <h2 className='text-2xl sm:text-3xl font-black mb-1'>{currentExamSeries.title}</h2>
                 <p className='text-xs sm:text-sm text-indigo-200 mb-4'>
-                  Cấp độ: <strong className='text-white font-bold'>{examResult.cefrLevel}</strong> - {examResult.proficiencyTitle}
+                  Cấp độ: <strong className='text-white font-bold'>{examResult.cefrLevel}</strong> -{' '}
+                  {examResult.proficiencyTitle}
                 </p>
                 <div className='flex flex-wrap items-center gap-3 text-xs'>
                   <span className='px-3 py-1.5 rounded-xl bg-white/10 font-semibold'>
-                    Tổng đúng: {examResult.listeningRaw + examResult.readingRaw} / {examQuestions.length} câu ({examResult.percentage}%)
+                    Tổng đúng: {examResult.listeningRaw + examResult.readingRaw} /{' '}
+                    {examQuestions.length} câu ({examResult.percentage}%)
                   </span>
                   <span className='px-3 py-1.5 rounded-xl bg-white/10 font-semibold'>
                     Listening: {examResult.listeningScaled} / 495
@@ -1101,7 +1206,9 @@ export function Toeic7PartsArena() {
 
               {/* Big Scaled Score Dial */}
               <div className='w-44 h-44 rounded-full border-8 border-indigo-400/40 bg-white/10 backdrop-blur-md flex flex-col items-center justify-center shrink-0 shadow-2xl'>
-                <span className='text-xs uppercase font-bold text-indigo-200'>Điểm Quy Đổi ETS</span>
+                <span className='text-xs uppercase font-bold text-indigo-200'>
+                  Điểm Quy Đổi ETS
+                </span>
                 <span className='text-4xl sm:text-5xl font-black tracking-tight text-white my-1'>
                   {examResult.totalScaled}
                 </span>
@@ -1119,7 +1226,11 @@ export function Toeic7PartsArena() {
               </h3>
               <div className='space-y-3'>
                 {PART_CONFIG.map((p) => {
-                  const data = examResult.partBreakdown[p.part] || { correct: 0, total: 0, percentage: 0 }
+                  const data = examResult.partBreakdown[p.part] || {
+                    correct: 0,
+                    total: 0,
+                    percentage: 0,
+                  }
                   return (
                     <div key={p.part} className='space-y-1'>
                       <div className='flex items-center justify-between text-xs font-semibold'>
@@ -1131,7 +1242,11 @@ export function Toeic7PartsArena() {
                       <div className='h-2.5 w-full bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden'>
                         <div
                           className={`h-full rounded-full transition-all ${
-                            data.percentage >= 80 ? 'bg-emerald-500' : data.percentage >= 60 ? 'bg-blue-500' : 'bg-amber-500'
+                            data.percentage >= 80
+                              ? 'bg-emerald-500'
+                              : data.percentage >= 60
+                                ? 'bg-blue-500'
+                                : 'bg-amber-500'
                           }`}
                           style={{ width: `${data.percentage}%` }}
                         />
@@ -1146,7 +1261,8 @@ export function Toeic7PartsArena() {
             <div className='bg-white dark:bg-gray-800/80 rounded-2xl p-6 border border-gray-200 dark:border-gray-700/60 shadow-sm flex flex-col justify-between'>
               <div>
                 <h3 className='font-bold text-sm sm:text-base text-gray-900 dark:text-white mb-4 flex items-center gap-2'>
-                  <Sparkles size={18} className='text-purple-600' /> Chẩn Đoán AI & Lộ Trình Cải Thiện
+                  <Sparkles size={18} className='text-purple-600' /> Chẩn Đoán AI & Lộ Trình Cải
+                  Thiện
                 </h3>
                 <div className='space-y-3 mb-6'>
                   {examResult.recommendations.map((rec, i) => (
@@ -1265,13 +1381,17 @@ export function Toeic7PartsArena() {
                         const isChosen = userChoice === oIdx
                         const isTarget = q.correctAnswer === oIdx
 
-                        let optClass = 'p-2.5 rounded-xl text-xs font-medium border flex items-center gap-2 '
+                        let optClass =
+                          'p-2.5 rounded-xl text-xs font-medium border flex items-center gap-2 '
                         if (isTarget) {
-                          optClass += 'bg-emerald-100 dark:bg-emerald-900/60 border-emerald-500 text-emerald-900 dark:text-emerald-100 font-bold'
+                          optClass +=
+                            'bg-emerald-100 dark:bg-emerald-900/60 border-emerald-500 text-emerald-900 dark:text-emerald-100 font-bold'
                         } else if (isChosen && !isTarget) {
-                          optClass += 'bg-rose-100 dark:bg-rose-900/60 border-rose-500 text-rose-900 dark:text-rose-100 font-bold line-through'
+                          optClass +=
+                            'bg-rose-100 dark:bg-rose-900/60 border-rose-500 text-rose-900 dark:text-rose-100 font-bold line-through'
                         } else {
-                          optClass += 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300'
+                          optClass +=
+                            'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300'
                         }
 
                         return (
@@ -1307,17 +1427,21 @@ export function Toeic7PartsArena() {
           <div className='bg-white dark:bg-gray-800/80 rounded-2xl p-5 border border-gray-200 dark:border-gray-700/60 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4'>
             <div>
               <h2 className='text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2'>
-                <Bookmark size={20} className='text-amber-500' /> Sổ Tay Câu Hỏi Sai ({savedMistakes.size} câu)
+                <Bookmark size={20} className='text-amber-500' /> Sổ Tay Câu Hỏi Sai (
+                {savedMistakes.size} câu)
               </h2>
               <p className='text-xs text-gray-500 dark:text-gray-400 mt-0.5'>
-                Tập trung luyện lại các câu bạn đã làm sai trong phòng thi hoặc khi luyện Part để xóa sạch lỗ hổng kiến thức.
+                Tập trung luyện lại các câu bạn đã làm sai trong phòng thi hoặc khi luyện Part để
+                xóa sạch lỗ hổng kiến thức.
               </p>
             </div>
 
             <div className='flex items-center gap-2'>
               <select
                 value={mistakeFilterPart}
-                onChange={(e) => setMistakeFilterPart(e.target.value === 'all' ? 'all' : Number(e.target.value))}
+                onChange={(e) =>
+                  setMistakeFilterPart(e.target.value === 'all' ? 'all' : Number(e.target.value))
+                }
                 className='px-3 py-2 rounded-xl text-xs bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-200 min-h-[38px]'
               >
                 <option value='all'>Tất cả các Part</option>
@@ -1343,9 +1467,12 @@ export function Toeic7PartsArena() {
           {mistakeQuestions.length === 0 ? (
             <div className='bg-white dark:bg-gray-800/80 rounded-2xl p-12 text-center border border-gray-200 dark:border-gray-700/60'>
               <CheckCircle2 size={48} className='mx-auto text-emerald-500 mb-3' />
-              <h3 className='text-base font-bold text-gray-900 dark:text-white mb-1'>Không Có Câu Hỏi Sai Nào</h3>
+              <h3 className='text-base font-bold text-gray-900 dark:text-white mb-1'>
+                Không Có Câu Hỏi Sai Nào
+              </h3>
               <p className='text-xs text-gray-500 dark:text-gray-400 max-w-sm mx-auto'>
-                Sổ tay câu hỏi sai của bạn đang trống. Khi làm bài thi thử hoặc luyện đề, hãy bấm biểu tượng dấu trang để lưu các câu bạn muốn xem lại!
+                Sổ tay câu hỏi sai của bạn đang trống. Khi làm bài thi thử hoặc luyện đề, hãy bấm
+                biểu tượng dấu trang để lưu các câu bạn muốn xem lại!
               </p>
             </div>
           ) : (
@@ -1373,7 +1500,9 @@ export function Toeic7PartsArena() {
                     </button>
                   </div>
 
-                  <div className='text-base font-bold text-gray-900 dark:text-white mb-3'>{q.question}</div>
+                  <div className='text-base font-bold text-gray-900 dark:text-white mb-3'>
+                    {q.question}
+                  </div>
 
                   <div className='grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4'>
                     {q.options.map((opt, oIdx) => {
@@ -1387,7 +1516,9 @@ export function Toeic7PartsArena() {
                               : 'bg-gray-50 dark:bg-gray-750 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300'
                           }`}
                         >
-                          <span className='font-bold mr-1.5'>{String.fromCharCode(65 + oIdx)}.</span>
+                          <span className='font-bold mr-1.5'>
+                            {String.fromCharCode(65 + oIdx)}.
+                          </span>
                           <span>{opt}</span>
                         </div>
                       )
@@ -1436,7 +1567,9 @@ export function Toeic7PartsArena() {
                     <span>{p.name}</span>
                     <span
                       className={`px-1.5 py-0.5 rounded-md text-[10px] font-semibold ${
-                        isSelected ? 'bg-white/20 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-500'
+                        isSelected
+                          ? 'bg-white/20 text-white'
+                          : 'bg-gray-200 dark:bg-gray-700 text-gray-500'
                       }`}
                     >
                       {p.count}
@@ -1452,7 +1585,11 @@ export function Toeic7PartsArena() {
             <div className='flex flex-col sm:flex-row sm:items-center justify-between gap-3'>
               <div>
                 <h3 className='font-bold text-gray-900 dark:text-white text-base sm:text-lg flex items-center gap-2'>
-                  {selectedPart <= 4 ? <Headphones size={20} className='text-indigo-600' /> : <FileText size={20} className='text-indigo-600' />}
+                  {selectedPart <= 4 ? (
+                    <Headphones size={20} className='text-indigo-600' />
+                  ) : (
+                    <FileText size={20} className='text-indigo-600' />
+                  )}
                   {PART_CONFIG.find((x) => x.part === selectedPart)?.name}
                 </h3>
                 <p className='text-xs sm:text-sm text-gray-600 dark:text-gray-300 mt-0.5'>
@@ -1466,7 +1603,8 @@ export function Toeic7PartsArena() {
                     onClick={() => navigate(`/toeic-tactics`)}
                     className='text-xs py-1.5 px-3 border-indigo-400 text-indigo-700 dark:text-indigo-300 min-h-[36px]'
                   >
-                    <Award size={14} className='mr-1' /> Xem {currentPartTactics.length} Mẹo Part {selectedPart}
+                    <Award size={14} className='mr-1' /> Xem {currentPartTactics.length} Mẹo Part{' '}
+                    {selectedPart}
                   </Button>
                 )}
               </div>
@@ -1476,7 +1614,8 @@ export function Toeic7PartsArena() {
             {selectedPart === 5 && (
               <div className='mt-4 pt-4 border-t border-indigo-200/50 dark:border-indigo-800/30'>
                 <div className='text-xs font-bold text-gray-700 dark:text-gray-300 mb-2 flex items-center gap-1.5'>
-                  <Filter size={14} className='text-indigo-600' /> Lọc theo 17 chuyên đề ngữ pháp Part 5:
+                  <Filter size={14} className='text-indigo-600' /> Lọc theo 17 chuyên đề ngữ pháp
+                  Part 5:
                 </div>
                 <div className='flex flex-wrap gap-1.5 max-h-24 overflow-y-auto pr-1'>
                   <button
@@ -1549,7 +1688,10 @@ export function Toeic7PartsArena() {
                         }`}
                         title='Gắn cờ xem lại'
                       >
-                        <Flag size={16} fill={practiceFlagged.has(practiceIndex) ? 'currentColor' : 'none'} />
+                        <Flag
+                          size={16}
+                          fill={practiceFlagged.has(practiceIndex) ? 'currentColor' : 'none'}
+                        />
                       </button>
 
                       <button
@@ -1561,7 +1703,10 @@ export function Toeic7PartsArena() {
                         }`}
                         title='Lưu vào sổ tay câu sai'
                       >
-                        <Bookmark size={16} fill={savedMistakes.has(currentPracticeQ.id) ? 'currentColor' : 'none'} />
+                        <Bookmark
+                          size={16}
+                          fill={savedMistakes.has(currentPracticeQ.id) ? 'currentColor' : 'none'}
+                        />
                       </button>
                     </div>
                   </div>
@@ -1575,14 +1720,20 @@ export function Toeic7PartsArena() {
                             onClick={togglePlayAudio}
                             className='w-12 h-12 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white flex items-center justify-center shadow-md shadow-indigo-600/30 transition-transform active:scale-95 shrink-0'
                           >
-                            {isPlaying ? <Pause size={22} /> : <Play size={22} className='ml-0.5' />}
+                            {isPlaying ? (
+                              <Pause size={22} />
+                            ) : (
+                              <Play size={22} className='ml-0.5' />
+                            )}
                           </button>
                           <div>
                             <div className='text-xs font-bold text-gray-900 dark:text-white flex items-center gap-1.5'>
-                              <Headphones size={14} className='text-indigo-600' /> Audio Đề Thi Chuẩn ETS
+                              <Headphones size={14} className='text-indigo-600' /> Audio Đề Thi
+                              Chuẩn ETS
                             </div>
                             <div className='text-[11px] text-gray-500 font-mono'>
-                              {formatTime(Math.floor(audioCurrentTime))} / {formatTime(Math.floor(audioDuration))}
+                              {formatTime(Math.floor(audioCurrentTime))} /{' '}
+                              {formatTime(Math.floor(audioDuration))}
                             </div>
                           </div>
                         </div>
@@ -1608,7 +1759,9 @@ export function Toeic7PartsArena() {
                                 key={rate}
                                 onClick={() => handleChangePlaybackRate(rate)}
                                 className={`px-2 py-0.5 rounded text-[10px] font-bold ${
-                                  playbackRate === rate ? 'bg-indigo-600 text-white' : 'text-gray-600 dark:text-gray-300'
+                                  playbackRate === rate
+                                    ? 'bg-indigo-600 text-white'
+                                    : 'text-gray-600 dark:text-gray-300'
                                 }`}
                               >
                                 {rate}x
@@ -1619,7 +1772,11 @@ export function Toeic7PartsArena() {
                           <button
                             onClick={() => setPracticeShowTranscript((prev) => !prev)}
                             className='p-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 min-h-[36px]'
-                            title={practiceShowTranscript ? 'Ẩn Lời Thoại' : 'Hiện Lời Thoại (Transcript)'}
+                            title={
+                              practiceShowTranscript
+                                ? 'Ẩn Lời Thoại'
+                                : 'Hiện Lời Thoại (Transcript)'
+                            }
                           >
                             {practiceShowTranscript ? <EyeOff size={16} /> : <Eye size={16} />}
                           </button>
@@ -1628,7 +1785,9 @@ export function Toeic7PartsArena() {
 
                       {practiceShowTranscript && currentPracticeQ.transcript && (
                         <div className='mt-4 pt-3 border-t border-indigo-100 dark:border-indigo-900/40 text-xs text-gray-700 dark:text-gray-300 font-serif leading-relaxed whitespace-pre-line'>
-                          <span className='font-bold text-indigo-600 font-sans block mb-1'>Lời thoại (Transcript):</span>
+                          <span className='font-bold text-indigo-600 font-sans block mb-1'>
+                            Lời thoại (Transcript):
+                          </span>
                           {currentPracticeQ.transcript}
                         </div>
                       )}
@@ -1676,11 +1835,14 @@ export function Toeic7PartsArena() {
 
                       if (userAns !== undefined) {
                         if (isCorrect) {
-                          btnStyle += 'bg-emerald-50 dark:bg-emerald-950/50 border-emerald-500 text-emerald-950 dark:text-emerald-100 font-bold'
+                          btnStyle +=
+                            'bg-emerald-50 dark:bg-emerald-950/50 border-emerald-500 text-emerald-950 dark:text-emerald-100 font-bold'
                         } else if (isChosen && !isCorrect) {
-                          btnStyle += 'bg-rose-50 dark:bg-rose-950/50 border-rose-500 text-rose-950 dark:text-rose-100 font-bold'
+                          btnStyle +=
+                            'bg-rose-50 dark:bg-rose-950/50 border-rose-500 text-rose-950 dark:text-rose-100 font-bold'
                         } else {
-                          btnStyle += 'bg-gray-50 dark:bg-gray-750/30 border-gray-200 dark:border-gray-700 opacity-60 text-gray-600'
+                          btnStyle +=
+                            'bg-gray-50 dark:bg-gray-750/30 border-gray-200 dark:border-gray-700 opacity-60 text-gray-600'
                         }
                       } else {
                         btnStyle +=
@@ -1702,16 +1864,20 @@ export function Toeic7PartsArena() {
                                 userAns !== undefined && isCorrect
                                   ? 'bg-emerald-600 text-white border-emerald-600'
                                   : userAns !== undefined && isChosen
-                                  ? 'bg-rose-600 text-white border-rose-600'
-                                  : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600'
+                                    ? 'bg-rose-600 text-white border-rose-600'
+                                    : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600'
                               }`}
                             >
                               {label}
                             </span>
                             <span>{opt}</span>
                           </div>
-                          {userAns !== undefined && isCorrect && <CheckCircle2 size={20} className='text-emerald-500' />}
-                          {userAns !== undefined && isChosen && !isCorrect && <XCircle size={20} className='text-rose-500' />}
+                          {userAns !== undefined && isCorrect && (
+                            <CheckCircle2 size={20} className='text-emerald-500' />
+                          )}
+                          {userAns !== undefined && isChosen && !isCorrect && (
+                            <XCircle size={20} className='text-rose-500' />
+                          )}
                         </button>
                       )
                     })}
@@ -1722,7 +1888,8 @@ export function Toeic7PartsArena() {
                     <div className='bg-gradient-to-br from-indigo-50/90 to-purple-50/90 dark:from-indigo-950/40 dark:to-purple-950/40 rounded-2xl p-5 border border-indigo-200 dark:border-indigo-800/50 space-y-3 mb-6'>
                       <div className='flex items-center justify-between'>
                         <h4 className='font-bold text-sm text-indigo-900 dark:text-indigo-200 flex items-center gap-2'>
-                          <Lightbulb size={16} className='text-amber-500' /> Phân Tích & Lời Giải Chi Tiết Study4
+                          <Lightbulb size={16} className='text-amber-500' /> Phân Tích & Lời Giải
+                          Chi Tiết Study4
                         </h4>
                         <span className='text-xs font-bold text-emerald-600 bg-emerald-100 dark:bg-emerald-900/60 px-2.5 py-1 rounded-lg'>
                           Đáp án đúng: {String.fromCharCode(65 + currentPracticeQ.correctAnswer)}
@@ -1731,14 +1898,18 @@ export function Toeic7PartsArena() {
 
                       {currentPracticeQ.translation && (
                         <div className='text-xs text-gray-700 dark:text-gray-300 leading-relaxed'>
-                          <strong className='text-indigo-700 dark:text-indigo-300'>Dịch nghĩa: </strong>
+                          <strong className='text-indigo-700 dark:text-indigo-300'>
+                            Dịch nghĩa:{' '}
+                          </strong>
                           {currentPracticeQ.translation}
                         </div>
                       )}
 
                       {currentPracticeQ.detailedExplanation && (
                         <div className='text-xs text-gray-700 dark:text-gray-300 leading-relaxed'>
-                          <strong className='text-indigo-700 dark:text-indigo-300'>Phân tích ngữ pháp: </strong>
+                          <strong className='text-indigo-700 dark:text-indigo-300'>
+                            Phân tích ngữ pháp:{' '}
+                          </strong>
                           {currentPracticeQ.detailedExplanation}
                         </div>
                       )}
@@ -1773,7 +1944,9 @@ export function Toeic7PartsArena() {
                       variant='primary'
                       disabled={practiceIndex === filteredPracticeQuestions.length - 1}
                       onClick={() => {
-                        setPracticeIndex((prev) => Math.min(filteredPracticeQuestions.length - 1, prev + 1))
+                        setPracticeIndex((prev) =>
+                          Math.min(filteredPracticeQuestions.length - 1, prev + 1),
+                        )
                         setPracticeShowExplanation(false)
                       }}
                       className='text-xs py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white min-h-[40px]'

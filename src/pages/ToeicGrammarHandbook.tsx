@@ -24,7 +24,7 @@ import {
   Split,
   Zap,
   BookCheck,
-  ArrowRight
+  ArrowRight,
 } from 'lucide-react'
 import { Button } from '@/components/common/Button'
 import rawGrammarData from '@/data/extractedGrammarEncyclopedia.json'
@@ -34,11 +34,11 @@ import {
   COMPARISON_MATRICES,
   GRAMMAR_EXAM_TRAPS,
   ComparisonMatrixItem,
-  GrammarExamTrap
+  GrammarExamTrap,
 } from '@/data/grammarTrapsAndComparisons'
 import {
   CHAPTER_PEDAGOGICAL_EXERCISES,
-  PedagogicalQuestion
+  PedagogicalQuestion,
 } from '@/data/chapterPedagogicalExercises'
 
 // Web Speech helper
@@ -70,16 +70,18 @@ interface GrammarChapter {
   notes?: string
 }
 
-const CHAPTERS = (rawGrammarData as unknown) as GrammarChapter[]
+const CHAPTERS = rawGrammarData as unknown as GrammarChapter[]
 
 export function ToeicGrammarHandbook() {
   const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
   const [activeChapterId, setActiveChapterId] = useState<string>(CHAPTERS[0]?.id || 'tenses')
-  
+
   // Navigation Tabs: Theory, Formulas, Traps & Comparisons, Irregular Verbs, Deep Practice
-  const [activeTab, setActiveTab] = useState<'theory' | 'formulas' | 'traps' | 'irregular' | 'practice'>('theory')
+  const [activeTab, setActiveTab] = useState<
+    'theory' | 'formulas' | 'traps' | 'irregular' | 'practice'
+  >('theory')
 
   // Interactive practice state for the active chapter
   const [currentPracticeIdx, setCurrentPracticeIdx] = useState<number>(0)
@@ -156,7 +158,7 @@ export function ToeicGrammarHandbook() {
           exampleEn: 'Mr. Smith finalized the strategic partnership contract.',
           exampleVi: 'Ông Smith đã hoàn tất hợp đồng đối tác chiến lược.',
           signals: ['crucial', 'exam priority'],
-          tip: 'Xác định thành phần trước và sau chỗ trống để chọn dạng ngữ pháp chính xác.'
+          tip: 'Xác định thành phần trước và sau chỗ trống để chọn dạng ngữ pháp chính xác.',
         })
       })
     }
@@ -168,10 +170,15 @@ export function ToeicGrammarHandbook() {
   const matchingComparisons = useMemo(() => {
     return COMPARISON_MATRICES.filter((m) => {
       if (activeChapter.id === 'tenses' && m.category === 'Tenses') return true
-      if ((activeChapter.id === 'conjunctions' || activeChapter.id === 'prepositions') && m.category === 'Conjunctions & Prepositions') return true
+      if (
+        (activeChapter.id === 'conjunctions' || activeChapter.id === 'prepositions') &&
+        m.category === 'Conjunctions & Prepositions'
+      )
+        return true
       if (activeChapter.id === 'participles' && m.category === 'Participles') return true
       if (activeChapter.id === 'subjunctive_wish' && m.category === 'Subjunctive Mood') return true
-      if (activeChapter.id === 'pronouns_quantifiers' && m.category === 'Pronouns & Determiners') return true
+      if (activeChapter.id === 'pronouns_quantifiers' && m.category === 'Pronouns & Determiners')
+        return true
       return false
     })
   }, [activeChapter.id])
@@ -187,7 +194,7 @@ export function ToeicGrammarHandbook() {
     if (CHAPTER_PEDAGOGICAL_EXERCISES[activeChapter.id]?.length > 0) {
       return CHAPTER_PEDAGOGICAL_EXERCISES[activeChapter.id]
     }
-    
+
     // 2. Try linked curriculum days exercises
     const fromCurriculum: PedagogicalQuestion[] = []
     linkedDays.forEach((d) => {
@@ -202,7 +209,8 @@ export function ToeicGrammarHandbook() {
             translation: ex.translation,
             detailedExplanation: ex.detailedExplanation,
             distractorAnalysis: `Phương án đúng thỏa mãn quy tắc cấu trúc ngữ pháp và trật tự từ của chuyên đề ${activeChapter.nameVi}. Các phương án khác vi phạm sự hòa hợp về thì hoặc dạng từ.`,
-            examTrap: ex.examTrap || 'Đọc kỹ các dấu hiệu thời gian và liên từ trước khi chọn đáp án.'
+            examTrap:
+              ex.examTrap || 'Đọc kỹ các dấu hiệu thời gian và liên từ trước khi chọn đáp án.',
           })
         })
       }
@@ -218,16 +226,21 @@ export function ToeicGrammarHandbook() {
         options: ['evaluated', 'evaluating', 'evaluation', 'evaluate'],
         correctAnswer: 0,
         difficulty: 'A1-A2 Foundation',
-        translation: 'Hội đồng khu vực đã đánh giá cẩn thận tất cả các đề xuất được nộp bởi các giám sát viên phòng ban.',
-        detailedExplanation: 'Câu có chủ ngữ là "The regional committee" và trạng từ "carefully". Chỗ trống cần một động từ chính chia thì (finite verb) ở quá khứ đơn ("evaluated") phù hợp với hành động đã nộp ("submitted").',
-        distractorAnalysis: 'A đúng vì là động từ chia thì quá khứ đơn. B sai vì evaluating là dạng V-ing không làm vị ngữ chính khi thiếu to be. C sai vì evaluation là danh từ. D sai vì evaluate là động từ nguyên mẫu không hợp chủ ngữ số ít ở quá khứ.',
-        examTrap: 'Bẫy thiếu động từ chính trong câu: Nhận diện rõ vị trí vị ngữ sau trạng từ đuôi -ly.'
-      }
+        translation:
+          'Hội đồng khu vực đã đánh giá cẩn thận tất cả các đề xuất được nộp bởi các giám sát viên phòng ban.',
+        detailedExplanation:
+          'Câu có chủ ngữ là "The regional committee" và trạng từ "carefully". Chỗ trống cần một động từ chính chia thì (finite verb) ở quá khứ đơn ("evaluated") phù hợp với hành động đã nộp ("submitted").',
+        distractorAnalysis:
+          'A đúng vì là động từ chia thì quá khứ đơn. B sai vì evaluating là dạng V-ing không làm vị ngữ chính khi thiếu to be. C sai vì evaluation là danh từ. D sai vì evaluate là động từ nguyên mẫu không hợp chủ ngữ số ít ở quá khứ.',
+        examTrap:
+          'Bẫy thiếu động từ chính trong câu: Nhận diện rõ vị trí vị ngữ sau trạng từ đuôi -ly.',
+      },
     ]
   }, [activeChapter.id, linkedDays, activeChapter.nameVi])
 
   const currentQ = activeQuestions[currentPracticeIdx] || activeQuestions[0]
-  const currentAnswer = practiceAnswers[currentPracticeIdx] !== undefined ? practiceAnswers[currentPracticeIdx] : null
+  const currentAnswer =
+    practiceAnswers[currentPracticeIdx] !== undefined ? practiceAnswers[currentPracticeIdx] : null
 
   const handleSelectOption = (optIdx: number) => {
     setPracticeAnswers((prev) => ({ ...prev, [currentPracticeIdx]: optIdx }))
@@ -265,7 +278,8 @@ export function ToeicGrammarHandbook() {
             Bách Khoa Tra Cứu Ngữ Pháp TOEIC
           </h1>
           <p className='text-teal-100 text-sm sm:text-base leading-relaxed mb-4'>
-            Hệ thống hóa toàn diện 21 chuyên đề, phân tích cấu trúc S-V-O chuyên sâu, giải mã bẫy đề thi ETS và tra cứu tức thì từ điển 360 động từ bất quy tắc.
+            Hệ thống hóa toàn diện 21 chuyên đề, phân tích cấu trúc S-V-O chuyên sâu, giải mã bẫy đề
+            thi ETS và tra cứu tức thì từ điển 360 động từ bất quy tắc.
           </p>
 
           {/* Quick Metrics Bar */}
@@ -355,7 +369,9 @@ export function ToeicGrammarHandbook() {
                     </div>
                     <div className='truncate'>
                       <div className='text-sm font-semibold truncate'>{chap.nameVi}</div>
-                      <div className='text-xs text-gray-400 dark:text-gray-500 truncate'>{chap.nameEn}</div>
+                      <div className='text-xs text-gray-400 dark:text-gray-500 truncate'>
+                        {chap.nameEn}
+                      </div>
                     </div>
                   </div>
 
@@ -363,7 +379,10 @@ export function ToeicGrammarHandbook() {
                     <span className='px-2 py-0.5 rounded-full text-[11px] font-medium bg-teal-100 dark:bg-teal-900/60 text-teal-700 dark:text-teal-300'>
                       {qCount} bài tập
                     </span>
-                    <ChevronRight size={14} className={isActive ? 'text-teal-600' : 'text-gray-400'} />
+                    <ChevronRight
+                      size={14}
+                      className={isActive ? 'text-teal-600' : 'text-gray-400'}
+                    />
                   </div>
                 </button>
               )
@@ -388,7 +407,10 @@ export function ToeicGrammarHandbook() {
                 </div>
               </div>
             </div>
-            <ArrowRight size={16} className='text-amber-600 group-hover:translate-x-1 transition-transform' />
+            <ArrowRight
+              size={16}
+              className='text-amber-600 group-hover:translate-x-1 transition-transform'
+            />
           </button>
         </div>
 
@@ -413,7 +435,9 @@ export function ToeicGrammarHandbook() {
 
               {/* 1-Click Practice in 7-Parts Arena */}
               <Button
-                onClick={() => navigate(`/toeic-7parts?topic=${encodeURIComponent(activeChapter.nameVi)}`)}
+                onClick={() =>
+                  navigate(`/toeic-7parts?topic=${encodeURIComponent(activeChapter.nameVi)}`)
+                }
                 variant='primary'
                 className='bg-teal-600 hover:bg-teal-700 text-white text-xs sm:text-sm py-2 px-4 shadow-md shadow-teal-600/20'
               >
@@ -421,7 +445,9 @@ export function ToeicGrammarHandbook() {
               </Button>
             </div>
 
-            <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-1'>{activeChapter.nameVi}</h2>
+            <h2 className='text-2xl font-extrabold text-gray-900 dark:text-white mb-1'>
+              {activeChapter.nameVi}
+            </h2>
             <p className='text-sm text-gray-500 dark:text-gray-400 mb-4'>{activeChapter.nameEn}</p>
             <div className='text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed bg-teal-50/60 dark:bg-teal-950/30 p-4 rounded-xl border border-teal-100 dark:border-teal-900/40 flex items-start gap-3'>
               <BookOpen className='text-teal-600 shrink-0 mt-0.5' size={20} />
@@ -449,7 +475,8 @@ export function ToeicGrammarHandbook() {
                     : 'text-gray-500 hover:text-gray-800 dark:text-gray-400'
                 }`}
               >
-                <Code2 size={16} className='inline mr-1.5' /> Công Thức Vàng ({structuredFormulas.length})
+                <Code2 size={16} className='inline mr-1.5' /> Công Thức Vàng (
+                {structuredFormulas.length})
               </button>
 
               <button
@@ -460,7 +487,8 @@ export function ToeicGrammarHandbook() {
                     : 'text-gray-500 hover:text-gray-800 dark:text-gray-400'
                 }`}
               >
-                <AlertTriangle size={16} className='inline mr-1.5 text-rose-500' /> Bẫy Đề Thi & So Sánh
+                <AlertTriangle size={16} className='inline mr-1.5 text-rose-500' /> Bẫy Đề Thi & So
+                Sánh
               </button>
 
               <button
@@ -482,7 +510,8 @@ export function ToeicGrammarHandbook() {
                     : 'text-gray-500 hover:text-gray-800 dark:text-gray-400'
                 }`}
               >
-                <BookCheck size={16} className='inline mr-1.5' /> Luyện Tập Sư Phạm ({activeQuestions.length})
+                <BookCheck size={16} className='inline mr-1.5' /> Luyện Tập Sư Phạm (
+                {activeQuestions.length})
               </button>
             </div>
           </div>
@@ -494,12 +523,13 @@ export function ToeicGrammarHandbook() {
               {activeChapter.examples && activeChapter.examples.length > 0 && (
                 <div>
                   <h3 className='text-base font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2'>
-                    <Sparkles className='text-amber-500' size={18} /> Ví dụ minh họa thực chiến (Chuẩn ngữ cảnh doanh nghiệp)
+                    <Sparkles className='text-amber-500' size={18} /> Ví dụ minh họa thực chiến
+                    (Chuẩn ngữ cảnh doanh nghiệp)
                   </h3>
                   <div className='grid grid-cols-1 gap-3'>
                     {activeChapter.examples.map((ex, i) => {
-                      const textEn = typeof ex === 'string' ? ex : (ex.en || '')
-                      const textVi = typeof ex === 'string' ? '' : (ex.vi || '')
+                      const textEn = typeof ex === 'string' ? ex : ex.en || ''
+                      const textVi = typeof ex === 'string' ? '' : ex.vi || ''
                       return (
                         <div
                           key={i}
@@ -539,10 +569,22 @@ export function ToeicGrammarHandbook() {
                     <Lightbulb size={18} /> Nguyên tắc nền tảng cần nhớ:
                   </div>
                   <ul className='list-disc pl-5 space-y-2 text-sm'>
-                    <li>Xác định thành phần trước và sau vị trí cần điền: kiểm tra chủ ngữ số ít hay số nhiều, động từ chính hay mệnh đề phụ.</li>
-                    <li>Rà soát các từ dấu hiệu thời gian (signal markers), liên từ nhượng bộ hoặc nguyên nhân để tránh chọn nhầm thì.</li>
-                    <li>Xét tính chủ động (chủ ngữ tự gây ra hành động) hay bị động (chủ ngữ chịu tác động) trước khi chọn dạng V-ing hoặc V-ed/V3.</li>
-                    <li>Áp dụng bảng đối chiếu bẫy đề thi ở tab <strong>Bẫy Đề Thi & So Sánh</strong> để loại trừ các phương án gây nhiễu kinh điển của ETS.</li>
+                    <li>
+                      Xác định thành phần trước và sau vị trí cần điền: kiểm tra chủ ngữ số ít hay
+                      số nhiều, động từ chính hay mệnh đề phụ.
+                    </li>
+                    <li>
+                      Rà soát các từ dấu hiệu thời gian (signal markers), liên từ nhượng bộ hoặc
+                      nguyên nhân để tránh chọn nhầm thì.
+                    </li>
+                    <li>
+                      Xét tính chủ động (chủ ngữ tự gây ra hành động) hay bị động (chủ ngữ chịu tác
+                      động) trước khi chọn dạng V-ing hoặc V-ed/V3.
+                    </li>
+                    <li>
+                      Áp dụng bảng đối chiếu bẫy đề thi ở tab <strong>Bẫy Đề Thi & So Sánh</strong>{' '}
+                      để loại trừ các phương án gây nhiễu kinh điển của ETS.
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -554,11 +596,10 @@ export function ToeicGrammarHandbook() {
             <div className='bg-white dark:bg-gray-800/90 rounded-2xl p-6 border border-gray-200 dark:border-gray-700/60 shadow-sm space-y-4'>
               <div className='flex items-center justify-between mb-2'>
                 <h3 className='text-base font-bold text-gray-900 dark:text-white flex items-center gap-2'>
-                  <Code2 className='text-teal-500' size={18} /> Danh sách công thức vàng & Dấu hiệu nhận biết
+                  <Code2 className='text-teal-500' size={18} /> Danh sách công thức vàng & Dấu hiệu
+                  nhận biết
                 </h3>
-                <span className='text-xs text-gray-400'>
-                  Nhấn biểu tượng chép để lưu công thức
-                </span>
+                <span className='text-xs text-gray-400'>Nhấn biểu tượng chép để lưu công thức</span>
               </div>
 
               <div className='space-y-4'>
@@ -588,7 +629,9 @@ export function ToeicGrammarHandbook() {
                           {isCopied ? (
                             <>
                               <Check size={16} className='text-emerald-500' />
-                              <span className='text-emerald-600 text-xs font-semibold'>Đã chép</span>
+                              <span className='text-emerald-600 text-xs font-semibold'>
+                                Đã chép
+                              </span>
                             </>
                           ) : (
                             <Copy size={16} />
@@ -663,7 +706,8 @@ export function ToeicGrammarHandbook() {
               {matchingComparisons.length > 0 && (
                 <div className='space-y-4'>
                   <h3 className='text-base font-bold text-gray-900 dark:text-white flex items-center gap-2'>
-                    <Split className='text-teal-600' size={18} /> Bảng đối chiếu các cặp phạm trù dễ nhầm lẫn
+                    <Split className='text-teal-600' size={18} /> Bảng đối chiếu các cặp phạm trù dễ
+                    nhầm lẫn
                   </h3>
 
                   {matchingComparisons.map((cmp: ComparisonMatrixItem) => (
@@ -733,7 +777,8 @@ export function ToeicGrammarHandbook() {
               {/* 2. Topic Specific Traps */}
               <div className='space-y-4'>
                 <h3 className='text-base font-bold text-gray-900 dark:text-white flex items-center gap-2'>
-                  <AlertTriangle className='text-rose-500' size={18} /> Các bẫy đề thi xuất hiện nhiều nhất (Tần suất $\ge$ 75%)
+                  <AlertTriangle className='text-rose-500' size={18} /> Các bẫy đề thi xuất hiện
+                  nhiều nhất (Tần suất $\ge$ 75%)
                 </h3>
 
                 {matchingTraps.length > 0 ? (
@@ -771,7 +816,8 @@ export function ToeicGrammarHandbook() {
                   </div>
                 ) : (
                   <div className='p-8 text-center text-gray-400 bg-gray-50 dark:bg-gray-900/30 rounded-2xl border border-gray-200 dark:border-gray-800'>
-                    Chuyên đề này chú trọng vào tư duy từ loại và ngữ nghĩa câu. Hãy xem tab Công Thức Vàng và Luyện Tập Sư Phạm.
+                    Chuyên đề này chú trọng vào tư duy từ loại và ngữ nghĩa câu. Hãy xem tab Công
+                    Thức Vàng và Luyện Tập Sư Phạm.
                   </div>
                 )}
               </div>
@@ -784,10 +830,12 @@ export function ToeicGrammarHandbook() {
               <div className='flex flex-wrap items-center justify-between gap-3'>
                 <div>
                   <h3 className='text-base font-bold text-gray-900 dark:text-white flex items-center gap-2'>
-                    <Zap className='text-amber-500' size={18} /> Từ Điển 360 Động Từ Bất Quy Tắc (Irregular Verbs)
+                    <Zap className='text-amber-500' size={18} /> Từ Điển 360 Động Từ Bất Quy Tắc
+                    (Irregular Verbs)
                   </h3>
                   <p className='text-xs text-gray-500 dark:text-gray-400'>
-                    Hỗ trợ tìm kiếm tức thì theo V1, V2, V3 hoặc nghĩa tiếng Việt kèm phát âm chuẩn Web Speech.
+                    Hỗ trợ tìm kiếm tức thì theo V1, V2, V3 hoặc nghĩa tiếng Việt kèm phát âm chuẩn
+                    Web Speech.
                   </p>
                 </div>
 
@@ -849,9 +897,7 @@ export function ToeicGrammarHandbook() {
                           <td className='p-3 font-semibold text-gray-800 dark:text-gray-200'>
                             {item.v3}
                           </td>
-                          <td className='p-3 text-gray-600 dark:text-gray-300'>
-                            {item.meaning}
-                          </td>
+                          <td className='p-3 text-gray-600 dark:text-gray-300'>{item.meaning}</td>
                           <td className='p-3 text-right space-x-1 whitespace-nowrap'>
                             <button
                               onClick={() => speak(`${item.v1}, ${item.v2}, ${item.v3}`)}
@@ -861,11 +907,20 @@ export function ToeicGrammarHandbook() {
                               <Volume2 size={16} />
                             </button>
                             <button
-                              onClick={() => handleCopy(`${item.v1} - ${item.v2} - ${item.v3} (${item.meaning})`, `verb-${idx}`)}
+                              onClick={() =>
+                                handleCopy(
+                                  `${item.v1} - ${item.v2} - ${item.v3} (${item.meaning})`,
+                                  `verb-${idx}`,
+                                )
+                              }
                               className='p-1.5 rounded-lg text-gray-400 hover:text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-950'
                               title='Sao chép'
                             >
-                              {isCopied ? <Check size={16} className='text-emerald-500' /> : <Copy size={16} />}
+                              {isCopied ? (
+                                <Check size={16} className='text-emerald-500' />
+                              ) : (
+                                <Copy size={16} />
+                              )}
                             </button>
                           </td>
                         </tr>

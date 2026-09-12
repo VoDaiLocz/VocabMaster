@@ -14,7 +14,7 @@ import {
   Award,
   Layers,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
 } from 'lucide-react'
 import { Button } from '@/components/common/Button'
 import raw1500Vocab from '@/data/toeic_1500_vocabulary.json'
@@ -116,11 +116,19 @@ export function ToeicVocabArena() {
   const [quizScore, setQuizScore] = useState(0)
   const [quizUserChoice, setQuizUserChoice] = useState<number | null>(null)
   const [quizCompleted, setQuizCompleted] = useState(false)
+  const [quizQuestions, setQuizQuestions] = useState<
+    Array<{
+      target: (typeof RAW_LIST)[0]
+      options: string[]
+      correctIdx: number
+    }>
+  >([])
 
-  // 10 random quiz questions
-  const quizQuestions = useMemo(() => {
+  // 10 random quiz questions generated when entering quiz tab or changing filteredWords
+  useEffect(() => {
+    if (activeTab !== 'quiz') return
     const list = [...filteredWords].sort(() => 0.5 - Math.random()).slice(0, 10)
-    return list.map((target) => {
+    const questions = list.map((target) => {
       const wrongOpts = RAW_LIST.filter((x) => x.word !== target.word)
         .sort(() => 0.5 - Math.random())
         .slice(0, 3)
@@ -134,7 +142,8 @@ export function ToeicVocabArena() {
         correctIdx: allOpts.indexOf(correctOpt),
       }
     })
-  }, [filteredWords, activeTab === 'quiz'])
+    setQuizQuestions(questions)
+  }, [activeTab, filteredWords])
 
   const handleNextCard = () => {
     setIsFlipped(false)
@@ -164,7 +173,8 @@ export function ToeicVocabArena() {
             Từ Vựng TOEIC 7 Part & Doanh Nghiệp
           </h1>
           <p className='text-purple-100 text-sm sm:text-base leading-relaxed'>
-            Làm chủ hơn 3.000 từ vựng cốt lõi với phiên âm IPA, giải nghĩa tiếng Việt, câu ví dụ công sở và thẻ ghi nhớ 3D Flashcard Spaced Repetition.
+            Làm chủ hơn 3.000 từ vựng cốt lõi với phiên âm IPA, giải nghĩa tiếng Việt, câu ví dụ
+            công sở và thẻ ghi nhớ 3D Flashcard Spaced Repetition.
           </p>
         </div>
         <div className='absolute -right-6 -bottom-8 opacity-15 pointer-events-none'>
@@ -335,7 +345,9 @@ export function ToeicVocabArena() {
             ) : (
               <div className='my-auto py-4 space-y-4 animate-in fade-in zoom-in-95 duration-150'>
                 <div>
-                  <h3 className='text-xs uppercase font-bold text-gray-400 tracking-wider mb-1'>Nghĩa tiếng Việt</h3>
+                  <h3 className='text-xs uppercase font-bold text-gray-400 tracking-wider mb-1'>
+                    Nghĩa tiếng Việt
+                  </h3>
                   <div className='text-xl sm:text-2xl font-bold text-gray-900 dark:text-white leading-snug'>
                     {currentWord.meaning}
                   </div>
@@ -419,16 +431,27 @@ export function ToeicVocabArena() {
 
                     <div>
                       <div className='flex items-center gap-2.5 mb-1'>
-                        <span className='text-lg font-bold text-gray-900 dark:text-white'>{item.word}</span>
-                        {item.pos && <span className='text-xs font-semibold text-gray-400'>{item.pos}</span>}
+                        <span className='text-lg font-bold text-gray-900 dark:text-white'>
+                          {item.word}
+                        </span>
+                        {item.pos && (
+                          <span className='text-xs font-semibold text-gray-400'>{item.pos}</span>
+                        )}
                         {item.ipa && (
-                          <span className='font-mono text-xs text-purple-600 dark:text-purple-400'>{item.ipa}</span>
+                          <span className='font-mono text-xs text-purple-600 dark:text-purple-400'>
+                            {item.ipa}
+                          </span>
                         )}
                       </div>
-                      <p className='text-sm text-gray-700 dark:text-gray-300 font-medium mb-1.5'>{item.meaning}</p>
+                      <p className='text-sm text-gray-700 dark:text-gray-300 font-medium mb-1.5'>
+                        {item.meaning}
+                      </p>
                       {item.exampleEn && (
                         <p className='text-xs text-gray-500 dark:text-gray-400 leading-relaxed'>
-                          <strong className='text-gray-700 dark:text-gray-300 font-semibold'>VD:</strong> {item.exampleEn}
+                          <strong className='text-gray-700 dark:text-gray-300 font-semibold'>
+                            VD:
+                          </strong>{' '}
+                          {item.exampleEn}
                         </p>
                       )}
                     </div>
@@ -474,7 +497,9 @@ export function ToeicVocabArena() {
                 <h3 className='text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-white mt-2 mb-1'>
                   {quizQuestions[quizIdx]?.target.word}
                 </h3>
-                <p className='font-mono text-sm text-gray-400'>{quizQuestions[quizIdx]?.target.ipa}</p>
+                <p className='font-mono text-sm text-gray-400'>
+                  {quizQuestions[quizIdx]?.target.ipa}
+                </p>
               </div>
 
               {/* 4 Choices */}
@@ -545,9 +570,12 @@ export function ToeicVocabArena() {
           ) : (
             <div className='bg-white dark:bg-gray-800/90 rounded-3xl p-8 border border-gray-200 dark:border-gray-700 shadow-xl text-center space-y-4'>
               <Award size={56} className='text-amber-500 mx-auto' />
-              <h3 className='text-2xl font-extrabold text-gray-900 dark:text-white'>Hoàn thành bài Quiz!</h3>
+              <h3 className='text-2xl font-extrabold text-gray-900 dark:text-white'>
+                Hoàn thành bài Quiz!
+              </h3>
               <p className='text-gray-600 dark:text-gray-300'>
-                Bạn đã trả lời đúng <strong className='text-purple-600 font-bold'>{quizScore}</strong> /{' '}
+                Bạn đã trả lời đúng{' '}
+                <strong className='text-purple-600 font-bold'>{quizScore}</strong> /{' '}
                 {quizQuestions.length} từ vựng.
               </p>
               <Button

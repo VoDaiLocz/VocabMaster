@@ -13,7 +13,7 @@ import {
   Lightbulb,
   HelpCircle,
   Flame,
-  ArrowRight
+  ArrowRight,
 } from 'lucide-react'
 import { Button } from '@/components/common/Button'
 import rawTacticsData from '@/data/toeic_exam_tactics.json'
@@ -41,13 +41,41 @@ interface ExamTactic {
 const ALL_TACTICS = rawTacticsData as ExamTactic[]
 
 const PART_NAMES: Record<number, { title: string; subtitle: string; color: string }> = {
-  1: { title: 'Part 1: Mô tả tranh', subtitle: 'Photographs (8 Kỹ xảo)', color: 'from-amber-500 to-orange-600' },
-  2: { title: 'Part 2: Hỏi & Đáp', subtitle: 'Question-Response (7 Kỹ xảo)', color: 'from-blue-500 to-indigo-600' },
-  3: { title: 'Part 3: Đoạn hội thoại', subtitle: 'Conversations (10 Kỹ xảo)', color: 'from-purple-500 to-violet-600' },
-  4: { title: 'Part 4: Bài nói ngắn', subtitle: 'Short Talks (10 Kỹ xảo)', color: 'from-pink-500 to-rose-600' },
-  5: { title: 'Part 5: Hoàn thành câu', subtitle: 'Incomplete Sentences (10 Kỹ xảo)', color: 'from-emerald-500 to-teal-600' },
-  6: { title: 'Part 6: Điền đoạn văn', subtitle: 'Text Completion (7 Kỹ xảo)', color: 'from-cyan-500 to-blue-600' },
-  7: { title: 'Part 7: Đọc hiểu', subtitle: 'Reading Comprehension (8 Kỹ xảo)', color: 'from-violet-500 to-fuchsia-600' },
+  1: {
+    title: 'Part 1: Mô tả tranh',
+    subtitle: 'Photographs (8 Kỹ xảo)',
+    color: 'from-amber-500 to-orange-600',
+  },
+  2: {
+    title: 'Part 2: Hỏi & Đáp',
+    subtitle: 'Question-Response (7 Kỹ xảo)',
+    color: 'from-blue-500 to-indigo-600',
+  },
+  3: {
+    title: 'Part 3: Đoạn hội thoại',
+    subtitle: 'Conversations (10 Kỹ xảo)',
+    color: 'from-purple-500 to-violet-600',
+  },
+  4: {
+    title: 'Part 4: Bài nói ngắn',
+    subtitle: 'Short Talks (10 Kỹ xảo)',
+    color: 'from-pink-500 to-rose-600',
+  },
+  5: {
+    title: 'Part 5: Hoàn thành câu',
+    subtitle: 'Incomplete Sentences (10 Kỹ xảo)',
+    color: 'from-emerald-500 to-teal-600',
+  },
+  6: {
+    title: 'Part 6: Điền đoạn văn',
+    subtitle: 'Text Completion (7 Kỹ xảo)',
+    color: 'from-cyan-500 to-blue-600',
+  },
+  7: {
+    title: 'Part 7: Đọc hiểu',
+    subtitle: 'Reading Comprehension (8 Kỹ xảo)',
+    color: 'from-violet-500 to-fuchsia-600',
+  },
 }
 
 export function ToeicTacticsMaster() {
@@ -120,7 +148,8 @@ export function ToeicTacticsMaster() {
             60 Kỹ Xảo & Bẫy Đề Thi TOEIC Part 1 - Part 7
           </h1>
           <p className='text-amber-100 text-sm sm:text-base leading-relaxed'>
-            Tổng hợp 60 thủ thuật nhận diện bẫy đề thi trong 3 giây, công thức chọn nhanh phương án đúng và mẹo né bẫy phổ biến của các giám khảo ETS.
+            Tổng hợp 60 thủ thuật nhận diện bẫy đề thi trong 3 giây, công thức chọn nhanh phương án
+            đúng và mẹo né bẫy phổ biến của các giám khảo ETS.
           </p>
         </div>
         <div className='absolute -right-6 -bottom-10 opacity-15 pointer-events-none'>
@@ -185,7 +214,9 @@ export function ToeicTacticsMaster() {
                 }`}
               >
                 <span>Part {partNum}</span>
-                <span className={`px-1.5 py-0.2 rounded-full text-[10px] ${isSelected ? 'bg-white/20 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-500'}`}>
+                <span
+                  className={`px-1.5 py-0.2 rounded-full text-[10px] ${isSelected ? 'bg-white/20 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-500'}`}
+                >
                   {count}
                 </span>
               </button>
@@ -198,7 +229,9 @@ export function ToeicTacticsMaster() {
       {filteredTactics.length === 0 ? (
         <div className='bg-white dark:bg-gray-800/80 rounded-2xl p-12 text-center border border-gray-200 dark:border-gray-700'>
           <HelpCircle size={48} className='mx-auto text-gray-400 mb-3' />
-          <h3 className='text-lg font-bold text-gray-800 dark:text-gray-200'>Không tìm thấy kỹ xảo phù hợp</h3>
+          <h3 className='text-lg font-bold text-gray-800 dark:text-gray-200'>
+            Không tìm thấy kỹ xảo phù hợp
+          </h3>
           <p className='text-sm text-gray-500 mt-1'>Thử đổi từ khóa hoặc bộ lọc Part khác.</p>
         </div>
       ) : (
@@ -278,7 +311,9 @@ export function ToeicTacticsMaster() {
 
                 {/* Bottom Action: Practice Part questions */}
                 <div className='pt-4 border-t border-gray-100 dark:border-gray-700/60 flex items-center justify-between'>
-                  <span className='text-xs text-gray-500 dark:text-gray-400'>{partInfo.subtitle}</span>
+                  <span className='text-xs text-gray-500 dark:text-gray-400'>
+                    {partInfo.subtitle}
+                  </span>
                   <Button
                     onClick={() => navigate(`/toeic-7parts?part=${tactic.part}`)}
                     variant='outline'

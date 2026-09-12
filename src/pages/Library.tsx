@@ -5,7 +5,16 @@
 
 import { useState, useCallback, useMemo, memo } from 'react'
 import { Link } from 'react-router-dom'
-import { Download, Check, Loader2, Upload, ExternalLink, Search, FolderOpen, Sparkles } from 'lucide-react'
+import {
+  Download,
+  Check,
+  Loader2,
+  Upload,
+  ExternalLink,
+  Search,
+  FolderOpen,
+  Sparkles,
+} from 'lucide-react'
 import { Button } from '@/components/common/Button'
 import { useDeckStore } from '@/store/deckStore'
 import { getAllVocabularyDecks, getTotalWordCount, VocabDeck } from '@/data'
@@ -34,7 +43,9 @@ export function Library() {
   const [imported, setImported] = useState<Record<string, number>>({})
   const [error, setError] = useState('')
   const [filter, setFilter] = useState<FilterType>('ALL')
-  const [importProgress, setImportProgress] = useState<{ current: number; total: number } | null>(null)
+  const [importProgress, setImportProgress] = useState<{ current: number; total: number } | null>(
+    null,
+  )
 
   const decks = getAllVocabularyDecks()
   const totalWords = getTotalWordCount()
@@ -91,7 +102,7 @@ export function Library() {
         category: 'ets',
         categoryLabel: 'Đề Thi ETS',
         badgeColor: 'bg-indigo-600',
-        driveUrl: s.driveUrl
+        driveUrl: s.driveUrl,
       })
     })
 
@@ -103,7 +114,7 @@ export function Library() {
         category: 'toeic',
         categoryLabel: 'Sách & Đề TOEIC',
         badgeColor: 'bg-blue-600',
-        driveUrl: d.driveUrl
+        driveUrl: d.driveUrl,
       })
     })
 
@@ -114,15 +125,33 @@ export function Library() {
       let label = 'Tiếng Anh Căn Bản'
       let color = 'bg-emerald-600'
 
-      if (lower.includes('chuyên ngành') || lower.includes('y') || lower.includes('cntt') || lower.includes('khách sạn') || lower.includes('du lịch') || lower.includes('xây dựng') || lower.includes('cơ khí')) {
+      if (
+        lower.includes('chuyên ngành') ||
+        lower.includes('y') ||
+        lower.includes('cntt') ||
+        lower.includes('khách sạn') ||
+        lower.includes('du lịch') ||
+        lower.includes('xây dựng') ||
+        lower.includes('cơ khí')
+      ) {
         cat = 'specialized'
         label = 'Tiếng Anh Chuyên Ngành'
         color = 'bg-amber-600'
-      } else if (lower.includes('ipa') || lower.includes('phát âm') || lower.includes('pronunciation')) {
+      } else if (
+        lower.includes('ipa') ||
+        lower.includes('phát âm') ||
+        lower.includes('pronunciation')
+      ) {
         cat = 'ipa'
         label = 'Phát Âm & 44 Video IPA'
         color = 'bg-purple-600'
-      } else if (lower.includes('b1') || lower.includes('b2') || lower.includes('c1') || lower.includes('vstep') || lower.includes('thpt')) {
+      } else if (
+        lower.includes('b1') ||
+        lower.includes('b2') ||
+        lower.includes('c1') ||
+        lower.includes('vstep') ||
+        lower.includes('thpt')
+      ) {
         cat = 'vstep'
         label = 'Chứng Chỉ B1-C1 & VSTEP'
         color = 'bg-rose-600'
@@ -134,7 +163,7 @@ export function Library() {
         category: cat,
         categoryLabel: label,
         badgeColor: color,
-        driveUrl: b.driveUrl
+        driveUrl: b.driveUrl,
       })
     })
 
@@ -161,7 +190,8 @@ export function Library() {
             📚 Kho Tài Liệu & Bộ Từ Vựng
           </h1>
           <p className='text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1'>
-            {decks.length} bộ flashcard ({totalWords} từ vựng) • 141 giáo trình & kho đề Google Drive gốc
+            {decks.length} bộ flashcard ({totalWords} từ vựng) • 141 giáo trình & kho đề Google
+            Drive gốc
           </p>
         </div>
 
@@ -271,7 +301,9 @@ export function Library() {
               >
                 <div>
                   <div className='flex items-center justify-between gap-2 mb-2'>
-                    <span className={`px-2.5 py-0.5 rounded-lg text-[10px] font-bold text-white ${item.badgeColor}`}>
+                    <span
+                      className={`px-2.5 py-0.5 rounded-lg text-[10px] font-bold text-white ${item.badgeColor}`}
+                    >
                       {item.categoryLabel}
                     </span>
                   </div>

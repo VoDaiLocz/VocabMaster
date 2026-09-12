@@ -5,10 +5,7 @@
 
 import React, { useState, useMemo, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import {
-  GRAMMAR_30_DAYS,
-  GrammarDay,
-  } from '@/data/grammarCurriculumData'
+import { GRAMMAR_30_DAYS, GrammarDay } from '@/data/grammarCurriculumData'
 import ENCYCLOPEDIA_DATA from '@/data/extractedGrammarEncyclopedia.json'
 import QUESTION_BANK from '@/data/extractedQuestionBank.json'
 import ENRICHED_DAYS from '@/data/enrichedCurriculumDays.json'
@@ -27,7 +24,7 @@ import {
   Calendar,
   Layers,
   Award,
-    Flame,
+  Flame,
   BookmarkCheck,
   Check,
   RotateCcw,
@@ -60,7 +57,7 @@ export const GrammarMaster: React.FC = () => {
 
   // Encyclopedia State
   const [activeTopicId, setActiveTopicId] = useState<string>(ENCYCLOPEDIA_DATA[0]?.id || 'tenses')
-  
+
   // Practice State
   const [practiceTopicFilter, setPracticeTopicFilter] = useState<string>('all')
   const [practiceLevelFilter, setPracticeLevelFilter] = useState<string>('all')
@@ -170,7 +167,7 @@ export const GrammarMaster: React.FC = () => {
   const jumpToPracticeTopic = (topicId: string) => {
     // Find matching topic in ENCYCLOPEDIA_DATA
     const found = (ENCYCLOPEDIA_DATA as EncyclopediaTopic[]).find(
-      (t) => t.id === topicId || t.category.toLowerCase() === topicId.toLowerCase()
+      (t) => t.id === topicId || t.category.toLowerCase() === topicId.toLowerCase(),
     )
     if (found) {
       setPracticeTopicFilter(found.id)
@@ -185,7 +182,7 @@ export const GrammarMaster: React.FC = () => {
 
   const jumpToEncyclopediaTopic = (topicId: string) => {
     const found = (ENCYCLOPEDIA_DATA as EncyclopediaTopic[]).find(
-      (t) => t.id === topicId || t.category.toLowerCase() === topicId.toLowerCase()
+      (t) => t.id === topicId || t.category.toLowerCase() === topicId.toLowerCase(),
     )
     if (found) {
       setActiveTopicId(found.id)
@@ -340,7 +337,9 @@ export const GrammarMaster: React.FC = () => {
                   </h2>
                 </div>
                 <p className='text-xs sm:text-sm text-primary-100 font-medium leading-relaxed'>
-                  Thiết kế theo chuẩn mục lục sách giáo trình, từ cấp độ nền tảng A1-A2 đến bẫy đề thi nâng cao C1 / TOEIC 800+. Mỗi ngày tích hợp sẵn 15 - 100+ câu hỏi thực chiến có lời giải chi tiết.
+                  Thiết kế theo chuẩn mục lục sách giáo trình, từ cấp độ nền tảng A1-A2 đến bẫy đề
+                  thi nâng cao C1 / TOEIC 800+. Mỗi ngày tích hợp sẵn 15 - 100+ câu hỏi thực chiến
+                  có lời giải chi tiết.
                 </p>
               </div>
 
@@ -487,7 +486,9 @@ export const GrammarMaster: React.FC = () => {
                             {idx + 1}
                           </span>
                           <div className='min-w-0'>
-                            <h4 className='font-bold text-xs sm:text-sm truncate'>{topic.nameVi}</h4>
+                            <h4 className='font-bold text-xs sm:text-sm truncate'>
+                              {topic.nameVi}
+                            </h4>
                             <p className='text-[10px] text-gray-400 truncate'>{topic.nameEn}</p>
                           </div>
                         </div>
@@ -608,7 +609,8 @@ export const GrammarMaster: React.FC = () => {
                         <span>Bách Khoa Tra Cứu Toàn Thư & Từ Điển 360 Động Từ Bất Quy Tắc</span>
                       </div>
                       <p className='text-xs text-gray-600 dark:text-gray-300'>
-                        Xem bảng đối chiếu bẫy đề thi ETS, 60+ công thức cú pháp mở rộng và tra cứu V1-V2-V3 kèm phát âm.
+                        Xem bảng đối chiếu bẫy đề thi ETS, 60+ công thức cú pháp mở rộng và tra cứu
+                        V1-V2-V3 kèm phát âm.
                       </p>
                     </div>
                     <button
@@ -817,7 +819,9 @@ export const GrammarMaster: React.FC = () => {
               </div>
             ) : (
               <div className='p-10 rounded-3xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-center text-gray-500 space-y-2'>
-                <p className='font-bold text-sm'>Không tìm thấy câu hỏi phù hợp với bộ lọc hiện tại.</p>
+                <p className='font-bold text-sm'>
+                  Không tìm thấy câu hỏi phù hợp với bộ lọc hiện tại.
+                </p>
                 <button
                   onClick={() => {
                     setPracticeTopicFilter('all')
@@ -844,59 +848,66 @@ export const GrammarMaster: React.FC = () => {
                   Cẩm Nang Tra Cứu Công Thức & Dấu Hiệu Nhận Biết
                 </h3>
                 <p className='text-xs text-purple-700 dark:text-purple-300'>
-                  Bảng tổng hợp nhanh các công thức ngữ pháp cốt lõi trích xuất từ 21 chuyên đề chuẩn quốc tế.
+                  Bảng tổng hợp nhanh các công thức ngữ pháp cốt lõi trích xuất từ 21 chuyên đề
+                  chuẩn quốc tế.
                 </p>
               </div>
             </div>
 
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
-              {(ENCYCLOPEDIA_DATA as EncyclopediaTopic[]).filter((t) => {
-                if (!searchQuery) return true
-                return t.nameVi.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                  t.formulas.some((f: string) => f.toLowerCase().includes(searchQuery.toLowerCase()))
-              }).map((topic, tIdx) => (
-                <div
-                  key={tIdx}
-                  className='p-5 rounded-3xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-xs space-y-4 flex flex-col justify-between hover:shadow-md transition-all'
-                >
-                  <div className='space-y-3'>
-                    <div className='flex items-center justify-between'>
-                      <span className='px-2.5 py-1 rounded-xl bg-purple-50 dark:bg-purple-950 text-purple-700 dark:text-purple-300 text-xs font-black uppercase'>
-                        {topic.category}
-                      </span>
-                      <span className='text-[10px] font-bold text-gray-400'>
-                        {topic.formulas.length} công thức
-                      </span>
-                    </div>
-
-                    <h3 className='text-base font-black text-gray-900 dark:text-white'>
-                      {topic.nameVi}
-                    </h3>
-                    <p className='text-xs text-gray-500 dark:text-gray-400 font-semibold'>
-                      {topic.nameEn}
-                    </p>
-
-                    <div className='space-y-2'>
-                      {topic.formulas.slice(0, 4).map((form: string, fIdx: number) => (
-                        <div
-                          key={fIdx}
-                          className='p-2.5 rounded-2xl bg-gray-50 dark:bg-gray-900/60 border border-gray-200 dark:border-gray-700/80 font-mono text-xs text-primary-700 dark:text-primary-300 font-bold'
-                        >
-                          {form}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <button
-                    onClick={() => jumpToEncyclopediaTopic(topic.id)}
-                    className='w-full py-2.5 rounded-xl bg-gray-100 dark:bg-gray-700 hover:bg-primary-50 hover:text-primary-600 text-gray-700 dark:text-gray-300 text-xs font-bold transition-all flex items-center justify-center gap-1.5'
+              {(ENCYCLOPEDIA_DATA as EncyclopediaTopic[])
+                .filter((t) => {
+                  if (!searchQuery) return true
+                  return (
+                    t.nameVi.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                    t.formulas.some((f: string) =>
+                      f.toLowerCase().includes(searchQuery.toLowerCase()),
+                    )
+                  )
+                })
+                .map((topic, tIdx) => (
+                  <div
+                    key={tIdx}
+                    className='p-5 rounded-3xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-xs space-y-4 flex flex-col justify-between hover:shadow-md transition-all'
                   >
-                    <span>Xem toàn văn chuyên đề</span>
-                    <ChevronRight size={14} />
-                  </button>
-                </div>
-              ))}
+                    <div className='space-y-3'>
+                      <div className='flex items-center justify-between'>
+                        <span className='px-2.5 py-1 rounded-xl bg-purple-50 dark:bg-purple-950 text-purple-700 dark:text-purple-300 text-xs font-black uppercase'>
+                          {topic.category}
+                        </span>
+                        <span className='text-[10px] font-bold text-gray-400'>
+                          {topic.formulas.length} công thức
+                        </span>
+                      </div>
+
+                      <h3 className='text-base font-black text-gray-900 dark:text-white'>
+                        {topic.nameVi}
+                      </h3>
+                      <p className='text-xs text-gray-500 dark:text-gray-400 font-semibold'>
+                        {topic.nameEn}
+                      </p>
+
+                      <div className='space-y-2'>
+                        {topic.formulas.slice(0, 4).map((form: string, fIdx: number) => (
+                          <div
+                            key={fIdx}
+                            className='p-2.5 rounded-2xl bg-gray-50 dark:bg-gray-900/60 border border-gray-200 dark:border-gray-700/80 font-mono text-xs text-primary-700 dark:text-primary-300 font-bold'
+                          >
+                            {form}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <button
+                      onClick={() => jumpToEncyclopediaTopic(topic.id)}
+                      className='w-full py-2.5 rounded-xl bg-gray-100 dark:bg-gray-700 hover:bg-primary-50 hover:text-primary-600 text-gray-700 dark:text-gray-300 text-xs font-bold transition-all flex items-center justify-center gap-1.5'
+                    >
+                      <span>Xem toàn văn chuyên đề</span>
+                      <ChevronRight size={14} />
+                    </button>
+                  </div>
+                ))}
             </div>
           </div>
         )}

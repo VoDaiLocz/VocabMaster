@@ -334,13 +334,18 @@ export const VideoLearning: React.FC = () => {
             }`}
             title='Chế độ Thuyết minh xen kẽ: Video phát tiếng Anh gốc ➔ Tự dừng ➔ Tự đọc tiếng Việt ➔ Tự phát tiếp câu sau'
           >
-            <Languages size={14} className={isInterleavedSpeaking ? 'animate-bounce text-amber-300' : ''} />
+            <Languages
+              size={14}
+              className={isInterleavedSpeaking ? 'animate-bounce text-amber-300' : ''}
+            />
             <span className='hidden sm:inline'>
-              {isInterleavedSpeaking ? 'Đang đọc TV...' : interleavedMode ? 'Thuyết minh: BẬT' : 'Thuyết minh xen kẽ'}
+              {isInterleavedSpeaking
+                ? 'Đang đọc TV...'
+                : interleavedMode
+                  ? 'Thuyết minh: BẬT'
+                  : 'Thuyết minh xen kẽ'}
             </span>
-            <span className='sm:hidden'>
-              {interleavedMode ? 'TM: BẬT' : 'Thuyết minh'}
-            </span>
+            <span className='sm:hidden'>{interleavedMode ? 'TM: BẬT' : 'Thuyết minh'}</span>
           </button>
 
           {/* Tech Learning Board (Trello-Style) Button */}

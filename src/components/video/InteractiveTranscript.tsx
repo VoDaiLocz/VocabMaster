@@ -188,7 +188,11 @@ const CueItem = memo<CueItemProps>(
                     ? 'bg-purple-100 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 hover:bg-purple-200 dark:hover:bg-purple-900/50'
                     : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-300 hover:bg-purple-50 dark:hover:bg-purple-900/30'
               }`}
-              title={speakingMode === 'bilingual' ? 'Dừng đọc song ngữ' : 'Đọc câu này song ngữ (EN ➔ VI)'}
+              title={
+                speakingMode === 'bilingual'
+                  ? 'Dừng đọc song ngữ'
+                  : 'Đọc câu này song ngữ (EN ➔ VI)'
+              }
             >
               <Languages size={11} />
               <span>
@@ -284,43 +288,24 @@ export const InteractiveTranscript: React.FC<InteractiveTranscriptProps> = ({
   const [searchQuery, setSearchQuery] = useState('')
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const containerRef = useRef<HTMLDivElement | null>(null)
-  const currentActiveIdRef = useRef<number | null>(null)
   const lastScrolledIdRef = useRef<number | null>(null)
 
-  // Find currently active cue with boundary hysteresis to eliminate flickering between cues
+  // Pure active cue selection without ref read/writes during render
   const activeCueId = useMemo(() => {
     if (cues.length === 0) return null
 
-    // 1. Hysteresis: If currently active cue is still valid within a 0.2s margin, stay on it!
-    if (currentActiveIdRef.current !== null) {
-      const currentCue = cues.find((c) => c.id === currentActiveIdRef.current)
-      if (
-        currentCue &&
-        currentTime >= currentCue.start - 0.05 &&
-        currentTime <= currentCue.end + 0.2
-      ) {
-        return currentCue.id
-      }
-    }
-
-    // 2. Exact match within start and end
+    // 1. Exact match within start and end
     const exact = cues.find((c) => currentTime >= c.start && currentTime <= c.end)
-    if (exact) {
-      currentActiveIdRef.current = exact.id
-      return exact.id
-    }
+    if (exact) return exact.id
 
-    // 3. Fallback to latest passed cue
+    // 2. Fallback to latest passed cue
     for (let i = cues.length - 1; i >= 0; i--) {
       if (currentTime >= cues[i].start) {
-        currentActiveIdRef.current = cues[i].id
         return cues[i].id
       }
     }
 
-    const firstId = cues[0]?.id ?? null
-    currentActiveIdRef.current = firstId
-    return firstId
+    return cues[0]?.id ?? null
   }, [cues, currentTime])
 
   // Smart Viewport Containment Scroll: ONLY scroll if the active cue is outside comfortable padding
@@ -338,8 +323,7 @@ export const InteractiveTranscript: React.FC<InteractiveTranscriptProps> = ({
 
     // Margin: If item is comfortably visible (between top + 45px and bottom - 45px), DO NOT scroll!
     const isComfortablyVisible =
-      elRect.top >= containerRect.top + 45 &&
-      elRect.bottom <= containerRect.bottom - 45
+      elRect.top >= containerRect.top + 45 && elRect.bottom <= containerRect.bottom - 45
 
     if (isComfortablyVisible) {
       lastScrolledIdRef.current = activeCueId
@@ -414,13 +398,18 @@ export const InteractiveTranscript: React.FC<InteractiveTranscriptProps> = ({
             }`}
             title='Chế độ Thuyết minh xen kẽ: Video phát tiếng Anh gốc ➔ Tự dừng ➔ Đọc tiếng Việt ➔ Tự phát tiếp câu sau'
           >
-            <Languages size={12} className={isInterleavedSpeaking ? 'animate-bounce text-amber-300' : ''} />
+            <Languages
+              size={12}
+              className={isInterleavedSpeaking ? 'animate-bounce text-amber-300' : ''}
+            />
             <span className='hidden sm:inline'>
-              {isInterleavedSpeaking ? 'Đang đọc TV...' : interleavedMode ? 'Thuyết minh: BẬT' : 'Thuyết minh xen kẽ'}
+              {isInterleavedSpeaking
+                ? 'Đang đọc TV...'
+                : interleavedMode
+                  ? 'Thuyết minh: BẬT'
+                  : 'Thuyết minh xen kẽ'}
             </span>
-            <span className='sm:hidden'>
-              {interleavedMode ? 'TM: BẬT' : 'TM xen kẽ'}
-            </span>
+            <span className='sm:hidden'>{interleavedMode ? 'TM: BẬT' : 'TM xen kẽ'}</span>
           </button>
         )}
 

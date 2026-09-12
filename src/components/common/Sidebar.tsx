@@ -22,7 +22,7 @@ import {
   GraduationCap,
   Layers,
   BookMarked,
-  Award
+  Award,
 } from 'lucide-react'
 import { APP_INFO } from '@/constants'
 
