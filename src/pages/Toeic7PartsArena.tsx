@@ -42,6 +42,7 @@ import tacticsRaw from '@/data/toeic_exam_tactics.json'
 import examSeriesRaw from '@/data/toeic_exam_series.json'
 import toeicDocsRaw from '@/data/tai_lieu_toeic.json'
 import { calculateToeicScore, ToeicScoreResult } from '@/utils/toeicScoring'
+import { ToeicPassageViewer } from '@/components/toeic/ToeicPassageViewer'
 
 export interface UnifiedToeicQuestion {
   id: string
@@ -976,14 +977,11 @@ export function Toeic7PartsArena() {
 
                     {/* Đoạn văn đọc hiểu Part 6 & Part 7 */}
                     {(q.part === 6 || q.part === 7) && q.passageText && (
-                      <div className='bg-gray-50 dark:bg-gray-900/60 rounded-2xl p-5 border border-gray-200 dark:border-gray-700/60 mb-6 font-serif text-sm leading-relaxed whitespace-pre-line text-gray-800 dark:text-gray-200 max-h-96 overflow-y-auto'>
-                        {q.passageType && (
-                          <div className='text-[11px] font-sans font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 mb-2'>
-                            [{q.passageType}]
-                          </div>
-                        )}
-                        {q.passageText}
-                      </div>
+                      <ToeicPassageViewer
+                        passageText={q.passageText}
+                        passageType={q.passageType}
+                        part={q.part}
+                      />
                     )}
 
                     {/* Nội dung câu hỏi */}
@@ -1807,14 +1805,11 @@ export function Toeic7PartsArena() {
 
                   {/* Đoạn văn đọc hiểu Part 6 & 7 */}
                   {(selectedPart === 6 || selectedPart === 7) && currentPracticeQ.passageText && (
-                    <div className='bg-gray-50 dark:bg-gray-900/60 rounded-2xl p-5 border border-gray-200 dark:border-gray-700/60 mb-6 font-serif text-sm leading-relaxed whitespace-pre-line text-gray-800 dark:text-gray-200 max-h-96 overflow-y-auto'>
-                      {currentPracticeQ.passageType && (
-                        <div className='text-[11px] font-sans font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 mb-2'>
-                          [{currentPracticeQ.passageType}]
-                        </div>
-                      )}
-                      {currentPracticeQ.passageText}
-                    </div>
+                    <ToeicPassageViewer
+                      passageText={currentPracticeQ.passageText}
+                      passageType={currentPracticeQ.passageType}
+                      part={selectedPart}
+                    />
                   )}
 
                   {/* Câu hỏi */}
